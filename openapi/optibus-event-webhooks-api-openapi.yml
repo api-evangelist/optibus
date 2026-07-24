@@ -1,0 +1,561 @@
+openapi: 3.0.0
+info:
+  title: Optibus Operations Driver Absences Event Webhooks API
+  version: 2.8.17
+  description: '**Welcome to the Optibus Operations API documentation!**
+
+
+    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.
+
+
+
+    '
+  license:
+    name: Optibus Ltd, All rights reserved
+  contact: {}
+servers:
+- url: https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co
+  description: Contact your Optibus Customer Success Manager for the actual baseURL and API credentials to use.
+tags:
+- name: Event Webhooks
+paths:
+  /<event-webhook-subscriber-endpoint>:
+    post:
+      operationId: EventWebhookPost
+      responses:
+        '202':
+          description: Operational Webhook Event successfully enqueued by the consumer
+      description: "### Operational Webhook Events from Optibus OPS system\n\n Optibus OPS Event Webhooks deliver operational changes triggered by users in the OPS platform to subscribers as outbound HTTP webhook requests.\n\n#### ODS format based\n\nActions supported will be sent in requests to the subscribers, containing all the entities that were changed,\nsuch as `runs`, `run_assignments`, `run_events`, `blocks` and `block_assignments` with a format that has been inspired by ODS,\nfollowing the same terminology for the name of attributes and entities, despite there's additional information to enrich the event payload.\n\nNote: Internal IDs can be found in attributes with `_internal_id` suffix, such as `run_internal_id` and `block_internal_id` and these can be used to uniquely identify entities\nif the OPS API is consumed, but for the integration these IDs shouldn't be used. It's recommended to use `run_id` and `block_id` to uniquely identify entities.\n\n#### Subscriber URL and configuration\n\nTo set up a subscription, the subscriber must provide:\n- Callback URL – The endpoint where requests will be delivered.\n- Subscription Window – The relative range of operational days for which they want to receive events (e.g., previous and next days).\n- Action Types – The list of `action_type` operations they want to receive on this endpoint.\n- Operational Day Start Time – The time at which the customer’s or agency’s operational day begins.\n\n#### Auth\n\nThe subscriber will receive a secret token that will be used to validate the request comes from Optibus as a trusted source.\nBefore sending the webhook, we generate an HMAC signature using the same secret key for the request body, then include the result in a header `X-HMAC-SIGNATURE`.\nThe subscriber will need to validates the request by generating the signature following the same process on their side and then comparing it to the `X-HMAC-SIGNATURE` header.\nIf there's a match, the request should be accepted; otherwise, it should be rejected as it might come from an unauthorized source.\n\nTo generate a signature is a simple as:\n```\n import crypto from \"crypto\";\n return crypto\n.createHmac(\"sha256\", subscriber.secret)\n.update(JSON.stringify(eventWebhookPayload), \"utf8\")\n.digest(\"base64\");\n```\n\n#### Sequential processing of events\n\nIt's important that operational webhook events that belong to an `aggregate_id`, value that's always included in every request payload,\nare sequentially processed by the consumers in order to guarantee correctness, given that operations could depend on each and if not\nprocessed chronologically in the order they were triggered, it could lead to data inconsistencies.\n\n`aggregate_id` represents a funnel for all actions in a specific operational region and parallelism across different `aggregate_id` should be\nconsidered by the subscribers.\n\n#### Retry mechanism\n\n##### Successful Processing\nIf the subscriber returns any 2xx status code, the request is considered successfully processed. No further action will be taken.\n##### Retry Mechanism\nIf the subscriber fails to process the request (e.g., due to server issues or downtime), the system will retry the request using an exponential backoff strategy for up to 2 minutes.\nRetries will be triggered when the subscriber responds with one of the following status codes:\n- 5xx (server errors)\n- 408 (Request Timeout)\n- 409 (Conflict)\n- 422 (Unprocessable Entity)\n- 425 (Too Early)\n- 429 (Too Many Requests)\n##### Non-Retryable Responses\n- 4xx Errors (except those listed above): No retries will be attempted, as these indicate client-side issues that must be fixed by the subscriber.\n- 3xx Redirects: No retries will be attempted. Subscribers must provide a valid, direct URL that does not require redirection.\n##### Sequential Processing by aggregate_id\nOperational webhook events for a given aggregate_id are processed sequentially.\nIf a request for that aggregate_id fails and is being retried, no new events will be delivered for that same aggregate_id until:\nThe request succeeds, or\nThe retry window (2 minutes) expires.\n\n#### Request body payload examples for operational actions supported\n\n<details>\n<summary><strong>Unassign Duty Operation</strong></summary>\n\n```json\n{\n  \"id\": \"90cb367f-3680-48c2-93a2-b162cb11ce9a\",\n  \"customer\": \"superbus\",\n  \"created_at\": \"2024-10-09T16:19:01.300Z\",\n  \"aggregate_id\": \"operational-calendar-0d277b74-ab79-493f-8f1d-ec307420868d\",\n  \"region_id\": \"0d277b74-ab79-493f-8f1d-ec307420868d\",\n  \"operational_actions\": [\n    {\n      \"action_type\": \"unassign_duty\",\n      \"operational_date\": \"2024-10-09\",\n      \"entities_changes\": [\n        {\n          \"blocks\": [],\n          \"block_assignments\": [],\n          \"runs\": [],\n          \"run_assignments\": [\n            {\n              \"run_internal_id\": \"b045c6f4-f827-4e82-833a-1c5e713ad0b2\",\n              \"date\": \"2024-10-09\",\n              \"driver_id\": null,\n              \"run_id\": \"VU1002\",\n              \"service_id\": \"etf0C81iX7\",\n              \"entity_operation\": \"update\"\n            }\n          ],\n          \"run_events\": []\n        }\n      ]\n    }\n  ]\n}\n```\n</details>\n\n<details>\n<summary><strong>Assign Duty Operation</strong></summary>\n\n```json\n{\n  \"id\": \"90cb367f-3680-48c2-93a2-b162cb11ce9a\",\n  \"customer\": \"superbus\",\n  \"created_at\": \"2024-10-09T16:19:01.300Z\",\n  \"aggregate_id\": \"operational-calendar-0d277b74-ab79-493f-8f1d-ec307420868d\",\n  \"region_id\": \"0d277b74-ab79-493f-8f1d-ec307420868d\",\n  \"operational_actions\": [\n    {\n      \"action_type\": \"assign_duty\",\n      \"operational_date\": \"2024-10-09\",\n      \"entities_changes\": [\n        {\n          \"blocks\": [],\n          \"block_assignments\": [],\n          \"runs\": [],\n          \"run_assignments\": [\n            {\n              \"run_internal_id\": \"b045c6f4-f827-4e82-833a-1c5e713ad0b2\",\n              \"date\": \"2024-10-09\",\n              \"driver_id\": \"driver-123\",\n              \"run_id\": \"VU1002\",\n              \"service_id\": \"etf0C81iX7\",\n              \"entity_operation\": \"update\"\n            }\n          ],\n          \"run_events\": []\n        }\n      ]\n    }\n  ]\n}\n```\n</details>\n\n<details>\n<summary><strong>Unassign Block Operation</strong></summary>\n\n```json\n{\n  \"id\": \"90cb367f-3680-48c2-93a2-b162cb11ce9a\",\n  \"customer\": \"superbus\",\n  \"created_at\": \"2024-10-09T16:19:01.300Z\",\n  \"aggregate_id\": \"operational-calendar-0d277b74-ab79-493f-8f1d-ec307420868d\",\n  \"region_id\": \"0d277b74-ab79-493f-8f1d-ec307420868d\",\n  \"operational_actions\": [\n    {\n      \"action_type\": \"unassign_block\",\n      \"operational_date\": \"2025-09-24\",\n      \"entities_changes\": [\n        {\n          \"blocks\": [],\n          \"block_assignments\": [\n            {\n              \"block_id\": \"Block EU3006\",\n              \"block_internal_id\": \"bd8c55d2-7359-47b0-9a90-228872130eec\",\n              \"date\": \"2025-09-24\",\n              \"vehicle_id\": null,\n              \"entity_operation\": \"update\",\n              \"service_id\": \"QtyCFMaby\"\n            }\n          ],\n          \"runs\": [],\n          \"run_assignments\": [],\n          \"run_events\": []\n        }\n      ]\n    }\n  ]\n}\n```\n</details>\n\n<details>\n<summary><strong>Assign Block Operation</strong></summary>\n\n```json\n{\n  \"id\": \"90cb367f-3680-48c2-93a2-b162cb11ce9a\",\n  \"customer\": \"superbus\",\n  \"created_at\": \"2024-10-09T16:19:01.300Z\",\n  \"aggregate_id\": \"operational-calendar-0d277b74-ab79-493f-8f1d-ec307420868d\",\n  \"region_id\": \"0d277b74-ab79-493f-8f1d-ec307420868d\",\n  \"operational_actions\": [\n    {\n      \"action_type\": \"assign_block\",\n      \"operational_date\": \"2025-09-24\",\n      \"entities_changes\": [\n        {\n          \"blocks\": [],\n          \"block_assignments\": [\n            {\n              \"block_id\": \"Block EU3006\",\n              \"block_internal_id\": \"bd8c55d2-7359-47b0-9a90-228872130eec\",\n              \"date\": \"2025-09-24\",\n              \"vehicle_id\": \"Vehicle 230\",\n              \"entity_operation\": \"update\",\n              \"service_id\": \"QtyCFMaby\"\n            }\n          ],\n          \"runs\": [],\n          \"run_assignments\": [],\n          \"run_events\": []\n        }\n      ]\n    }\n  ]\n}\n```\n</details>\n\n<details>\n<summary><strong>Swap Duties Operation</strong></summary>\n\n```json\n{\n  \"id\": \"90cb367f-3680-48c2-93a2-b162cb11ce9a\",\n  \"customer\": \"superbus\",\n  \"created_at\": \"2024-10-09T16:19:01.300Z\",\n  \"aggregate_id\": \"operational-calendar-0d277b74-ab79-493f-8f1d-ec307420868d\",\n  \"region_id\": \"0d277b74-ab79-493f-8f1d-ec307420868d\",\n  \"operational_actions\": [\n    {\n      \"action_type\": \"assign_block\",\n      \"operational_date\": \"2025-09-24\",\n      \"entities_changes\": [\n        {\n          \"blocks\": [],\n          \"block_assignments\": [],\n          \"runs\": [],\n          \"run_assignments\": [\n            {\n              \"run_internal_id\": \"48afea60-81ce-428c-bc93-622961f2e9b5\",\n              \"date\": \"2024-10-09\",\n              \"driver_id\": \"Driver 124\",\n              \"run_id\": \"Duty VU1000\",\n              \"service_id\": \"etf0C81iX7\",\n              \"entity_operation\": \"update\"\n            }\n          ],\n          \"run_events\": []\n        },\n        {\n          \"blocks\": [],\n          \"block_assignments\": [],\n          \"runs\": [],\n          \"run_assignments\": [\n            {\n              \"run_internal_id\": \"b045c6f4-f827-4e82-833a-1c5e713ad0b2\",\n              \"date\": \"2024-10-09\",\n              \"driver_id\": \"Driver 421\",\n              \"run_id\": \"Duty VU2000\",\n              \"service_id\": \"etf0C81iX7\",\n              \"entity_operation\": \"update\"\n            }\n          ],\n          \"run_events\": []\n        }\n      ]\n    }\n  ]\n}\n```\n</details>\n\n<details>\n<summary><strong>Cut/split Duty Operation</strong></summary>\n\n```json\n{\n  \"id\": \"90cb367f-3680-48c2-93a2-b162cb11ce9a\",\n  \"customer\": \"superbus\",\n  \"created_at\": \"2024-10-09T16:19:01.300Z\",\n  \"aggregate_id\": \"operational-calendar-0d277b74-ab79-493f-8f1d-ec307420868d\",\n  \"region_id\": \"0d277b74-ab79-493f-8f1d-ec307420868d\",\n  \"operational_actions\": [\n    {\n       \"action_type\": \"cut_duty\",\n       \"operational_date\": \"2025-09-24\",\n       \"entities_changes\": [\n         {\n           \"blocks\": [],\n           \"block_assignments\": [],\n           \"runs\": [\n             {\n               \"run_internal_id\": \"acaebae9-9804-4a2d-bd66-62f7cbb925a8\",\n               \"run_id\": \"EU1008 (1/2)\",\n               \"original_run_internal_id\": \"9da47cf8-f45b-40a0-a150-18f09503b2c1\",\n               \"entity_operation\": \"create\",\n               \"original_run_id\": \"EU1008\",\n               \"reference_from\": \"split\"\n             },\n             {\n               \"run_internal_id\": \"2b26543c-9094-4ebe-b3f0-e8789cd5a4a1\",\n               \"run_id\": \"EU1008 (2/2)\",\n               \"original_run_internal_id\": \"9da47cf8-f45b-40a0-a150-18f09503b2c1\",\n               \"entity_operation\": \"create\",\n               \"original_run_id\": \"EU1008\",\n               \"reference_from\": \"split\"\n             }\n           ],\n           \"run_assignments\": [\n             {\n               \"service_id\": \"ObP5ZTmaUy\",\n               \"run_id\": \"EU1008\",\n               \"run_internal_id\": \"86ab09ef-d145-4982-94ed-8f4a0b613ce9\",\n               \"date\": \"2025-09-24\",\n               \"driver_id\": null,\n               \"entity_operation\": \"delete\"\n             },\n             {\n               \"service_id\": \"ObP5ZTmaUy\",\n               \"run_id\": \"EU1008 (1/2)\",\n               \"run_internal_id\": \"acaebae9-9804-4a2d-bd66-62f7cbb925a8\",\n               \"date\": \"2025-09-24\",\n               \"driver_id\": \"006494\",\n               \"entity_operation\": \"create\"\n             },\n             {\n               \"service_id\": \"ObP5ZTmaUy\",\n               \"run_id\": \"EU1008 (2/2)\",\n               \"run_internal_id\": \"2b26543c-9094-4ebe-b3f0-e8789cd5a4a1\",\n               \"date\": \"2025-09-24\",\n               \"driver_id\": \"006494\",\n               \"entity_operation\": \"create\"\n             }\n           ],\n           \"run_events\": [\n             {\n               \"run_event_internal_id\": \"1f3263ea-65b2-4954-a8ce-8eb3ef1a0b60\",\n               \"event_type\": \"deadhead\",\n               \"start_time\": \"05:01\",\n               \"start_location\": \"1\",\n               \"end_location\": \"140143\",\n               \"end_time\": \"05:10\",\n               \"event_sequence\": 1,\n               \"run_internal_id\": \"acaebae9-9804-4a2d-bd66-62f7cbb925a8\",\n               \"run_id\": \"EU1008 (1/2)\",\n               \"service_id\": \"ObP5ZTmaUy\",\n               \"entity_operation\": \"update\",\n               \"block_id\": \"EU1007\",\n               \"block_internal_id\": \"4472986c-0f4f-478d-a1e3-8c7f6d904d19\"\n             },\n             {\n               \"run_event_internal_id\": \"30da3618-e771-4ee8-9821-ba14268c4400\",\n               \"trip_id\": \"TRIP_ID_12345\",\n               \"event_type\": \"service_trip\",\n               \"start_time\": \"05:10\",\n               \"start_location\": \"140143\",\n               \"end_location\": \"141569\",\n               \"end_time\": \"05:30\",\n               \"event_sequence\": 2,\n               \"run_internal_id\": \"acaebae9-9804-4a2d-bd66-62f7cbb925a8\",\n               \"run_id\": \"EU1008 (1/2)\",\n               \"service_id\": \"ObP5ZTmaUy\",\n               \"entity_operation\": \"update\",\n               \"block_id\": \"EU1007\",\n               \"block_internal_id\": \"4472986c-0f4f-478d-a1e3-8c7f6d904d19\"\n             },\n             {\n               \"run_event_internal_id\": \"b119d22f-1f53-4e4b-80c6-e3ab77ac1d90\",\n               \"trip_id\": \"TRIP_ID_5423\",\n               \"event_type\": \"service_trip\",\n               \"start_time\": \"05:45\",\n               \"start_location\": \"140167\",\n               \"end_location\": \"140143\",\n               \"end_time\": \"06:00\",\n               \"event_sequence\": 3,\n               \"run_internal_id\": \"acaebae9-9804-4a2d-bd66-62f7cbb925a8\",\n               \"run_id\": \"EU1008 (2/2)\",\n               \"service_id\": \"ObP5ZTmaUy\",\n               \"entity_operation\": \"update\",\n               \"block_id\": \"EU1007\",\n               \"block_internal_id\": \"4472986c-0f4f-478d-a1e3-8c7f6d904d19\"\n             },\n             {\n               \"run_event_internal_id\": \"215625a0-2e75-46d7-b496-fede700a01e7\",\n               \"trip_id\": \"TRIP_ID_9821\",\n               \"event_type\": \"service_trip\",\n               \"start_time\": \"06:00\",\n               \"start_location\": \"140143\",\n               \"end_location\": \"141569\",\n               \"end_time\": \"06:20\",\n               \"event_sequence\": 4,\n               \"run_internal_id\": \"acaebae9-9804-4a2d-bd66-62f7cbb925a8\",\n               \"run_id\": \"EU1008 (2/2)\",\n               \"service_id\": \"ObP5ZTmaUy\",\n               \"entity_operation\": \"update\",\n               \"block_id\": \"EU1007\",\n               \"block_internal_id\": \"4472986c-0f4f-478d-a1e3-8c7f6d904d19\"\n             }\n           ]\n         }\n       ]\n    }\n  ]\n}\n```\n</details>\n\n\n<details>\n<summary><strong>Cut/split Block Operation</strong></summary>\n\n```json\n{\n  \"id\": \"90cb367f-3680-48c2-93a2-b162cb11ce9a\",\n  \"customer\": \"superbus\",\n  \"created_at\": \"2024-10-09T16:19:01.300Z\",\n  \"aggregate_id\": \"operational-calendar-0d277b74-ab79-493f-8f1d-ec307420868d\",\n  \"region_id\": \"0d277b74-ab79-493f-8f1d-ec307420868d\",\n  \"operational_actions\": [\n    {\n      \"action_type\": \"cut_block\",\n      \"operational_date\": \"2025-09-24\",\n      \"entities_changes\": [\n        {\n          \"blocks\": [\n            {\n              \"block_internal_id\": \"b66bfa61-714b-4e4f-af5d-49f6ced103c3\",\n              \"block_id\": \"Block EU1084 (1/2)\",\n              \"original_block_internal_id\": \"02890089-ae62-44a4-9eb8-17697deac901\",\n              \"original_block_id\": \"Block EU1084\",\n              \"service_id\": \"ObP5ZTmaUy\",\n              \"entity_operation\": \"create\",\n              \"reference_from\": \"split\"\n            },\n            {\n              \"block_internal_id\": \"15a985f4-0382-494a-9e7e-c310196563f4\",\n              \"block_id\": \"Block EU1084 (2/2)\",\n              \"original_block_internal_id\": \"02890089-ae62-44a4-9eb8-17697deac901\",\n              \"original_block_id\": \"Block EU1084\",\n              \"service_id\": \"ObP5ZTmaUy\",\n              \"entity_operation\": \"create\",\n              \"reference_from\": \"split\"\n            }\n          ],\n          \"block_assignments\": [\n            {\n              \"block_id\": \"Block EU1084\",\n              \"block_internal_id\": \"4dc6e8f1-47a7-4008-90cd-80a6f5141d02\",\n              \"date\": \"2025-09-24\",\n              \"vehicle_id\": \"2336\",\n              \"entity_operation\": \"delete\",\n              \"service_id\": \"ObP5ZTmaUy\"\n            },\n            {\n              \"block_id\": \"Block EU1084 (1/2)\",\n              \"block_internal_id\": \"b66bfa61-714b-4e4f-af5d-49f6ced103c3\",\n              \"date\": \"2025-09-24\",\n              \"vehicle_id\": \"2336\",\n              \"entity_operation\": \"create\",\n              \"service_id\": \"ObP5ZTmaUy\"\n            },\n            {\n              \"block_id\": \"Block EU1084 (2/2)\",\n              \"block_internal_id\": \"15a985f4-0382-494a-9e7e-c310196563f4\",\n              \"date\": \"2025-09-24\",\n              \"vehicle_id\": \"2336\",\n              \"entity_operation\": \"create\",\n              \"service_id\": \"ObP5ZTmaUy\"\n            }\n          ],\n          \"runs\": [],\n          \"run_assignments\": [],\n          \"run_events\": [\n            {\n              \"run_event_internal_id\": \"03cdba95-196e-498e-ad1c-67f012779d95\",\n              \"event_type\": \"deadhead\",\n              \"start_time\": \"10:36\",\n              \"start_location\": \"1\",\n              \"end_location\": \"020959\",\n              \"end_time\": \"10:45\",\n              \"event_sequence\": 0,\n              \"entity_operation\": \"update\",\n              \"run_internal_id\": \"50e527d1-a2af-4502-a1da-f983e377518a\",\n              \"run_id\": \"EU1002\",\n              \"block_id\": \"Block EU1084 (1/2)\",\n              \"block_internal_id\": \"b66bfa61-714b-4e4f-af5d-49f6ced103c3\",\n              \"service_id\": \"ObP5ZTmaUy\"\n            },\n            {\n              \"run_event_internal_id\": \"e53380be-e28e-4732-8fd4-725228ac2fc4\",\n              \"trip_id\": \"TRIP_ID_1234\",\n              \"event_type\": \"service_trip\",\n              \"start_time\": \"10:45\",\n              \"start_location\": \"020959\",\n              \"end_location\": \"140638\",\n              \"end_time\": \"11:25\",\n              \"event_sequence\": 1,\n              \"entity_operation\": \"update\",\n              \"run_internal_id\": \"50e527d1-a2af-4502-a1da-f983e377518a\",\n              \"run_id\": \"EU1002\",\n              \"block_id\": \"Block EU1084 (1/2)\",\n              \"block_internal_id\": \"b66bfa61-714b-4e4f-af5d-49f6ced103c3\",\n              \"service_id\": \"ObP5ZTmaUy\"\n            },\n            {\n              \"run_event_internal_id\": \"1fe96a0d-f009-467c-be45-1757ae70f131\",\n              \"trip_id\": \"TRIP_ID_5326\",\n              \"event_type\": \"service_trip\",\n              \"start_time\": \"11:30\",\n              \"start_location\": \"140637\",\n              \"end_location\": \"020959\",\n              \"end_time\": \"12:10\",\n              \"event_sequence\": 2,\n              \"entity_operation\": \"update\",\n              \"run_internal_id\": \"50e527d1-a2af-4502-a1da-f983e377518a\",\n              \"run_id\": \"EU1002\",\n              \"block_id\": \"Block EU1084 (1/3)\",\n              \"block_internal_id\": \"b66bfa61-714b-4e4f-af5d-49f6ced103c3\",\n              \"service_id\": \"ObP5ZTmaUy\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}\n```\n</details>\n\n<details>\n<summary><strong>Cancel Duty Operation</strong></summary>\n\nThe duty is soft-cancelled and can be reactivated later with the same identifiers. The full\ncascade (run, driver assignment, and every event on the duty) is shipped with\n`entity_operation: \"cancel\"`. The run carries an optional `cancellation_cause` when the\ndispatcher selected one (the cause list is configured per customer).\n\n```json\n{\n  \"id\": \"90cb367f-3680-48c2-93a2-b162cb11ce9a\",\n  \"customer\": \"superbus\",\n  \"created_at\": \"2024-10-09T16:19:01.300Z\",\n  \"aggregate_id\": \"operational-calendar-0d277b74-ab79-493f-8f1d-ec307420868d\",\n  \"region_id\": \"0d277b74-ab79-493f-8f1d-ec307420868d\",\n  \"operational_actions\": [\n    {\n      \"action_type\": \"cancel_duty\",\n      \"operational_date\": \"2024-10-09\",\n      \"entities_changes\": [\n        {\n          \"blocks\": [],\n          \"block_assignments\": [],\n          \"runs\": [\n            {\n              \"run_internal_id\": \"b045c6f4-f827-4e82-833a-1c5e713ad0b2\",\n              \"run_id\": \"VU1002\",\n              \"entity_operation\": \"cancel\",\n              \"cancellation_cause\": { \"cause_code\": \"PVI\", \"cause\": \"Planned vehicle inspection\" }\n            }\n          ],\n          \"run_assignments\": [\n            {\n              \"run_internal_id\": \"b045c6f4-f827-4e82-833a-1c5e713ad0b2\",\n              \"run_id\": \"VU1002\",\n              \"service_id\": \"etf0C81iX7\",\n              \"driver_id\": \"006494\",\n              \"date\": \"2024-10-09\",\n              \"entity_operation\": \"cancel\"\n            }\n          ],\n          \"run_events\": [\n            {\n              \"run_event_internal_id\": \"e1f2a3b4-c5d6-7890-abcd-ef1234567890\",\n              \"run_internal_id\": \"b045c6f4-f827-4e82-833a-1c5e713ad0b2\",\n              \"run_id\": \"VU1002\",\n              \"event_sequence\": 0,\n              \"event_type\": \"service_trip\",\n              \"trip_id\": \"TRIP_ID_12345\",\n              \"start_time\": \"08:00\",\n              \"start_location\": \"140143\",\n              \"end_location\": \"141569\",\n              \"end_time\": \"09:00\",\n              \"entity_operation\": \"cancel\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}\n```\n</details>\n\n<details>\n<summary><strong>Reactivate Duty Operation</strong></summary>\n\nReverses a previous `cancel_duty`. All identifiers from the cancel event are reused and the\ncascade ships with `entity_operation: \"reactivate\"`. No `cancellation_cause` is sent.\n\n```json\n{\n  \"id\": \"2a4b1d13-5a82-4c1f-9a60-3dc4b21e7f11\",\n  \"customer\": \"superbus\",\n  \"created_at\": \"2024-10-09T16:30:00.000Z\",\n  \"aggregate_id\": \"operational-calendar-0d277b74-ab79-493f-8f1d-ec307420868d\",\n  \"region_id\": \"0d277b74-ab79-493f-8f1d-ec307420868d\",\n  \"operational_actions\": [\n    {\n      \"action_type\": \"reactivate_duty\",\n      \"operational_date\": \"2024-10-09\",\n      \"entities_changes\": [\n        {\n          \"blocks\": [],\n          \"block_assignments\": [],\n          \"runs\": [\n            {\n              \"run_internal_id\": \"b045c6f4-f827-4e82-833a-1c5e713ad0b2\",\n              \"run_id\": \"VU1002\",\n              \"entity_operation\": \"reactivate\"\n            }\n          ],\n          \"run_assignments\": [\n            {\n              \"run_internal_id\": \"b045c6f4-f827-4e82-833a-1c5e713ad0b2\",\n              \"run_id\": \"VU1002\",\n              \"service_id\": \"etf0C81iX7\",\n              \"driver_id\": \"006494\",\n              \"date\": \"2024-10-09\",\n              \"entity_operation\": \"reactivate\"\n            }\n          ],\n          \"run_events\": [\n            {\n              \"run_event_internal_id\": \"e1f2a3b4-c5d6-7890-abcd-ef1234567890\",\n              \"run_internal_id\": \"b045c6f4-f827-4e82-833a-1c5e713ad0b2\",\n              \"run_id\": \"VU1002\",\n              \"event_sequence\": 0,\n              \"event_type\": \"service_trip\",\n              \"trip_id\": \"TRIP_ID_12345\",\n              \"start_time\": \"08:00\",\n              \"start_location\": \"140143\",\n              \"end_location\": \"141569\",\n              \"end_time\": \"09:00\",\n              \"entity_operation\": \"reactivate\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}\n```\n</details>\n\n<details>\n<summary><strong>Delete Duty Operation</strong></summary>\n\nThe duty is hard-deleted; `run_internal_id` will never be valid again. The full cascade ships\nwith `entity_operation: \"delete\"`. `blocks` / `block_assignments` are left empty (block-level\nreconciliation is deferred to the scheduled feed).\n\n```json\n{\n  \"id\": \"f7b9c2ea-8f41-4b73-ae2c-0b8f7d5c4e90\",\n  \"customer\": \"superbus\",\n  \"created_at\": \"2024-10-09T16:45:00.000Z\",\n  \"aggregate_id\": \"operational-calendar-0d277b74-ab79-493f-8f1d-ec307420868d\",\n  \"region_id\": \"0d277b74-ab79-493f-8f1d-ec307420868d\",\n  \"operational_actions\": [\n    {\n      \"action_type\": \"delete_duty\",\n      \"operational_date\": \"2024-10-09\",\n      \"entities_changes\": [\n        {\n          \"blocks\": [],\n          \"block_assignments\": [],\n          \"runs\": [\n            {\n              \"run_internal_id\": \"b045c6f4-f827-4e82-833a-1c5e713ad0b2\",\n              \"run_id\": \"VU1002\",\n              \"entity_operation\": \"delete\"\n            }\n          ],\n          \"run_assignments\": [\n            {\n              \"run_internal_id\": \"b045c6f4-f827-4e82-833a-1c5e713ad0b2\",\n              \"run_id\": \"VU1002\",\n              \"service_id\": \"etf0C81iX7\",\n              \"driver_id\": \"006494\",\n              \"date\": \"2024-10-09\",\n              \"entity_operation\": \"delete\"\n            }\n          ],\n          \"run_events\": [\n            {\n              \"run_event_internal_id\": \"e1f2a3b4-c5d6-7890-abcd-ef1234567890\",\n              \"run_internal_id\": \"b045c6f4-f827-4e82-833a-1c5e713ad0b2\",\n              \"run_id\": \"VU1002\",\n              \"event_sequence\": 0,\n              \"event_type\": \"service_trip\",\n              \"trip_id\": \"TRIP_ID_12345\",\n              \"start_time\": \"08:00\",\n              \"start_location\": \"140143\",\n              \"end_location\": \"141569\",\n              \"end_time\": \"09:00\",\n              \"entity_operation\": \"delete\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}\n```\n</details>"
+      summary: Receive Operational Webhook Event
+      tags:
+      - Event Webhooks
+      security: []
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RealTimeOperationODS'
+components:
+  schemas:
+    RunODS:
+      properties:
+        split_part:
+          type: string
+          description: '(Optional) Chronological part of the duty that was split between the amount of parts
+
+            (e.g., "1/3" for the first part of a split duty in 3 pieces)'
+        cancellation_cause:
+          $ref: '#/components/schemas/CancellationCauseODS'
+          description: '(Optional) Cause selected by the dispatcher when soft-cancelling the duty.
+
+            Present only on `cancel` operations and only when the customer has configured causes.'
+        entity_operation:
+          $ref: '#/components/schemas/EntityOperationType'
+          description: Type of operation (create, update, delete, cancel, or reactivate) to be applied to the run
+        reference_from:
+          $ref: '#/components/schemas/RunReferenceFrom'
+          description: Indicates whether the run is split or clone from an original run
+        original_run_internal_id:
+          type: string
+          description: '(Optional) References the original run when the run is split or copied from another run,
+
+            using a UUID that guarantees uniqueness'
+        original_run_id:
+          type: string
+          description: (Optional) References the original run when the run is split or copied from another run
+        run_internal_id:
+          type: string
+          description: Internal identifier for the run to which this event belongs, which guarantees uniqueness
+        run_id:
+          type: string
+          description: 'Identifier for the run to which this event belongs in a readable format
+
+            that doesn''t guarantee uniqueness'
+        service_id:
+          type: string
+          description: (Optional) Identifier referencing the service
+      required:
+      - entity_operation
+      - run_internal_id
+      - run_id
+      type: object
+      description: Run data, which involves the definition of a set of trips or duties
+    CustomScheduleEventsTypes:
+      description: Duty schedule only custom event, vehicle does not move between stops
+      enum:
+      - standby
+      - technical_break
+      - meeting
+      - training
+      - non_revenue
+      - light_duty_hours
+      - behind_the_wheel_hours
+      type: string
+    BlockODS:
+      properties:
+        split_part:
+          type: string
+          description: '(Optional) Chronological part of the duty that was split between the amount of parts
+
+            (e.g., "1/3" for the first part of a split duty in 3 pieces)'
+        entity_operation:
+          $ref: '#/components/schemas/EntityOperationType'
+          description: Type of operation (create, update, or delete) to be applied to the block
+        reference_from:
+          $ref: '#/components/schemas/BlockReferenceFrom'
+          description: Indicates whether the block is split or cloned from another block
+        original_block_internal_id:
+          type: string
+          description: '(Optional) References the original run when the run is split or copied from another run,
+
+            using a UUID that guarantees uniqueness'
+        original_block_id:
+          type: string
+          description: '(Optional) References the original run when the run is split or copied from another run,
+
+            using an readable identifier that doesn''t guarantees uniqueness'
+        block_internal_id:
+          type: string
+          description: Readable block identifier that doesn't guarantee uniqueness
+        block_id:
+          type: string
+          description: 'Identifier for the block to which this event belongs in a readable format
+
+            that doesn''t guarantee uniqueness'
+        service_id:
+          type: string
+          description: (Optional) Identifier referencing the service
+      required:
+      - entity_operation
+      type: object
+      description: Block definition (relating to trips and their sequences)
+    CancellationCauseODS:
+      properties:
+        cause:
+          type: string
+          description: Human-readable label (e.g. "Planned vehicle inspection"). Intended for display.
+        cause_code:
+          type: string
+          description: Stable short identifier the customer assigns to the cause (e.g. "PVI"). Intended for programmatic use.
+      required:
+      - cause
+      - cause_code
+      type: object
+      description: 'Cancellation cause forwarded on a cancelled run (and, in the future, run event).
+
+        Field names follow GTFS Realtime Service Alerts. Internally OPS uses
+
+        `reason` / `reasonCode`; the rename happens at the OPS->GMV serializer boundary.'
+    EntityChanges:
+      properties:
+        run_events:
+          items:
+            $ref: '#/components/schemas/RunEventODS'
+          type: array
+        run_assignments:
+          items:
+            $ref: '#/components/schemas/RunAssignmentODS'
+          type: array
+        runs:
+          items:
+            $ref: '#/components/schemas/RunODS'
+          type: array
+        block_assignments:
+          items:
+            $ref: '#/components/schemas/BlockAssignmentODS'
+          type: array
+        blocks:
+          items:
+            $ref: '#/components/schemas/BlockODS'
+          type: array
+      required:
+      - run_events
+      - run_assignments
+      - runs
+      - block_assignments
+      - blocks
+      type: object
+    BlockAssignmentODS:
+      properties:
+        split_part:
+          type: string
+          description: '(Optional) Chronological part of the duty that was split between the amount of parts
+
+            (e.g., "1/3" for the first part of a split duty in 3 pieces)'
+        entity_operation:
+          $ref: '#/components/schemas/EntityOperationType'
+          description: Type of operation (create, update, or delete) for this assignment
+        date:
+          type: string
+          description: Operational date for the assignment in "YYYY-MM-DD" format
+        vehicle_id:
+          type: string
+          nullable: true
+          description: Vehicle assigned to this block, or null if unassigned
+        block_internal_id:
+          type: string
+          description: Internal identifier for the block to which this event belongs, it's a UUID which guarantees uniqueness
+        block_id:
+          type: string
+          description: 'Identifier for the run to which this event belongs in a readable format
+
+            that doesn''t guarantee uniqueness'
+        service_id:
+          type: string
+          description: (Optional) Identifier referencing the service associated with the block
+      required:
+      - entity_operation
+      - date
+      - vehicle_id
+      - block_internal_id
+      - block_id
+      type: object
+      description: Block assignment to vehicles in the operational system
+    EntityOperationType:
+      type: string
+      enum:
+      - create
+      - update
+      - delete
+      - cancel
+      - reactivate
+      description: 'Enum of possible entity operations.
+
+        `cancel` / `reactivate` are reversible lifecycle state changes that preserve the
+
+        entity''s identity (the underlying records persist; only their state flips), as
+
+        opposed to `create` / `delete` which introduce or terminally remove an entity.'
+    RunReferenceFrom:
+      type: string
+      enum:
+      - clone
+      - split
+    RealTimeOperationODS:
+      properties:
+        operational_actions:
+          items:
+            $ref: '#/components/schemas/OperationalAction'
+          type: array
+          description: 'List of operational actions triggered by a user in OPS platform.
+
+            A single action triggered by a user has the potential of creating multiple operational actions.
+
+            A user action could cause multiple operational action types for an operational day, such as [example]
+
+            or actions for multiple operational days, such as adding a driver absence that could unassign the driver along multiple days.'
+        customer:
+          type: string
+          description: The customer or agency the operation applies to
+        aggregate_id:
+          type: string
+          description: 'Aggregate identifier, typically to group related operations
+
+            Sequentiality in processing real-time events for an aggregateId should be
+
+            guaranteed by the provider.
+
+            Parallelism in the processing of events could be performed across events belonging
+
+            to different aggregateId.'
+        region_id:
+          type: string
+          description: Identifier of the region the operation pertains to
+        created_at:
+          type: string
+          description: Timestamp of the operation
+        id:
+          type: string
+          description: UUID for the real-time operation
+      required:
+      - operational_actions
+      - customer
+      - aggregate_id
+      - region_id
+      - created_at
+      - id
+      type: object
+      example:
+        id: 90cb367f-3680-48c2-93a2-b162cb11ce9a
+        customer: superbus
+        created_at: '2024-10-09T16:19:01.300Z'
+        aggregate_id: operational-calendar-0d277b74-ab79-493f-8f1d-ec307420868d
+        region_id: 0d277b74-ab79-493f-8f1d-ec307420868d
+        operational_actions:
+        - action_type: unassign_duty
+          operational_date: '2024-10-09'
+          entities_changes:
+          - blocks: []
+            block_assignments: []
+            runs: []
+            run_assignments:
+            - run_internal_id: b045c6f4-f827-4e82-833a-1c5e713ad0b2
+              date: '2024-10-09'
+              driver_id: null
+              run_id: VU1002
+              service_id: etf0C81iX7
+              entity_operation: update
+            run_events: []
+      description: The main structure for a real-time operation message
+    OnScheduleEventsTypes:
+      enum:
+      - service_trip
+      - sub_trip
+      - deadhead
+      - sign_on
+      - sign_off
+      - split
+      - pre_trip
+      - post_trip
+      - attendance
+      - custom
+      - refuels
+      - recharge
+      - other_travels
+      - taxi
+      - walk
+      - relief_cars
+      - public_travel
+      - break
+      - other
+      type: string
+    RunEventODS:
+      properties:
+        entity_operation:
+          $ref: '#/components/schemas/EntityOperationType'
+          description: Type of operation (create, update, or delete) to be applied to the run
+        end_mid_trip:
+          type: number
+          enum:
+          - 0
+          - 1
+          - 2
+          description: '(Optional) Indicator of whether the event ends mid-trip
+
+            0: no, 1: yes, 2: not mid-trip'
+        start_mid_trip:
+          type: number
+          enum:
+          - 0
+          - 1
+          - 2
+          description: '(Optional) Indicator of whether the event starts mid-trip
+
+            0: no, 1: yes, 2: not mid-trip'
+        end_time:
+          type: string
+          description: Time when the employee stops the event
+        end_location:
+          type: string
+          description: Location where the employee ends the event (referencing stops.stop_id)
+        start_time:
+          type: string
+          description: Time when the employee starts the event (e.g., sign-on time)
+        start_location:
+          type: string
+          description: Location where the employee starts the event (referencing stops.stop_id)
+        event_type:
+          $ref: '#/components/schemas/ScheduleEventsType'
+          description: Type of event (custom or predefined)
+        job_type:
+          type: string
+          description: (Optional) Human-readable job type for the employee performing the event (e.g., "Conductor")
+        block_internal_id:
+          type: string
+          description: Readable block identifier that doesn't guarantee uniqueness
+        block_id:
+          type: string
+          description: 'Identifier for the block to which this event belongs in a readable format
+
+            that doesn''t guarantee uniqueness'
+        event_sequence:
+          type: number
+          format: double
+          description: The order of the event within the run (must be unique for a run)
+        trip_id:
+          type: string
+          description: Identifier for the trip related to the event, if applicable
+        run_event_internal_id:
+          type: string
+          description: Internal identifier for a run event
+        run_internal_id:
+          type: string
+          description: Internal identifier for the run to which this event belongs, it's a UUID which guarantees uniqueness
+        run_id:
+          type: string
+          description: 'Identifier for the run to which this event belongs in a readable format
+
+            that doesn''t guarantee uniqueness'
+        service_id:
+          type: string
+          description: (Optional) Identifier referencing calendar.service_id or calendar_dates.service_id
+      required:
+      - entity_operation
+      - end_time
+      - start_time
+      - event_type
+      - event_sequence
+      - run_event_internal_id
+      - run_internal_id
+      - run_id
+      type: object
+      description: Events associated with the execution of a run (work shifts, breaks, trips, etc.)
+    ScheduleEventsType:
+      anyOf:
+      - $ref: '#/components/schemas/CustomScheduleEventsTypes'
+      - $ref: '#/components/schemas/OnScheduleEventsTypes'
+      - $ref: '#/components/schemas/OtherEventTypes'
+      - $ref: '#/components/schemas/ReliefCarEventsTypes'
+    RealTimeOperations:
+      enum:
+      - cut_duty
+      - cut_block
+      - assign_duty
+      - unassign_duty
+      - swap_duty_assignment
+      - assign_block
+      - unassign_block
+      - swap_block
+      - cancel_duty
+      - reactivate_duty
+      - delete_duty
+      type: string
+    RunAssignmentODS:
+      properties:
+        split_part:
+          type: string
+          description: '(Optional) Chronological part of the duty that was split between the amount of parts
+
+            (e.g., "1/3" for the first part of a split duty in 3 pieces)'
+        entity_operation:
+          $ref: '#/components/schemas/EntityOperationType'
+          description: Type of operation (create, update, or delete) for this assignment
+        date:
+          type: string
+          description: Operational date for the assignment in "YYYY-MM-DD" format
+        driver_id:
+          type: string
+          nullable: true
+          description: Driver assigned to this run, or null if unassigned
+        run_internal_id:
+          type: string
+          description: Internal identifier for the run to which this event belongs, which guarantees uniqueness
+        run_id:
+          type: string
+          description: 'Identifier for the run to which this event belongs in a readable format
+
+            that doesn''t guarantee uniqueness'
+        service_id:
+          type: string
+          description: (Optional) Identifier referencing the service
+      required:
+      - entity_operation
+      - date
+      - driver_id
+      - run_internal_id
+      - run_id
+      type: object
+      description: Assignment of drivers to a run
+    OtherEventTypes:
+      enum:
+      - depot_pull_in
+      - depot_pull_out
+      - reinforcement_trip
+      - private_hire
+      type: string
+    OperationalAction:
+      properties:
+        entities_changes:
+          items:
+            $ref: '#/components/schemas/EntityChanges'
+          type: array
+          description: 'The payload containing the detailed operational creating, deleting or updating entities
+
+            such as blocks, block_assignments, runs, run_assignments and run_events.'
+        operational_date:
+          type: string
+          description: The date of the operation in "YYYY-MM-DD" format
+        action_type:
+          $ref: '#/components/schemas/RealTimeOperationType'
+          description: The type of real-time operation (e.g., cut duty, assign duty)
+      required:
+      - entities_changes
+      - operational_date
+      - action_type
+      type: object
+    RealTimeOperationType:
+      $ref: '#/components/schemas/RealTimeOperations'
+    ReliefCarEventsTypes:
+      enum:
+      - relief_car_passenger
+      - relief_car_driver
+      type: string
+    BlockReferenceFrom:
+      type: string
+      enum:
+      - clone
+      - split
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: Authorization
+      in: header
+x-tagGroups:
+- name: General API Info
+  tags:
+  - Authentication
+  - Versioning
+- name: Use case guides
+  tags:
+  - HR System Integration Guides
+  - Fleet Management System Integration Guides
+  - Operational Plan Query Guides
+  - Custom Driver App Notification Action Guide
+- name: Client preferences
+  tags:
+  - Preferences
+- name: Resource Management
+  tags:
+  - Regions
+  - Drivers
+  - Driver Absences
+  - Driver Employment Periods
+  - Driver Custom Attributes
+  - Driver Groups
+  - Vehicles
+  - Vehicle Downtimes
+  - Vehicle Custom Attributes
+- name: Operations Management
+  tags:
+  - Roster
+  - Operational Plan
+  - Tasks
+  - Stops
+  - Signing Times
+- name: Work & Payroll
+  tags:
+  - Work Entities
+  - Payroll
+  - Statistics
+- name: Private Hires
+  tags:
+  - Private Hires
+- name: Driver App Integration
+  tags:
+  - Driver App Notifications
+- name: Event Webhooks
+  tags:
+  - Event Webhooks
+- name: Data Ingestion
+  tags:
+  - Tacho Ingestion
+- name: Deprecated API Endpoints
+  tags:
+  - Drivers (Deprecated)
+  - Vehicles (Deprecated)
+  - Operational Plan (Deprecated)
+- name: Changelog
+  tags:
+  - Changelog

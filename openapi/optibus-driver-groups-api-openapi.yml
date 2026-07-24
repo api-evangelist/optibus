@@ -1,0 +1,179 @@
+openapi: 3.0.0
+info:
+  title: Optibus Operations Driver Absences Driver Groups API
+  version: 2.8.17
+  description: '**Welcome to the Optibus Operations API documentation!**
+
+
+    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.
+
+
+
+    '
+  license:
+    name: Optibus Ltd, All rights reserved
+  contact: {}
+servers:
+- url: https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co
+  description: Contact your Optibus Customer Success Manager for the actual baseURL and API credentials to use.
+tags:
+- name: Driver Groups
+  description: API endpoints for managing driver groups.
+paths:
+  /group:
+    get:
+      operationId: GetDriverGroupsInfo
+      responses:
+        '200':
+          description: Driver groups fetched successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetGroupResponse'
+      description: List driver groups that exist in the system.
+      summary: List driver groups
+      tags:
+      - Driver Groups
+      security:
+      - api_key: []
+      parameters:
+      - description: '- Comma-separated list of region IDs to filter for'
+        in: query
+        name: regionUuids
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/UUID'
+      - description: '- [deprecated - use `regionUuids` instead] Comma-separated list of _region_ IDs to filter for'
+        in: query
+        name: depotsIds
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/UUID'
+        deprecated: true
+components:
+  schemas:
+    Group:
+      properties:
+        meta:
+          properties: {}
+          additionalProperties: {}
+          type: object
+          description: Additional data provided by the user
+        depot:
+          $ref: '#/components/schemas/UUID'
+          description: The uuid of the default depot the driver belongs to.
+        name:
+          type: string
+          description: The driver group name
+        id:
+          $ref: '#/components/schemas/UUID'
+          description: the group id in Ops platform, this value is auto generated
+      required:
+      - depot
+      - name
+      - id
+      type: object
+    GroupWithRegionAliases:
+      allOf:
+      - properties:
+          depot:
+            type: string
+            description: ID of the _region_ the driver group is associated with. Deprecated in favor of `regionUuid`.
+            deprecated: true
+          regionName:
+            type: string
+            description: Name of the region the driver group is associated with.
+          regionUuid:
+            type: string
+            description: ID of the region the driver group is associated with.
+        required:
+        - depot
+        - regionUuid
+        type: object
+      - $ref: '#/components/schemas/Group'
+    UUID:
+      type: string
+      description: Stringified ID for a resource. Cannot exceed 36 characters.
+    GetGroupResponse:
+      items:
+        $ref: '#/components/schemas/GroupWithRegionAliases'
+      type: array
+      example:
+      - id: ad681aa0-b99c-42db-912e-94ddef5f1387
+        name: Full-Time Drivers
+        regionUuid: c808109c-7c99-4038-9266-f3d241c53f5b
+        regionName: North
+        depot: c808109c-7c99-4038-9266-f3d241c53f5b
+        meta: {}
+      - id: ad681aa0-b99c-42db-912e-94ddef5f1387
+        name: Part-Time Drivers
+        regionUuid: c808109c-7c99-4038-9266-f3d241c53f5b
+        regionName: North
+        depot: c808109c-7c99-4038-9266-f3d241c53f5b
+        meta: {}
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: Authorization
+      in: header
+x-tagGroups:
+- name: General API Info
+  tags:
+  - Authentication
+  - Versioning
+- name: Use case guides
+  tags:
+  - HR System Integration Guides
+  - Fleet Management System Integration Guides
+  - Operational Plan Query Guides
+  - Custom Driver App Notification Action Guide
+- name: Client preferences
+  tags:
+  - Preferences
+- name: Resource Management
+  tags:
+  - Regions
+  - Drivers
+  - Driver Absences
+  - Driver Employment Periods
+  - Driver Custom Attributes
+  - Driver Groups
+  - Vehicles
+  - Vehicle Downtimes
+  - Vehicle Custom Attributes
+- name: Operations Management
+  tags:
+  - Roster
+  - Operational Plan
+  - Tasks
+  - Stops
+  - Signing Times
+- name: Work & Payroll
+  tags:
+  - Work Entities
+  - Payroll
+  - Statistics
+- name: Private Hires
+  tags:
+  - Private Hires
+- name: Driver App Integration
+  tags:
+  - Driver App Notifications
+- name: Event Webhooks
+  tags:
+  - Event Webhooks
+- name: Data Ingestion
+  tags:
+  - Tacho Ingestion
+- name: Deprecated API Endpoints
+  tags:
+  - Drivers (Deprecated)
+  - Vehicles (Deprecated)
+  - Operational Plan (Deprecated)
+- name: Changelog
+  tags:
+  - Changelog

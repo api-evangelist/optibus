@@ -1,0 +1,426 @@
+openapi: 3.0.0
+info:
+  title: Optibus Operations Driver Absences Vehicle Downtimes API
+  version: 2.8.17
+  description: '**Welcome to the Optibus Operations API documentation!**
+
+
+    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.
+
+
+
+    '
+  license:
+    name: Optibus Ltd, All rights reserved
+  contact: {}
+servers:
+- url: https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co
+  description: Contact your Optibus Customer Success Manager for the actual baseURL and API credentials to use.
+tags:
+- name: Vehicle Downtimes
+  description: API endpoints for managing downtimes for vehicles - i.e. periods where they are unavailable for service.
+paths:
+  /v1/vehicles/downtimes:
+    get:
+      operationId: GetVehiclesDowntimes
+      responses:
+        '200':
+          description: Vehicle downtimes fetched successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetVehiclesDowntimesSuccess'
+        '400':
+          description: 'Possible error types: `Invalid request schema` (schema of your request does not match the specification), `invalidDatesCombination` (the combination of fromDate and toDate is invalid)'
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/GetVehiclesDowntimesErrorResponse'
+                - $ref: '#/components/schemas/SchemaValidationErrorResponse'
+        '404':
+          description: 'Possible error types: `pageNotFound` (requested page number is out of range; details.totalPages indicates the number of pages available)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetVehiclesDowntimesErrorResponse'
+      description: "List existing vehicle downtimes in the system, with optional filtering capability.\n\nNotes:\n- The result is paginated. Check the `pagination` property in the response to see the total number of pages and the current page number.\n- Information about the modelling of date/time periods for each entry:\n  - `startDate` is mandatory\n  - `endDate` is optional - if omitted, the downtime will be ongoing indefinitely\n  - `startTime` and `endTime` are optional - if omitted, the downtime will be for the entire day(s) specified by `startDate` and `endDate`"
+      summary: List vehicle downtimes
+      tags:
+      - Vehicle Downtimes
+      security:
+      - api_key: []
+      parameters:
+      - description: '- Comma-separated list of vehicle IDs to filter for'
+        in: query
+        name: vehicleIds
+        required: false
+        schema:
+          type: string
+      - description: '- Date string formatted as `YYYY-MM-dd`. Only downtimes that end on or after this date are returned.'
+        in: query
+        name: fromDate
+        required: false
+        schema:
+          type: string
+      - description: '- Date string formatted as `YYYY-MM-dd`. Only downtimes that start on or before this date are returned.'
+        in: query
+        name: toDate
+        required: false
+        schema:
+          type: string
+      - description: '- 1-indexed integer indicating which page of results to pull'
+        in: query
+        name: page
+        required: false
+        schema:
+          $ref: '#/components/schemas/PageNumber'
+    put:
+      operationId: PutVehiclesDowntimes
+      responses:
+        '200':
+          description: Vehicle downtimes created and/or updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PutVehiclesDowntimesSuccessResponse'
+        '400':
+          description: 'Possible error types: `Invalid request schema` (schema of your request does not match the specification), `invalidFieldContent` (the content of one or more fields in your request is invalid), `noItems` (you specified 0 items in your request), `tooManyItems` (you specified >1000 items in your request)'
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/PutVehiclesDowntimesErrorResponse'
+                - $ref: '#/components/schemas/SchemaValidationErrorResponse'
+        '409':
+          description: 'Possible error types: `conflictProcessingRequest` (temporary concurrency conflict, retry shortly)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PutVehiclesDowntimesErrorResponse'
+        '422':
+          description: 'Possible error types: `vehiclesNotFound` (one or more vehicle IDs specified in the request do not exist in the system)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PutVehiclesDowntimesErrorResponse'
+      description: "Creates or updates downtimes for vehicles. As input, provide a list of downtime entries to create or update.\n\nNotes:\n- Behaviour of the `downtimeId` field:\n  - If a `downtimeId` is specified and a downtime with that ID already exists, the existing downtime will be updated.\n  - If a `downtimeId` is specified and a downtime with that ID does not already exist, a new downtime will be created with the specified ID.\n  - If a `downtimeId` is not specified, a new downtime will be created with an automatically generated ID.\n- Information about the modelling of date/time periods for each entry:\n  - `startDate` is mandatory\n  - `endDate` is optional - if omitted, the downtime will be ongoing indefinitely\n  - `startTime` and `endTime` are optional - if omitted, the downtime will be for the entire day(s) specified by `startDate` and `endDate`\n- Each request is atomic - either all downtimes listed in the request are created/updated successfully, or none are created/updated.\n- No more than 1000 downtimes can be created/updated in a single request - please break your request into multiple smaller chunks if you need to create/update more than 1000 downtimes."
+      summary: Create/update vehicle downtimes
+      tags:
+      - Vehicle Downtimes
+      security:
+      - api_key: []
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutVehiclesDowntimesRequest'
+components:
+  schemas:
+    TypedErrorResponse_PutVehiclesDowntimesErrorTypes_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/PutVehiclesDowntimesErrorTypes'
+      required:
+      - message
+      - type
+      type: object
+    TypedApiErrorResponse_Invalidrequestschema_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_Invalidrequestschema_'
+      required:
+      - error
+      type: object
+    TypedApiErrorResponse_GetVehiclesDowntimesErrorTypes_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_GetVehiclesDowntimesErrorTypes_'
+      required:
+      - error
+      type: object
+    MinutesFromMidnightTime:
+      type: integer
+      format: int32
+      description: Wall clock time, represented as minutes since midnight. For example, `0` is midnight (start of the day), `120` is 02:00 (2 hours after midnight), `180` is 02:30 (2.5 hours after midnight), `1560` is 02:00 the _next day_ (26 hours after midnight), etc.
+    PutVehicleDowntimeEntry:
+      properties:
+        note:
+          type: string
+          description: A note describing the downtime. Cannot exceed 65535 characters.
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        endDate:
+          $ref: '#/components/schemas/StringifyDate'
+        startDate:
+          $ref: '#/components/schemas/StringifyDate'
+        vehicleId:
+          type: string
+          description: 'ID of the vehicle this downtime applies to. Note: you may not modify the vehicle ID for an existing downtime, and will receive an error if you try to do so.'
+        downtimeId:
+          type: string
+          description: ID of the vehicle downtime to create or update. Must be unique within the request. Cannot exceed 36 characters.
+      required:
+      - startDate
+      - vehicleId
+      type: object
+    UUID:
+      type: string
+      description: Stringified ID for a resource. Cannot exceed 36 characters.
+    PutVehiclesDowntimesRequest:
+      properties:
+        downtimes:
+          items:
+            $ref: '#/components/schemas/PutVehicleDowntimeEntry'
+          type: array
+      required:
+      - downtimes
+      type: object
+      example:
+        downtimes:
+        - downtimeId: downtime-1
+          vehicleId: vehicle-1
+          startDate: '2024-01-01'
+          endDate: '2024-01-02'
+          startTime: 120
+          endTime: 180
+          note: Vehicle is being serviced for a discrete time period (02:00 on 1st January until 02:30 on 2nd January)
+        - downtimeId: downtime-2
+          vehicleId: vehicle-2
+          startDate: '2024-01-03'
+          startTime: 360
+          note: Vehicle is being serviced starting at 06:00 on 3rd January, and the downtime is ongoing indefinitely
+        - downtimeId: downtime-3
+          vehicleId: vehicle-3
+          startDate: '2024-01-04'
+          endDate: '2024-01-05'
+          note: Vehicle is being serviced all day on the 4th and 5th January
+    TypedErrorResponse_Invalidrequestschema_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - Invalid request schema
+          nullable: false
+      required:
+      - message
+      - type
+      type: object
+    Pagination:
+      properties:
+        totalPages:
+          $ref: '#/components/schemas/Integer'
+          description: Total number of pages.
+        nextPage:
+          $ref: '#/components/schemas/PageNumber'
+          description: Next page number (1-indexed). If undefined, there is no next page.
+        currentPage:
+          $ref: '#/components/schemas/PageNumber'
+          description: Current page number (1-indexed).
+      required:
+      - totalPages
+      - currentPage
+      type: object
+      description: 'Metadata about the pagination of a list of items. When a list of items is too large to be returned in a single response, it is split into multiple pages.
+
+        This object informs you about the current page, the next page, and the total number of pages.'
+    PageNumber:
+      $ref: '#/components/schemas/Integer'
+      description: Page number (1-indexed). Defaults to 1.
+      minimum: 1
+    GetVehiclesDowntimesErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_GetVehiclesDowntimesErrorTypes_'
+    VehicleDowntime:
+      properties:
+        note:
+          type: string
+          description: A note about the downtime
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        endDate:
+          $ref: '#/components/schemas/StringifyDate'
+        startDate:
+          $ref: '#/components/schemas/StringifyDate'
+        vehicleId:
+          type: string
+          description: ID of the vehicle this downtime applies to
+        downtimeId:
+          type: string
+          description: Unique identifier for the downtime
+      required:
+      - startDate
+      - vehicleId
+      - downtimeId
+      type: object
+    TypedApiErrorResponse_PutVehiclesDowntimesErrorTypes_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_PutVehiclesDowntimesErrorTypes_'
+      required:
+      - error
+      type: object
+    PutVehiclesDowntimesSuccessResponse:
+      properties:
+        createDowntimeIds:
+          $ref: '#/components/schemas/IdList'
+          description: List of downtime IDs that were created.
+        modifiedDowntimeIds:
+          $ref: '#/components/schemas/IdList'
+          description: List of downtime IDs that were modified.
+      required:
+      - createDowntimeIds
+      - modifiedDowntimeIds
+      type: object
+    PutVehiclesDowntimesErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_PutVehiclesDowntimesErrorTypes_'
+    Integer:
+      type: integer
+      format: int32
+    TypedErrorResponse_GetVehiclesDowntimesErrorTypes_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/GetVehiclesDowntimesErrorTypes'
+      required:
+      - message
+      - type
+      type: object
+    IdList:
+      items:
+        $ref: '#/components/schemas/UUID'
+      type: array
+      example:
+      - item-123
+      - item-456
+      - item-789
+      description: A list of IDs.
+    GetVehiclesDowntimesSuccess:
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        downtimes:
+          items:
+            $ref: '#/components/schemas/VehicleDowntime'
+          type: array
+      required:
+      - pagination
+      - downtimes
+      type: object
+      example:
+        downtimes:
+        - downtimeId: downtime-1
+          vehicleId: vehicle-1
+          startDate: '2024-01-01'
+          endDate: '2024-01-02'
+          startTime: 120
+          endTime: 180
+          note: Vehicle is being serviced for a discrete time period (02:00 on 1st January until 02:30 on 2nd January)
+        - downtimeId: downtime-2
+          vehicleId: vehicle-2
+          startDate: '2024-01-03'
+          startTime: 360
+          note: Vehicle is being serviced starting at 06:00 on 3rd January, and the downtime is ongoing indefinitely
+        - downtimeId: downtime-3
+          vehicleId: vehicle-3
+          startDate: '2024-01-04'
+          endDate: '2024-01-05'
+          note: Vehicle is being serviced all day on the 4th and 5th January
+        pagination:
+          currentPage: 1
+          nextPage: 2
+          totalPages: 2
+    PutVehiclesDowntimesErrorTypes:
+      type: string
+      enum:
+      - tooManyItems
+      - noItems
+      - invalidFieldContent
+      - vehiclesNotFound
+      - conflictProcessingRequest
+    StringifyDate:
+      type: string
+      format: date
+      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
+    SchemaValidationErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
+    GetVehiclesDowntimesErrorTypes:
+      type: string
+      enum:
+      - invalidDatesCombination
+      - pageNotFound
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: Authorization
+      in: header
+x-tagGroups:
+- name: General API Info
+  tags:
+  - Authentication
+  - Versioning
+- name: Use case guides
+  tags:
+  - HR System Integration Guides
+  - Fleet Management System Integration Guides
+  - Operational Plan Query Guides
+  - Custom Driver App Notification Action Guide
+- name: Client preferences
+  tags:
+  - Preferences
+- name: Resource Management
+  tags:
+  - Regions
+  - Drivers
+  - Driver Absences
+  - Driver Employment Periods
+  - Driver Custom Attributes
+  - Driver Groups
+  - Vehicles
+  - Vehicle Downtimes
+  - Vehicle Custom Attributes
+- name: Operations Management
+  tags:
+  - Roster
+  - Operational Plan
+  - Tasks
+  - Stops
+  - Signing Times
+- name: Work & Payroll
+  tags:
+  - Work Entities
+  - Payroll
+  - Statistics
+- name: Private Hires
+  tags:
+  - Private Hires
+- name: Driver App Integration
+  tags:
+  - Driver App Notifications
+- name: Event Webhooks
+  tags:
+  - Event Webhooks
+- name: Data Ingestion
+  tags:
+  - Tacho Ingestion
+- name: Deprecated API Endpoints
+  tags:
+  - Drivers (Deprecated)
+  - Vehicles (Deprecated)
+  - Operational Plan (Deprecated)
+- name: Changelog
+  tags:
+  - Changelog

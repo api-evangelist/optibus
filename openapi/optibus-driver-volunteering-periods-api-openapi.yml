@@ -1,0 +1,391 @@
+openapi: 3.0.0
+info:
+  title: Optibus Operations Driver Absences Driver Volunteering Periods API
+  version: 2.8.17
+  description: '**Welcome to the Optibus Operations API documentation!**
+
+
+    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.
+
+
+
+    '
+  license:
+    name: Optibus Ltd, All rights reserved
+  contact: {}
+servers:
+- url: https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co
+  description: Contact your Optibus Customer Success Manager for the actual baseURL and API credentials to use.
+tags:
+- name: Driver Volunteering Periods
+  description: API endpoints for fetching volunteering periods for drivers - i.e. periods where a driver is willing to volunteer for extra work, such as on a rest day or for overtime.
+paths:
+  /v1/drivers/volunteering-periods:
+    get:
+      operationId: GetVolunteeringPeriods
+      responses:
+        '200':
+          description: Driver volunteering periods fetched successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetVolunteeringPeriodsSuccessfulResponse'
+        '400':
+          description: 'Possible error types: `Invalid request schema` (schema of your request does not match the specification), `invalidDatesCombination` (the combination of fromDate and toDate is invalid)'
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/GetVolunteeringPeriodsErrorResponse'
+                - $ref: '#/components/schemas/SchemaValidationErrorResponse'
+        '404':
+          description: 'Possible error types: `pageNotFound` (requested page number is out of range; details.totalPages indicates the number of pages available)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetVolunteeringPeriodsErrorResponse'
+      description: 'List existing driver volunteering periods in the system, with optional filtering capability.
+
+
+        Notes:
+
+        - The result is paginated. Check the `pagination` property in the response to see the total number of pages and the current page number.
+
+        - A volunteering period matches the date-range filter when it overlaps the `[fromDate, toDate]` window.
+
+        - The time range (`startTime`, `endTime`, `timePeriodCode`) is either fully present or all `null` for a given period.'
+      summary: List driver volunteering periods
+      tags:
+      - Driver Volunteering Periods
+      security:
+      - api_key: []
+      parameters:
+      - description: '- Comma-separated list of driver IDs to filter for'
+        in: query
+        name: driverIds
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - description: '- Date string formatted as `YYYY-MM-dd`. Only volunteering periods that end on or after this date are returned.'
+        in: query
+        name: fromDate
+        required: false
+        schema:
+          $ref: '#/components/schemas/StringifyDate'
+      - description: '- Date string formatted as `YYYY-MM-dd`. Only volunteering periods that start on or before this date are returned.'
+        in: query
+        name: toDate
+        required: false
+        schema:
+          $ref: '#/components/schemas/StringifyDate'
+      - description: '- 1-indexed integer indicating which page of results to pull'
+        in: query
+        name: page
+        required: false
+        schema:
+          $ref: '#/components/schemas/PageNumber'
+components:
+  schemas:
+    TypedApiErrorResponse_Invalidrequestschema_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_Invalidrequestschema_'
+      required:
+      - error
+      type: object
+    MinutesFromMidnightTime:
+      type: integer
+      format: int32
+      description: Wall clock time, represented as minutes since midnight. For example, `0` is midnight (start of the day), `120` is 02:00 (2 hours after midnight), `180` is 02:30 (2.5 hours after midnight), `1560` is 02:00 the _next day_ (26 hours after midnight), etc.
+    UUID:
+      type: string
+      description: Stringified ID for a resource. Cannot exceed 36 characters.
+    TypedErrorResponse_Invalidrequestschema_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - Invalid request schema
+          nullable: false
+      required:
+      - message
+      - type
+      type: object
+    Pagination:
+      properties:
+        totalPages:
+          $ref: '#/components/schemas/Integer'
+          description: Total number of pages.
+        nextPage:
+          $ref: '#/components/schemas/PageNumber'
+          description: Next page number (1-indexed). If undefined, there is no next page.
+        currentPage:
+          $ref: '#/components/schemas/PageNumber'
+          description: Current page number (1-indexed).
+      required:
+      - totalPages
+      - currentPage
+      type: object
+      description: 'Metadata about the pagination of a list of items. When a list of items is too large to be returned in a single response, it is split into multiple pages.
+
+        This object informs you about the current page, the next page, and the total number of pages.'
+    PageNumber:
+      $ref: '#/components/schemas/Integer'
+      description: Page number (1-indexed). Defaults to 1.
+      minimum: 1
+    DriverVolunteerPeriodBase:
+      properties:
+        daysOfWeek:
+          items:
+            $ref: '#/components/schemas/WeekDay'
+          type: array
+          description: 'The days of the week when this volunteer period applies
+
+            If not present, the volunteer period applies to all days of the week'
+        createdAt:
+          $ref: '#/components/schemas/StringifyDateTime'
+          description: The timestamp of when the driver originally volunteered to do the work
+        volunteerType:
+          $ref: '#/components/schemas/VolunteerType'
+          description: What is type of volunteer work is the driver agreeing to?
+        note:
+          type: string
+          description: The note provided by the user
+        endDate:
+          $ref: '#/components/schemas/StringifyDate'
+          description: The volunteer period end date
+        startDate:
+          $ref: '#/components/schemas/StringifyDate'
+          description: The volunteer period start date.
+        driverId:
+          $ref: '#/components/schemas/UUID'
+          description: The ID of the driver that is willing to volunteer
+        id:
+          $ref: '#/components/schemas/UUID'
+      required:
+      - createdAt
+      - volunteerType
+      - endDate
+      - startDate
+      - driverId
+      - id
+      type: object
+      description: 'Base properties for a volunteer period
+
+        A volunteer period is a period that the driver is willing to volunteer for.
+
+        It can volunteering on a rest day or overtime (volunteering on an absence is not supported yet).
+
+        It can be a single day or a range of days.'
+    WeekDay:
+      enum:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      type: number
+    DriverVolunteerPeriodTimeRange:
+      properties:
+        timePeriodCode:
+          type: string
+          description: The code will be used for WE purposes and to retrieve the name from the preference store (as the name is editable)
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+          description: 'The end time in minutes from midnight (this applies separately to every date during the volunteer period.)
+
+            Without end time the volunteer period is until the end of the operational day'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+          description: 'The start time in minutes from midnight (this applies separately to every date during the volunteer period).
+
+            Without start time the volunteer period is form the start of the operational day'
+      required:
+      - timePeriodCode
+      - endTime
+      - startTime
+      type: object
+    GetVolunteeringPeriodsSuccessfulResponse:
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+          description: Pagination metadata
+        volunteeringPeriods:
+          items:
+            $ref: '#/components/schemas/DriverVolunteerPeriod'
+          type: array
+          description: Array of driver volunteering periods
+      required:
+      - pagination
+      - volunteeringPeriods
+      type: object
+      example:
+        pagination:
+          currentPage: 1
+          nextPage: 2
+          totalPages: 10
+        volunteeringPeriods:
+        - id: vp-123
+          driverId: driver-334
+          startDate: '2026-01-03'
+          endDate: '2026-01-05'
+          volunteerType: rest_day
+          createdAt: '2025-12-01 09:00:00'
+          startTime: 360
+          endTime: 720
+          timePeriodCode: morning
+        - id: vp-456
+          driverId: driver-334
+          startDate: '2026-02-01'
+          endDate: '2026-02-01'
+          volunteerType: overtime
+          createdAt: '2026-01-15 12:30:00'
+          startTime: null
+          endTime: null
+          timePeriodCode: null
+      description: Paginated response containing driver volunteering periods
+    TypedErrorResponse_GetVolunteeringPeriodsErrorTypes_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/GetVolunteeringPeriodsErrorTypes'
+      required:
+      - message
+      - type
+      type: object
+    PartialRecord_keyofDriverVolunteerPeriodTimeRange.null_:
+      $ref: '#/components/schemas/Partial_Record_keyofDriverVolunteerPeriodTimeRange.null__'
+    Integer:
+      type: integer
+      format: int32
+    VolunteerType:
+      enum:
+      - rest_day
+      - absence
+      - overtime
+      type: string
+    GetVolunteeringPeriodsErrorTypes:
+      type: string
+      enum:
+      - invalidDatesCombination
+      - pageNotFound
+    GetVolunteeringPeriodsErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_GetVolunteeringPeriodsErrorTypes_'
+    Partial_Record_keyofDriverVolunteerPeriodTimeRange.null__:
+      properties:
+        startTime:
+          type: number
+          enum:
+          - null
+          nullable: true
+        endTime:
+          type: number
+          enum:
+          - null
+          nullable: true
+        timePeriodCode:
+          type: number
+          enum:
+          - null
+          nullable: true
+      type: object
+      description: Make all properties in T optional
+    StringifyDate:
+      type: string
+      format: date
+      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
+    SchemaValidationErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
+    TypedApiErrorResponse_GetVolunteeringPeriodsErrorTypes_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_GetVolunteeringPeriodsErrorTypes_'
+      required:
+      - error
+      type: object
+    StringifyDateTime:
+      type: string
+      format: date-time
+      description: 'Stringified date-time.
+
+        date-time notation as defined by [RFC 3339](https://tools.ietf.org/html/rfc3339#section-5.6), section 5.6, for example,2017-07-21T17:32:28Z'
+    DriverVolunteerPeriod:
+      allOf:
+      - $ref: '#/components/schemas/DriverVolunteerPeriodBase'
+      - anyOf:
+        - $ref: '#/components/schemas/DriverVolunteerPeriodTimeRange'
+        - $ref: '#/components/schemas/PartialRecord_keyofDriverVolunteerPeriodTimeRange.null_'
+      description: 'A volunteer period can have a time period which will include a start time, end time and a code.
+
+        Either all properties (startTime, endTime, timePeriodCode) are present or none of them.'
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: Authorization
+      in: header
+x-tagGroups:
+- name: General API Info
+  tags:
+  - Authentication
+  - Versioning
+- name: Use case guides
+  tags:
+  - HR System Integration Guides
+  - Fleet Management System Integration Guides
+  - Operational Plan Query Guides
+  - Custom Driver App Notification Action Guide
+- name: Client preferences
+  tags:
+  - Preferences
+- name: Resource Management
+  tags:
+  - Regions
+  - Drivers
+  - Driver Absences
+  - Driver Employment Periods
+  - Driver Custom Attributes
+  - Driver Groups
+  - Vehicles
+  - Vehicle Downtimes
+  - Vehicle Custom Attributes
+- name: Operations Management
+  tags:
+  - Roster
+  - Operational Plan
+  - Tasks
+  - Stops
+  - Signing Times
+- name: Work & Payroll
+  tags:
+  - Work Entities
+  - Payroll
+  - Statistics
+- name: Private Hires
+  tags:
+  - Private Hires
+- name: Driver App Integration
+  tags:
+  - Driver App Notifications
+- name: Event Webhooks
+  tags:
+  - Event Webhooks
+- name: Data Ingestion
+  tags:
+  - Tacho Ingestion
+- name: Deprecated API Endpoints
+  tags:
+  - Drivers (Deprecated)
+  - Vehicles (Deprecated)
+  - Operational Plan (Deprecated)
+- name: Changelog
+  tags:
+  - Changelog

@@ -1,0 +1,672 @@
+openapi: 3.0.0
+info:
+  title: Optibus Operations Driver Absences Roster API
+  version: 2.8.17
+  description: '**Welcome to the Optibus Operations API documentation!**
+
+
+    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.
+
+
+
+    '
+  license:
+    name: Optibus Ltd, All rights reserved
+  contact: {}
+servers:
+- url: https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co
+  description: Contact your Optibus Customer Success Manager for the actual baseURL and API credentials to use.
+tags:
+- name: Roster
+  description: A roster describes the daily operator runs grouped into packages of (repeating) weekly work assignments.
+paths:
+  /roster:
+    get:
+      operationId: GetRoster
+      responses:
+        '200':
+          description: Roster data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRosterResponse'
+        '404':
+          description: Roster not found
+      description: Returns the roster information by roster ID.
+      summary: Fetch roster
+      tags:
+      - Roster
+      security:
+      - api_key: []
+      parameters:
+      - description: '- The roster ID to retrieve.'
+        in: query
+        name: rosterId
+        required: true
+        schema:
+          $ref: '#/components/schemas/UUID'
+      - description: '- Get the roster information for a specific date'
+        in: query
+        name: operationalDay
+        required: false
+        schema:
+          $ref: '#/components/schemas/StringifyDate'
+components:
+  schemas:
+    ReliefCarEventsTypes:
+      enum:
+      - relief_car_passenger
+      - relief_car_driver
+      type: string
+    RosterAssignments:
+      properties:
+        taskId:
+          type: string
+        assignmentType:
+          $ref: '#/components/schemas/RosterAssignmentType'
+        dayIndex:
+          type: number
+          format: double
+        weekIndex:
+          type: number
+          format: double
+        lineId:
+          $ref: '#/components/schemas/UUID'
+      required:
+      - assignmentType
+      - dayIndex
+      - weekIndex
+      - lineId
+      type: object
+    MinutesFromMidnightTime:
+      type: integer
+      format: int32
+      description: Wall clock time, represented as minutes since midnight. For example, `0` is midnight (start of the day), `120` is 02:00 (2 hours after midnight), `180` is 02:30 (2.5 hours after midnight), `1560` is 02:00 the _next day_ (26 hours after midnight), etc.
+    StandbySummary:
+      properties:
+        referenceStandbyType:
+          type: string
+        isCustom:
+          type: boolean
+        paidTime:
+          type: number
+          format: double
+        splits:
+          items:
+            properties:
+              endTime:
+                $ref: '#/components/schemas/MinutesFromMidnightTime'
+              startTime:
+                $ref: '#/components/schemas/MinutesFromMidnightTime'
+            required:
+            - endTime
+            - startTime
+            type: object
+          type: array
+        type:
+          type: string
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+          deprecated: true
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+          deprecated: true
+      required:
+      - type
+      - endTime
+      - startTime
+      type: object
+    Spare:
+      allOf:
+      - $ref: '#/components/schemas/Omit_RosterTimedTask.startTime-or-endTime_'
+      - properties:
+          summary:
+            $ref: '#/components/schemas/SpareSummary'
+          type:
+            $ref: '#/components/schemas/RosterTaskType.Spare'
+          displayId:
+            type: string
+        required:
+        - summary
+        - type
+        - displayId
+        type: object
+    CustomScheduleEventsTypes:
+      description: Duty schedule only custom event, vehicle does not move between stops
+      enum:
+      - standby
+      - technical_break
+      - meeting
+      - training
+      - non_revenue
+      - light_duty_hours
+      - behind_the_wheel_hours
+      type: string
+    UUID:
+      type: string
+      description: Stringified ID for a resource. Cannot exceed 36 characters.
+    RosterTaskType.Standby:
+      enum:
+      - Standby
+      type: string
+    RosterAssignmentType:
+      enum:
+      - Task
+      - DayOff
+      - Standby
+      - Spare
+      type: string
+    RosterTimedTask:
+      allOf:
+      - $ref: '#/components/schemas/BaseRosterTask'
+      - properties:
+          extraData: {}
+          paidTime:
+            $ref: '#/components/schemas/Minutes'
+          endTime:
+            $ref: '#/components/schemas/MinutesFromMidnightTime'
+          startTime:
+            $ref: '#/components/schemas/MinutesFromMidnightTime'
+        required:
+        - extraData
+        - paidTime
+        - endTime
+        - startTime
+        type: object
+    SpareSummary:
+      properties:
+        endTime:
+          type: number
+          format: double
+        startTime:
+          type: number
+          format: double
+        paidTime:
+          type: number
+          format: double
+        type:
+          type: string
+      required:
+      - type
+      type: object
+    BaseRosterTask:
+      properties:
+        type:
+          $ref: '#/components/schemas/RosterTaskType'
+        name:
+          type: string
+        id:
+          $ref: '#/components/schemas/UUID'
+      required:
+      - type
+      - name
+      - id
+      type: object
+    Block:
+      properties:
+        blockData: {}
+        summary:
+          $ref: '#/components/schemas/BlockSummary'
+        events:
+          items:
+            $ref: '#/components/schemas/UUID'
+          type: array
+        displayId:
+          type: string
+        id:
+          $ref: '#/components/schemas/UUID'
+      required:
+      - blockData
+      - summary
+      - events
+      - displayId
+      - id
+      type: object
+    RosterStartDay:
+      type: number
+      enum:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+    RosterData:
+      properties:
+        importMode:
+          type: string
+          enum:
+          - roster
+          - undefined
+        depotId:
+          type: string
+        createdBy:
+          type: string
+        createdAt:
+          $ref: '#/components/schemas/StringifyDateTime'
+        rotating:
+          $ref: '#/components/schemas/RosterRotating'
+        daysInWeek:
+          $ref: '#/components/schemas/Integer'
+        numberOfWeeks:
+          $ref: '#/components/schemas/Integer'
+        startDay:
+          $ref: '#/components/schemas/RosterStartDay'
+        importName:
+          $ref: '#/components/schemas/UUID'
+        importId:
+          $ref: '#/components/schemas/UUID'
+        group:
+          type: string
+        rosterDatasetId:
+          type: string
+        rosterSourceId:
+          type: string
+        id:
+          $ref: '#/components/schemas/UUID'
+      required:
+      - depotId
+      - createdBy
+      - createdAt
+      - rotating
+      - daysInWeek
+      - numberOfWeeks
+      - startDay
+      - importName
+      - importId
+      - group
+      - rosterDatasetId
+      - rosterSourceId
+      - id
+      type: object
+    RosterInfo:
+      properties:
+        stops:
+          items:
+            $ref: '#/components/schemas/Stop'
+          type: array
+        assignmentsInfo:
+          items:
+            $ref: '#/components/schemas/RosterAssignments'
+          type: array
+        lineInfo:
+          items:
+            $ref: '#/components/schemas/RosterLine'
+          type: array
+        events:
+          items:
+            $ref: '#/components/schemas/GenericRosterEvent'
+          type: array
+        blocks:
+          items:
+            $ref: '#/components/schemas/Block'
+          type: array
+        tasks:
+          items:
+            $ref: '#/components/schemas/Task'
+          type: array
+        rosterDataInfo:
+          $ref: '#/components/schemas/RosterData'
+      required:
+      - stops
+      - assignmentsInfo
+      - lineInfo
+      - events
+      - blocks
+      - tasks
+      - rosterDataInfo
+      type: object
+    RosterLine:
+      properties:
+        order:
+          type: number
+          format: double
+        lineDisplayId:
+          type: string
+        lineId:
+          $ref: '#/components/schemas/UUID'
+      required:
+      - order
+      - lineDisplayId
+      - lineId
+      type: object
+    Omit_RosterTimedTask.startTime-or-endTime_:
+      $ref: '#/components/schemas/Pick_RosterTimedTask.Exclude_keyofRosterTimedTask.startTime-or-endTime__'
+      description: Construct a type with the properties of T except for those in type K.
+    Standby:
+      allOf:
+      - $ref: '#/components/schemas/RosterTimedTask'
+      - properties:
+          summary:
+            $ref: '#/components/schemas/StandbySummary'
+          type:
+            $ref: '#/components/schemas/RosterTaskType.Standby'
+          displayId:
+            type: string
+        required:
+        - summary
+        - type
+        - displayId
+        type: object
+    RosterTaskType.Spare:
+      enum:
+      - Spare
+      type: string
+    BlockSummary:
+      properties:
+        serviceId:
+          type: string
+        timeplanId:
+          type: string
+        scheduleDatasetId:
+          type: string
+          description: This is actually the schedule ID (as found in the scheduling URL). It is not the schedule dataset ID
+        rosterDatasetId:
+          type: string
+        rosterSourceId:
+          type: string
+        type:
+          type: string
+      required:
+      - type
+      type: object
+    Duty:
+      allOf:
+      - $ref: '#/components/schemas/RosterTimedTask'
+      - properties:
+          summary:
+            $ref: '#/components/schemas/DutySummary'
+          events:
+            items:
+              $ref: '#/components/schemas/UUID'
+            type: array
+          type:
+            $ref: '#/components/schemas/RosterTaskType.Duty'
+          displayId:
+            type: string
+        required:
+        - summary
+        - events
+        - type
+        - displayId
+        type: object
+    Task:
+      anyOf:
+      - $ref: '#/components/schemas/Duty'
+      - $ref: '#/components/schemas/Standby'
+      - $ref: '#/components/schemas/Spare'
+      - $ref: '#/components/schemas/BaseRosterTask'
+    OnScheduleEventsTypes:
+      enum:
+      - service_trip
+      - sub_trip
+      - deadhead
+      - sign_on
+      - sign_off
+      - split
+      - pre_trip
+      - post_trip
+      - attendance
+      - custom
+      - refuels
+      - recharge
+      - other_travels
+      - taxi
+      - walk
+      - relief_cars
+      - public_travel
+      - break
+      - other
+      type: string
+    Minutes:
+      type: integer
+      format: int32
+      description: time measure in minutes
+    Stop:
+      properties:
+        shortDescription:
+          type: string
+          description: A description of the stop. For example, "Albany Road Camberwell Road (Stop R)"
+        long:
+          type: number
+          format: double
+        lat:
+          type: number
+          format: double
+        stopId:
+          type: string
+      required:
+      - shortDescription
+      - stopId
+      type: object
+    DutySummary:
+      allOf:
+      - properties:
+          scheduleName:
+            type: string
+          scheduleLink:
+            type: string
+          serviceName:
+            type: string
+          serviceId:
+            type: string
+          timeplanId:
+            type: string
+          scheduleDatasetId:
+            type: string
+            description: This is actually the schedule ID (as found in the scheduling URL). It is not the schedule dataset ID
+          rosterDatasetId:
+            type: string
+          rosterSourceId:
+            type: string
+          splits:
+            items:
+              $ref: '#/components/schemas/DutySplit'
+            type: array
+          blockTypes:
+            items:
+              type: string
+            type: array
+            deprecated: true
+          blocks:
+            items:
+              type: string
+            type: array
+            deprecated: true
+          routes:
+            items:
+              type: string
+            type: array
+          paidTime:
+            $ref: '#/components/schemas/Minutes'
+          destinationDepot:
+            type: string
+          destinationStop:
+            type: string
+          originDepot:
+            type: string
+          originStop:
+            type: string
+          spreadTime:
+            $ref: '#/components/schemas/Minutes'
+          workTime:
+            $ref: '#/components/schemas/Minutes'
+          type:
+            type: string
+          endTime:
+            $ref: '#/components/schemas/MinutesFromMidnightTime'
+            deprecated: true
+          startTime:
+            $ref: '#/components/schemas/MinutesFromMidnightTime'
+            deprecated: true
+        required:
+        - type
+        - endTime
+        - startTime
+        type: object
+      - properties: {}
+        additionalProperties: {}
+        type: object
+    DutySplit:
+      properties:
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - endTime
+      - startTime
+      type: object
+    Integer:
+      type: integer
+      format: int32
+    RosterTaskType.Duty:
+      enum:
+      - Duty
+      type: string
+    RosterTaskType:
+      enum:
+      - Duty
+      - Standby
+      - Spare
+      - DayOff
+      - Unassigned
+      type: string
+    RosterRotating:
+      enum:
+      - Static
+      - Up
+      - Down
+      type: string
+    GenericRosterEvent:
+      allOf:
+      - properties:
+          type:
+            $ref: '#/components/schemas/ScheduleEventsType'
+          id:
+            $ref: '#/components/schemas/UUID'
+        required:
+        - type
+        - id
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_unknown_'
+    StringifyDate:
+      type: string
+      format: date
+      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
+    OtherEventTypes:
+      enum:
+      - depot_pull_in
+      - depot_pull_out
+      - reinforcement_trip
+      - private_hire
+      type: string
+    GenericRosterEventProps_unknown_:
+      properties:
+        eventJsonData: {}
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - eventJsonData
+      - endTime
+      - startTime
+      type: object
+    StringifyDateTime:
+      type: string
+      format: date-time
+      description: 'Stringified date-time.
+
+        date-time notation as defined by [RFC 3339](https://tools.ietf.org/html/rfc3339#section-5.6), section 5.6, for example,2017-07-21T17:32:28Z'
+    Pick_RosterTimedTask.Exclude_keyofRosterTimedTask.startTime-or-endTime__:
+      properties:
+        id:
+          type: string
+        type:
+          $ref: '#/components/schemas/RosterTaskType'
+        name:
+          type: string
+        paidTime:
+          type: number
+          format: double
+        extraData: {}
+      required:
+      - id
+      - type
+      - name
+      - paidTime
+      - extraData
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
+    GetRosterResponse:
+      $ref: '#/components/schemas/RosterInfo'
+    ScheduleEventsType:
+      anyOf:
+      - $ref: '#/components/schemas/CustomScheduleEventsTypes'
+      - $ref: '#/components/schemas/OnScheduleEventsTypes'
+      - $ref: '#/components/schemas/OtherEventTypes'
+      - $ref: '#/components/schemas/ReliefCarEventsTypes'
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: Authorization
+      in: header
+x-tagGroups:
+- name: General API Info
+  tags:
+  - Authentication
+  - Versioning
+- name: Use case guides
+  tags:
+  - HR System Integration Guides
+  - Fleet Management System Integration Guides
+  - Operational Plan Query Guides
+  - Custom Driver App Notification Action Guide
+- name: Client preferences
+  tags:
+  - Preferences
+- name: Resource Management
+  tags:
+  - Regions
+  - Drivers
+  - Driver Absences
+  - Driver Employment Periods
+  - Driver Custom Attributes
+  - Driver Groups
+  - Vehicles
+  - Vehicle Downtimes
+  - Vehicle Custom Attributes
+- name: Operations Management
+  tags:
+  - Roster
+  - Operational Plan
+  - Tasks
+  - Stops
+  - Signing Times
+- name: Work & Payroll
+  tags:
+  - Work Entities
+  - Payroll
+  - Statistics
+- name: Private Hires
+  tags:
+  - Private Hires
+- name: Driver App Integration
+  tags:
+  - Driver App Notifications
+- name: Event Webhooks
+  tags:
+  - Event Webhooks
+- name: Data Ingestion
+  tags:
+  - Tacho Ingestion
+- name: Deprecated API Endpoints
+  tags:
+  - Drivers (Deprecated)
+  - Vehicles (Deprecated)
+  - Operational Plan (Deprecated)
+- name: Changelog
+  tags:
+  - Changelog

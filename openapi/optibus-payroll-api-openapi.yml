@@ -1,0 +1,265 @@
+openapi: 3.0.0
+info:
+  title: Optibus Operations Driver Absences Payroll API
+  version: 2.8.17
+  description: '**Welcome to the Optibus Operations API documentation!**
+
+
+    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.
+
+
+
+    '
+  license:
+    name: Optibus Ltd, All rights reserved
+  contact: {}
+servers:
+- url: https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co
+  description: Contact your Optibus Customer Success Manager for the actual baseURL and API credentials to use.
+tags:
+- name: Payroll
+paths:
+  /v2/payroll:
+    get:
+      operationId: GetPayroll
+      responses:
+        '200':
+          description: Payroll information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPayrollV2Response'
+        '413':
+          description: The request is too long. Please reduce the number of drivers or days.
+      description: 'Retrieves payroll values for depots within a specified date range and for specified driver IDs or by depotId.
+
+        There is a limit of 204k work-entities calculation per request to avoid timeouts. This limit enables, for example,
+
+        a calculation of 100 drivers for 30 days with 100 daily work-entities defined. In case the limit is exceeded, a 413 error code will be returned, together with the allowed amount of drivers for the existing configuration.
+
+
+        This endpoint is only available if the `Use Payroll V2` feature flag is enabled and work-entity as well as payroll rules have been properly setup.'
+      summary: Fetch payroll
+      tags:
+      - Payroll
+      security:
+      - api_key: []
+      parameters:
+      - description: '- Optional. The ID of a specific depot for which payroll is to be retrieved.'
+        in: query
+        name: depotId
+        required: false
+        schema:
+          type: string
+      - description: '- Optional. An array of driver IDs for whom payroll is to be retrieved.'
+        in: query
+        name: driverIds
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - description: '- The start date of the payroll period'
+        in: query
+        name: startDate
+        required: false
+        schema:
+          $ref: '#/components/schemas/StringifyDate'
+      - description: '- The end date of the payroll period'
+        in: query
+        name: endDate
+        required: false
+        schema:
+          $ref: '#/components/schemas/StringifyDate'
+      - description: '- Optional. An array of paycodes to filter the payroll values by. If not provided, all paycodes are returned.'
+        in: query
+        name: paycodes
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/CodeId'
+      - description: '- Optional. Will attempt to retreive the data from the cache if true. If false, will always calculate the data.'
+        in: query
+        name: shouldUseCache
+        required: false
+        schema:
+          type: boolean
+components:
+  schemas:
+    CycleTypeWithDaily:
+      anyOf:
+      - $ref: '#/components/schemas/CycleType'
+      - type: string
+        enum:
+        - daily
+    CycleType:
+      enum:
+      - weekly
+      - biWeekly
+      - monthly
+      type: string
+    GetPayrollV2Response:
+      items:
+        $ref: '#/components/schemas/PayrollV2External'
+      type: array
+    ISOWithTimeDate:
+      type: string
+      format: date
+      description: Stringified ISO8601 date in the form of 2017-07-21T23:59:00+03:00
+    StringifyDate:
+      type: string
+      format: date
+      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
+    WorkEntityId:
+      type: string
+    DepotId:
+      $ref: '#/components/schemas/UUID'
+      description: The depot unique identifier in the Ops system.
+    DriverUuid:
+      $ref: '#/components/schemas/UUID'
+      description: The driver unique identifier in the Ops system (not the driver personal id)
+    PayrollV2External:
+      properties:
+        occurrenceDates:
+          properties:
+            endDate:
+              $ref: '#/components/schemas/StringifyDate'
+            startDate:
+              $ref: '#/components/schemas/StringifyDate'
+          required:
+          - endDate
+          - startDate
+          type: object
+        result:
+          properties:
+            timeIntervals:
+              $ref: '#/components/schemas/ApiTimeInterval'
+            value:
+              type: number
+              format: double
+            rate:
+              type: number
+              format: double
+            unit:
+              $ref: '#/components/schemas/TimeUnit'
+          required:
+          - value
+          - rate
+          - unit
+          type: object
+        periodType:
+          $ref: '#/components/schemas/CycleTypeWithDaily'
+        workEntityIdReference:
+          $ref: '#/components/schemas/WorkEntityId'
+        codeId:
+          $ref: '#/components/schemas/CodeId'
+        workingDriver:
+          $ref: '#/components/schemas/WorkingDriver'
+        depotId:
+          $ref: '#/components/schemas/DepotId'
+      required:
+      - occurrenceDates
+      - result
+      - periodType
+      - workEntityIdReference
+      - codeId
+      - workingDriver
+      - depotId
+      type: object
+    ApiTimeInterval:
+      items:
+        properties:
+          end:
+            $ref: '#/components/schemas/ISOWithTimeDate'
+          start:
+            $ref: '#/components/schemas/ISOWithTimeDate'
+        required:
+        - end
+        - start
+        type: object
+      type: array
+    UUID:
+      type: string
+      description: Stringified ID for a resource. Cannot exceed 36 characters.
+    CodeId:
+      type: string
+    WorkingDriver:
+      properties:
+        driverExternalId:
+          type: string
+        driverUuid:
+          $ref: '#/components/schemas/DriverUuid'
+      required:
+      - driverExternalId
+      - driverUuid
+      type: object
+    TimeUnit:
+      enum:
+      - Minutes
+      - Hours
+      - Days
+      - Number
+      type: string
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: Authorization
+      in: header
+x-tagGroups:
+- name: General API Info
+  tags:
+  - Authentication
+  - Versioning
+- name: Use case guides
+  tags:
+  - HR System Integration Guides
+  - Fleet Management System Integration Guides
+  - Operational Plan Query Guides
+  - Custom Driver App Notification Action Guide
+- name: Client preferences
+  tags:
+  - Preferences
+- name: Resource Management
+  tags:
+  - Regions
+  - Drivers
+  - Driver Absences
+  - Driver Employment Periods
+  - Driver Custom Attributes
+  - Driver Groups
+  - Vehicles
+  - Vehicle Downtimes
+  - Vehicle Custom Attributes
+- name: Operations Management
+  tags:
+  - Roster
+  - Operational Plan
+  - Tasks
+  - Stops
+  - Signing Times
+- name: Work & Payroll
+  tags:
+  - Work Entities
+  - Payroll
+  - Statistics
+- name: Private Hires
+  tags:
+  - Private Hires
+- name: Driver App Integration
+  tags:
+  - Driver App Notifications
+- name: Event Webhooks
+  tags:
+  - Event Webhooks
+- name: Data Ingestion
+  tags:
+  - Tacho Ingestion
+- name: Deprecated API Endpoints
+  tags:
+  - Drivers (Deprecated)
+  - Vehicles (Deprecated)
+  - Operational Plan (Deprecated)
+- name: Changelog
+  tags:
+  - Changelog

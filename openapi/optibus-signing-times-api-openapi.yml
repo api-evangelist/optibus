@@ -1,0 +1,412 @@
+openapi: 3.0.0
+info:
+  title: Optibus Operations Driver Absences Signing Times API
+  version: 2.8.17
+  description: '**Welcome to the Optibus Operations API documentation!**
+
+
+    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.
+
+
+
+    '
+  license:
+    name: Optibus Ltd, All rights reserved
+  contact: {}
+servers:
+- url: https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co
+  description: Contact your Optibus Customer Success Manager for the actual baseURL and API credentials to use.
+tags:
+- name: Signing Times
+  description: API endpoints for fetching sign-on/off times & deviations for drivers - i.e. the actual and expected sign-on and sign-off times for a driver and how much they deviate from each other.
+paths:
+  /v2/signing-times:
+    get:
+      operationId: GetSigningTimesV2
+      responses:
+        '200':
+          description: Signing times fetched successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSigningTimesV2SuccessfulResponse'
+        '400':
+          description: 'Possible error types: `Invalid request schema` (schema of your request does not match the specification — e.g. `date` or `regionName` not supplied, or `date` is not a valid `YYYY-MM-DD` date)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchemaValidationErrorResponse'
+        '404':
+          description: 'Possible error types: `pageNotFound` (requested page number is out of range; details.totalPages indicates the number of pages available)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSigningTimesV2ErrorResponse'
+      description: 'Returns matched expected/actual sign-on and sign-off times for drivers on a given date in a region.
+
+
+        Notes:
+
+        - The result is paginated by driver, 100 drivers per page. Check the `pagination` property in the response for total pages.
+
+        - A driver appears in the response if their main or loaned region is the requested region on the date, regardless of whether they have a calendar task. Drivers without any tasks or actual signings on the date appear with `signingTimes: []`.
+
+        - Orphaned signings (for example, an actual sign-on left behind after a previously-assigned task was unassigned or sign-on/off task-event was deleted) still appear here as entries with `orphaned: true`. If the original expected time is known, it will still be returned; otherwise `expectedTime` will be `null`.
+
+        - `regionName` must match the name of a region returned by `GET /v1/regions`. An unknown region returns an empty result (no error).
+
+        - Driver IDs in the response are the same external driver IDs accepted by `GET /v2/drivers` and other v2 endpoints.'
+      summary: List driver signing times for a date in a region
+      tags:
+      - Signing Times
+      security:
+      - api_key: []
+      parameters:
+      - description: '- Operational date in `YYYY-MM-dd` format.'
+        in: query
+        name: date
+        required: true
+        schema:
+          $ref: '#/components/schemas/StringifyDate'
+      - description: '- Name of the region for which to return signing times.'
+        in: query
+        name: regionName
+        required: true
+        schema:
+          type: string
+      - description: '- Comma-separated list of driver IDs to further narrow the result. Only drivers whose main or loaned region is the requested region on the date are eligible regardless of this filter.'
+        in: query
+        name: driverIds
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - description: '- 1-indexed integer indicating which page of results to pull. Defaults to 1.'
+        in: query
+        name: page
+        required: false
+        schema:
+          $ref: '#/components/schemas/PageNumber'
+  /v1/drivers/signing-deviations:
+    get:
+      operationId: GetDriversSigningDeviations
+      responses:
+        '200':
+          description: Drivers signing deviations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSigningDeviationsResponse'
+        '400':
+          description: End date cannot be before start date
+        '422':
+          description: Signing deviations validation rules are not defined for this customer
+      description: 'Calculate the signing deviations for the drivers in the given date range and region. ''Signing deviations'' refer to the difference between
+
+        the actual and expected sign-on and sign-off times for a driver. The expected times are calculated based on the driver''s assigned work.
+
+
+        Deviation might be classified either early or late, calculated according to a defined threshold.'
+      summary: Fetch signing deviations
+      tags:
+      - Signing Times
+      security:
+      - api_key: []
+      parameters:
+      - description: The start of the date range to get the signing deviations from
+        in: query
+        name: from
+        required: true
+        schema:
+          $ref: '#/components/schemas/StringifyDate'
+      - description: The end of the date range to get the signing deviations from
+        in: query
+        name: to
+        required: true
+        schema:
+          $ref: '#/components/schemas/StringifyDate'
+      - description: The region to get the signing deviations from
+        in: query
+        name: regionUuid
+        required: true
+        schema:
+          $ref: '#/components/schemas/DepotId'
+      - description: The driver IDs for which to get the signing deviations. if empty all drivers will be returned
+        in: query
+        name: driverIds
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/DriverId'
+components:
+  schemas:
+    DriverId:
+      type: string
+      description: The Id of the driver
+    TypedApiErrorResponse_Invalidrequestschema_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_Invalidrequestschema_'
+      required:
+      - error
+      type: object
+    GetSigningTimesV2ErrorTypes:
+      type: string
+      enum:
+      - pageNotFound
+      nullable: false
+    DepotId:
+      $ref: '#/components/schemas/UUID'
+      description: The depot unique identifier in the Ops system.
+    ISO8601Time:
+      type: string
+      example: '2024-06-30T23:30:00+02:00'
+      description: Representation of the time in ISO8601 format, where the minimum is at the start of the operational day (12am night) and the maximum 12 hours the day after the operational date of the private hire trip (12pm noon the day after)
+    UUID:
+      type: string
+      description: Stringified ID for a resource. Cannot exceed 36 characters.
+    TypedErrorResponse_Invalidrequestschema_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - Invalid request schema
+          nullable: false
+      required:
+      - message
+      - type
+      type: object
+    Pagination:
+      properties:
+        totalPages:
+          $ref: '#/components/schemas/Integer'
+          description: Total number of pages.
+        nextPage:
+          $ref: '#/components/schemas/PageNumber'
+          description: Next page number (1-indexed). If undefined, there is no next page.
+        currentPage:
+          $ref: '#/components/schemas/PageNumber'
+          description: Current page number (1-indexed).
+      required:
+      - totalPages
+      - currentPage
+      type: object
+      description: 'Metadata about the pagination of a list of items. When a list of items is too large to be returned in a single response, it is split into multiple pages.
+
+        This object informs you about the current page, the next page, and the total number of pages.'
+    PageNumber:
+      $ref: '#/components/schemas/Integer'
+      description: Page number (1-indexed). Defaults to 1.
+      minimum: 1
+    GetSigningTimesV2ErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_GetSigningTimesV2ErrorTypes_'
+    TypedApiErrorResponse_GetSigningTimesV2ErrorTypes_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_GetSigningTimesV2ErrorTypes_'
+      required:
+      - error
+      type: object
+    DriverUuid:
+      $ref: '#/components/schemas/UUID'
+      description: The driver unique identifier in the Ops system (not the driver personal id)
+    TypedErrorResponse_GetSigningTimesV2ErrorTypes_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/GetSigningTimesV2ErrorTypes'
+      required:
+      - message
+      - type
+      type: object
+    SigningDeviationItem:
+      properties:
+        expectedTime:
+          $ref: '#/components/schemas/ISO8601Time'
+        actualTime:
+          $ref: '#/components/schemas/ISO8601Time'
+        deviation:
+          type: number
+          format: double
+        signingType:
+          type: string
+          enum:
+          - signOn
+          - signOff
+        signingDeviationType:
+          type: string
+          enum:
+          - early
+          - late
+      required:
+      - expectedTime
+      - actualTime
+      - deviation
+      - signingType
+      - signingDeviationType
+      type: object
+    GetSigningTimesV2SuccessfulResponse:
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+          description: Pagination metadata.
+        drivers:
+          items:
+            $ref: '#/components/schemas/GetSigningTimesV2DriverEntry'
+          type: array
+          description: Array of drivers with their signing times for the date.
+      required:
+      - pagination
+      - drivers
+      type: object
+      example:
+        pagination:
+          currentPage: 1
+          nextPage: 2
+          totalPages: 3
+        drivers:
+        - id: driver-334
+          signingTimes:
+          - type: signOn
+            expectedTime: 360
+            actualTime: 358
+            orphaned: false
+          - type: signOff
+            expectedTime: 840
+            orphaned: false
+        - id: driver-335
+          signingTimes: []
+      description: Paginated response containing per-driver signing times for a date in a region.
+    Integer:
+      type: integer
+      format: int32
+    GetSigningTimesV2DriverEntry:
+      properties:
+        signingTimes:
+          items:
+            $ref: '#/components/schemas/SigningTimeV2'
+          type: array
+          description: Matched expected/actual signing records for this driver on the date. May be empty.
+        id:
+          $ref: '#/components/schemas/DriverUuid'
+          description: External driver ID.
+      required:
+      - signingTimes
+      - id
+      type: object
+      description: Signing times for a single driver on the requested date.
+    StringifyDate:
+      type: string
+      format: date
+      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
+    SchemaValidationErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
+    GetSigningDeviationsResponse:
+      properties: {}
+      additionalProperties:
+        properties: {}
+        additionalProperties:
+          items:
+            $ref: '#/components/schemas/SigningDeviationItem'
+          type: array
+        type: object
+      type: object
+    SigningTimeV2:
+      properties:
+        orphaned:
+          type: boolean
+          description: '`true` when the record is orphaned (an actual signing with no matching expected event, or vice versa).'
+        actualTime:
+          type: number
+          format: double
+          description: 'Actual signing time in minutes from midnight of the operational date.
+
+            Omitted when no actual signing has been recorded.'
+        expectedTime:
+          type: number
+          format: double
+          nullable: true
+          description: 'Expected signing time in minutes from midnight of the operational date.
+
+            `null` when there is an actual signing that does not match any expected event (orphaned).'
+        type:
+          type: string
+          enum:
+          - signOn
+          - signOff
+          description: Whether this is a sign-on or sign-off record.
+      required:
+      - orphaned
+      - expectedTime
+      - type
+      type: object
+      description: A single matched expected/actual signing record.
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: Authorization
+      in: header
+x-tagGroups:
+- name: General API Info
+  tags:
+  - Authentication
+  - Versioning
+- name: Use case guides
+  tags:
+  - HR System Integration Guides
+  - Fleet Management System Integration Guides
+  - Operational Plan Query Guides
+  - Custom Driver App Notification Action Guide
+- name: Client preferences
+  tags:
+  - Preferences
+- name: Resource Management
+  tags:
+  - Regions
+  - Drivers
+  - Driver Absences
+  - Driver Employment Periods
+  - Driver Custom Attributes
+  - Driver Groups
+  - Vehicles
+  - Vehicle Downtimes
+  - Vehicle Custom Attributes
+- name: Operations Management
+  tags:
+  - Roster
+  - Operational Plan
+  - Tasks
+  - Stops
+  - Signing Times
+- name: Work & Payroll
+  tags:
+  - Work Entities
+  - Payroll
+  - Statistics
+- name: Private Hires
+  tags:
+  - Private Hires
+- name: Driver App Integration
+  tags:
+  - Driver App Notifications
+- name: Event Webhooks
+  tags:
+  - Event Webhooks
+- name: Data Ingestion
+  tags:
+  - Tacho Ingestion
+- name: Deprecated API Endpoints
+  tags:
+  - Drivers (Deprecated)
+  - Vehicles (Deprecated)
+  - Operational Plan (Deprecated)
+- name: Changelog
+  tags:
+  - Changelog

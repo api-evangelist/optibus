@@ -1,0 +1,248 @@
+openapi: 3.0.0
+info:
+  title: Optibus Operations Driver Absences Tacho Ingestion API
+  version: 2.8.17
+  description: '**Welcome to the Optibus Operations API documentation!**
+
+
+    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.
+
+
+
+    '
+  license:
+    name: Optibus Ltd, All rights reserved
+  contact: {}
+servers:
+- url: https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co
+  description: Contact your Optibus Customer Success Manager for the actual baseURL and API credentials to use.
+tags:
+- name: Tacho Ingestion
+  description: API endpoint for ingesting normalized Tachograph activity data from the Data Team.
+paths:
+  /v1/tacho-activity:
+    post:
+      operationId: PostTachoActivities
+      responses:
+        '204':
+          description: Tachograph activities accepted successfully
+        '400':
+          description: 'Possible error types: `Invalid request schema` (schema of your request does not match the specification), `invalidTimeRange` (one or more activities have an endTimestamp before their startTimestamp)'
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/PostTachoActivitiesErrorResponse'
+                - $ref: '#/components/schemas/SchemaValidationErrorResponse'
+        '422':
+          description: 'Possible error types: `driversNotFound` (one or more driver IDs do not exist in the system), `vehiclesNotFound` (one or more vehicle IDs do not exist in the system)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostTachoActivitiesErrorResponse'
+      description: '⚠️ **Unstable — not yet available for use.** This endpoint is published for design review
+
+        and integration planning only. It currently accepts and validates payloads but does not
+
+        persist any data. The request/response shape may still change without notice. Do not rely
+
+        on it in production integrations until this notice is removed.
+
+
+        Accepts a bulk upload of normalized Tachograph activities. Validates that
+
+        all driver and vehicle IDs in the payload refer to existing entities.'
+      summary: Ingest Tachograph activity data
+      tags:
+      - Tacho Ingestion
+      security:
+      - api_key: []
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostTachoActivitiesRequest'
+components:
+  schemas:
+    TypedApiErrorResponse_Invalidrequestschema_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_Invalidrequestschema_'
+      required:
+      - error
+      type: object
+    TypedErrorResponse_PostTachoActivitiesErrorTypes_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/PostTachoActivitiesErrorTypes'
+      required:
+      - message
+      - type
+      type: object
+    TypedErrorResponse_Invalidrequestschema_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - Invalid request schema
+          nullable: false
+      required:
+      - message
+      - type
+      type: object
+    SchemaValidationErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
+    TachoActivity:
+      properties:
+        rawExternalCode:
+          type: string
+          nullable: true
+          description: The vendor's original activity code before normalization. Optional.
+        vendor:
+          type: string
+          nullable: true
+          description: The tachograph data provider (vendor). Optional.
+        vin:
+          type: string
+          nullable: true
+          description: The vehicle's VIN (Vehicle Identification Number). Optional.
+        activityType:
+          $ref: '#/components/schemas/TachoActivityType'
+          description: 'Type of the activity. Possible values are: drive, work, available, rest.'
+        endTimestamp:
+          $ref: '#/components/schemas/StringifyDateTime'
+          description: ISO 8601 timestamp of when the activity ended.
+          format: date-time
+        startTimestamp:
+          $ref: '#/components/schemas/StringifyDateTime'
+          description: ISO 8601 timestamp of when the activity started.
+          format: date-time
+        vehicleId:
+          type: string
+          nullable: true
+          description: 'The vehicle''s unique identifier in Ops, as returned by the Vehicles API.
+
+            This is not the vehicle''s VIN, registration plate, or tachograph identifier.
+
+            Null for activities not associated with a vehicle (e.g. rest).'
+        driverId:
+          type: string
+          description: 'The driver''s unique identifier in Ops, as returned by the Drivers API.
+
+            This is not the driver''s personal tachograph ID.'
+      required:
+      - activityType
+      - endTimestamp
+      - startTimestamp
+      - vehicleId
+      - driverId
+      type: object
+    StringifyDateTime:
+      type: string
+      format: date-time
+      description: 'Stringified date-time.
+
+        date-time notation as defined by [RFC 3339](https://tools.ietf.org/html/rfc3339#section-5.6), section 5.6, for example,2017-07-21T17:32:28Z'
+    PostTachoActivitiesErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_PostTachoActivitiesErrorTypes_'
+    PostTachoActivitiesErrorTypes:
+      type: string
+      enum:
+      - invalidTimeRange
+      nullable: false
+    PostTachoActivitiesRequest:
+      properties:
+        activities:
+          items:
+            $ref: '#/components/schemas/TachoActivity'
+          type: array
+          minItems: 1
+          maxItems: 5000
+      required:
+      - activities
+      type: object
+    TypedApiErrorResponse_PostTachoActivitiesErrorTypes_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_PostTachoActivitiesErrorTypes_'
+      required:
+      - error
+      type: object
+    TachoActivityType:
+      description: The type of tachograph activity recorded for the driver.
+      enum:
+      - drive
+      - work
+      - available
+      - rest
+      type: string
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: Authorization
+      in: header
+x-tagGroups:
+- name: General API Info
+  tags:
+  - Authentication
+  - Versioning
+- name: Use case guides
+  tags:
+  - HR System Integration Guides
+  - Fleet Management System Integration Guides
+  - Operational Plan Query Guides
+  - Custom Driver App Notification Action Guide
+- name: Client preferences
+  tags:
+  - Preferences
+- name: Resource Management
+  tags:
+  - Regions
+  - Drivers
+  - Driver Absences
+  - Driver Employment Periods
+  - Driver Custom Attributes
+  - Driver Groups
+  - Vehicles
+  - Vehicle Downtimes
+  - Vehicle Custom Attributes
+- name: Operations Management
+  tags:
+  - Roster
+  - Operational Plan
+  - Tasks
+  - Stops
+  - Signing Times
+- name: Work & Payroll
+  tags:
+  - Work Entities
+  - Payroll
+  - Statistics
+- name: Private Hires
+  tags:
+  - Private Hires
+- name: Driver App Integration
+  tags:
+  - Driver App Notifications
+- name: Event Webhooks
+  tags:
+  - Event Webhooks
+- name: Data Ingestion
+  tags:
+  - Tacho Ingestion
+- name: Deprecated API Endpoints
+  tags:
+  - Drivers (Deprecated)
+  - Vehicles (Deprecated)
+  - Operational Plan (Deprecated)
+- name: Changelog
+  tags:
+  - Changelog

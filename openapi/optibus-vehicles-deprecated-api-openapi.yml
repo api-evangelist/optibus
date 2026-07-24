@@ -1,0 +1,292 @@
+openapi: 3.0.0
+info:
+  title: Optibus Operations Driver Absences Vehicles (Deprecated) API
+  version: 2.8.17
+  description: '**Welcome to the Optibus Operations API documentation!**
+
+
+    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.
+
+
+
+    '
+  license:
+    name: Optibus Ltd, All rights reserved
+  contact: {}
+servers:
+- url: https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co
+  description: Contact your Optibus Customer Success Manager for the actual baseURL and API credentials to use.
+tags:
+- name: Vehicles (Deprecated)
+  description: These API endpoints are deprecated and could be removed in a future version. Please use the corresponding new API endpoints instead, which should offer improved usability and extra functionality.
+paths:
+  /vehicles:
+    get:
+      operationId: GetVehiclesInfo
+      responses:
+        '200':
+          description: Vehicles information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetVehiclesResponse'
+      description: '**WARNING: This API endpoint is deprecated - you should use `GET /v1/vehicles` instead.**
+
+
+        Returns the information for vehicles, with filters.'
+      summary: Fetch vehicles (deprecated)
+      tags:
+      - Vehicles (Deprecated)
+      deprecated: true
+      security:
+      - api_key: []
+      parameters:
+      - description: '- Returns the information for the given vehicles by vehicle ID'
+        in: query
+        name: vehicleIds
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/UUID'
+      - description: '- Returns the information for vehicles that are that are loaned or assigned to the given depot IDs, on the given date or today if date is not provided'
+        in: query
+        name: depotIds
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/UUID'
+      - description: '- Returns the attributes information for the given date'
+        in: query
+        name: date
+        required: false
+        schema:
+          $ref: '#/components/schemas/StringifyDate'
+  /v1/vehicle-attributes:
+    get:
+      operationId: GetVehicleAttributes
+      responses:
+        '200':
+          description: Vehicle attributes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetVehicleAttributesResponse'
+      description: '**WARNING: This API endpoint is deprecated - you should use `GET /v1/vehicles/custom-attributes` instead.**
+
+
+        Returns the vehicle attributes.'
+      summary: Fetch vehicle attributes (deprecated)
+      tags:
+      - Vehicles (Deprecated)
+      deprecated: true
+      security:
+      - api_key: []
+      parameters:
+      - description: '- Returns the vehicle attributes by vehicle ID'
+        in: query
+        name: vehicleIds
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/VehicleId'
+      - description: '- Returns the attributes for a specified date range (both from and to are required)'
+        in: query
+        name: from
+        required: false
+        schema:
+          type: string
+      - description: '- Returns the attributes for a specified date range (both from and to are required)'
+        in: query
+        name: to
+        required: false
+        schema:
+          type: string
+components:
+  schemas:
+    vehicleWithAttributes:
+      properties:
+        id:
+          type: string
+        licensePlate:
+          type: string
+        parkingLocation:
+          type: string
+        depot:
+          type: string
+          deprecated: true
+        opUnitId:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+          deprecated: true
+        nextDowntime:
+          type: number
+          format: double
+        model:
+          type: string
+        archived:
+          type: boolean
+        archivedOn:
+          type: string
+      required:
+      - id
+      - depot
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/AttributeValue'
+    GetVehicleAttributesResponse:
+      properties:
+        attributes:
+          properties: {}
+          additionalProperties:
+            $ref: '#/components/schemas/Attributes'
+          type: object
+        attributeMap:
+          properties: {}
+          additionalProperties:
+            $ref: '#/components/schemas/Pick_AttributeTypeDefinition.id-or-type-or-displayName_'
+          type: object
+      required:
+      - attributes
+      - attributeMap
+      type: object
+    VehicleId:
+      type: string
+    Pick_AttributeTypeDefinition.id-or-type-or-displayName_:
+      properties:
+        id:
+          type: string
+        type:
+          $ref: '#/components/schemas/AttributeType'
+        displayName:
+          type: string
+      required:
+      - id
+      - type
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
+    StringifyDate:
+      type: string
+      format: date
+      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
+    AttributeType:
+      enum:
+      - STRING
+      - BOOLEAN
+      - SINGLE_SELECT
+      - MULTI_SELECT
+      - DATE
+      - NUMBER
+      - DURATION
+      type: string
+    GetVehiclesResponse:
+      items:
+        $ref: '#/components/schemas/vehicleWithAttributes'
+      type: array
+    UUID:
+      type: string
+      description: Stringified ID for a resource. Cannot exceed 36 characters.
+    Attributes:
+      properties: {}
+      additionalProperties:
+        items:
+          $ref: '#/components/schemas/AttributeEntry'
+        type: array
+      type: object
+      description: 'Dictionary mapping attribute ID to an array of values by date.
+
+        Correct usage: array sorted by date, only one value per date.'
+    AttributeId:
+      type: string
+    AttributeEntry:
+      properties:
+        value:
+          $ref: '#/components/schemas/AttributeValue'
+        date:
+          $ref: '#/components/schemas/StringifyDate'
+        attributeId:
+          $ref: '#/components/schemas/AttributeId'
+      required:
+      - value
+      - date
+      - attributeId
+      type: object
+    AttributeValue:
+      anyOf:
+      - items:
+          anyOf:
+          - type: number
+            format: double
+          - type: string
+        type: array
+      - type: string
+      - type: boolean
+      - type: number
+        format: double
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: Authorization
+      in: header
+x-tagGroups:
+- name: General API Info
+  tags:
+  - Authentication
+  - Versioning
+- name: Use case guides
+  tags:
+  - HR System Integration Guides
+  - Fleet Management System Integration Guides
+  - Operational Plan Query Guides
+  - Custom Driver App Notification Action Guide
+- name: Client preferences
+  tags:
+  - Preferences
+- name: Resource Management
+  tags:
+  - Regions
+  - Drivers
+  - Driver Absences
+  - Driver Employment Periods
+  - Driver Custom Attributes
+  - Driver Groups
+  - Vehicles
+  - Vehicle Downtimes
+  - Vehicle Custom Attributes
+- name: Operations Management
+  tags:
+  - Roster
+  - Operational Plan
+  - Tasks
+  - Stops
+  - Signing Times
+- name: Work & Payroll
+  tags:
+  - Work Entities
+  - Payroll
+  - Statistics
+- name: Private Hires
+  tags:
+  - Private Hires
+- name: Driver App Integration
+  tags:
+  - Driver App Notifications
+- name: Event Webhooks
+  tags:
+  - Event Webhooks
+- name: Data Ingestion
+  tags:
+  - Tacho Ingestion
+- name: Deprecated API Endpoints
+  tags:
+  - Drivers (Deprecated)
+  - Vehicles (Deprecated)
+  - Operational Plan (Deprecated)
+- name: Changelog
+  tags:
+  - Changelog
