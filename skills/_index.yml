@@ -1,0 +1,19 @@
+generated: '2026-07-20'
+method: generated
+skills:
+- file: optibus-sync-driver-absences.md
+  name: Sync driver absences to an HR system
+  api: openapi/optibus-operations-openapi.yml
+  operations: [GetDriversV2, GetAbsencesV2, PostDriverAbsences, GetTimeOffBalances, GetAbsenceQuotas]
+- file: optibus-manage-vehicles.md
+  name: Manage vehicles and downtimes
+  api: openapi/optibus-operations-openapi.yml
+  operations: [GetVehiclesInfoV1, PostVehicles, PutVehicles, GetVehiclesDowntimes, PutVehiclesDowntimes]
+- file: optibus-read-operational-plan.md
+  name: Read the operational plan and payroll
+  api: openapi/optibus-operations-openapi.yml
+  operations: [GetOperationalPlanV2, GetWorkEntities, GetPayroll, GetStats, GetRoster]
+- file: optibus-subscribe-webhooks.md
+  name: Subscribe to operational webhooks
+  api: openapi/optibus-operations-openapi.yml
+  operations: [EventWebhookPost]

@@ -1,0 +1,35 @@
+generated: '2026-07-20'
+method: searched
+source: https://apidocs.ops.optibus.co/
+authentication:
+  style: api-key
+  header: Authorization
+  additional_header: X-Optibus-Api-Client (ACCOUNT_NAME)
+  notes: Stable API_KEY sent as Authorization header value; account name sent in X-Optibus-Api-Client.
+    Credentials + account-specific BASE_URL provisioned by the Optibus Customer Success Manager.
+  ref: authentication/optibus-authentication.yml
+idempotency:
+  supported: false
+  notes: No idempotency-key mechanism documented in the OpenAPI or reference; write operations are not
+    advertised as idempotent.
+pagination:
+  style: filter-and-date-range
+  notes: No cursor/offset pagination. Large result sets are bounded by date-range filters (fromDate/toDate)
+    and calculation-limit endpoints (GET /v2/calculation-limit, /v2/duty-stats-calculation-limit) that
+    return daysLimit/tasksLimit; exceeding limits returns HTTP 413.
+request_size_limits:
+  uri_max_bytes: 10240
+  notes: Requests whose URI exceeds 10240 bytes return HTTP 414; use the POST query variants (e.g. POST
+    /v1/drivers/absence-quotas-query) instead of long GET query strings.
+versioning:
+  style: uri-path + semver
+  ref: lifecycle/optibus-lifecycle.yml
+error_envelope:
+  shape: '{ "error": { "type": <string enum>, "message": <string>, "details": <any> } }'
+  note: Not RFC 9457 problem+json; custom typed error envelope. See errors/optibus-problem-types.yml
+  ref: errors/optibus-problem-types.yml
+webhooks:
+  supported: true
+  signature: HMAC-SHA256 over the JSON body, base64, in X-HMAC-SIGNATURE header
+  ordering: events sharing an aggregate_id must be processed sequentially
+  ref: asyncapi/optibus-operational-webhooks.yml

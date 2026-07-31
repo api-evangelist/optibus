@@ -1,0 +1,65 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/optibus-operations-openapi.yml
+entities:
+- driver
+- vehicle
+- absence
+- employment-period
+- downtime
+- roster
+- operational-plan
+- depot
+- region
+- stop
+- private-hire-order
+- payroll
+- duty
+- work-entity
+relationships:
+- from: driver
+  type: has_many
+  to: absence
+  via: driverId
+- from: driver
+  type: has_many
+  to: employment-period
+  via: driverId
+- from: driver
+  type: has_many
+  to: volunteering-period
+  via: driverId
+- from: driver
+  type: belongs_to
+  to: driver-group
+  via: groupId
+- from: driver
+  type: has_many
+  to: time-off-balance
+  via: driverId
+- from: vehicle
+  type: has_many
+  to: downtime
+  via: vehicleId
+- from: vehicle
+  type: belongs_to
+  to: depot
+  via: depotId
+- from: operational-plan
+  type: belongs_to
+  to: depot
+  via: depotId
+- from: roster
+  type: has_many
+  to: duty
+  via: dutyId
+- from: private-hire-order
+  type: has_many
+  to: trip
+  via: orderId
+- from: duty
+  type: belongs_to
+  to: driver
+  via: driverId
+note: Entity graph derived from OpenAPI tags, path resources, and id-reference request/query parameters
+  (driverId, vehicleId, depotId, orderId).

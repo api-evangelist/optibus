@@ -1,0 +1,100 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/optibus-operations-openapi.yml
+format: custom
+envelope: '{ "error": { "type": <string>, "message": <string>, "details": <any> } }'
+named_error_types:
+- Invalid request schema
+- autoUnassignFailed
+- overwriteCustomAttributeEntry
+- overwriteMainRegionPeriodEntry
+- conflictProcessingRequest
+- pageNotFound
+- vehiclesNotFound
+note: Optibus returns a typed error envelope (error.type + error.message + error.details), not RFC 9457
+  application/problem+json. Named types derived from OpenAPI error schemas and reference prose.
+problems:
+- status: 400
+  title: Bad request / invalid request schema
+  occurrences: 28
+  remediation: Fix the request body/parameters to match the documented schema.
+  example_descriptions:
+  - 'Possible error types: `Invalid request schema` (schema of your request does not match the specification),
+    `invalidDatesCombination` (the combination of fromDate and toDate is invalid)'
+  - 'Possible error types: `Invalid request schema` (schema of your request does not match the specification),
+    `invalidFieldContent` (the content of one or more fields in your request is invalid), `noItems` (you
+    specified 0 items in your request), `tooManyItems` (you specified >1000 items in your request)'
+  - 'Possible error types: `Invalid request schema` (schema of your request does not match the specification),
+    `tooManyItems` (you specified >1000 items in your request), `noItems` (you specified 0 items in your
+    request), `invalidFieldContent` (the content of one or more fields in your request is invalid)'
+- status: 403
+  title: Not authenticated
+  occurrences: 3
+  remediation: Ensure the Authorization API key and X-Optibus-Api-Client account header are correct.
+  example_descriptions:
+  - The request was not successfully authenticated. Ensure the authentication header is correctly set.
+- status: 404
+  title: Resource not found
+  occurrences: 16
+  remediation: Verify the resource id (driver, vehicle, order, depot) exists.
+  example_descriptions:
+  - 'Possible error types: `pageNotFound` (requested page number is out of range; details.totalPages indicates
+    the number of pages available)'
+  - Order does not exist
+  - One or more of the requested depots was not found.
+- status: 409
+  title: Conflict processing request
+  occurrences: 12
+  remediation: Retry conflictProcessingRequest errors after a short delay; otherwise resolve the state
+    conflict.
+  example_descriptions:
+  - 'Possible error types: `conflictProcessingRequest` (temporary concurrency conflict, retry shortly)'
+  - The request cannot be processed because events created from the web application are still being processed
+    sequentially
+  - 'Possible error types: `conflictProcessingRequest` (temporary concurrency conflict, retry shortly),
+    `vehicleAlreadyExists` (one or more vehicle IDs specified in the request already exist in the system)'
+- status: 413
+  title: Request too large / exceeds calculation limit
+  occurrences: 4
+  remediation: Reduce the request size; consult GET /v2/calculation-limit or /v2/duty-stats-calculation-limit
+    and split by day/tasks.
+  example_descriptions:
+  - The request is too long. Please reduce the number of drivers or days.
+  - The request is too long. Please reduce the number of drivers.
+  - 'The request exceeds the calculation limit. Size it with GET /v2/duty-stats-calculation-limit: at
+    most daysLimit days per request, or — when daysLimit is 0 — one day per request with at most tasksLimit
+    taskIds.'
+- status: 414
+  title: Request URI too long
+  occurrences: 9
+  remediation: Use the POST *-query variant instead of a long GET query string (URI limit 10240 bytes).
+  example_descriptions:
+  - The request URI exceeds 10240 bytes which is not supported. This probably results from trying to query
+    more than a thousand driverIds at the same time. Please consider chunking your request.
+  - The request URI exceeds 10240 bytes which is not supported. This probably results from trying to query
+    more than a thousand driversIds/taskIds at the same time. Please consider chunking your request.
+  - The request URI exceeds 10240 bytes which is not supported. This probably results from trying to query
+    more than a thousand vehicles at the same time. Please consider chunking your request.
+- status: 422
+  title: Unprocessable entity / validation failed
+  occurrences: 12
+  remediation: Resolve the validation error described in error.details before retrying.
+  example_descriptions:
+  - 'Possible error types: `vehiclesNotFound` (one or more vehicle IDs specified in the request do not
+    exist in the system)'
+  - Signing deviations validation rules are not defined for this customer
+  - 'Possible error types: `driversNotFound` (one or more driver IDs specified in the request do not exist
+    in the system)'
+- status: 500
+  title: Server error
+  occurrences: 5
+  remediation: Transient server error; retry with backoff.
+  example_descriptions:
+  - Server error
+  - The request was not successful.
+- status: 503
+  title: Service unavailable
+  occurrences: 1
+  remediation: Service temporarily unavailable; retry with backoff.
+  example_descriptions:
+  - The request was not successful. Please try again.

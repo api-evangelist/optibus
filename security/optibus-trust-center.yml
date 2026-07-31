@@ -1,0 +1,16 @@
+generated: '2026-07-20'
+method: searched
+source: https://optibus.com/security/
+url: https://optibus.com/security/
+certifications:
+- ISO 27001:2022
+- SOC 2
+evidence:
+- source: https://optibus.com/security/
+  item: ISO 27001:2022 certified
+  certificate: https://optibus.com/file/2025/06/ISO-27001-2022-Optibus-certification.pdf
+- source: https://optibus.com/company/security/whitepaper/
+  item: Comprehensive Security Measures whitepaper
+- source: https://optibus.com/llms.txt
+  item: ISO 27001 & SOC 2 referenced
+subprocessors: https://optibus.com/file/2026/06/optibus_subprocessor_list.pdf

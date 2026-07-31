@@ -1,28 +1,801 @@
 aid: optibus
 name: Optibus
-description: 'Optibus is a company surfaced as a portfolio company of bessemer-venture-partners, insight-partners
-  and added to the API Evangelist network as a stub for enrichment. Sector: vertical-software. This profile
-  is a lead awaiting the enrichment pipeline.'
+description: 'Optibus is a cloud-native, end-to-end operating system for public transportation
+  planning, scheduling, rostering and operations, used by transit agencies and operators
+  in more than 3,000 cities. Its proprietary AI and optimization algorithms modernize network
+  planning, vehicle and crew scheduling, driver rostering, fleet monitoring, payroll and depot
+  management. The Optibus Operations API (OpenAPI 3.0.0, 58 operations) provides programmatic
+  access to drivers, vehicles, absences, employment periods, operational plans, rosters, payroll
+  and statistics, plus outbound HMAC-signed operational event webhooks, for integrating Optibus
+  with external HR, payroll and fleet-management systems. Backed by Bessemer Venture Partners and
+  Insight Partners.'
 url: https://raw.githubusercontent.com/api-evangelist/optibus/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - bessemer-venture-partners
 - insight-partners
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: enriched
+x-tier-reason: has-operations-api
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://optibus.com/file/2026/01/Thumbnail-HP.png
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
 tags:
 - Company
 - Vertical Software
-apis: []
+- Public Transportation
+- Transit
+- Scheduling
+- Fleet Management
+- Mobility
+- Optimization
+- Workforce Management
+apis:
+- aid: optibus:optibus-driver-absences-api
+  name: Optibus Driver Absences API
+  description: >-
+    API endpoints for managing absences for drivers - i.e. periods where they are unavailable for work.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Driver Absences
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-driver-absences-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-driver-app-notifications-api
+  name: Optibus Driver App Notifications API
+  description: >-
+    The Driver App Notifications API from Optibus — 1 operation(s) for driver app notifications.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Driver App Notifications
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-driver-app-notifications-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-driver-custom-attributes-api
+  name: Optibus Driver Custom Attributes API
+  description: >-
+    API endpoints for managing custom attributes for drivers - i.e. additional properties that can be
+    set for drivers - including querying and updating their historical values.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Driver Custom Attributes
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-driver-custom-attributes-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-driver-employment-periods-api
+  name: Optibus Driver Employment Periods API
+  description: >-
+    API endpoints for managing employment periods for drivers - i.e. periods where they are employed,
+    hired, terminated, etc.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Driver Employment Periods
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-driver-employment-periods-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-driver-groups-api
+  name: Optibus Driver Groups API
+  description: API endpoints for managing driver groups.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Driver Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-driver-groups-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-driver-volunteering-periods-api
+  name: Optibus Driver Volunteering Periods API
+  description: >-
+    API endpoints for fetching volunteering periods for drivers - i.e. periods where a driver is willing
+    to volunteer for extra work, such as on a rest day or for overtime.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Driver Volunteering Periods
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-driver-volunteering-periods-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-drivers-api
+  name: Optibus Drivers API
+  description: API endpoints for managing drivers.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Drivers
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-drivers-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-drivers-deprecated-api
+  name: Optibus Drivers (Deprecated) API
+  description: >-
+    These API endpoints are deprecated and could be removed in a future version. Please use the corresponding
+    new API endpoints instead, which should offer improved usability and extra functionality.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Drivers (Deprecated)
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-drivers-deprecated-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-event-webhooks-api
+  name: Optibus Event Webhooks API
+  description: The Event Webhooks API from Optibus — 1 operation(s) for event webhooks.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Event Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-event-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-operational-plan-api
+  name: Optibus Operational Plan API
+  description: The Operational Plan API from Optibus — 3 operation(s) for operational plan.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Operational Plan
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-operational-plan-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-operational-plan-deprecated-api
+  name: Optibus Operational Plan (Deprecated) API
+  description: >-
+    These API endpoints are deprecated and could be removed in a future version. Please use GET /v2/operational-plan
+    instead.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Operational Plan (Deprecated)
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-operational-plan-deprecated-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-payroll-api
+  name: Optibus Payroll API
+  description: The Payroll API from Optibus — 1 operation(s) for payroll.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Payroll
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-payroll-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-preferences-api
+  name: Optibus Preferences API
+  description: The Preferences API from Optibus — 2 operation(s) for preferences.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Preferences
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-preferences-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-private-hires-api
+  name: Optibus Private Hires API
+  description: The Private Hires API from Optibus — 4 operation(s) for private hires.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Private Hires
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-private-hires-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-regions-api
+  name: Optibus Regions API
+  description: The Regions API from Optibus — 1 operation(s) for regions.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Regions
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-regions-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-roster-api
+  name: Optibus Roster API
+  description: >-
+    A roster describes the daily operator runs grouped into packages of (repeating) weekly work assignments.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Roster
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-roster-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-signing-times-api
+  name: Optibus Signing Times API
+  description: >-
+    API endpoints for fetching sign-on/off times & deviations for drivers - i.e. the actual and expected
+    sign-on and sign-off times for a driver and how much they deviate from each other.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Signing Times
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-signing-times-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-statistics-api
+  name: Optibus Statistics API
+  description: >-
+    API endpoints for fetching computed statistics over a date range - per-task duty statistics (mirroring
+    the duty side panel in the Ops UI) and the calculation limits that bound a single request.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Statistics
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-statistics-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-stops-api
+  name: Optibus Stops API
+  description: The Stops API from Optibus — 1 operation(s) for stops.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Stops
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-stops-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-tacho-ingestion-api
+  name: Optibus Tacho Ingestion API
+  description: API endpoint for ingesting normalized Tachograph activity data from the Data Team.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Tacho Ingestion
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-tacho-ingestion-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-tasks-api
+  name: Optibus Tasks API
+  description: The Tasks API from Optibus — 1 operation(s) for tasks.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Tasks
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-tasks-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-vehicle-custom-attributes-api
+  name: Optibus Vehicle Custom Attributes API
+  description: >-
+    API endpoints for managing custom attributes for vehicles - i.e. additional properties that can be
+    set for vehicles - including querying and updating their historical values.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Vehicle Custom Attributes
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-vehicle-custom-attributes-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-vehicle-downtimes-api
+  name: Optibus Vehicle Downtimes API
+  description: >-
+    API endpoints for managing downtimes for vehicles - i.e. periods where they are unavailable for service.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Vehicle Downtimes
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-vehicle-downtimes-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-vehicles-api
+  name: Optibus Vehicles API
+  description: API endpoints for managing vehicles.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Vehicles
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-vehicles-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-vehicles-deprecated-api
+  name: Optibus Vehicles (Deprecated) API
+  description: >-
+    These API endpoints are deprecated and could be removed in a future version. Please use the corresponding
+    new API endpoints instead, which should offer improved usability and extra functionality.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Vehicles (Deprecated)
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-vehicles-deprecated-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
+- aid: optibus:optibus-work-entities-api
+  name: Optibus Work Entities API
+  description: The Work Entities API from Optibus — 2 operation(s) for work entities.
+  humanURL: https://apidocs.ops.optibus.co/
+  baseURL: https://your-optibus-account.api.ops.optibus.co
+  tags:
+  - Work Entities
+  properties:
+  - type: OpenAPI
+    url: openapi/optibus-work-entities-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.ops.optibus.co/
+  - type: APIReference
+    url: https://apidocs.ops.optibus.co/
+  - type: Authentication
+    url: authentication/optibus-authentication.yml
+  - type: Conventions
+    url: conventions/optibus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/optibus-problem-types.yml
+  - type: DataModel
+    url: data-model/optibus-data-model.yml
+  - type: Webhooks
+    url: asyncapi/optibus-operational-webhooks.yml
+  - type: AgenticAccess
+    url: agentic-access/optibus-agentic-access.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DeveloperPortal
+  url: https://apidocs.ops.optibus.co/
+- type: Documentation
+  url: https://apidocs.ops.optibus.co/
+- type: APIReference
+  url: https://apidocs.ops.optibus.co/
 - type: Website
   url: https://www.optibus.com/
+- type: Blog
+  url: https://blog.optibus.com/
+- type: GitHubOrganization
+  url: https://github.com/Optibus
+- type: PrivacyPolicy
+  url: https://optibus.com/optibus-privacy-policy/
+- type: Support
+  url: https://optibus.com/contacts/
+- type: Security
+  url: https://optibus.com/security/
+- type: Compliance
+  url: https://optibus.com/security/
+- type: TrustCenter
+  url: security/optibus-trust-center.yml
+- type: Conformance
+  url: conformance/optibus-conformance.yml
+- type: StatusPage
+  url: https://status.optibus.co/
+- type: Deprecation
+  url: https://apidocs.ops.optibus.co/#tag/Versioning
+- type: Lifecycle
+  url: lifecycle/optibus-lifecycle.yml
+- type: ChangeLog
+  url: changelog/optibus-changelog.yml
+- type: Authentication
+  url: authentication/optibus-authentication.yml
+- type: Conventions
+  url: conventions/optibus-conventions.yml
+- type: DomainSecurity
+  url: security/optibus-domain-security.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Webhooks
+  url: asyncapi/optibus-operational-webhooks.yml
+- type: AgenticAccess
+  url: agentic-access/optibus-agentic-access.yml
+- type: LLMsTxt
+  url: llms/optibus-llms.txt
+x-enrichment:
+  date: '2026-07-20'
+  status: enriched
+  artifacts_added: 16
+  pass: local-v1

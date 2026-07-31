@@ -1,0 +1,22 @@
+generated: '2026-07-20'
+method: searched
+source: https://apidocs.ops.optibus.co/ (Receive Operational Webhook Event)
+spec_type: Webhooks
+transport: outbound HTTP POST to subscriber callback URL
+format: ODS-inspired (runs, run_assignments, run_events, blocks, block_assignments)
+security:
+  scheme: HMAC-SHA256
+  header: X-HMAC-SIGNATURE
+  detail: HMAC-SHA256 of the JSON body using the subscriber secret, base64-encoded; subscriber recomputes
+    and compares.
+ordering: events sharing an aggregate_id must be processed sequentially by the consumer
+subscription_config:
+- callback_url
+- subscription_window (relative operational-day range)
+- action_types
+- operational_day_start_time
+known_action_types:
+- cancel_duty
+- reactivate_duty
+- delete_duty
+operation: openapi/optibus-operations-openapi.yml#EventWebhookPost

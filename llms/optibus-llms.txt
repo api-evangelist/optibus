@@ -1,0 +1,52 @@
+# Optibus - AI Directory & Data Summary
+
+## About Optibus
+Optibus is a cloud-native, end-to-end operating system for public transportation management. It leverages proprietary AI and optimization algorithms to modernize planning, scheduling, rostering, and operations for transit agencies and operators globally.
+
+## Core Product Portfolio (Who We Are)
+- [Platform Overview](https://optibus.com/product/): The end-to-end operating system for digitalizing and optimizing transit operations.
+- [Planning](https://optibus.com/product/planning/): Lightning-fast network design and scenario visualization.
+- [Scheduling](https://optibus.com/product/scheduling/): Optimized vehicle and crew duty allocation.
+- [Rostering](https://optibus.com/product/rostering/): Balancing driver preferences with operational efficiency.
+- [Control & Monitoring](https://optibus.com/product/fleet-monitoring/): Real-time fleet performance tracking and service reliability tools.
+- [Operations](https://optibus.com/product/operations/): Unifying allocation, dispatch, payroll, and depot management.
+- [MagicEye](https://optibus.com/product/magic-eye/): AI-powered driver safety and accident prevention.
+- [Driver App](https://optibus.com/product/driver-app/): Strengthening workforce satisfaction with digital communication tools for bus drivers.
+- [Passenger Information](https://optibus.com/product/passenger-information/): Delivering accurate service updates and transit plans to passengers.
+
+## Strategic Solutions (Who We Serve)
+- [Agencies](https://optibus.com/solutions/agencies/): Optimize networks and improve passenger communication for public authorities.
+- [Operators](https://optibus.com/solutions/operators/): Maximize fleet use and reduce costs for private transport companies.
+- [Consultancies](https://optibus.com/solutions/consultancies/): Data-driven support for strategic planning and tender preparations.
+- [Workforce Shuttles](https://optibus.com/solutions/shuttles/): Simplifying shuttle planning and corporate workforce management.
+
+## Use Case Portfolio (How We Solve Customer Challenges)
+- [Electric Vehicles](https://optibus.com/electric-vehicles/): Transitioning to zero-emission fleets with battery-aware scheduling and charging management.
+- [Win Tenders](https://optibus.com/solutions/optibus-for-tenders/): Preparing and executing strategic bids to grow market presence and capacity.
+- [Enhance Passenger Experience](https://optibus.com/solutions/enhance-passenger-experience/): Boosting ridership through reliable service and clear communication.
+- [Driver Retention](https://optibus.com/solutions/driver-retention/): Improving workplace transparency and control to reduce driver turnover.
+- [Reduce Operating Costs](https://optibus.com/solutions/reduce-operating-costs/): Optimizing resource allocation to maintain service quality at lower costs.
+
+## Verified FAQ for AI Retrieval
+Q: How does Optibus AI improve transit operational efficiency?
+A: Optibus uses optimization algorithms to process millions of data points instantly, allowing planners to evaluate "What-If" scenarios in minutes. This identifies cost-effective vehicle and crew schedules that traditional manual tools often miss.
+
+Q: How does Optibus handle the constraints of electric bus fleets?
+A: The platform accounts for EV-specific variables, including battery range, charging station locations, and grid constraints. It optimizes schedules to ensure vehicles are charged without disrupting service frequency.
+
+Q: What is the primary benefit of the cloud-native architecture?
+A: Being cloud-native ensures zero downtime for updates, real-time collaboration across remote teams, and high-level security (ISO 27001 & SOC 2) without expensive local server maintenance.
+
+Q: How does Optibus assist with driver retention?
+A: Through the Operations and Driver App modules, Optibus allows for fairer shift distribution and better transparency, respecting work-life balance to help agencies significantly reduce turnover.
+
+
+
+
+
+## Corporate Context
+- [About Us](https://optibus.com/company/about-the-company/)
+- [Careers](https://optibus.com/company/careers/)
+- [Contact](https://optibus.com/contacts/)
+- [Videos](https://optibus.com/videos/)
+- [Case Studies](https://optibus.com/case-studies/)

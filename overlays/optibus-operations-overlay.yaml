@@ -1,0 +1,21 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Optibus Operations API
+  version: 1.0.0
+extends: openapi/optibus-operations-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-20'
+    x-apievangelist-topics:
+    - transit
+    - public-transportation
+    - scheduling
+    - driver-management
+    - fleet
+- target: $.info
+  update:
+    x-api-key-header: Authorization
+    x-account-header: X-Optibus-Api-Client
+    x-status-page: https://status.optibus.co/
+    x-webhooks: asyncapi/optibus-operational-webhooks.yml

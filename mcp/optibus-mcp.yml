@@ -1,0 +1,154 @@
+generated: '2026-07-20'
+method: derived
+status: candidate
+source: openapi/optibus-operations-openapi.yml
+server:
+  name: optibus-operations
+  transport: stdio
+  note: No official Optibus MCP server found; candidate tool list derived one-per-active-operation from
+    the Operations OpenAPI.
+tools:
+- name: GetVehiclesInfoV1
+  description: List vehicles
+  source_operation: openapi/optibus-operations-openapi.yml#GetVehiclesInfoV1
+- name: PostVehicles
+  description: Create vehicles
+  source_operation: openapi/optibus-operations-openapi.yml#PostVehicles
+- name: PutVehicles
+  description: Update vehicles
+  source_operation: openapi/optibus-operations-openapi.yml#PutVehicles
+- name: GetVehiclesDepotPeriods
+  description: Fetch vehicle region periods
+  source_operation: openapi/optibus-operations-openapi.yml#GetVehiclesDepotPeriods
+- name: GetVehiclesDowntimes
+  description: List vehicle downtimes
+  source_operation: openapi/optibus-operations-openapi.yml#GetVehiclesDowntimes
+- name: PutVehiclesDowntimes
+  description: Create/update vehicle downtimes
+  source_operation: openapi/optibus-operations-openapi.yml#PutVehiclesDowntimes
+- name: GetVehiclesCustomAttributes
+  description: List vehicle custom attributes
+  source_operation: openapi/optibus-operations-openapi.yml#GetVehiclesCustomAttributes
+- name: PutVehiclesCustomAttributes
+  description: Create/update vehicle custom attributes
+  source_operation: openapi/optibus-operations-openapi.yml#PutVehiclesCustomAttributes
+- name: PostTachoActivities
+  description: Ingest Tachograph activity data
+  source_operation: openapi/optibus-operations-openapi.yml#PostTachoActivities
+- name: GetStops
+  description: List stops
+  source_operation: openapi/optibus-operations-openapi.yml#GetStops
+- name: GetRoster
+  description: Fetch roster
+  source_operation: openapi/optibus-operations-openapi.yml#GetRoster
+- name: GetRegions
+  description: List regions
+  source_operation: openapi/optibus-operations-openapi.yml#GetRegions
+- name: PostPrivateHireOrder
+  description: Create private hire order
+  source_operation: openapi/optibus-operations-openapi.yml#PostPrivateHireOrder
+- name: GetPrivateHireOrder
+  description: Fetch private hire order
+  source_operation: openapi/optibus-operations-openapi.yml#GetPrivateHireOrder
+- name: PatchPrivateHireOrder
+  description: Update private hire order
+  source_operation: openapi/optibus-operations-openapi.yml#PatchPrivateHireOrder
+- name: PatchPrivateHireOrderTrips
+  description: Update private hire order trips
+  source_operation: openapi/optibus-operations-openapi.yml#PatchPrivateHireOrderTrips
+- name: GetHolidays
+  description: List holidays
+  source_operation: openapi/optibus-operations-openapi.yml#GetHolidays
+- name: GetAbsenceTypes
+  description: List absence types
+  source_operation: openapi/optibus-operations-openapi.yml#GetAbsenceTypes
+- name: GetWorkEntities
+  description: List work entities
+  source_operation: openapi/optibus-operations-openapi.yml#GetWorkEntities
+- name: GetStats
+  description: Fetch statistics
+  source_operation: openapi/optibus-operations-openapi.yml#GetStats
+- name: GetPayroll
+  description: Fetch payroll
+  source_operation: openapi/optibus-operations-openapi.yml#GetPayroll
+- name: GetDutyStats
+  description: Fetch per-task statistics for a date range
+  source_operation: openapi/optibus-operations-openapi.yml#GetDutyStats
+- name: GetDutyStatsCalculationLimit
+  description: Fetch the request limits for /v2/duty-stats
+  source_operation: openapi/optibus-operations-openapi.yml#GetDutyStatsCalculationLimit
+- name: GetAPICalculationLimit
+  description: Fetch work engine API calculation limit
+  source_operation: openapi/optibus-operations-openapi.yml#GetAPICalculationLimit
+- name: GetPublicKey
+  description: Fetch driver app notifications custom action public key
+  source_operation: openapi/optibus-operations-openapi.yml#GetPublicKey
+- name: EventWebhookPost
+  description: Receive Operational Webhook Event
+  source_operation: openapi/optibus-operations-openapi.yml#EventWebhookPost
+- name: GetSigningTimesV2
+  description: List driver signing times for a date in a region
+  source_operation: openapi/optibus-operations-openapi.yml#GetSigningTimesV2
+- name: GetDriversSigningDeviations
+  description: Fetch signing deviations
+  source_operation: openapi/optibus-operations-openapi.yml#GetDriversSigningDeviations
+- name: GetDriversV2
+  description: List drivers
+  source_operation: openapi/optibus-operations-openapi.yml#GetDriversV2
+- name: PostDriversV2
+  description: Create drivers
+  source_operation: openapi/optibus-operations-openapi.yml#PostDriversV2
+- name: PutDriversV2
+  description: Update drivers
+  source_operation: openapi/optibus-operations-openapi.yml#PutDriversV2
+- name: GetDriversDepotPeriods
+  description: Fetch driver region periods
+  source_operation: openapi/optibus-operations-openapi.yml#GetDriversDepotPeriods
+- name: GetVolunteeringPeriods
+  description: List driver volunteering periods
+  source_operation: openapi/optibus-operations-openapi.yml#GetVolunteeringPeriods
+- name: GetDriverGroupsInfo
+  description: List driver groups
+  source_operation: openapi/optibus-operations-openapi.yml#GetDriverGroupsInfo
+- name: GetEmploymentPeriodsV2
+  description: List driver employment periods
+  source_operation: openapi/optibus-operations-openapi.yml#GetEmploymentPeriodsV2
+- name: PostDriverEmploymentPeriods
+  description: Create driver employment period
+  source_operation: openapi/optibus-operations-openapi.yml#PostDriverEmploymentPeriods
+- name: PutDriverEmploymentPeriodById
+  description: Update driver employment period
+  source_operation: openapi/optibus-operations-openapi.yml#PutDriverEmploymentPeriodById
+- name: GetDriversCustomAttributes
+  description: List driver custom attributes
+  source_operation: openapi/optibus-operations-openapi.yml#GetDriversCustomAttributes
+- name: PutDriversCustomAttributes
+  description: Create/update driver custom attributes
+  source_operation: openapi/optibus-operations-openapi.yml#PutDriversCustomAttributes
+- name: GetAbsencesV2
+  description: List driver absences
+  source_operation: openapi/optibus-operations-openapi.yml#GetAbsencesV2
+- name: PostDriverAbsences
+  description: Create/update driver absences
+  source_operation: openapi/optibus-operations-openapi.yml#PostDriverAbsences
+- name: GetTimeOffBalances
+  description: List driver time-off balances
+  source_operation: openapi/optibus-operations-openapi.yml#GetTimeOffBalances
+- name: PutTimeOffBalances
+  description: Create/update driver time-off balances
+  source_operation: openapi/optibus-operations-openapi.yml#PutTimeOffBalances
+- name: GetAbsenceQuotas
+  description: List absence quota usage
+  source_operation: openapi/optibus-operations-openapi.yml#GetAbsenceQuotas
+- name: GetOperationalPlanV2
+  description: Fetch operational plan (v2)
+  source_operation: openapi/optibus-operations-openapi.yml#GetOperationalPlanV2
+- name: GetCalendarPlannedAssignments
+  description: List calendar planned assignments
+  source_operation: openapi/optibus-operations-openapi.yml#GetCalendarPlannedAssignments
+- name: GetCalendarDriverDayLabels
+  description: List driver day labels
+  source_operation: openapi/optibus-operations-openapi.yml#GetCalendarDriverDayLabels
+- name: GetCalendarInfo
+  description: Fetch calendar tasks
+  source_operation: openapi/optibus-operations-openapi.yml#GetCalendarInfo

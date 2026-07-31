@@ -1,0 +1,33 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/optibus-operations-openapi.yml + https://optibus.com/security/
+standards:
+- id: oauth2
+  conforms: false
+  evidence: no oauth2 securityScheme; API key auth only
+- id: openid-connect
+  conforms: false
+- id: api-key-auth
+  conforms: true
+  evidence: apiKey securityScheme in header (Authorization)
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: custom typed error envelope, not application/problem+json
+- id: openapi-3.0
+  conforms: true
+  evidence: OpenAPI 3.0.0 published
+- id: semver
+  conforms: true
+  evidence: Versioning section commits to Semantic Versioning
+- id: webhooks-hmac
+  conforms: true
+  evidence: outbound event webhooks signed with HMAC-SHA256 (X-HMAC-SIGNATURE)
+- id: gtfs
+  conforms: true
+  evidence: Optibus generates/exports GTFS, GTFS-Flex, GTFS-Fares v2 (product docs)
+- id: iso-27001
+  conforms: true
+  evidence: ISO 27001:2022 certified (published certificate at optibus.com/security/)
+- id: soc2
+  conforms: true
+  evidence: SOC 2 referenced in Optibus AI/security summary (llms.txt)

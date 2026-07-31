@@ -1,0 +1,80 @@
+generated: '2026-07-20'
+method: searched
+source: https://apidocs.ops.optibus.co/ (Changelog section)
+scheme: semver
+current_version: 2.8.17
+notes: Optibus Operations API follows Semantic Versioning; endpoint-level version prefixes (/v1, /v2)
+  may lag the overall API major. Changelog is embedded in the API reference under the Changelog tag.
+entries:
+- version: v2.8.19
+  date: '2026-06-30'
+  breaking: false
+  highlight: 'GET /v2/duty-stats-calculation-limit`: added `tasksLimit` to the response — the maximum
+    number of tasks a single `GET /v2/duty-stats` request may ask for via the `taskIds` filter. Use it
+    when `daysLimit` is `0` (a day too dense to fetch who'
+- version: v2.8.18
+  date: '2026-06-25'
+  breaking: false
+  highlight: 'Event Webhooks: added the `cancel_duty`, `reactivate_duty`, and `delete_duty` operational
+    actions to the real-time stream, emitted when a dispatcher cancels, reactivates, or deletes a duty.
+    Each ships the full run / run_assignment / run_eve'
+- version: v2.8.17
+  date: '2026-06-16'
+  breaking: false
+  highlight: 'GET /v2/drivers`: added the `customAttributes[<attributeId>]=value` query parameter to filter
+    drivers by custom attribute value. Repeat a key to match any of several values (OR) for an attribute;
+    listing several distinct attribute keys requ'
+- version: v2.8.16
+  date: '2026-06-15'
+  breaking: false
+  highlight: 'GET /v1/drivers/volunteering-periods`: new endpoint returning driver volunteering periods
+    (periods where a driver is willing to volunteer for extra work, e.g. on a rest day or for overtime).
+    Supports optional filtering by driver IDs and by '
+- version: v2.8.15
+  date: '2026-06-09'
+  breaking: false
+  highlight: 'GET /v2/duty-stats`: New endpoint returning per-task work-engine statistics for a date range,
+    mirroring the duty side panel in the Ops UI. Returns one row per `(date, task)` pair with the statistics
+    configured under the customer''s `dutyFilt'
+- version: v2.8.14
+  date: '2026-05-29'
+  breaking: false
+  highlight: 'POST /v1/tacho-activity`: Renamed from `POST /v1/ops/tacho-activity` — the `/ops` prefix
+    was unintended. The endpoint remains unstable and not yet available for use; the previous path is
+    no longer served.'
+- version: v2.8.13
+  date: '2026-05-26'
+  breaking: false
+  highlight: 'POST /v1/absences`: If any driver in the request would exceed the configured yearly `maxCap`
+    for an absence type, that driver''s absence imports are blocked and the request is rejected with HTTP
+    422 `absenceTypeCapExceeded`. Response details'
+- version: v2.8.12
+  date: '2026-05-16'
+  breaking: false
+  highlight: 'GET /v2/signing-times`: new endpoint returning matched expected/actual sign-on and sign-off
+    times for drivers on a given operational date in a region. Supports filtering by driver IDs and is
+    paginated by driver (100 drivers per page). A dri'
+- version: v2.8.11
+  date: '2026-05-15'
+  breaking: false
+  highlight: 'POST /v1/ops/tacho-activity`: New endpoint to ingest normalized Tachograph activity data.
+    Accepts 1-5000 activities per request. Listed under the new "Data Ingestion" section. **⚠️ Unstable
+    — not yet available for use. The endpoint currentl'
+- version: v2.8.10
+  date: '2026-05-13'
+  breaking: false
+  highlight: 'GET /v1/drivers/absence-quotas`: new endpoint to read absence quota configuration and aggregated
+    usage for a date range, with optional `depotId` and `unitIds` scope. OpenAPI documentation describes
+    how **unit-level** quota rows (`depotQuota'
+- version: v2.8.9
+  date: '2026-04-22'
+  breaking: false
+  highlight: 'PUT /v1/vehicles`: Added optional `mainRegionPeriod` on each request item (same shape as
+    `GET /v1/vehicles`). When it differs from the vehicle''s current assignment, a new main region period
+    starts today (customer timezone). If a main period'
+- version: v2.8.8
+  date: '2026-04-16'
+  breaking: false
+  highlight: 'GET /v2/operational-plan`: Fixed block events containing `RosterDutyEventReference` entries
+    whose `dutyId` does not match any task in the response. Such orphaned references are now stripped
+    from the block''s events array. Note: a block whose'

@@ -1,0 +1,27 @@
+generated: '2026-07-20'
+method: searched
+source: https://apidocs.ops.optibus.co/ (Versioning + Changelog sections)
+versioning:
+  scheme: semver
+  current: 2.8.17
+  endpoint_prefix: /v{n}/
+  docs: https://apidocs.ops.optibus.co/#tag/Versioning
+deprecation:
+  policy_documented: true
+  policy_url: https://apidocs.ops.optibus.co/#tag/Versioning
+  summary: Optibus commits not to make breaking changes to existing endpoints; breaking changes ship as
+    a new versioned endpoint (e.g. /v2 -> /v3). Removing endpoints/response properties or changing property
+    types is treated as breaking.
+  sunset_header: false
+status_page: https://status.optibus.co/
+deprecated_operations:
+- openapi/optibus-operations-openapi.yml#GetVehiclesInfo
+- openapi/optibus-operations-openapi.yml#GetVehicleAttributes
+- openapi/optibus-operations-openapi.yml#GetAbsenceByDrivers
+- openapi/optibus-operations-openapi.yml#GetDriversInfo
+- openapi/optibus-operations-openapi.yml#PostDrivers
+- openapi/optibus-operations-openapi.yml#ListSigningDeviationsV0Deprecated
+- openapi/optibus-operations-openapi.yml#GetDriverAttributes
+- openapi/optibus-operations-openapi.yml#GetAbsenceQuotasViaQuery
+- openapi/optibus-operations-openapi.yml#GetDepotOperationalPlan
+- openapi/optibus-operations-openapi.yml#GetOperationalPlan
