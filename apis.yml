@@ -748,6 +748,10 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: MCPServer
+  url: mcp/optibus-mcp.yml
+- type: Overlay
+  url: overlays/optibus-operations-overlay.yaml
 - type: DeveloperPortal
   url: https://apidocs.ops.optibus.co/
 - type: Documentation
