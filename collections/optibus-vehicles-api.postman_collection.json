@@ -1,0 +1,971 @@
+{
+  "item": [
+    {
+      "id": "664a3b06-4319-449a-ad1f-ebb079f15ec1",
+      "name": "Vehicles",
+      "description": {
+        "content": "API endpoints for managing vehicles.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3e0e74a3-1100-4f69-b2cc-7a6f437d72c2",
+          "name": "List vehicles",
+          "request": {
+            "name": "List vehicles",
+            "description": {
+              "content": "List existing vehicles in the system, with optional filtering capability.\n\nNotes:\n- The result is paginated. Check the `pagination` property in the response to see the total number of pages and the current page number.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "vehicles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "vehicleIds",
+                  "value": "<string>",
+                  "description": "- Comma-separated list of vehicle IDs to filter for"
+                },
+                {
+                  "disabled": false,
+                  "key": "onDate",
+                  "value": "<string>",
+                  "description": "- Date string formatted as `YYYY-MM-dd` for which we want data returned. If not provided, today's date will be used. The date specified here affects the data returned for certain properties such as `mainRegionPeriod`, `loanedRegionPeriods`, `decommissioned`, and `customAttributes`, and also the behaviour of the `isDecommissioned` and `regionNames` query parameters."
+                },
+                {
+                  "disabled": false,
+                  "key": "regionNames",
+                  "value": "<string>",
+                  "description": "- Comma-separated list of region names to filter on. Vehicles belonging to any of the regions (either main or loaned) on the date specified by `onDate` (or today's date if not provided) will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "isDecommissioned",
+                  "value": "<boolean>",
+                  "description": "- Whether to filter for decommissioned vehicles on the date specified by `onDate` (or today's date if not provided). Set to `true` to filter for decommissioned vehicles, and `false` to filter for active vehicles. Leave unspecified to return all vehicles."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "- 1-indexed integer indicating which page of results to pull"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ab2878dd-ac5f-4f96-83b2-826db7e94e8e",
+              "name": "Vehicles fetched successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vehicleIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "onDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "regionNames",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isDecommissioned",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pagination\": {\n    \"totalPages\": \"<integer>\",\n    \"currentPage\": \"<integer>\",\n    \"nextPage\": \"<integer>\"\n  },\n  \"vehicles\": [\n    {\n      \"customAttributes\": {\n        \"key_0\": [\n          9571.098269030006,\n          5866.027894507497\n        ]\n      },\n      \"decommissioned\": true,\n      \"loanedRegionPeriods\": [\n        {\n          \"regionName\": \"string\",\n          \"depotName\": \"string\"\n        },\n        {\n          \"regionName\": \"string\",\n          \"depotName\": \"string\"\n        }\n      ],\n      \"mainRegionPeriod\": {\n        \"regionName\": \"string\",\n        \"depotName\": \"string\"\n      },\n      \"id\": \"string\",\n      \"decommissionedOnDate\": \"2005-12-21\",\n      \"model\": \"string\",\n      \"type\": \"string\",\n      \"note\": \"string\",\n      \"parkingLocation\": \"string\",\n      \"licensePlate\": \"string\"\n    },\n    {\n      \"customAttributes\": {\n        \"key_0\": [\n          7239.9223665863665,\n          1636.9918072898292\n        ],\n        \"key_1\": [\n          3167.083768705138,\n          533.6686358909049\n        ],\n        \"key_2\": [\n          8267.889637609918,\n          6960.81255035781\n        ]\n      },\n      \"decommissioned\": true,\n      \"loanedRegionPeriods\": [\n        {\n          \"regionName\": \"string\",\n          \"depotName\": \"string\"\n        },\n        {\n          \"regionName\": \"string\",\n          \"depotName\": \"string\"\n        }\n      ],\n      \"mainRegionPeriod\": {\n        \"regionName\": \"string\",\n        \"depotName\": \"string\"\n      },\n      \"id\": \"string\",\n      \"decommissionedOnDate\": \"2007-04-12\",\n      \"model\": \"string\",\n      \"type\": \"string\",\n      \"note\": \"string\",\n      \"parkingLocation\": \"string\",\n      \"licensePlate\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a05fcc44-2b57-4586-8b16-8007a2b5d54b",
+              "name": "Possible error types: `Invalid request schema` (schema of your request does not match the specification)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vehicleIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "onDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "regionNames",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isDecommissioned",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"Invalid request schema\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aa5640be-d882-42bf-b229-acdfef1cfd72",
+              "name": "Possible error types: `pageNotFound` (requested page number is out of range; details.totalPages indicates the number of pages available)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vehicleIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "onDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "regionNames",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isDecommissioned",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"pageNotFound\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1c5944a3-c080-46d2-9a3b-0339d5f67a95",
+          "name": "Create vehicles",
+          "request": {
+            "name": "Create vehicles",
+            "description": {
+              "content": "Add new vehicles to the system.\n\nNotes:\n- This API endpoint does not support modifying existing vehicles. If you need to update an existing vehicle, use the `PUT /v1/vehicles` API endpoint instead.\n- Each request is atomic - either all vehicles listed in the request are created successfully, or none are created.\n- No more than 1000 vehicles can be created in a single request - please break your request into multiple smaller chunks if you need to create more than 1000 vehicles.\n- The specification of expected values for the `customAttributes` field and whether they are mandatory or not is determined by the attribute definitions in the \"Vehicle attributes\" preference in your Ops instance.\n  - Attributes with type `STRING` expect a string to be set for `customAttributes[attributeId]`.\n  - Attributes with type `NUMBER` expect a number to be set for `customAttributes[attributeId]`.\n  - Attributes with type `BOOLEAN` expect a boolean to be set for `customAttributes[attributeId]`.\n  - Attributes with type `DATE` expect a date string formatted as `YYYY-MM-dd` to be set for `customAttributes[attributeId]`.\n  - Attributes with type `SINGLE_SELECT` expect the `value` of one of the available select options to be set for `customAttributes[attributeId]`.\n  - Attributes with type `MULTI_SELECT` expect an array of strings (each one being the `value` of one of the available select options) to be set for `customAttributes[attributeId]`.\n  - Attributes with type `DURATION` expect a duration string formatted as `HH:mm` (where `HH` is an integer between 0 and 999, and `mm` is an integer between 0 and 59) to be set for `customAttributes[attributeId]`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "vehicles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicles\": [\n    {\n      \"regionName\": \"<string>\",\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"decommissionedOnDate\": \"<date>\",\n      \"decommissioned\": \"<boolean>\",\n      \"model\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"parkingLocation\": \"<string>\",\n      \"licensePlate\": \"<string>\"\n    },\n    {\n      \"regionName\": \"<string>\",\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"decommissionedOnDate\": \"<date>\",\n      \"decommissioned\": \"<boolean>\",\n      \"model\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"parkingLocation\": \"<string>\",\n      \"licensePlate\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1935878a-01bb-4305-a8f0-6b9b3be57d3e",
+              "name": "Vehicles created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"vehicles\": [\n    {\n      \"regionName\": \"<string>\",\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"key_1\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"decommissionedOnDate\": \"<date>\",\n      \"decommissioned\": \"<boolean>\",\n      \"model\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"parkingLocation\": \"<string>\",\n      \"licensePlate\": \"<string>\"\n    },\n    {\n      \"regionName\": \"<string>\",\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"key_1\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"decommissionedOnDate\": \"<date>\",\n      \"decommissioned\": \"<boolean>\",\n      \"model\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"parkingLocation\": \"<string>\",\n      \"licensePlate\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdVehicleIds\": [\n    \"item-123\",\n    \"item-456\",\n    \"item-789\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9a5b58a-f6d0-42cf-a9e3-ff2878c7b68c",
+              "name": "Possible error types: `Invalid request schema` (schema of your request does not match the specification), `tooManyItems` (you specified >1000 items in your request), `noItems` (you specified 0 items in your request), `invalidFieldContent` (the content of one or more fields in your request is invalid)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"vehicles\": [\n    {\n      \"regionName\": \"<string>\",\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"key_1\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"decommissionedOnDate\": \"<date>\",\n      \"decommissioned\": \"<boolean>\",\n      \"model\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"parkingLocation\": \"<string>\",\n      \"licensePlate\": \"<string>\"\n    },\n    {\n      \"regionName\": \"<string>\",\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"key_1\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"decommissionedOnDate\": \"<date>\",\n      \"decommissioned\": \"<boolean>\",\n      \"model\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"parkingLocation\": \"<string>\",\n      \"licensePlate\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"vehicleAlreadyExists\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ad64bbb-d400-421a-a904-fde5863749bb",
+              "name": "Possible error types: `conflictProcessingRequest` (temporary concurrency conflict, retry shortly), `vehicleAlreadyExists` (one or more vehicle IDs specified in the request already exist in the system)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"vehicles\": [\n    {\n      \"regionName\": \"<string>\",\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"key_1\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"decommissionedOnDate\": \"<date>\",\n      \"decommissioned\": \"<boolean>\",\n      \"model\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"parkingLocation\": \"<string>\",\n      \"licensePlate\": \"<string>\"\n    },\n    {\n      \"regionName\": \"<string>\",\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"key_1\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"decommissionedOnDate\": \"<date>\",\n      \"decommissioned\": \"<boolean>\",\n      \"model\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"parkingLocation\": \"<string>\",\n      \"licensePlate\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"vehicleAlreadyExists\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f0742617-178f-43d6-9e00-83b3ffe048ea",
+          "name": "Update vehicles",
+          "request": {
+            "name": "Update vehicles",
+            "description": {
+              "content": "Update existing vehicles in the system.\n\nNotes:\n- This API endpoint expects a full representation of the vehicle. Omitting an optional field will clear the field, with one exception: `mainRegionPeriod` (see below).\n- This API endpoint does not support creating new vehicles. If you need to create a new vehicle, use the `POST /v1/vehicles` API endpoint instead.\n- Each request is atomic - either all vehicles listed in the request are updated successfully, or none are updated.\n- No more than 1000 vehicles can be updated in a single request - please break your request into multiple smaller chunks if you need to update more than 1000 vehicles.\n- The specification of expected values for the `customAttributes` field and whether they are mandatory or not is determined by the attribute definitions in the \"Vehicle attributes\" preference in your Ops instance.\n  - Attributes with type `STRING` expect a string to be set for `customAttributes[attributeId]`.\n  - Attributes with type `NUMBER` expect a number to be set for `customAttributes[attributeId]`.\n  - Attributes with type `BOOLEAN` expect a boolean to be set for `customAttributes[attributeId]`.\n  - Attributes with type `DATE` expect a date string formatted as `YYYY-MM-dd` to be set for `customAttributes[attributeId]`.\n  - Attributes with type `SINGLE_SELECT` expect the `value` of one of the available select options to be set for `customAttributes[attributeId]`.\n  - Attributes with type `MULTI_SELECT` expect an array of strings (each one being the `value` of one of the available select options) to be set for `customAttributes[attributeId]`.\n  - Attributes with type `DURATION` expect a duration string formatted as `HH:mm` (where `HH` is an integer between 0 and 999, and `mm` is an integer between 0 and 59) to be set for `customAttributes[attributeId]`.\n- If the value of any custom attribute is updated compared to the existing value, a new entry will be added to the history of that attribute starting from the current date. If an entry for that attribute already exists starting today, it will be overwritten instead, and an `overwriteCustomAttributeEntry` warning will be returned in the response.\n- `mainRegionPeriod` is the **only optional field whose omission does not clear the value**. Every vehicle must always belong to a region, so there is no way to remove a region assignment - you can only change it to a different region. Omitting `mainRegionPeriod` (or sending the same value currently returned by `GET /v1/vehicles`) leaves the vehicle's region assignment untouched. Sending a different region/depot creates a new region period starting today; if a region period already starts today it is overwritten in place and an `overwriteMainRegionPeriodEntry` warning is returned in the response.\n- When there are non-fatal side effects (for example, today's entries being overwritten), the response includes a `warnings` array describing them. The property is omitted when there are no warnings. The request is still considered successful when warnings are returned.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "vehicles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicles\": [\n    {\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"key_1\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"decommissionedOnDate\": \"<date>\",\n      \"decommissioned\": \"<boolean>\",\n      \"model\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"mainRegionPeriod\": {\n        \"regionName\": \"<string>\",\n        \"depotName\": \"<string>\"\n      },\n      \"parkingLocation\": \"<string>\",\n      \"licensePlate\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"key_1\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"decommissionedOnDate\": \"<date>\",\n      \"decommissioned\": \"<boolean>\",\n      \"model\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"mainRegionPeriod\": {\n        \"regionName\": \"<string>\",\n        \"depotName\": \"<string>\"\n      },\n      \"parkingLocation\": \"<string>\",\n      \"licensePlate\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f3654973-270d-4ea8-bdd5-aa64ea20d4a2",
+              "name": "Vehicles updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"vehicles\": [\n    {\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"decommissionedOnDate\": \"<date>\",\n      \"decommissioned\": \"<boolean>\",\n      \"model\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"mainRegionPeriod\": {\n        \"regionName\": \"<string>\",\n        \"depotName\": \"<string>\"\n      },\n      \"parkingLocation\": \"<string>\",\n      \"licensePlate\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"key_1\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"key_2\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"decommissionedOnDate\": \"<date>\",\n      \"decommissioned\": \"<boolean>\",\n      \"model\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"mainRegionPeriod\": {\n        \"regionName\": \"<string>\",\n        \"depotName\": \"<string>\"\n      },\n      \"parkingLocation\": \"<string>\",\n      \"licensePlate\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"updatedVehicleIds\": [\n    \"item-123\",\n    \"item-456\",\n    \"item-789\"\n  ],\n  \"warnings\": [\n    {\n      \"details\": [\n        {\n          \"vehicleId\": \"string\"\n        },\n        {\n          \"vehicleId\": \"string\"\n        }\n      ],\n      \"message\": \"string\",\n      \"type\": \"overwriteMainRegionPeriodEntry\"\n    },\n    {\n      \"details\": [\n        {\n          \"vehicleId\": \"string\"\n        },\n        {\n          \"vehicleId\": \"string\"\n        }\n      ],\n      \"message\": \"string\",\n      \"type\": \"overwriteMainRegionPeriodEntry\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b7b137a-d72f-4a91-8375-615321a8e469",
+              "name": "Possible error types: `Invalid request schema` (schema of your request does not match the specification), `tooManyItems` (you specified >1000 items in your request), `noItems` (you specified 0 items in your request), `invalidFieldContent` (the content of one or more fields in your request is invalid)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"vehicles\": [\n    {\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"decommissionedOnDate\": \"<date>\",\n      \"decommissioned\": \"<boolean>\",\n      \"model\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"mainRegionPeriod\": {\n        \"regionName\": \"<string>\",\n        \"depotName\": \"<string>\"\n      },\n      \"parkingLocation\": \"<string>\",\n      \"licensePlate\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"key_1\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"key_2\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"decommissionedOnDate\": \"<date>\",\n      \"decommissioned\": \"<boolean>\",\n      \"model\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"mainRegionPeriod\": {\n        \"regionName\": \"<string>\",\n        \"depotName\": \"<string>\"\n      },\n      \"parkingLocation\": \"<string>\",\n      \"licensePlate\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"invalidFieldContent\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1623f0bd-0874-448a-bd7d-11ee3b353be5",
+              "name": "Possible error types: `conflictProcessingRequest` (temporary concurrency conflict, retry shortly)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"vehicles\": [\n    {\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"decommissionedOnDate\": \"<date>\",\n      \"decommissioned\": \"<boolean>\",\n      \"model\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"mainRegionPeriod\": {\n        \"regionName\": \"<string>\",\n        \"depotName\": \"<string>\"\n      },\n      \"parkingLocation\": \"<string>\",\n      \"licensePlate\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"key_1\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"key_2\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"decommissionedOnDate\": \"<date>\",\n      \"decommissioned\": \"<boolean>\",\n      \"model\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"mainRegionPeriod\": {\n        \"regionName\": \"<string>\",\n        \"depotName\": \"<string>\"\n      },\n      \"parkingLocation\": \"<string>\",\n      \"licensePlate\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"invalidFieldContent\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc55aebf-775f-45bb-ba20-0d1b33638e3a",
+              "name": "Possible error types: `vehiclesNotFound` (one or more vehicle IDs specified in the request do not exist in the system)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"vehicles\": [\n    {\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"decommissionedOnDate\": \"<date>\",\n      \"decommissioned\": \"<boolean>\",\n      \"model\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"mainRegionPeriod\": {\n        \"regionName\": \"<string>\",\n        \"depotName\": \"<string>\"\n      },\n      \"parkingLocation\": \"<string>\",\n      \"licensePlate\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"key_1\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"key_2\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"decommissionedOnDate\": \"<date>\",\n      \"decommissioned\": \"<boolean>\",\n      \"model\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"mainRegionPeriod\": {\n        \"regionName\": \"<string>\",\n        \"depotName\": \"<string>\"\n      },\n      \"parkingLocation\": \"<string>\",\n      \"licensePlate\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"invalidFieldContent\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ae1e1d72-a8a9-4dd9-b710-111134516138",
+          "name": "Fetch vehicle region periods",
+          "request": {
+            "name": "Fetch vehicle region periods",
+            "description": {
+              "content": "Returns the information about the vehicles depot periods by vehicle ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vehicles",
+                "depot-period"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "vehicleId",
+                  "value": "<string>",
+                  "description": "- Returns the depot periods for the given vehicle IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "vehicleId",
+                  "value": "<string>",
+                  "description": "- Returns the depot periods for the given vehicle IDs"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "59fd51ea-1aca-4944-b519-905091f35a4b",
+              "name": "Vehicles depot periods",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vehicles",
+                    "depot-period"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vehicleId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "vehicleId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": [\n    {\n      \"depotId\": \"string\",\n      \"periodId\": \"string\",\n      \"startDate\": \"<date>\",\n      \"type\": \"MAIN\",\n      \"vehicleId\": \"string\",\n      \"opUnitId\": \"string\",\n      \"endTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"endDate\": \"<date>\"\n    },\n    {\n      \"depotId\": \"string\",\n      \"periodId\": \"string\",\n      \"startDate\": \"<date>\",\n      \"type\": \"FIRST\",\n      \"vehicleId\": \"string\",\n      \"opUnitId\": \"string\",\n      \"endTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"endDate\": \"<date>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff017d6c-1cec-40f7-a8a1-9a05867fa3a1",
+              "name": "The request URI exceeds 10240 bytes which is not supported. This probably results from trying to query more than a thousand vehicles at the same time. Please consider chunking your request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vehicles",
+                    "depot-period"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vehicleId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "vehicleId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request-URI Too Long",
+              "code": 414,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a3843527-2423-41e4-9544-dc9ecc138d67",
+    "name": "Optibus Operations Driver Absences Vehicles API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "**Welcome to the Optibus Operations API documentation!**\n\nOptibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations' functionality, allowing you to integrate it with your own applications and systems.\n\n\n",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,283 @@
+{
+  "item": [
+    {
+      "id": "8e810d7f-522f-4a56-b086-57bfdf7c0a6c",
+      "name": "Payroll",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "86d9e5bf-406e-493c-9d21-549304d929fd",
+          "name": "Fetch payroll",
+          "request": {
+            "name": "Fetch payroll",
+            "description": {
+              "content": "Retrieves payroll values for depots within a specified date range and for specified driver IDs or by depotId.\nThere is a limit of 204k work-entities calculation per request to avoid timeouts. This limit enables, for example,\na calculation of 100 drivers for 30 days with 100 daily work-entities defined. In case the limit is exceeded, a 413 error code will be returned, together with the allowed amount of drivers for the existing configuration.\n\nThis endpoint is only available if the `Use Payroll V2` feature flag is enabled and work-entity as well as payroll rules have been properly setup.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "payroll"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "depotId",
+                  "value": "<string>",
+                  "description": "- Optional. The ID of a specific depot for which payroll is to be retrieved."
+                },
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "- Optional. An array of driver IDs for whom payroll is to be retrieved."
+                },
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "- Optional. An array of driver IDs for whom payroll is to be retrieved."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>",
+                  "description": "- The start date of the payroll period"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "- The end date of the payroll period"
+                },
+                {
+                  "disabled": false,
+                  "key": "paycodes",
+                  "value": "<string>",
+                  "description": "- Optional. An array of paycodes to filter the payroll values by. If not provided, all paycodes are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "paycodes",
+                  "value": "<string>",
+                  "description": "- Optional. An array of paycodes to filter the payroll values by. If not provided, all paycodes are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "shouldUseCache",
+                  "value": "<boolean>",
+                  "description": "- Optional. Will attempt to retreive the data from the cache if true. If false, will always calculate the data."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "532e9ff7-4f5e-446c-81b3-cab4742d8c8b",
+              "name": "Payroll information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payroll"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depotId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "paycodes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "paycodes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "shouldUseCache",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"occurrenceDates\": {\n      \"endDate\": \"<date>\",\n      \"startDate\": \"<date>\"\n    },\n    \"result\": {\n      \"value\": 8252.274000978441,\n      \"rate\": 7304.691185127993,\n      \"unit\": \"Number\",\n      \"timeIntervals\": [\n        {\n          \"end\": \"1985-09-05\",\n          \"start\": \"1985-02-21\"\n        },\n        {\n          \"end\": \"1967-12-02\",\n          \"start\": \"1985-07-31\"\n        }\n      ]\n    },\n    \"periodType\": \"monthly\",\n    \"workEntityIdReference\": \"string\",\n    \"codeId\": \"<string>\",\n    \"workingDriver\": {\n      \"driverExternalId\": \"string\",\n      \"driverUuid\": \"string\"\n    },\n    \"depotId\": \"string\"\n  },\n  {\n    \"occurrenceDates\": {\n      \"endDate\": \"<date>\",\n      \"startDate\": \"<date>\"\n    },\n    \"result\": {\n      \"value\": 9027.870370870014,\n      \"rate\": 785.7664473073867,\n      \"unit\": \"Hours\",\n      \"timeIntervals\": [\n        {\n          \"end\": \"1960-06-24\",\n          \"start\": \"1958-12-27\"\n        },\n        {\n          \"end\": \"2024-04-10\",\n          \"start\": \"2014-07-07\"\n        }\n      ]\n    },\n    \"periodType\": \"biWeekly\",\n    \"workEntityIdReference\": \"string\",\n    \"codeId\": \"<string>\",\n    \"workingDriver\": {\n      \"driverExternalId\": \"string\",\n      \"driverUuid\": \"string\"\n    },\n    \"depotId\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d9a68dfe-86fa-4591-a78e-89e82fdb52f5",
+              "name": "The request is too long. Please reduce the number of drivers or days.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payroll"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depotId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "paycodes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "paycodes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "shouldUseCache",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "2871bd93-b8c2-43f1-b623-4ca2dd510b62",
+    "name": "Optibus Operations Driver Absences Payroll API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "**Welcome to the Optibus Operations API documentation!**\n\nOptibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations' functionality, allowing you to integrate it with your own applications and systems.\n\n\n",
+      "type": "text/plain"
+    }
+  }
+}

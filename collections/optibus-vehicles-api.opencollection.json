@@ -1,0 +1,134 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Optibus Operations Driver Absences Vehicles API",
+    "version": "2.8.17"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Vehicles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List vehicles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v1/vehicles",
+            "params": [
+              {
+                "name": "vehicleIds",
+                "value": "",
+                "type": "query",
+                "description": "- Comma-separated list of vehicle IDs to filter for"
+              },
+              {
+                "name": "onDate",
+                "value": "",
+                "type": "query",
+                "description": "- Date string formatted as `YYYY-MM-dd` for which we want data returned. If not provided, today's date will be used. The date specified here affects the data returned for certain properties such as `mainRegionPeriod`, `loanedRegionPeriods`, `decommissioned`, and `customAttributes`, and also the behaviour of the `isDecommissioned` and `regionNames` query parameters."
+              },
+              {
+                "name": "regionNames",
+                "value": "",
+                "type": "query",
+                "description": "- Comma-separated list of region names to filter on. Vehicles belonging to any of the regions (either main or loaned) on the date specified by `onDate` (or today's date if not provided) will be returned."
+              },
+              {
+                "name": "isDecommissioned",
+                "value": "",
+                "type": "query",
+                "description": "- Whether to filter for decommissioned vehicles on the date specified by `onDate` (or today's date if not provided). Set to `true` to filter for decommissioned vehicles, and `false` to filter for active vehicles. Leave unspecified to return all vehicles."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "- 1-indexed integer indicating which page of results to pull"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List existing vehicles in the system, with optional filtering capability.\n\nNotes:\n- The result is paginated. Check the `pagination` property in the response to see the total number of pages and the current page number."
+        },
+        {
+          "info": {
+            "name": "Create vehicles",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v1/vehicles",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Add new vehicles to the system.\n\nNotes:\n- This API endpoint does not support modifying existing vehicles. If you need to update an existing vehicle, use the `PUT /v1/vehicles` API endpoint instead.\n- Each request is atomic - either all vehicles listed in the request are created successfully, or none are created.\n- No more than 1000 vehicles can be created in a single request - please break your request into multiple smaller chunks if you need to create more than 1000 vehicles.\n- The specificatio"
+        },
+        {
+          "info": {
+            "name": "Update vehicles",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v1/vehicles",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update existing vehicles in the system.\n\nNotes:\n- This API endpoint expects a full representation of the vehicle. Omitting an optional field will clear the field, with one exception: `mainRegionPeriod` (see below).\n- This API endpoint does not support creating new vehicles. If you need to create a new vehicle, use the `POST /v1/vehicles` API endpoint instead.\n- Each request is atomic - either all vehicles listed in the request are updated successfully, or none are updated.\n- No more than 1000 ve"
+        },
+        {
+          "info": {
+            "name": "Fetch vehicle region periods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/vehicles/depot-period",
+            "params": [
+              {
+                "name": "vehicleId",
+                "value": "",
+                "type": "query",
+                "description": "- Returns the depot periods for the given vehicle IDs"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the information about the vehicles depot periods by vehicle ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,977 @@
+{
+  "item": [
+    {
+      "id": "146b2775-6263-41bc-ae20-35aa00b0ac87",
+      "name": "Driver Employment Periods",
+      "description": {
+        "content": "API endpoints for managing employment periods for drivers - i.e. periods where they are employed, hired, terminated, etc.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4fec7e66-d905-403c-a897-59d9b6f6fd0e",
+          "name": "List driver employment periods",
+          "request": {
+            "name": "List driver employment periods",
+            "description": {
+              "content": "List existing driver employment periods in the system, with optional filtering capability.\n\nNotes:\n- The result is paginated. Check the `pagination` property in the response to see the total number of pages and the current page number.\n- Information about the modelling of date periods for each entry:\n  - `startDate` is mandatory\n  - `endDate` is optional - if omitted, the employment period will be ongoing indefinitely",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "drivers",
+                "employment-periods"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "- Comma-separated list of driver IDs to filter for"
+                },
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "- Comma-separated list of driver IDs to filter for"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<date>",
+                  "description": "- Date string formatted as `YYYY-MM-dd`. Only employment periods that end on or after this date are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<date>",
+                  "description": "- Date string formatted as `YYYY-MM-dd`. Only employment periods that start on or before this date are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "- 1-indexed integer indicating which page of results to pull"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2cec49c4-16ca-41d3-9626-98292d53a1c0",
+              "name": "Driver employment periods fetched successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "drivers",
+                    "employment-periods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pagination\": {\n    \"currentPage\": 1,\n    \"nextPage\": 2,\n    \"totalPages\": 10\n  },\n  \"employmentPeriods\": [\n    {\n      \"driverId\": \"driver-334\",\n      \"periodId\": \"period-123\",\n      \"startDate\": \"2026-01-03\",\n      \"endDate\": \"2026-01-03\"\n    },\n    {\n      \"driverId\": \"driver-334\",\n      \"periodId\": \"period-456\",\n      \"startDate\": \"2027-01-01\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c26bafd4-8ec9-47ad-91b6-6ac1edbf2cc1",
+              "name": "Possible error types: `Invalid request schema` (schema of your request does not match the specification), `invalidDatesCombination` (the combination of fromDate and toDate is invalid)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "drivers",
+                    "employment-periods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"invalidDatesCombination\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4fe9dc0-018b-4fd2-b0ec-89cb88e3a2c9",
+              "name": "Possible error types: `pageNotFound` (requested page number is out of range; details.totalPages indicates the number of pages available)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "drivers",
+                    "employment-periods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"invalidDatesCombination\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a28d63be-b561-4104-86a1-d3d91179847c",
+          "name": "Create driver employment period",
+          "request": {
+            "name": "Create driver employment period",
+            "description": {
+              "content": "Creates a single driver employment period.\n\nNotes:\n- Behaviour of the `periodId` field:\n  - If a `periodId` is specified that already exists, you will receive an error (this endpoint does not support updating existing employment\n    periods - use the `PUT /v1/drivers/employment-periods/{periodId}` endpoint instead)\n  - If a `periodId` is specified that does not already exist, a new employment period will be created with the specified ID.\n  - If a `periodId` is not specified, a new employment period will be created with an automatically generated ID.\n  - We recommend you set the `periodId` to a corresponding fixed identifier from your external system that you are synchronizing with, if such an identifier exists.\n- Employment periods for a single driver may not overlap each other.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "drivers",
+                "employment-periods"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"startDate\": \"<date>\",\n  \"driverId\": \"<string>\",\n  \"endDate\": \"<date>\",\n  \"periodId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "44f481f4-0322-4ada-92c7-401405a7cc23",
+              "name": "Driver employment period created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "employment-periods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"periodId\": \"period-123\",\n  \"driverId\": \"driver-123\",\n  \"startDate\": \"2026-01-01\",\n  \"endDate\": \"2027-05-17\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"periodId\": \"period-123\",\n  \"driverId\": \"driver-123\",\n  \"startDate\": \"2026-01-01\",\n  \"endDate\": \"2027-05-17\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e99ae0c-4348-4dcc-be0b-93f318f2121f",
+              "name": "Possible error types: `Invalid request schema` (schema of your request does not match the specification), `invalidFieldContent` (the content of one or more fields in your request is invalid), `alreadyExists` (the `periodId` specified already exists), `employmentPeriodOverlap` (the employment period would overlap with an existing employment period)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "employment-periods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"periodId\": \"period-123\",\n  \"driverId\": \"driver-123\",\n  \"startDate\": \"2026-01-01\",\n  \"endDate\": \"2027-05-17\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"alreadyExists\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fcc92fc8-7634-4b77-a1a3-626d023130aa",
+              "name": "Possible error types: `alreadyExists` (the `periodId` specified already exists), `conflictProcessingRequest` (temporary concurrency conflict, retry shortly)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "employment-periods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"periodId\": \"period-123\",\n  \"driverId\": \"driver-123\",\n  \"startDate\": \"2026-01-01\",\n  \"endDate\": \"2027-05-17\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"alreadyExists\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aeb437ff-d358-4dce-9b35-0c16eedfc007",
+              "name": "Possible error types: `employmentPeriodOverlap` (the employment period would overlap with an existing employment period)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "employment-periods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"periodId\": \"period-123\",\n  \"driverId\": \"driver-123\",\n  \"startDate\": \"2026-01-01\",\n  \"endDate\": \"2027-05-17\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"alreadyExists\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "587c1f82-e055-41d1-a2c3-6d7c173cf6ae",
+          "name": "Update driver employment period",
+          "request": {
+            "name": "Update driver employment period",
+            "description": {
+              "content": "Updates a single driver employment period by ID.\n\nNotes:\n- You can only update the `startDate` and `endDate` fields of an employment period, not the `driverId`.\n- If you set `shouldAutoUnassignFromEndDate` to `true`, the system will auto-unassign duties from the day after the `endDate` if\n  this is the last employment period chronologically for the driver.\n  - If auto-unassignment fails for any of the regions which the driver has work in, a warning will be returned in the response to allow for manual intervention.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "drivers",
+                "employment-periods",
+                ":periodId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "periodId",
+                  "description": "(Required) - The employment period ID to update"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shouldAutoUnassignFromEndDate\": \"<boolean>\",\n  \"startDate\": \"<date>\",\n  \"driverId\": \"<string>\",\n  \"endDate\": \"<date>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2a300a76-ebb7-4d63-8a68-a562e724f111",
+              "name": "Driver employment period updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "employment-periods",
+                    ":periodId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "periodId",
+                      "description": "(Required) - The employment period ID to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"driverId\": \"driver-123\",\n  \"startDate\": \"2026-01-01\",\n  \"endDate\": \"2027-05-17\",\n  \"shouldAutoUnassignFromEndDate\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"warnings\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "12ac7a2e-bec2-4007-a9fb-1d8e6c3fbd49",
+              "name": "Possible error types: `Invalid request schema` (schema of your request does not match the specification), `invalidFieldContent` (the content of one or more fields in your request is invalid), `cannotChangeField` (the `driverId` field cannot be changed)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "employment-periods",
+                    ":periodId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "periodId",
+                      "description": "(Required) - The employment period ID to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"driverId\": \"driver-123\",\n  \"startDate\": \"2026-01-01\",\n  \"endDate\": \"2027-05-17\",\n  \"shouldAutoUnassignFromEndDate\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"conflictProcessingRequest\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eca6427b-37ab-472f-953e-2d151416f5d5",
+              "name": "Possible error types: `notFound` (the employment period ID specified does not exist)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "employment-periods",
+                    ":periodId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "periodId",
+                      "description": "(Required) - The employment period ID to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"driverId\": \"driver-123\",\n  \"startDate\": \"2026-01-01\",\n  \"endDate\": \"2027-05-17\",\n  \"shouldAutoUnassignFromEndDate\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"conflictProcessingRequest\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "961e818c-9f4d-4e9f-81c6-37a1e04019e0",
+              "name": "Possible error types: `conflictProcessingRequest` (temporary concurrency conflict, retry shortly), `alreadyExists` (the `periodId` specified already exists)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "employment-periods",
+                    ":periodId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "periodId",
+                      "description": "(Required) - The employment period ID to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"driverId\": \"driver-123\",\n  \"startDate\": \"2026-01-01\",\n  \"endDate\": \"2027-05-17\",\n  \"shouldAutoUnassignFromEndDate\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"conflictProcessingRequest\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "14990d15-fbb0-4c57-9a00-18bff7238f49",
+              "name": "Possible error types: `employmentPeriodOverlap` (the employment period would overlap with an existing employment period)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "employment-periods",
+                    ":periodId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "periodId",
+                      "description": "(Required) - The employment period ID to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"driverId\": \"driver-123\",\n  \"startDate\": \"2026-01-01\",\n  \"endDate\": \"2027-05-17\",\n  \"shouldAutoUnassignFromEndDate\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"conflictProcessingRequest\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d9cb6732-a604-4508-ad92-c4accf20bd24",
+    "name": "Optibus Operations Driver Absences Driver Employment Periods API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "**Welcome to the Optibus Operations API documentation!**\n\nOptibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations' functionality, allowing you to integrate it with your own applications and systems.\n\n\n",
+      "type": "text/plain"
+    }
+  }
+}

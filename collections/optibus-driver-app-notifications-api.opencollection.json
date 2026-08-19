@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Optibus Operations Driver Absences Driver App Notifications API",
+    "version": "2.8.17"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Driver App Notifications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch driver app notifications custom action public key",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/driver-app/notifications-custom-action-public-key"
+          },
+          "docs": "Returns the public key that can be used to verify the payloads attached to URLs\nopened via a custom action attached to a notification received in the Optibus Driver App.\n\nNo authentication is required to access this endpoint."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

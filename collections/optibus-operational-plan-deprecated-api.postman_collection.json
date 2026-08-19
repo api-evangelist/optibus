@@ -1,0 +1,505 @@
+{
+  "item": [
+    {
+      "id": "88e6cfd5-452e-40e0-b3ed-ba75617da21f",
+      "name": "Operational Plan (Deprecated)",
+      "description": {
+        "content": "These API endpoints are deprecated and could be removed in a future version. Please use GET /v2/operational-plan instead.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "eafae41b-54e2-4199-b17a-a852b2b208bb",
+          "name": "Fetch depot operational plan",
+          "request": {
+            "name": "Fetch depot operational plan",
+            "description": {
+              "content": "**WARNING: This is deprecated - you should use `/v2/operational-plan` described below. This API will not be supported beyond 2024-06-30.** Returns the daily operational plans for a specified date range and a specific depot.\n\n**Spare Types Support**: When the spare types feature flag is enabled, spare tasks will include additional properties:\n- `spareType`: The spare type code (e.g., \"SPARE1\", \"SPARE2\")\n- `displayId`: Will show the configured spare type name instead of the original display ID\n- `dutyType`: Will be set to \"spare\" for spare tasks\n- `startTime` and `endTime`: Will be included in the task summary for spare tasks based on the relevant spare type preference configuration",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "operational-plan",
+                ":depotId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<date>",
+                  "description": "(Required) - Returns the operational plans from this date (both from and to are required)"
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<date>",
+                  "description": "(Required) - Returns the daily operational plans to this date (both from and to are required)"
+                },
+                {
+                  "disabled": false,
+                  "key": "driversIds",
+                  "value": "<string>",
+                  "description": "- Returns the daily operational plans for the filtered driver IDs (when this filter is used, the response won't include unassigned tasks)"
+                },
+                {
+                  "disabled": false,
+                  "key": "vehicleIds",
+                  "value": "<string>",
+                  "description": "- Returns the daily operational plans for the filtered vehicle IDs (when this filter is used, the response won't include unassigned blocks)"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeStops",
+                  "value": "<string>",
+                  "description": "-  When true, the response will include a full stop list on each trip (requests may take a long time or even time out)"
+                },
+                {
+                  "disabled": false,
+                  "key": "assignedOnly",
+                  "value": "<string>",
+                  "description": "- When true, the response will only contain tasks that have drivers assigned to them"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeUnassigned",
+                  "value": "<string>",
+                  "description": "-  In conjunction with supplying driver ids, When true return unassigned tasks as well as assigned tasks according to the driver filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "fetchPlannedAssignmentsProperties",
+                  "value": "<boolean>",
+                  "description": "- When true, the response will include the properties of the plannedAssignments"
+                },
+                {
+                  "disabled": false,
+                  "key": "taskDisplayIds",
+                  "value": "<string>",
+                  "description": "- When specified, filters tasks, blocks, task assignments, and block assignments to only include those associated with the provided task display IDs. Can be a comma separated list (eg taskDisplayIds=T1,T2)"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "depotId",
+                  "description": "(Required) - Returns the daily operational plans for this depot ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "25277645-c7ae-443d-bdc2-c3990f9aa8f6",
+              "name": "The daily operational plan for the specified depot during the specified time range",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "operational-plan",
+                    ":depotId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "driversIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "vehicleIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeStops",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "assignedOnly",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeUnassigned",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fetchPlannedAssignmentsProperties",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "taskDisplayIds",
+                      "value": "T100,T200,T300"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "depotId",
+                      "description": "(Required) - Returns the daily operational plans for this depot ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"assignments\": [\n    {\n      \"properties\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"plannedAssignments\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"vehicleAssignments\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"driverAssignments\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"date\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    {\n      \"properties\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"plannedAssignments\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"vehicleAssignments\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"driverAssignments\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"date\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"blocks\": [\n    {\n      \"disabled\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"summary\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"type\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"displayId\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"id\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"srcBlockId\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"data\": \"\",\n      \"events\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"description\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    {\n      \"disabled\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"summary\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"type\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"displayId\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"id\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"srcBlockId\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"data\": \"\",\n      \"events\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"description\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"drivers\": [\n    {\n      \"id\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"archived\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"firstName\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"lastName\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"uuid\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"middleName\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    {\n      \"id\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"archived\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"firstName\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"lastName\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"uuid\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"middleName\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"tasks\": [\n    {\n      \"spareType\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"events\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    {\n      \"spareType\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"events\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ],\n  \"vehicles\": [\n    {\n      \"depot\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"id\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"videoSurveillance\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"passengerCounting\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"bicycles\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"consumptionMeter\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"externalSound\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"internalSound\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"sideDisplay\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"rearDisplay\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"frontDisplay\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"onboardMonitor\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"staticInformation\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"kneeling\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"foldingSystem\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"ramp\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"loweredFloor\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"corridor\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"wheelchair\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"climatization\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"ecological\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"newSeminew\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"emission\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"propulsion\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"vclass\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"typology\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"registrationDate\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"startDate\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"availableStanding\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"availableSeats\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"owner\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"make\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"archivedOn\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"archived\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"capacity\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"branding\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"model\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"nextDowntime\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"type\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"mileage\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"description\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"opUnitId\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"parkingLocation\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"licensePlate\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    {\n      \"depot\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"id\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"videoSurveillance\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"passengerCounting\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"bicycles\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"consumptionMeter\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"externalSound\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"internalSound\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"sideDisplay\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"rearDisplay\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"frontDisplay\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"onboardMonitor\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"staticInformation\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"kneeling\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"foldingSystem\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"ramp\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"loweredFloor\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"corridor\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"wheelchair\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"climatization\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"ecological\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"newSeminew\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"emission\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"propulsion\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"vclass\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"typology\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"registrationDate\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"startDate\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"availableStanding\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"availableSeats\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"owner\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"make\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"archivedOn\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"archived\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"capacity\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"branding\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"model\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"nextDowntime\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"type\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"mileage\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"description\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"opUnitId\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"parkingLocation\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"licensePlate\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6dd053e-b02e-4952-b4b6-081d51f21bc1",
+              "name": "For very large responses, the result is served as a presigned S3 file. This redirection is handled automatically by the majority of clients.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "operational-plan",
+                    ":depotId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "driversIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "vehicleIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeStops",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "assignedOnly",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeUnassigned",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fetchPlannedAssignmentsProperties",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "taskDisplayIds",
+                      "value": "T100,T200,T300"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "depotId",
+                      "description": "(Required) - Returns the daily operational plans for this depot ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Found",
+              "code": 302,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3da63ef2-34c1-4a64-ac18-6275d895884c",
+          "name": "Fetch operational plan",
+          "request": {
+            "name": "Fetch operational plan",
+            "description": {
+              "content": "**WARNING: This is deprecated - you should use `/v2/operational-plan` described below. This API will not be supported beyond 2024-06-30.** Returns the daily operational plans for a specified date range for every depot.\n\n**Spare Types Support**: When the spare types feature flag is enabled, spare tasks will include additional properties:\n- `spareType`: The spare type code (e.g., \"SPARE1\", \"SPARE2\")\n- `displayId`: Will show the configured spare type name instead of the original display ID\n- `dutyType`: Will be set to \"spare\" for spare tasks\n- `startTime` and `endTime`: Will be included in the task summary for spare tasks based on the relevant spare type preference configuration",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "operational-plan"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<date>",
+                  "description": "(Required) - Returns the operational plans from this date (both from and to are required)"
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<date>",
+                  "description": "(Required) - Returns the daily operational plans to this date (both from and to are required)"
+                },
+                {
+                  "disabled": false,
+                  "key": "taskDisplayIds",
+                  "value": "<string>",
+                  "description": "- When specified, filters tasks, blocks, task assignments, and block assignments to only include those associated with the provided task display IDs. Can be a comma separated list (eg taskDisplayIds=T1,T2)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7943fb6f-6cdf-49f3-8844-8b4f386be5bd",
+              "name": "The daily operational plan for the specified time range",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "operational-plan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "taskDisplayIds",
+                      "value": "T100,T200,T300"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"depots\": {\n    \"key_0\": {\n      \"assignments\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"blocks\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"drivers\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"tasks\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"vehicles\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"key_1\": {\n      \"assignments\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"blocks\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"drivers\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"tasks\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"vehicles\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6544c97e-bc7f-4e7b-9c69-8c3f40741b9c",
+              "name": "For very large responses, the result is served as a presigned S3 file. This redirection is handled automatically by the majority of clients.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "operational-plan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "taskDisplayIds",
+                      "value": "T100,T200,T300"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Found",
+              "code": 302,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7df3e74e-d6e2-43a6-8049-e56dadacf35f",
+    "name": "Optibus Operations Driver Absences Operational Plan (Deprecated) API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "**Welcome to the Optibus Operations API documentation!**\n\nOptibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations' functionality, allowing you to integrate it with your own applications and systems.\n\n\n",
+      "type": "text/plain"
+    }
+  }
+}

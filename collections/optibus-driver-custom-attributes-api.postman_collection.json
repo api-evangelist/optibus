@@ -1,0 +1,628 @@
+{
+  "item": [
+    {
+      "id": "d7780dc6-8ef9-4941-b7ae-5b20e96994d4",
+      "name": "Driver Custom Attributes",
+      "description": {
+        "content": "API endpoints for managing custom attributes for drivers - i.e. additional properties that can be set for drivers - including querying and updating their historical values.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4b5168ab-6886-4291-b20a-b86bb0ac421c",
+          "name": "List driver custom attributes",
+          "request": {
+            "name": "List driver custom attributes",
+            "description": {
+              "content": "List custom attribute entries for drivers, with filters. Although the `GET /v2/drivers` API endpoint also returns custom attribute values for\neach driver, it is more limited, as it only returns attribute values for the specified date. This API endpoint allows you to query the full history\nof attribute values for drivers, and see the date range in which those values applied.\n\nNotes:\n- The result is paginated. Check the `pagination` property in the response to see the total number of pages and the current page number.\n  - The exact number of entries per page may vary, as the results are paginated by _driver_ rather than count of entries.\n- The entry history for the `type`, `union` and `grade` fields are also queryable through this endpoint. These entries appear under attribute ID `driverType`, `driverUnion` and `driverGrade`.\n- The specification for values and whether they are mandatory or not is determined by the attribute definitions in the \"Driver attributes\" preference in your Ops instance.\n  - Attributes with type `STRING` will have `value` set to a string\n  - Attributes with type `NUMBER` will have `value` set to a number\n  - Attributes with type `BOOLEAN` will have `value` set to a boolean\n  - Attributes with type `DATE` will have `value` set to a date string formatted as `YYYY-MM-dd`\n  - Attributes with type `SINGLE_SELECT` will have `value` set to the `value` of one of the available select options\n  - Attributes with type `MULTI_SELECT` will have `value` set to an array of strings (each one being the `value` of one of the available select options)\n  - Attributes with type `DURATION` will have `value` set to a duration string formatted as `HH:mm` (where `HH` is an integer between 0 and 999, and `mm` is an integer between 0 and 59)\n  - Attributes configured with `\"isMandatory\": false` may possibly have periods where the value is not set - in that case, the `value` will be omitted from the response\n- Information about the modelling of date periods for each entry:\n  - `startDate` is mandatory\n  - `endDate` is optional - if omitted, the entry value will be ongoing indefinitely into the future",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "drivers",
+                "custom-attributes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "- Comma-separated list of driver IDs to filter for"
+                },
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "- Comma-separated list of driver IDs to filter for"
+                },
+                {
+                  "disabled": false,
+                  "key": "attributeIds",
+                  "value": "<string>",
+                  "description": "- Comma-separated list of attribute IDs to filter for (according to the attribute definitions in the \"Driver attributes\" preference in your Ops instance)"
+                },
+                {
+                  "disabled": false,
+                  "key": "attributeIds",
+                  "value": "<string>",
+                  "description": "- Comma-separated list of attribute IDs to filter for (according to the attribute definitions in the \"Driver attributes\" preference in your Ops instance)"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<date>",
+                  "description": "- Date string formatted as `YYYY-MM-dd`. Only entries that end on or after this date are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<date>",
+                  "description": "- Date string formatted as `YYYY-MM-dd`. Only entries that start on or before this date are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "- 1-indexed integer indicating which page of results to pull"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2f7d6a70-0793-4185-98b9-6d16aafee6fd",
+              "name": "Driver custom attributes fetched successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "drivers",
+                    "custom-attributes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "attributeIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "attributeIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pagination\": {\n    \"totalPages\": \"<integer>\",\n    \"currentPage\": \"<integer>\",\n    \"nextPage\": \"<integer>\"\n  },\n  \"entries\": [\n    {\n      \"attributeId\": \"string\",\n      \"startDate\": \"<date>\",\n      \"value\": [\n        9418.014856987887,\n        3443.3379895740836\n      ],\n      \"driverId\": \"string\",\n      \"entryId\": \"string\",\n      \"endDate\": \"<date>\"\n    },\n    {\n      \"attributeId\": \"string\",\n      \"startDate\": \"<date>\",\n      \"value\": [\n        4917.924830547367,\n        1317.796002200531\n      ],\n      \"driverId\": \"string\",\n      \"entryId\": \"string\",\n      \"endDate\": \"<date>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "be3d66dc-63c8-401a-8026-4041e7422a7e",
+              "name": "Possible error types: `Invalid request schema` (schema of your request does not match the specification), `invalidDatesCombination` (the combination of fromDate and toDate is invalid)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "drivers",
+                    "custom-attributes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "attributeIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "attributeIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"pageNotFound\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "39a21311-3382-4a20-b853-1f85208895c5",
+              "name": "Possible error types: `pageNotFound` (requested page number is out of range; details.totalPages indicates the number of pages available)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "drivers",
+                    "custom-attributes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "attributeIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "attributeIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"pageNotFound\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "de984b7a-8737-4120-872e-68607b1d4862",
+          "name": "Create/update driver custom attributes",
+          "request": {
+            "name": "Create/update driver custom attributes",
+            "description": {
+              "content": "Creates or updates custom attribute entries for drivers. Although the `POST /v2/drivers` and `PUT /v2/drivers` API endpoints also allow you to create and update custom attribute values,\nthey are more limited in that they only allow you to create and update custom attribute values as of the current date. This API endpoint allows you to manage the full history of\ncustom attribute values for drivers.\n\nNotes:\n- The specification of expected values and whether they are mandatory or not is determined by the attribute definitions in the \"Driver attributes\" preference in your Ops instance.\n  - Attributes with type `STRING` expect a string to be set for `value`.\n  - Attributes with type `NUMBER` expect a number to be set for `value`.\n  - Attributes with type `BOOLEAN` expect a boolean to be set for `value`.\n  - Attributes with type `DATE` expect a date string formatted as `YYYY-MM-dd` to be set for `value`.\n  - Attributes with type `SINGLE_SELECT` expect the `value` of one of the available select options to be set for `value`.\n  - Attributes with type `MULTI_SELECT` expect an array of strings (each one being the `value` of one of the available select options) to be set for `value`.\n  - Attributes with type `DURATION` expect a duration string formatted as `HH:mm` (where `HH` is an integer between 0 and 999, and `mm` is an integer between 0 and 59) to be set for `value`.\n  - Attributes configured with `\"isMandatory\": false` allow the value to be 'unset' - simply omit the `value` field for that entry to unset it.\n- Behaviour of the `entryId` field:\n  - If an `entryId` is specified and an entry with that ID already exists, the existing entry will be updated.\n  - If an `entryId` is specified and an entry with that ID does not already exist, a new entry will be created with the specified ID.\n  - If an `entryId` is not specified, a new entry will be created with an automatically generated ID.\n- You must maintain the consistency of the attribute timeline:\n  - No entries for a given attribute on a given driver should overlap each other\n  - There should be no gap between the date periods of entries for a given attribute on a given driver (i.e. if one entry ends on `2024-01-01`, the next entry should start on `2024-01-02`)\n  - Each attribute on a given driver should have exactly one entry with no end date\n- For non-mandatory attributes, if you wish to represent a period with 'no value set', create an entry with no `value` field for that date period.\n- Each request is atomic - either all entries listed in the request are created/updated successfully, or none are created/updated.\n- No more than 1000 entries can be created/updated in a single request - please break your request into multiple smaller chunks if you need to create/update more than 1000 entries.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "drivers",
+                "custom-attributes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entries\": [\n    {\n      \"startDate\": \"<date>\",\n      \"value\": [\n        \"<double>\",\n        \"<double>\"\n      ],\n      \"attributeId\": \"<string>\",\n      \"driverId\": \"<string>\",\n      \"endDate\": \"<date>\",\n      \"entryId\": \"<string>\"\n    },\n    {\n      \"startDate\": \"<date>\",\n      \"value\": [\n        \"<double>\",\n        \"<double>\"\n      ],\n      \"attributeId\": \"<string>\",\n      \"driverId\": \"<string>\",\n      \"endDate\": \"<date>\",\n      \"entryId\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f71dd073-2c5c-4fd3-884c-0e5408097e82",
+              "name": "Driver custom attribute entries created and/or updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "drivers",
+                    "custom-attributes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entries\": [\n    {\n      \"startDate\": \"<date>\",\n      \"value\": [\n        \"<double>\",\n        \"<double>\"\n      ],\n      \"attributeId\": \"<string>\",\n      \"driverId\": \"<string>\",\n      \"endDate\": \"<date>\",\n      \"entryId\": \"<string>\"\n    },\n    {\n      \"startDate\": \"<date>\",\n      \"value\": [\n        \"<double>\",\n        \"<double>\"\n      ],\n      \"attributeId\": \"<string>\",\n      \"driverId\": \"<string>\",\n      \"endDate\": \"<date>\",\n      \"entryId\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdEntryIds\": [\n    \"item-123\",\n    \"item-456\",\n    \"item-789\"\n  ],\n  \"modifiedEntryIds\": [\n    \"item-123\",\n    \"item-456\",\n    \"item-789\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a22e088-1762-4bda-a722-d6a1b6b27f29",
+              "name": "Possible error types: `Invalid request schema` (schema of your request does not match the specification), `invalidFieldContent` (the content of one or more fields in your request is invalid), `noItems` (you specified 0 items in your request), `tooManyItems` (you specified >1000 items in your request)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "drivers",
+                    "custom-attributes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entries\": [\n    {\n      \"startDate\": \"<date>\",\n      \"value\": [\n        \"<double>\",\n        \"<double>\"\n      ],\n      \"attributeId\": \"<string>\",\n      \"driverId\": \"<string>\",\n      \"endDate\": \"<date>\",\n      \"entryId\": \"<string>\"\n    },\n    {\n      \"startDate\": \"<date>\",\n      \"value\": [\n        \"<double>\",\n        \"<double>\"\n      ],\n      \"attributeId\": \"<string>\",\n      \"driverId\": \"<string>\",\n      \"endDate\": \"<date>\",\n      \"entryId\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"conflictProcessingRequest\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5355864d-f118-4d9d-be59-d556effae9a1",
+              "name": "Possible error types: `conflictProcessingRequest` (temporary concurrency conflict, retry shortly)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "drivers",
+                    "custom-attributes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entries\": [\n    {\n      \"startDate\": \"<date>\",\n      \"value\": [\n        \"<double>\",\n        \"<double>\"\n      ],\n      \"attributeId\": \"<string>\",\n      \"driverId\": \"<string>\",\n      \"endDate\": \"<date>\",\n      \"entryId\": \"<string>\"\n    },\n    {\n      \"startDate\": \"<date>\",\n      \"value\": [\n        \"<double>\",\n        \"<double>\"\n      ],\n      \"attributeId\": \"<string>\",\n      \"driverId\": \"<string>\",\n      \"endDate\": \"<date>\",\n      \"entryId\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"conflictProcessingRequest\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "607d22a1-6072-4972-8434-1f8c0a60b1b8",
+              "name": "Possible error types: `invalidAttributeTimeline` (some edits result in invalid attribute timelines), `driversNotFound` (one or more driver IDs specified in the request do not exist in the system)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "drivers",
+                    "custom-attributes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entries\": [\n    {\n      \"startDate\": \"<date>\",\n      \"value\": [\n        \"<double>\",\n        \"<double>\"\n      ],\n      \"attributeId\": \"<string>\",\n      \"driverId\": \"<string>\",\n      \"endDate\": \"<date>\",\n      \"entryId\": \"<string>\"\n    },\n    {\n      \"startDate\": \"<date>\",\n      \"value\": [\n        \"<double>\",\n        \"<double>\"\n      ],\n      \"attributeId\": \"<string>\",\n      \"driverId\": \"<string>\",\n      \"endDate\": \"<date>\",\n      \"entryId\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"conflictProcessingRequest\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "267dd2b2-451a-434c-aa2b-6e9263584683",
+    "name": "Optibus Operations Driver Absences Driver Custom Attributes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "**Welcome to the Optibus Operations API documentation!**\n\nOptibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations' functionality, allowing you to integrate it with your own applications and systems.\n\n\n",
+      "type": "text/plain"
+    }
+  }
+}

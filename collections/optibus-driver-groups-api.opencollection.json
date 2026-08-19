@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Optibus Operations Driver Absences Driver Groups API",
+    "version": "2.8.17"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Driver Groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List driver groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/group",
+            "params": [
+              {
+                "name": "regionUuids",
+                "value": "",
+                "type": "query",
+                "description": "- Comma-separated list of region IDs to filter for"
+              },
+              {
+                "name": "depotsIds",
+                "value": "",
+                "type": "query",
+                "description": "- [deprecated - use `regionUuids` instead] Comma-separated list of _region_ IDs to filter for"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List driver groups that exist in the system."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,226 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Optibus Operations Driver Absences Drivers (Deprecated) API",
+    "version": "2.8.17"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Drivers (Deprecated)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List driver absences (deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v1/absences",
+            "params": [
+              {
+                "name": "driver",
+                "value": "",
+                "type": "query",
+                "description": "- Returns the absences of drivers by driver ID"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "- Returns the absences for a specified date range (both from and to are required)"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "- Returns the absences for a specified date range (both from and to are required)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "**WARNING: This API endpoint is deprecated - you should use `GET /v2/drivers/absences` instead.**\n\nReturns absences of drivers.\n- this does include absences configured for specific `Driver Groups`\n- this does not include `Public Holidays` as configured in preferences"
+        },
+        {
+          "info": {
+            "name": "Fetch drivers (deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/driver",
+            "params": [
+              {
+                "name": "driversIds",
+                "value": "",
+                "type": "query",
+                "description": "- Returns the driver information for the given driver IDs"
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "query",
+                "description": "- Returns the attributes information for the given date"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "**WARNING: This API endpoint is deprecated - you should use `GET /v2/drivers` instead.**\n\nReturns the driver information, with filters."
+        },
+        {
+          "info": {
+            "name": "Create/update drivers (deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v1/drivers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "**WARNING: This API endpoint is deprecated - you should use `POST /v2/drivers` and `PUT /v2/drivers` instead.**\n\nAdds or updates a specific driver."
+        },
+        {
+          "info": {
+            "name": "Fetch signing deviations (deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/signing-deviations",
+            "params": [
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "The start of the date range to get the signing deviations from"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "The end of the date range to get the signing deviations from"
+              },
+              {
+                "name": "regionUuid",
+                "value": "",
+                "type": "query",
+                "description": "The region to get the signing deviations from"
+              },
+              {
+                "name": "driverIds",
+                "value": "",
+                "type": "query",
+                "description": "The driver IDs for which to get the signing deviations. if empty all drivers will be returned"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "**WARNING: This API endpoint is deprecated - you should use `GET /v1/drivers/signing-deviations` instead.**\n\nCalculate the signing deviations for the drivers in the given date range and region.\nIf driverIds is empty, all drivers will be returned\nSigning deviations are calculated as the difference between the expected and actual signing times, for each sign on or sign off event.\nDeviation might be either early or late, calculated according to a defined threshold."
+        },
+        {
+          "info": {
+            "name": "Fetch driver attributes (deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v2/driver-attributes",
+            "params": [
+              {
+                "name": "driverIds",
+                "value": "",
+                "type": "query",
+                "description": "- Returns the driver attributes by driver ID"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "- Returns the attributes for a specified date range (both from and to are required)"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "- Returns the attributes for a specified date range (both from and to are required)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "**WARNING: This API endpoint is deprecated - you should use `GET /v2/drivers/custom-attributes` instead.**\n\nReturns the driver attributes."
+        },
+        {
+          "info": {
+            "name": "List absence quota usage (deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v1/drivers/absence-quotas",
+            "params": [
+              {
+                "name": "from",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "depotId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "unitIds",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "**WARNING: This API endpoint is deprecated - you should use `POST /v1/drivers/absence-quotas-query` instead.**\n\nThis compatibility endpoint accepts absence quota scope as query parameters. Query strings have practical\nsize limits, so use the POST endpoint when sending large request parameters, especially large `simulate`\npayloads."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

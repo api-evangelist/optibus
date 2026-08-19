@@ -1,0 +1,1201 @@
+{
+  "item": [
+    {
+      "id": "4098ed17-fc13-4234-b5eb-1e3eb82fc531",
+      "name": "Drivers (Deprecated)",
+      "description": {
+        "content": "These API endpoints are deprecated and could be removed in a future version. Please use the corresponding new API endpoints instead, which should offer improved usability and extra functionality.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "986e0fa7-048f-4ef2-880c-f9e6e2086dda",
+          "name": "List driver absences (deprecated)",
+          "request": {
+            "name": "List driver absences (deprecated)",
+            "description": {
+              "content": "**WARNING: This API endpoint is deprecated - you should use `GET /v2/drivers/absences` instead.**\n\nReturns absences of drivers.\n- this does include absences configured for specific `Driver Groups`\n- this does not include `Public Holidays` as configured in preferences",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "absences"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "driver",
+                  "value": "<string>",
+                  "description": "- Returns the absences of drivers by driver ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "driver",
+                  "value": "<string>",
+                  "description": "- Returns the absences of drivers by driver ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<date>",
+                  "description": "- Returns the absences for a specified date range (both from and to are required)"
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<date>",
+                  "description": "- Returns the absences for a specified date range (both from and to are required)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c653aa12-d8df-441b-aba5-72e2b591912a",
+              "name": "Driver absences",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "absences"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "driver",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driver",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": [\n    {\n      \"absenceCode\": \"string\",\n      \"absenceId\": \"<string>\",\n      \"driver\": \"<string>\",\n      \"startDate\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"endTimeNextDay\": true,\n      \"startTimeNextDay\": false,\n      \"endTime\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"endDate\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"startTime\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"absenceRequestId\": \"<string>\",\n      \"updatedOn\": \"1976-02-23T12:08:22.988Z\",\n      \"createdOn\": \"1956-06-13T05:07:02.712Z\",\n      \"metadata\": {\n        \"key_0\": {}\n      },\n      \"note\": \"string\"\n    },\n    {\n      \"absenceCode\": \"string\",\n      \"absenceId\": \"<string>\",\n      \"driver\": \"<string>\",\n      \"startDate\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"endTimeNextDay\": false,\n      \"startTimeNextDay\": true,\n      \"endTime\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"endDate\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"startTime\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"absenceRequestId\": \"<string>\",\n      \"updatedOn\": \"2020-01-17T15:54:45.095Z\",\n      \"createdOn\": \"1982-09-01T01:00:29.110Z\",\n      \"metadata\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      },\n      \"note\": \"string\"\n    }\n  ],\n  \"key_1\": [\n    {\n      \"absenceCode\": \"string\",\n      \"absenceId\": \"<string>\",\n      \"driver\": \"<string>\",\n      \"startDate\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"endTimeNextDay\": false,\n      \"startTimeNextDay\": false,\n      \"endTime\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"endDate\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"startTime\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"absenceRequestId\": \"<string>\",\n      \"updatedOn\": \"2022-07-03T09:22:18.763Z\",\n      \"createdOn\": \"1978-09-14T13:04:33.325Z\",\n      \"metadata\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {},\n        \"key_3\": {},\n        \"key_4\": {}\n      },\n      \"note\": \"string\"\n    },\n    {\n      \"absenceCode\": \"string\",\n      \"absenceId\": \"<string>\",\n      \"driver\": \"<string>\",\n      \"startDate\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"endTimeNextDay\": false,\n      \"startTimeNextDay\": true,\n      \"endTime\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"endDate\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"startTime\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"absenceRequestId\": \"<string>\",\n      \"updatedOn\": \"2026-08-12T06:09:44.338Z\",\n      \"createdOn\": \"2023-01-05T00:53:19.016Z\",\n      \"metadata\": {\n        \"key_0\": {}\n      },\n      \"note\": \"string\"\n    }\n  ],\n  \"key_2\": [\n    {\n      \"absenceCode\": \"string\",\n      \"absenceId\": \"<string>\",\n      \"driver\": \"<string>\",\n      \"startDate\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"endTimeNextDay\": false,\n      \"startTimeNextDay\": true,\n      \"endTime\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"endDate\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"startTime\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"absenceRequestId\": \"<string>\",\n      \"updatedOn\": \"1948-12-10T11:13:04.422Z\",\n      \"createdOn\": \"2024-09-01T11:05:22.885Z\",\n      \"metadata\": {\n        \"key_0\": {}\n      },\n      \"note\": \"string\"\n    },\n    {\n      \"absenceCode\": \"string\",\n      \"absenceId\": \"<string>\",\n      \"driver\": \"<string>\",\n      \"startDate\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"endTimeNextDay\": false,\n      \"startTimeNextDay\": true,\n      \"endTime\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"endDate\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"startTime\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"absenceRequestId\": \"<string>\",\n      \"updatedOn\": \"1966-02-14T00:08:29.669Z\",\n      \"createdOn\": \"1959-01-15T02:08:54.715Z\",\n      \"metadata\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {},\n        \"key_3\": {}\n      },\n      \"note\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d6fb7db3-b355-4b6a-aae5-3b2cc3e31ae8",
+          "name": "Fetch drivers (deprecated)",
+          "request": {
+            "name": "Fetch drivers (deprecated)",
+            "description": {
+              "content": "**WARNING: This API endpoint is deprecated - you should use `GET /v2/drivers` instead.**\n\nReturns the driver information, with filters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "driver"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "driversIds",
+                  "value": "<string>",
+                  "description": "- Returns the driver information for the given driver IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "driversIds",
+                  "value": "<string>",
+                  "description": "- Returns the driver information for the given driver IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "date",
+                  "value": "<date>",
+                  "description": "- Returns the attributes information for the given date"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "dd426abe-c6f6-48cb-9799-d0c2190fb4b2",
+              "name": "Driver information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "driver"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "driversIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driversIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"archived\": true,\n    \"attributes\": {\n      \"key_0\": [\n        421.74805876213696,\n        8353.786625667555\n      ],\n      \"key_1\": [\n        921.3981510370672,\n        2736.0933680224407\n      ]\n    },\n    \"employmentPeriods\": [\n      {\n        \"startDate\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"employmentPeriodId\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"endDate\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      {\n        \"startDate\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"employmentPeriodId\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"endDate\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    ],\n    \"firstName\": \"string\",\n    \"id\": \"string\",\n    \"lastName\": \"string\",\n    \"uuid\": \"string\",\n    \"note\": \"string\",\n    \"middleName\": \"string\",\n    \"avatar\": \"string\",\n    \"mobileNumber\": \"string\",\n    \"homeNumber\": \"string\",\n    \"emailAddress\": \"string\",\n    \"meta\": {\n      \"key_0\": {}\n    }\n  },\n  {\n    \"archived\": false,\n    \"attributes\": {\n      \"key_0\": [\n        5912.989351033087,\n        3335.806680161563\n      ],\n      \"key_1\": [\n        4150.864793656025,\n        6531.9173952091705\n      ]\n    },\n    \"employmentPeriods\": [\n      {\n        \"startDate\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"employmentPeriodId\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"endDate\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      {\n        \"startDate\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"employmentPeriodId\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"endDate\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    ],\n    \"firstName\": \"string\",\n    \"id\": \"string\",\n    \"lastName\": \"string\",\n    \"uuid\": \"string\",\n    \"note\": \"string\",\n    \"middleName\": \"string\",\n    \"avatar\": \"string\",\n    \"mobileNumber\": \"string\",\n    \"homeNumber\": \"string\",\n    \"emailAddress\": \"string\",\n    \"meta\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20c3fb59-2a5b-414e-a922-5a3e2113f562",
+              "name": "The request URI exceeds 10240 bytes which is not supported. This probably results from trying to query more than a thousand driversIds at the same time. Please consider chunking your request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "driver"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "driversIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driversIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request-URI Too Long",
+              "code": 414,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "835d9b37-2eda-45d2-9ee8-32e37a0d6d13",
+          "name": "Create/update drivers (deprecated)",
+          "request": {
+            "name": "Create/update drivers (deprecated)",
+            "description": {
+              "content": "**WARNING: This API endpoint is deprecated - you should use `POST /v2/drivers` and `PUT /v2/drivers` instead.**\n\nAdds or updates a specific driver.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "drivers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"id\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"opUnitId\": \"<string>\",\n    \"depotName\": \"<string>\",\n    \"group\": \"<string>\",\n    \"groupName\": \"<string>\",\n    \"depot\": \"<string>\",\n    \"regionName\": \"<string>\",\n    \"startDate\": \"<string>\",\n    \"middleName\": \"<string>\",\n    \"avatar\": \"<string>\",\n    \"mobileNumber\": \"<string>\",\n    \"homeNumber\": \"<string>\",\n    \"emailAddress\": \"<string>\",\n    \"driverType\": \"<string>\",\n    \"driverUnion\": \"<string>\",\n    \"driverGrade\": \"<string>\",\n    \"attributes\": {\n      \"key_0\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"key_1\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    }\n  },\n  {\n    \"id\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"opUnitId\": \"<string>\",\n    \"depotName\": \"<string>\",\n    \"group\": \"<string>\",\n    \"groupName\": \"<string>\",\n    \"depot\": \"<string>\",\n    \"regionName\": \"<string>\",\n    \"startDate\": \"<string>\",\n    \"middleName\": \"<string>\",\n    \"avatar\": \"<string>\",\n    \"mobileNumber\": \"<string>\",\n    \"homeNumber\": \"<string>\",\n    \"emailAddress\": \"<string>\",\n    \"driverType\": \"<string>\",\n    \"driverUnion\": \"<string>\",\n    \"driverGrade\": \"<string>\",\n    \"attributes\": {\n      \"key_0\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    }\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f5bf6f9d-91a7-4552-859a-6656d9ff0c8f",
+              "name": "Drivers information imported",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"opUnitId\": \"<string>\",\n    \"depotName\": \"<string>\",\n    \"group\": \"<string>\",\n    \"groupName\": \"<string>\",\n    \"depot\": \"<string>\",\n    \"regionName\": \"<string>\",\n    \"startDate\": \"<string>\",\n    \"middleName\": \"<string>\",\n    \"avatar\": \"<string>\",\n    \"mobileNumber\": \"<string>\",\n    \"homeNumber\": \"<string>\",\n    \"emailAddress\": \"<string>\",\n    \"driverType\": \"<string>\",\n    \"driverUnion\": \"<string>\",\n    \"driverGrade\": \"<string>\",\n    \"attributes\": {\n      \"key_0\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"key_1\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    }\n  },\n  {\n    \"id\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"opUnitId\": \"<string>\",\n    \"depotName\": \"<string>\",\n    \"group\": \"<string>\",\n    \"groupName\": \"<string>\",\n    \"depot\": \"<string>\",\n    \"regionName\": \"<string>\",\n    \"startDate\": \"<string>\",\n    \"middleName\": \"<string>\",\n    \"avatar\": \"<string>\",\n    \"mobileNumber\": \"<string>\",\n    \"homeNumber\": \"<string>\",\n    \"emailAddress\": \"<string>\",\n    \"driverType\": \"<string>\",\n    \"driverUnion\": \"<string>\",\n    \"driverGrade\": \"<string>\",\n    \"attributes\": {\n      \"key_0\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"key_1\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    }\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "090ef741-4e5f-4987-b4c1-68250df2cf05",
+          "name": "Fetch signing deviations (deprecated)",
+          "request": {
+            "name": "Fetch signing deviations (deprecated)",
+            "description": {
+              "content": "**WARNING: This API endpoint is deprecated - you should use `GET /v1/drivers/signing-deviations` instead.**\n\nCalculate the signing deviations for the drivers in the given date range and region.\nIf driverIds is empty, all drivers will be returned\nSigning deviations are calculated as the difference between the expected and actual signing times, for each sign on or sign off event.\nDeviation might be either early or late, calculated according to a defined threshold.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "signing-deviations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<date>",
+                  "description": "(Required) The start of the date range to get the signing deviations from"
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<date>",
+                  "description": "(Required) The end of the date range to get the signing deviations from"
+                },
+                {
+                  "disabled": false,
+                  "key": "regionUuid",
+                  "value": "<string>",
+                  "description": "(Required) The region to get the signing deviations from"
+                },
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "The driver IDs for which to get the signing deviations. if empty all drivers will be returned"
+                },
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "The driver IDs for which to get the signing deviations. if empty all drivers will be returned"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9dac875f-e6fc-49a0-804a-e373a87de876",
+              "name": "Drivers signing deviations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "signing-deviations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "regionUuid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": {\n    \"key_0\": [\n      {\n        \"expectedTime\": \"2024-06-30T23:30:00+02:00\",\n        \"actualTime\": \"2024-06-30T23:30:00+02:00\",\n        \"deviation\": 7805.461274236388,\n        \"signingType\": \"signOn\",\n        \"signingDeviationType\": \"late\"\n      },\n      {\n        \"expectedTime\": \"2024-06-30T23:30:00+02:00\",\n        \"actualTime\": \"2024-06-30T23:30:00+02:00\",\n        \"deviation\": 20.67447834798175,\n        \"signingType\": \"signOff\",\n        \"signingDeviationType\": \"late\"\n      }\n    ],\n    \"key_1\": [\n      {\n        \"expectedTime\": \"2024-06-30T23:30:00+02:00\",\n        \"actualTime\": \"2024-06-30T23:30:00+02:00\",\n        \"deviation\": 9650.659095547924,\n        \"signingType\": \"signOff\",\n        \"signingDeviationType\": \"early\"\n      },\n      {\n        \"expectedTime\": \"2024-06-30T23:30:00+02:00\",\n        \"actualTime\": \"2024-06-30T23:30:00+02:00\",\n        \"deviation\": 9673.596368750766,\n        \"signingType\": \"signOn\",\n        \"signingDeviationType\": \"late\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b7596c41-6de2-4a02-8f1f-fb7d9e2e98bf",
+              "name": "End date cannot be before start date",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "signing-deviations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "regionUuid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1e6c854d-2207-4af0-a009-e3eb4fc5f4f2",
+              "name": "Signing deviations validation rules are not defined for this customer",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "signing-deviations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "regionUuid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "69ed00b1-eaa9-4e96-86fb-0d901702d2b5",
+          "name": "Fetch driver attributes (deprecated)",
+          "request": {
+            "name": "Fetch driver attributes (deprecated)",
+            "description": {
+              "content": "**WARNING: This API endpoint is deprecated - you should use `GET /v2/drivers/custom-attributes` instead.**\n\nReturns the driver attributes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "driver-attributes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "- Returns the driver attributes by driver ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "- Returns the driver attributes by driver ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<string>",
+                  "description": "- Returns the attributes for a specified date range (both from and to are required)"
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<string>",
+                  "description": "- Returns the attributes for a specified date range (both from and to are required)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f457eff8-6dff-4142-b12e-0c02451f9586",
+              "name": "Driver attributes",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "driver-attributes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"driverAttributes\": {\n    \"key_0\": {\n      \"key_0\": [\n        {\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"date\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"attributeId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"date\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"attributeId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"key_1\": [\n        {\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"date\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"attributeId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"date\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"attributeId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ]\n    },\n    \"key_1\": {\n      \"key_0\": [\n        {\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"date\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"attributeId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"date\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"attributeId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ]\n    },\n    \"key_2\": {\n      \"key_0\": [\n        {\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"date\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"attributeId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"date\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"attributeId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"key_1\": [\n        {\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"date\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"attributeId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"date\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"attributeId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ]\n    }\n  },\n  \"version\": 2246.075313434246\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57808331-0e09-4114-802d-1b3947ee9ec9",
+              "name": "The request URI exceeds 10240 bytes which is not supported. This probably results from trying to query more than a thousand driverIds at the same time. Please consider chunking your request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "driver-attributes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request-URI Too Long",
+              "code": 414,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "df65fe90-9144-4b27-9e8d-5cb750437fcc",
+          "name": "List absence quota usage (deprecated)",
+          "request": {
+            "name": "List absence quota usage (deprecated)",
+            "description": {
+              "content": "**WARNING: This API endpoint is deprecated - you should use `POST /v1/drivers/absence-quotas-query` instead.**\n\nThis compatibility endpoint accepts absence quota scope as query parameters. Query strings have practical\nsize limits, so use the POST endpoint when sending large request parameters, especially large `simulate`\npayloads.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "drivers",
+                "absence-quotas"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "depotId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "unitIds",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "unitIds",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0aa02c96-825a-43b0-8bc2-6c633d1a7414",
+              "name": "Absence quotas and usage",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "absence-quotas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "depotId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "unitIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "unitIds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"quotas\": [\n    {\n      \"usage\": {\n        \"byWeek\": {\n          \"key_0\": {\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"used\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"used\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_2\": {\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"used\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"byDay\": {\n          \"key_0\": {\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"used\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"used\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_2\": {\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"used\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"byUnit\": {\n          \"key_0\": {\n            \"byWeek\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"byDay\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"byAbsenceType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"byWeek\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"byDay\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"byAbsenceType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"byAbsenceType\": {\n          \"key_0\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_2\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_3\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_4\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_2\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      \"depotQuota\": {\n        \"unitQuotas\": [\n          {\n            \"quota\": 545.7654413073942,\n            \"unitId\": \"string\"\n          },\n          {\n            \"quota\": 5386.136371874193,\n            \"unitId\": \"string\"\n          }\n        ],\n        \"depotId\": \"string\",\n        \"quota\": 1759.2763756745344\n      },\n      \"absenceTypes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"calculationTimeFrame\": \"daily\",\n      \"allowExceedQuota\": true,\n      \"hidden\": true,\n      \"quotaName\": \"string\",\n      \"quotaId\": \"string\"\n    },\n    {\n      \"usage\": {\n        \"byWeek\": {\n          \"key_0\": {\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"used\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"used\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"byDay\": {\n          \"key_0\": {\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"used\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"used\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_2\": {\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"used\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"byUnit\": {\n          \"key_0\": {\n            \"byWeek\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"byDay\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"byAbsenceType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"byAbsenceType\": {\n          \"key_0\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      \"depotQuota\": {\n        \"unitQuotas\": [\n          {\n            \"quota\": 2275.2562398859154,\n            \"unitId\": \"string\"\n          },\n          {\n            \"quota\": 7385.657611647194,\n            \"unitId\": \"string\"\n          }\n        ],\n        \"depotId\": \"string\",\n        \"quota\": 647.498909137777\n      },\n      \"absenceTypes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"calculationTimeFrame\": \"weekly\",\n      \"allowExceedQuota\": false,\n      \"hidden\": false,\n      \"quotaName\": \"string\",\n      \"quotaId\": \"string\"\n    }\n  ],\n  \"meta\": {\n    \"unitIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"depotId\": \"string\",\n    \"to\": \"string\",\n    \"from\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7b0cf7e6-2dc2-4d3d-a3ea-2066e20ccf03",
+              "name": "Possible error types: `Invalid request schema` (e.g. missing `from`/`to` or invalid date format)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "absence-quotas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "depotId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "unitIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "unitIds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"Invalid request schema\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb17d856-140d-4e77-88a0-10531f248839",
+              "name": "The request URI is too large. Use POST /v1/drivers/absence-quotas-query and send parameters in the request body, especially for large simulate payloads.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "absence-quotas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "depotId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "unitIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "unitIds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request-URI Too Long",
+              "code": 414,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a1084212-eac4-4048-80c2-c1b90d78dd84",
+    "name": "Optibus Operations Driver Absences Drivers (Deprecated) API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "**Welcome to the Optibus Operations API documentation!**\n\nOptibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations' functionality, allowing you to integrate it with your own applications and systems.\n\n\n",
+      "type": "text/plain"
+    }
+  }
+}

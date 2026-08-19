@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Optibus Operations Driver Absences Roster API",
+    "version": "2.8.17"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Roster",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch roster",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/roster",
+            "params": [
+              {
+                "name": "rosterId",
+                "value": "",
+                "type": "query",
+                "description": "- The roster ID to retrieve."
+              },
+              {
+                "name": "operationalDay",
+                "value": "",
+                "type": "query",
+                "description": "- Get the roster information for a specific date"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the roster information by roster ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

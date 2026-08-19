@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Optibus Operations Driver Absences Event Webhooks API",
+    "version": "2.8.17"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Event Webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Receive Operational Webhook Event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/<event-webhook-subscriber-endpoint>",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### Operational Webhook Events from Optibus OPS system\n\n Optibus OPS Event Webhooks deliver operational changes triggered by users in the OPS platform to subscribers as outbound HTTP webhook requests.\n\n#### ODS format based\n\nActions supported will be sent in requests to the subscribers, containing all the entities that were changed,\nsuch as `runs`, `run_assignments`, `run_events`, `blocks` and `block_assignments` with a format that has been inspired by ODS,\nfollowing the same terminology for the"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

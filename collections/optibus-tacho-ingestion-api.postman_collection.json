@@ -1,0 +1,249 @@
+{
+  "item": [
+    {
+      "id": "3828df41-0de0-4825-a28a-6cfb7a514148",
+      "name": "Tacho Ingestion",
+      "description": {
+        "content": "API endpoint for ingesting normalized Tachograph activity data from the Data Team.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7fbf7d82-5cec-4674-995b-8cfc5970d6cd",
+          "name": "Ingest Tachograph activity data",
+          "request": {
+            "name": "Ingest Tachograph activity data",
+            "description": {
+              "content": "⚠️ **Unstable — not yet available for use.** This endpoint is published for design review\nand integration planning only. It currently accepts and validates payloads but does not\npersist any data. The request/response shape may still change without notice. Do not rely\non it in production integrations until this notice is removed.\n\nAccepts a bulk upload of normalized Tachograph activities. Validates that\nall driver and vehicle IDs in the payload refer to existing entities.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "tacho-activity"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"activities\": [\n    {\n      \"activityType\": \"<string>\",\n      \"endTimestamp\": \"<dateTime>\",\n      \"startTimestamp\": \"<dateTime>\",\n      \"vehicleId\": \"<string>\",\n      \"driverId\": \"<string>\",\n      \"rawExternalCode\": \"<string>\",\n      \"vendor\": \"<string>\",\n      \"vin\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5da5ec2a-44bd-4f14-a16f-a402dd4ba0a3",
+              "name": "Tachograph activities accepted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tacho-activity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"activities\": [\n    {\n      \"activityType\": \"<string>\",\n      \"endTimestamp\": \"<dateTime>\",\n      \"startTimestamp\": \"<dateTime>\",\n      \"vehicleId\": \"<string>\",\n      \"driverId\": \"<string>\",\n      \"rawExternalCode\": \"<string>\",\n      \"vendor\": \"<string>\",\n      \"vin\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4cd074fd-fae1-4ebf-b415-48c23cf8fc51",
+              "name": "Possible error types: `Invalid request schema` (schema of your request does not match the specification), `invalidTimeRange` (one or more activities have an endTimestamp before their startTimestamp)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tacho-activity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"activities\": [\n    {\n      \"activityType\": \"<string>\",\n      \"endTimestamp\": \"<dateTime>\",\n      \"startTimestamp\": \"<dateTime>\",\n      \"vehicleId\": \"<string>\",\n      \"driverId\": \"<string>\",\n      \"rawExternalCode\": \"<string>\",\n      \"vendor\": \"<string>\",\n      \"vin\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"invalidTimeRange\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d426daca-782e-482c-a5db-a1576450272f",
+              "name": "Possible error types: `driversNotFound` (one or more driver IDs do not exist in the system), `vehiclesNotFound` (one or more vehicle IDs do not exist in the system)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tacho-activity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"activities\": [\n    {\n      \"activityType\": \"<string>\",\n      \"endTimestamp\": \"<dateTime>\",\n      \"startTimestamp\": \"<dateTime>\",\n      \"vehicleId\": \"<string>\",\n      \"driverId\": \"<string>\",\n      \"rawExternalCode\": \"<string>\",\n      \"vendor\": \"<string>\",\n      \"vin\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"invalidTimeRange\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ebf62d16-6876-4315-9a1d-d1e49fa6fc88",
+    "name": "Optibus Operations Driver Absences Tacho Ingestion API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "**Welcome to the Optibus Operations API documentation!**\n\nOptibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations' functionality, allowing you to integrate it with your own applications and systems.\n\n\n",
+      "type": "text/plain"
+    }
+  }
+}

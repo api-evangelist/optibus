@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Optibus Operations Driver Absences Vehicle Downtimes API",
+    "version": "2.8.17"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Vehicle Downtimes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List vehicle downtimes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v1/vehicles/downtimes",
+            "params": [
+              {
+                "name": "vehicleIds",
+                "value": "",
+                "type": "query",
+                "description": "- Comma-separated list of vehicle IDs to filter for"
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "- Date string formatted as `YYYY-MM-dd`. Only downtimes that end on or after this date are returned."
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "- Date string formatted as `YYYY-MM-dd`. Only downtimes that start on or before this date are returned."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "- 1-indexed integer indicating which page of results to pull"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List existing vehicle downtimes in the system, with optional filtering capability.\n\nNotes:\n- The result is paginated. Check the `pagination` property in the response to see the total number of pages and the current page number.\n- Information about the modelling of date/time periods for each entry:\n  - `startDate` is mandatory\n  - `endDate` is optional - if omitted, the downtime will be ongoing indefinitely\n  - `startTime` and `endTime` are optional - if omitted, the downtime will be for the enti"
+        },
+        {
+          "info": {
+            "name": "Create/update vehicle downtimes",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v1/vehicles/downtimes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates or updates downtimes for vehicles. As input, provide a list of downtime entries to create or update.\n\nNotes:\n- Behaviour of the `downtimeId` field:\n  - If a `downtimeId` is specified and a downtime with that ID already exists, the existing downtime will be updated.\n  - If a `downtimeId` is specified and a downtime with that ID does not already exist, a new downtime will be created with the specified ID.\n  - If a `downtimeId` is not specified, a new downtime will be created with an automa"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

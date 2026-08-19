@@ -1,0 +1,128 @@
+{
+  "item": [
+    {
+      "id": "2a6da41a-8d42-4f35-9bc1-41102b07e7e1",
+      "name": "Regions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "53ef9203-c58c-4fe3-99ea-6d1487fc6864",
+          "name": "List regions",
+          "request": {
+            "name": "List regions",
+            "description": {
+              "content": "Returns the configured organizational Regions including the corresponding Units for each Region.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "regions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3dca42c6-9ddb-42bd-99cc-642b470bab6e",
+              "name": "Regions data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "regions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"string\",\n    \"units\": [\n      {\n        \"code\": \"string\",\n        \"name\": \"string\",\n        \"uuid\": \"string\",\n        \"isArchived\": true\n      },\n      {\n        \"code\": \"string\",\n        \"name\": \"string\",\n        \"uuid\": \"string\",\n        \"isArchived\": false\n      }\n    ],\n    \"uuid\": \"string\",\n    \"isArchived\": true\n  },\n  {\n    \"name\": \"string\",\n    \"units\": [\n      {\n        \"code\": \"string\",\n        \"name\": \"string\",\n        \"uuid\": \"string\",\n        \"isArchived\": false\n      },\n      {\n        \"code\": \"string\",\n        \"name\": \"string\",\n        \"uuid\": \"string\",\n        \"isArchived\": true\n      }\n    ],\n    \"uuid\": \"string\",\n    \"isArchived\": false\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "307cdf7c-b43f-4393-bc93-3955238e5bbf",
+    "name": "Optibus Operations Driver Absences Regions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "**Welcome to the Optibus Operations API documentation!**\n\nOptibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations' functionality, allowing you to integrate it with your own applications and systems.\n\n\n",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Optibus Operations Driver Absences Preferences API",
+    "version": "2.8.17"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Preferences",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List holidays",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v1/preferences/holidays",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the configured holidays (as in bank holidays).\nThis is distinct from individual driver absences.\nIf `startDate` and `endDate` are provided, the response will include only holidays within that date range.\nIf neither is provided, all configured holidays are returned.\n\n### Important Notes:\n- Both `startDate` and `endDate` must be provided together.\n- Dates are expected in the format `YYYY-MM-DD`."
+        },
+        {
+          "info": {
+            "name": "List absence types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v1/preferences/absence-types",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the configured absence types."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,228 @@
+{
+  "item": [
+    {
+      "id": "87490b29-0de4-4788-9d89-4e0c777fe1ea",
+      "name": "Preferences",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fbfb617d-c4e7-41b9-8063-a959ca6f26a6",
+          "name": "List holidays",
+          "request": {
+            "name": "List holidays",
+            "description": {
+              "content": "Returns the configured holidays (as in bank holidays).\nThis is distinct from individual driver absences.\nIf `startDate` and `endDate` are provided, the response will include only holidays within that date range.\nIf neither is provided, all configured holidays are returned.\n\n### Important Notes:\n- Both `startDate` and `endDate` must be provided together.\n- Dates are expected in the format `YYYY-MM-DD`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "preferences",
+                "holidays"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "443270cd-b88d-41f8-af00-0135ef26200a",
+              "name": "Holiday preferences",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "preferences",
+                    "holidays"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"string\",\n    \"timeDefinition\": {\n      \"to\": \"1993-11-11\",\n      \"from\": \"1961-12-16\"\n    },\n    \"groupName\": \"string\"\n  },\n  {\n    \"name\": \"string\",\n    \"timeDefinition\": {\n      \"to\": \"1951-03-17\",\n      \"from\": \"1957-09-04\"\n    },\n    \"groupName\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dca0bc7f-fa91-46df-b4f6-696ba745bbb2",
+          "name": "List absence types",
+          "request": {
+            "name": "List absence types",
+            "description": {
+              "content": "Returns the configured absence types.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "preferences",
+                "absence-types"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "27d99a3c-0f7d-4251-9ae5-209e0c571530",
+              "name": "Absence types",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "preferences",
+                    "absence-types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"absenceTypes\": [\n    {\n      \"name\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e7d303a9-f162-435d-bea4-e6ca449d1afb",
+    "name": "Optibus Operations Driver Absences Preferences API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "**Welcome to the Optibus Operations API documentation!**\n\nOptibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations' functionality, allowing you to integrate it with your own applications and systems.\n\n\n",
+      "type": "text/plain"
+    }
+  }
+}

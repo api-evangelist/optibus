@@ -1,0 +1,140 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Optibus Operations Driver Absences Drivers API",
+    "version": "2.8.17"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Drivers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List drivers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v2/drivers",
+            "params": [
+              {
+                "name": "driverIds",
+                "value": "",
+                "type": "query",
+                "description": "- Comma-separated list of driver IDs to filter for"
+              },
+              {
+                "name": "onDate",
+                "value": "",
+                "type": "query",
+                "description": "- Date string formatted as `YYYY-MM-dd` for which we want data returned. If not provided, today's date will be used. The date specified here affects the data returned for certain properties such as `mainRegionPeriod`, `loanedRegionPeriods`, and `customAttributes`, and also the behaviour of the `isEmployed` and `regionNames` query parameters."
+              },
+              {
+                "name": "regionNames",
+                "value": "",
+                "type": "query",
+                "description": "- Comma-separated list of region names to filter on. Drivers belonging to any of the regions (either main or loaned) on the date specified by `onDate` (or today's date if not provided) will be returned."
+              },
+              {
+                "name": "isEmployed",
+                "value": "",
+                "type": "query",
+                "description": "- Filter for employed (true) or unemployed (false) drivers on the date specified in onDate. If not specified, all drivers will be returned."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "- 1-indexed integer indicating which page of results to pull"
+              },
+              {
+                "name": "customAttributes",
+                "value": "",
+                "type": "query",
+                "description": "Filter drivers by custom attribute value, using bracket notation `customAttributes[<attributeId>]=value`. Repeat a key to match any of several values (OR) for that attribute, e.g. `customAttributes[azienda]=A&customAttributes[azienda]=B`; listing several distinct attribute keys requires a driver to match all of them (AND). Matching uses the attribute's value effective on the date given by `onDate` (or today if omitted). NUMBER attributes are matched numerically (`20`, `20.0` and `20.00` are equivalent); all other types are matched exactly and case-sensitively, so e.g. leading zeros in string values are significant. For `MULTI_SELECT` a driver matches when the requested value is one of the selected options; supply DATE values as `YYYY-MM-dd` and BOOLEAN as `true`/`false`. Unknown attribute ids match no drivers."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List existing drivers in the system, with optional filtering capability.\n\nNotes:\n- The result is paginated. Check the `pagination` property in the response to see the total number of pages and the current page number."
+        },
+        {
+          "info": {
+            "name": "Create drivers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v2/drivers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Add new drivers to the system.\n\nNotes:\n- This API endpoint does not support modifying existing drivers. If you need to update an existing driver, use the `PUT /v2/drivers` API endpoint instead.\n- Each request is atomic - either all drivers listed in the request are created successfully, or none are created.\n- No more than 1000 drivers can be created in a single request - please break your request into multiple smaller chunks if you need to create more than 1000 drivers.\n- `startDate` is an optio"
+        },
+        {
+          "info": {
+            "name": "Update drivers",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v2/drivers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update existing drivers in the system.\n\nNotes:\n- This API endpoint expects a full representation of the driver. Omitting an optional field will clear the field.\n- This API endpoint does not support creating new drivers. If you need to create a new driver, use the `POST /v2/drivers` API endpoint instead.\n- Each request is atomic - either all drivers listed in the request are updated successfully, or none are updated.\n- No more than 1000 drivers can be updated in a single request - please break yo"
+        },
+        {
+          "info": {
+            "name": "Fetch driver region periods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v1/drivers/depot-period",
+            "params": [
+              {
+                "name": "driver",
+                "value": "",
+                "type": "query",
+                "description": "- Returns the region periods for the given driver IDs"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns information about which regions and depots drivers are assigned to during different time periods.\nThe response is a map between the driver ID and an array of that driver's region periods.\n\nNotes:\n- Due to legacy reasons, this endpoint contains properties referring to 'depots' instead of 'regions'. Anywhere you\n  see 'depot' referenced, it really refers to 'region'. For example `depotId` is actually `regionUuid`. This inconsistency\n  will be improved in a future API version.\n- Here is a b"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,175 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Optibus Operations Driver Absences API",
+    "version": "2.8.17"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Driver Absences",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List driver absences",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v2/drivers/absences",
+            "params": [
+              {
+                "name": "driverIds",
+                "value": "",
+                "type": "query",
+                "description": "- Comma-separated list of driver IDs to filter for"
+              },
+              {
+                "name": "absenceCode",
+                "value": "",
+                "type": "query",
+                "description": "- Comma-separated list of absence type codes to filter for"
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "- Date string formatted as `YYYY-MM-dd`. Only absences that end on or after this date are returned."
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "- Date string formatted as `YYYY-MM-dd`. Only absences that start on or before this date are returned."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "- 1-indexed integer indicating which page of results to pull"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List existing driver absences in the system, with optional filtering capability.\n\nNotes:\n- The result is paginated. Check the `pagination` property in the response to see the total number of pages and the current page number.\n- Information about the modelling of date/time periods for each entry:\n  - `startDate` is mandatory\n  - `endDate` is optional - if omitted, the absence will be ongoing indefinitely\n  - `startTime` and `endTime` are optional - if omitted, the absence will be for the entire d"
+        },
+        {
+          "info": {
+            "name": "Create/update driver absences",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v1/absences",
+            "params": [
+              {
+                "name": "skipBalanceValidation",
+                "value": "",
+                "type": "query",
+                "description": "- Optional query parameter. When set to `true`, skips ALL entitlement-driven validation: both negative-balance checks (when `entitlementBanksEffectiveDate` is enabled) and absence-type yearly-cap checks (when `entitlementBanksDeductionOrder` + `absenceCapEnabled` are enabled).\n  Defaults to `false` (validation enabled)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates or updates absences for drivers. As input, provide a list of absence entries to create or update.\n\nNotes:\n- Behaviour of the `absenceId` field:\n  - If an `absenceId` is specified that already exists, the existing absence will be updated.\n  - If an `absenceId` is specified that does not already exist, a new absence will be created with the specified ID.\n  - We recommend you set the `absenceId` to a corresponding fixed identifier from your external system that you are synchronizing with.\n-"
+        },
+        {
+          "info": {
+            "name": "List driver time-off balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v1/drivers/time-off-balances",
+            "params": [
+              {
+                "name": "driverIds",
+                "value": "",
+                "type": "query",
+                "description": "- Filter by driver IDs (required)"
+              },
+              {
+                "name": "bankNames",
+                "value": "",
+                "type": "query",
+                "description": "- Filter by bank names; if omitted default banks may be returned (optional)"
+              },
+              {
+                "name": "onDate",
+                "value": "",
+                "type": "query",
+                "description": "- Calculate balances as of this date (YYYY-MM-DD); defaults to today (optional)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns time off (entitlement) balances for drivers grouped by driver and bank.\n\nEach driver's balances are grouped by bank. For each bank you get the total balance, used portion,\nplanned future usage, remaining balance, and historical balance changes. Use this endpoint to sync\ntime-off data with external HR systems or to display balance dashboards.\n\nNotes:\n- Numeric fields can be null when data is unavailable.\n- If querying many drivers, consider chunking requests to avoid hitting URI length li"
+        },
+        {
+          "info": {
+            "name": "Create/update driver time-off balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v1/drivers/time-off-balances",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates time off (entitlement) balances for drivers with effective dates.\n\nUse this endpoint to import accrual-based policies from an external HR system or to pre-load\nbalances for upcoming years. Each record sets the total balance for a driver/bank as of a\nspecific effective date. The system will merge these with existing absences and payouts.\n\nNotes:\n- Each request is atomic — either all records are applied successfully, or none are.\n- Bank names must match the entitlement bank configuration ("
+        },
+        {
+          "info": {
+            "name": "List absence quota usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v1/drivers/absence-quotas-query",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns configured **absence quota** definitions for the customer together with **aggregated usage**\n(unique drivers per day / per week, by absence type where applicable) for the requested calendar window.\n\nQuotas and limits come from Ops preferences (same configuration as the internal planner). Usage is derived\nfrom all drivers' absences and depot/operational-unit assignments in the widened date range needed for\nweekly quota windows.\n\n**Request scope**\n- `from` / `to` (inclusive, `YYYY-MM-DD`) "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

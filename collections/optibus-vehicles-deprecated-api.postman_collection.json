@@ -1,0 +1,316 @@
+{
+  "item": [
+    {
+      "id": "f086b1d0-68d2-4949-8a0a-8e1f35eb4c1d",
+      "name": "Vehicles (Deprecated)",
+      "description": {
+        "content": "These API endpoints are deprecated and could be removed in a future version. Please use the corresponding new API endpoints instead, which should offer improved usability and extra functionality.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3747643b-ba27-47df-a351-e8cb90033eb3",
+          "name": "Fetch vehicles (deprecated)",
+          "request": {
+            "name": "Fetch vehicles (deprecated)",
+            "description": {
+              "content": "**WARNING: This API endpoint is deprecated - you should use `GET /v1/vehicles` instead.**\n\nReturns the information for vehicles, with filters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vehicles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "vehicleIds",
+                  "value": "<string>",
+                  "description": "- Returns the information for the given vehicles by vehicle ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "vehicleIds",
+                  "value": "<string>",
+                  "description": "- Returns the information for the given vehicles by vehicle ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "depotIds",
+                  "value": "<string>",
+                  "description": "- Returns the information for vehicles that are that are loaned or assigned to the given depot IDs, on the given date or today if date is not provided"
+                },
+                {
+                  "disabled": false,
+                  "key": "depotIds",
+                  "value": "<string>",
+                  "description": "- Returns the information for vehicles that are that are loaned or assigned to the given depot IDs, on the given date or today if date is not provided"
+                },
+                {
+                  "disabled": false,
+                  "key": "date",
+                  "value": "<date>",
+                  "description": "- Returns the attributes information for the given date"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ee5ddcb9-2e40-45e4-aec4-5eac56c404be",
+              "name": "Vehicles information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vehicleIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "vehicleIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "depotIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "depotIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"depot\": \"string\",\n    \"licensePlate\": \"string\",\n    \"parkingLocation\": \"string\",\n    \"opUnitId\": \"string\",\n    \"description\": \"string\",\n    \"type\": \"string\",\n    \"nextDowntime\": 5700.2479502654905,\n    \"model\": \"string\",\n    \"archived\": true,\n    \"archivedOn\": \"string\"\n  },\n  {\n    \"id\": \"string\",\n    \"depot\": \"string\",\n    \"licensePlate\": \"string\",\n    \"parkingLocation\": \"string\",\n    \"opUnitId\": \"string\",\n    \"description\": \"string\",\n    \"type\": \"string\",\n    \"nextDowntime\": 8598.54542218429,\n    \"model\": \"string\",\n    \"archived\": false,\n    \"archivedOn\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "362e890e-d951-46bf-b374-491169cf3054",
+          "name": "Fetch vehicle attributes (deprecated)",
+          "request": {
+            "name": "Fetch vehicle attributes (deprecated)",
+            "description": {
+              "content": "**WARNING: This API endpoint is deprecated - you should use `GET /v1/vehicles/custom-attributes` instead.**\n\nReturns the vehicle attributes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "vehicle-attributes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "vehicleIds",
+                  "value": "<string>",
+                  "description": "- Returns the vehicle attributes by vehicle ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "vehicleIds",
+                  "value": "<string>",
+                  "description": "- Returns the vehicle attributes by vehicle ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<string>",
+                  "description": "- Returns the attributes for a specified date range (both from and to are required)"
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<string>",
+                  "description": "- Returns the attributes for a specified date range (both from and to are required)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "24fef8d1-075c-4891-ade3-20c07f7246fa",
+              "name": "Vehicle attributes",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicle-attributes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vehicleIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "vehicleIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"attributes\": {\n    \"key_0\": {\n      \"key_0\": [\n        {\n          \"value\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"date\": \"<date>\",\n          \"attributeId\": \"string\"\n        },\n        {\n          \"value\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"date\": \"<date>\",\n          \"attributeId\": \"string\"\n        }\n      ],\n      \"key_1\": [\n        {\n          \"value\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"date\": \"<date>\",\n          \"attributeId\": \"string\"\n        },\n        {\n          \"value\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"date\": \"<date>\",\n          \"attributeId\": \"string\"\n        }\n      ],\n      \"key_2\": [\n        {\n          \"value\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"date\": \"<date>\",\n          \"attributeId\": \"string\"\n        },\n        {\n          \"value\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"date\": \"<date>\",\n          \"attributeId\": \"string\"\n        }\n      ],\n      \"key_3\": [\n        {\n          \"value\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"date\": \"<date>\",\n          \"attributeId\": \"string\"\n        },\n        {\n          \"value\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"date\": \"<date>\",\n          \"attributeId\": \"string\"\n        }\n      ]\n    },\n    \"key_1\": {\n      \"key_0\": [\n        {\n          \"value\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"date\": \"<date>\",\n          \"attributeId\": \"string\"\n        },\n        {\n          \"value\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"date\": \"<date>\",\n          \"attributeId\": \"string\"\n        }\n      ],\n      \"key_1\": [\n        {\n          \"value\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"date\": \"<date>\",\n          \"attributeId\": \"string\"\n        },\n        {\n          \"value\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"date\": \"<date>\",\n          \"attributeId\": \"string\"\n        }\n      ],\n      \"key_2\": [\n        {\n          \"value\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"date\": \"<date>\",\n          \"attributeId\": \"string\"\n        },\n        {\n          \"value\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"date\": \"<date>\",\n          \"attributeId\": \"string\"\n        }\n      ]\n    }\n  },\n  \"attributeMap\": {\n    \"key_0\": {\n      \"id\": \"string\",\n      \"type\": \"DURATION\",\n      \"displayName\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ac9dc071-03bf-42e0-8b4d-d7e37baac9a6",
+    "name": "Optibus Operations Driver Absences Vehicles (Deprecated) API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "**Welcome to the Optibus Operations API documentation!**\n\nOptibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations' functionality, allowing you to integrate it with your own applications and systems.\n\n\n",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,196 @@
+{
+  "item": [
+    {
+      "id": "85488173-4c70-44f0-820d-0fe499e0add2",
+      "name": "Roster",
+      "description": {
+        "content": "A roster describes the daily operator runs grouped into packages of (repeating) weekly work assignments.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e352f216-fb19-4469-9e79-40a9a75a0e6e",
+          "name": "Fetch roster",
+          "request": {
+            "name": "Fetch roster",
+            "description": {
+              "content": "Returns the roster information by roster ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "roster"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "rosterId",
+                  "value": "<string>",
+                  "description": "(Required) - The roster ID to retrieve."
+                },
+                {
+                  "disabled": false,
+                  "key": "operationalDay",
+                  "value": "<date>",
+                  "description": "- Get the roster information for a specific date"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1a70b73e-0ec2-4063-bfd9-5ebfea7ffd1a",
+              "name": "Roster data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "roster"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "rosterId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "operationalDay",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"stops\": [\n    {\n      \"shortDescription\": \"string\",\n      \"stopId\": \"string\",\n      \"long\": 3997.7951564588257,\n      \"lat\": 573.8791095028217\n    },\n    {\n      \"shortDescription\": \"string\",\n      \"stopId\": \"string\",\n      \"long\": 6721.066356674811,\n      \"lat\": 5240.787852046103\n    }\n  ],\n  \"assignmentsInfo\": [\n    {\n      \"assignmentType\": \"DayOff\",\n      \"dayIndex\": 8122.389233588907,\n      \"weekIndex\": 2905.595565903586,\n      \"lineId\": \"<string>\",\n      \"taskId\": \"string\"\n    },\n    {\n      \"assignmentType\": \"Task\",\n      \"dayIndex\": 5247.481775560105,\n      \"weekIndex\": 6206.261934422483,\n      \"lineId\": \"<string>\",\n      \"taskId\": \"string\"\n    }\n  ],\n  \"lineInfo\": [\n    {\n      \"order\": 5017.530510768901,\n      \"lineDisplayId\": \"string\",\n      \"lineId\": \"<string>\"\n    },\n    {\n      \"order\": 8996.057742812136,\n      \"lineDisplayId\": \"string\",\n      \"lineId\": \"<string>\"\n    }\n  ],\n  \"events\": [\n    {\n      \"endTime\": 9974,\n      \"eventJsonData\": \"\",\n      \"id\": \"<string>\",\n      \"startTime\": 2261,\n      \"type\": \"light_duty_hours\"\n    },\n    {\n      \"endTime\": 246,\n      \"eventJsonData\": \"\",\n      \"id\": \"<string>\",\n      \"startTime\": 7730,\n      \"type\": \"non_revenue\"\n    }\n  ],\n  \"blocks\": [\n    {\n      \"blockData\": \"\",\n      \"summary\": {\n        \"type\": \"string\",\n        \"serviceId\": \"string\",\n        \"timeplanId\": \"string\",\n        \"scheduleDatasetId\": \"string\",\n        \"rosterDatasetId\": \"string\",\n        \"rosterSourceId\": \"string\"\n      },\n      \"events\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"displayId\": \"string\",\n      \"id\": \"<string>\"\n    },\n    {\n      \"blockData\": \"\",\n      \"summary\": {\n        \"type\": \"string\",\n        \"serviceId\": \"string\",\n        \"timeplanId\": \"string\",\n        \"scheduleDatasetId\": \"string\",\n        \"rosterDatasetId\": \"string\",\n        \"rosterSourceId\": \"string\"\n      },\n      \"events\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"displayId\": \"string\",\n      \"id\": \"<string>\"\n    }\n  ],\n  \"tasks\": [\n    {\n      \"displayId\": \"string\",\n      \"endTime\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"events\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"extraData\": \"\",\n      \"id\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"name\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"paidTime\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"startTime\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"summary\": {\n        \"type\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"endTime\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"startTime\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"scheduleName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"scheduleLink\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"serviceName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"serviceId\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"timeplanId\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"scheduleDatasetId\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"rosterDatasetId\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"rosterSourceId\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"splits\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"blockTypes\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"blocks\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"routes\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"paidTime\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"destinationDepot\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"destinationStop\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"originDepot\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"originStop\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"spreadTime\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"workTime\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"type\": \"Duty\"\n    },\n    {\n      \"displayId\": \"string\",\n      \"endTime\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"events\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"extraData\": \"\",\n      \"id\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"name\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"paidTime\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"startTime\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"summary\": {\n        \"type\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"endTime\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"startTime\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"scheduleName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"scheduleLink\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"serviceName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"serviceId\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"timeplanId\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"scheduleDatasetId\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"rosterDatasetId\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"rosterSourceId\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"splits\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"blockTypes\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"blocks\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"routes\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"paidTime\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"destinationDepot\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"destinationStop\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"originDepot\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"originStop\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"spreadTime\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"workTime\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"type\": \"Duty\"\n    }\n  ],\n  \"rosterDataInfo\": {\n    \"depotId\": \"string\",\n    \"createdBy\": \"string\",\n    \"createdAt\": \"1988-11-23T22:51:38.571Z\",\n    \"rotating\": \"Static\",\n    \"daysInWeek\": 516,\n    \"numberOfWeeks\": 4120,\n    \"startDay\": 3,\n    \"importName\": \"<string>\",\n    \"importId\": \"<string>\",\n    \"group\": \"string\",\n    \"rosterDatasetId\": \"string\",\n    \"rosterSourceId\": \"string\",\n    \"id\": \"<string>\",\n    \"importMode\": \"undefined\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "18cc63e9-00b4-430c-855d-b31df19d1769",
+              "name": "Roster not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "roster"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "rosterId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "operationalDay",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "2454b674-88f0-40f9-a70d-febc7cf6b083",
+    "name": "Optibus Operations Driver Absences Roster API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "**Welcome to the Optibus Operations API documentation!**\n\nOptibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations' functionality, allowing you to integrate it with your own applications and systems.\n\n\n",
+      "type": "text/plain"
+    }
+  }
+}

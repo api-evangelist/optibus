@@ -1,0 +1,88 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Optibus Operations Driver Absences Driver Custom Attributes API",
+    "version": "2.8.17"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Driver Custom Attributes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List driver custom attributes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v2/drivers/custom-attributes",
+            "params": [
+              {
+                "name": "driverIds",
+                "value": "",
+                "type": "query",
+                "description": "- Comma-separated list of driver IDs to filter for"
+              },
+              {
+                "name": "attributeIds",
+                "value": "",
+                "type": "query",
+                "description": "- Comma-separated list of attribute IDs to filter for (according to the attribute definitions in the \"Driver attributes\" preference in your Ops instance)"
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "- Date string formatted as `YYYY-MM-dd`. Only entries that end on or after this date are returned."
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "- Date string formatted as `YYYY-MM-dd`. Only entries that start on or before this date are returned."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "- 1-indexed integer indicating which page of results to pull"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List custom attribute entries for drivers, with filters. Although the `GET /v2/drivers` API endpoint also returns custom attribute values for\neach driver, it is more limited, as it only returns attribute values for the specified date. This API endpoint allows you to query the full history\nof attribute values for drivers, and see the date range in which those values applied.\n\nNotes:\n- The result is paginated. Check the `pagination` property in the response to see the total number of pages and the"
+        },
+        {
+          "info": {
+            "name": "Create/update driver custom attributes",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v2/drivers/custom-attributes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates or updates custom attribute entries for drivers. Although the `POST /v2/drivers` and `PUT /v2/drivers` API endpoints also allow you to create and update custom attribute values,\nthey are more limited in that they only allow you to create and update custom attribute values as of the current date. This API endpoint allows you to manage the full history of\ncustom attribute values for drivers.\n\nNotes:\n- The specification of expected values and whether they are mandatory or not is determined "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1003 @@
+{
+  "item": [
+    {
+      "id": "261fd026-210a-4130-8580-fb95fa0506f6",
+      "name": "Drivers",
+      "description": {
+        "content": "API endpoints for managing drivers.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "eefd0648-7277-43f1-9d27-f798db4aff61",
+          "name": "List drivers",
+          "request": {
+            "name": "List drivers",
+            "description": {
+              "content": "List existing drivers in the system, with optional filtering capability.\n\nNotes:\n- The result is paginated. Check the `pagination` property in the response to see the total number of pages and the current page number.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "drivers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "- Comma-separated list of driver IDs to filter for"
+                },
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "- Comma-separated list of driver IDs to filter for"
+                },
+                {
+                  "disabled": false,
+                  "key": "onDate",
+                  "value": "<date>",
+                  "description": "- Date string formatted as `YYYY-MM-dd` for which we want data returned. If not provided, today's date will be used. The date specified here affects the data returned for certain properties such as `mainRegionPeriod`, `loanedRegionPeriods`, and `customAttributes`, and also the behaviour of the `isEmployed` and `regionNames` query parameters."
+                },
+                {
+                  "disabled": false,
+                  "key": "regionNames",
+                  "value": "<string>",
+                  "description": "- Comma-separated list of region names to filter on. Drivers belonging to any of the regions (either main or loaned) on the date specified by `onDate` (or today's date if not provided) will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "regionNames",
+                  "value": "<string>",
+                  "description": "- Comma-separated list of region names to filter on. Drivers belonging to any of the regions (either main or loaned) on the date specified by `onDate` (or today's date if not provided) will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "isEmployed",
+                  "value": "<boolean>",
+                  "description": "- Filter for employed (true) or unemployed (false) drivers on the date specified in onDate. If not specified, all drivers will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "- 1-indexed integer indicating which page of results to pull"
+                },
+                {
+                  "disabled": false,
+                  "key": "customAttributes[key_0]",
+                  "value": "<string>",
+                  "description": "Filter drivers by custom attribute value, using bracket notation `customAttributes[<attributeId>]=value`. Repeat a key to match any of several values (OR) for that attribute, e.g. `customAttributes[azienda]=A&customAttributes[azienda]=B`; listing several distinct attribute keys requires a driver to match all of them (AND). Matching uses the attribute's value effective on the date given by `onDate` (or today if omitted). NUMBER attributes are matched numerically (`20`, `20.0` and `20.00` are equivalent); all other types are matched exactly and case-sensitively, so e.g. leading zeros in string values are significant. For `MULTI_SELECT` a driver matches when the requested value is one of the selected options; supply DATE values as `YYYY-MM-dd` and BOOLEAN as `true`/`false`. Unknown attribute ids match no drivers."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2aa96122-82f2-45e3-b310-e4e929b82c8b",
+              "name": "Drivers fetched successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "drivers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "onDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "regionNames",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "regionNames",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isEmployed",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "customAttributes[key_0]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pagination\": {\n    \"totalPages\": \"<integer>\",\n    \"currentPage\": \"<integer>\",\n    \"nextPage\": \"<integer>\"\n  },\n  \"drivers\": [\n    {\n      \"customAttributes\": {\n        \"key_0\": [\n          4946.645636301432,\n          7740.776467540036\n        ],\n        \"key_1\": [\n          5930.336226780337,\n          9904.461874529175\n        ]\n      },\n      \"loanedRegionPeriods\": [\n        {\n          \"regionName\": \"string\",\n          \"groupName\": \"string\",\n          \"depotName\": \"string\"\n        },\n        {\n          \"regionName\": \"string\",\n          \"groupName\": \"string\",\n          \"depotName\": \"string\"\n        }\n      ],\n      \"mainRegionPeriod\": {\n        \"regionName\": \"string\",\n        \"groupName\": \"string\",\n        \"depotName\": \"string\"\n      },\n      \"lastName\": \"string\",\n      \"firstName\": \"string\",\n      \"id\": \"string\",\n      \"union\": \"string\",\n      \"grade\": \"string\",\n      \"type\": \"string\",\n      \"emailAddress\": \"string\",\n      \"description\": \"string\",\n      \"homeNumber\": \"string\",\n      \"mobileNumber\": \"string\",\n      \"avatar\": \"string\",\n      \"middleName\": \"string\"\n    },\n    {\n      \"customAttributes\": {\n        \"key_0\": [\n          6432.085368956529,\n          4708.074308765342\n        ],\n        \"key_1\": [\n          8012.239964871966,\n          5895.802294844896\n        ]\n      },\n      \"loanedRegionPeriods\": [\n        {\n          \"regionName\": \"string\",\n          \"groupName\": \"string\",\n          \"depotName\": \"string\"\n        },\n        {\n          \"regionName\": \"string\",\n          \"groupName\": \"string\",\n          \"depotName\": \"string\"\n        }\n      ],\n      \"mainRegionPeriod\": {\n        \"regionName\": \"string\",\n        \"groupName\": \"string\",\n        \"depotName\": \"string\"\n      },\n      \"lastName\": \"string\",\n      \"firstName\": \"string\",\n      \"id\": \"string\",\n      \"union\": \"string\",\n      \"grade\": \"string\",\n      \"type\": \"string\",\n      \"emailAddress\": \"string\",\n      \"description\": \"string\",\n      \"homeNumber\": \"string\",\n      \"mobileNumber\": \"string\",\n      \"avatar\": \"string\",\n      \"middleName\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3181a791-0eb2-4077-b0e7-8da219b01613",
+              "name": "Possible error types: `pageNotFound` (requested page number is out of range; details.totalPages indicates the number of pages available)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "drivers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "onDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "regionNames",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "regionNames",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isEmployed",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "customAttributes[key_0]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"pageNotFound\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "035577c8-6696-423d-8188-6baf5d5bd85b",
+          "name": "Create drivers",
+          "request": {
+            "name": "Create drivers",
+            "description": {
+              "content": "Add new drivers to the system.\n\nNotes:\n- This API endpoint does not support modifying existing drivers. If you need to update an existing driver, use the `PUT /v2/drivers` API endpoint instead.\n- Each request is atomic - either all drivers listed in the request are created successfully, or none are created.\n- No more than 1000 drivers can be created in a single request - please break your request into multiple smaller chunks if you need to create more than 1000 drivers.\n- `startDate` is an optional field, but if provided, an initial employment period will be automatically created with this start date.\n- The specification of expected values for the `customAttributes` field and whether they are mandatory or not is determined by the attribute definitions in the \"Driver attributes\" preference in your Ops instance.\n  - Attributes with type `STRING` expect a string to be set for `customAttributes[attributeId]`.\n  - Attributes with type `NUMBER` expect a number to be set for `customAttributes[attributeId]`.\n  - Attributes with type `BOOLEAN` expect a boolean to be set for `customAttributes[attributeId]`.\n  - Attributes with type `DATE` expect a date string formatted as `YYYY-MM-dd` to be set for `customAttributes[attributeId]`.\n  - Attributes with type `SINGLE_SELECT` expect the `value` of one of the available select options to be set for `customAttributes[attributeId]`.\n  - Attributes with type `MULTI_SELECT` expect an array of strings (each one being the `value` of one of the available select options) to be set for `customAttributes[attributeId]`.\n  - Attributes with type `DURATION` expect a duration string formatted as `HH:mm` (where `HH` is an integer between 0 and 999, and `mm` is an integer between 0 and 59) to be set for `customAttributes[attributeId]`.\n- Certifications (as configured in the \"Certifications\" preference in your Ops instance) are set the same way: use the certification code as the attribute ID, and the expiry date (`YYYY-MM-dd`) as the value.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "drivers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"drivers\": [\n    {\n      \"regionName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"firstName\": \"<string>\",\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"key_1\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"union\": \"<string>\",\n      \"grade\": \"<string>\",\n      \"type\": \"<string>\",\n      \"emailAddress\": \"<string>\",\n      \"description\": \"<string>\",\n      \"homeNumber\": \"<string>\",\n      \"mobileNumber\": \"<string>\",\n      \"avatar\": \"<string>\",\n      \"groupName\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"startDate\": \"<date>\",\n      \"middleName\": \"<string>\"\n    },\n    {\n      \"regionName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"firstName\": \"<string>\",\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"key_1\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"key_2\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"union\": \"<string>\",\n      \"grade\": \"<string>\",\n      \"type\": \"<string>\",\n      \"emailAddress\": \"<string>\",\n      \"description\": \"<string>\",\n      \"homeNumber\": \"<string>\",\n      \"mobileNumber\": \"<string>\",\n      \"avatar\": \"<string>\",\n      \"groupName\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"startDate\": \"<date>\",\n      \"middleName\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1e615d4b-62d0-419d-b3b9-7dcd3fbf6293",
+              "name": "Drivers created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "drivers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"drivers\": [\n    {\n      \"regionName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"firstName\": \"<string>\",\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"union\": \"<string>\",\n      \"grade\": \"<string>\",\n      \"type\": \"<string>\",\n      \"emailAddress\": \"<string>\",\n      \"description\": \"<string>\",\n      \"homeNumber\": \"<string>\",\n      \"mobileNumber\": \"<string>\",\n      \"avatar\": \"<string>\",\n      \"groupName\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"startDate\": \"<date>\",\n      \"middleName\": \"<string>\"\n    },\n    {\n      \"regionName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"firstName\": \"<string>\",\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"union\": \"<string>\",\n      \"grade\": \"<string>\",\n      \"type\": \"<string>\",\n      \"emailAddress\": \"<string>\",\n      \"description\": \"<string>\",\n      \"homeNumber\": \"<string>\",\n      \"mobileNumber\": \"<string>\",\n      \"avatar\": \"<string>\",\n      \"groupName\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"startDate\": \"<date>\",\n      \"middleName\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdDriverIds\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d22cdb54-a4b2-429c-9948-ac8ef701fe09",
+              "name": "Possible error types: `Invalid request schema` (schema of your request does not match the specification), `tooManyItems` (you specified >1000 items in your request), `invalidFieldContent` (the content of one or more fields in your request is invalid)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "drivers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"drivers\": [\n    {\n      \"regionName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"firstName\": \"<string>\",\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"union\": \"<string>\",\n      \"grade\": \"<string>\",\n      \"type\": \"<string>\",\n      \"emailAddress\": \"<string>\",\n      \"description\": \"<string>\",\n      \"homeNumber\": \"<string>\",\n      \"mobileNumber\": \"<string>\",\n      \"avatar\": \"<string>\",\n      \"groupName\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"startDate\": \"<date>\",\n      \"middleName\": \"<string>\"\n    },\n    {\n      \"regionName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"firstName\": \"<string>\",\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"union\": \"<string>\",\n      \"grade\": \"<string>\",\n      \"type\": \"<string>\",\n      \"emailAddress\": \"<string>\",\n      \"description\": \"<string>\",\n      \"homeNumber\": \"<string>\",\n      \"mobileNumber\": \"<string>\",\n      \"avatar\": \"<string>\",\n      \"groupName\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"startDate\": \"<date>\",\n      \"middleName\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"invalidFieldContent\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13e8cfd5-7874-4b99-8978-8c28603cd6f1",
+              "name": "Possible error types: `driverAlreadyExists` (one or more driver IDs specified in the request already exist in the system), `conflictProcessingRequest` (temporary concurrency conflict, retry shortly)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "drivers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"drivers\": [\n    {\n      \"regionName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"firstName\": \"<string>\",\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"union\": \"<string>\",\n      \"grade\": \"<string>\",\n      \"type\": \"<string>\",\n      \"emailAddress\": \"<string>\",\n      \"description\": \"<string>\",\n      \"homeNumber\": \"<string>\",\n      \"mobileNumber\": \"<string>\",\n      \"avatar\": \"<string>\",\n      \"groupName\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"startDate\": \"<date>\",\n      \"middleName\": \"<string>\"\n    },\n    {\n      \"regionName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"firstName\": \"<string>\",\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"union\": \"<string>\",\n      \"grade\": \"<string>\",\n      \"type\": \"<string>\",\n      \"emailAddress\": \"<string>\",\n      \"description\": \"<string>\",\n      \"homeNumber\": \"<string>\",\n      \"mobileNumber\": \"<string>\",\n      \"avatar\": \"<string>\",\n      \"groupName\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"startDate\": \"<date>\",\n      \"middleName\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"invalidFieldContent\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aef4043c-7e26-41bf-969d-8a07aa0df338",
+              "name": "Possible error types: `driversNotFound` (one or more driver IDs specified in the request do not exist in the system)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "drivers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"drivers\": [\n    {\n      \"regionName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"firstName\": \"<string>\",\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"union\": \"<string>\",\n      \"grade\": \"<string>\",\n      \"type\": \"<string>\",\n      \"emailAddress\": \"<string>\",\n      \"description\": \"<string>\",\n      \"homeNumber\": \"<string>\",\n      \"mobileNumber\": \"<string>\",\n      \"avatar\": \"<string>\",\n      \"groupName\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"startDate\": \"<date>\",\n      \"middleName\": \"<string>\"\n    },\n    {\n      \"regionName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"firstName\": \"<string>\",\n      \"id\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          \"<double>\",\n          \"<double>\"\n        ]\n      },\n      \"union\": \"<string>\",\n      \"grade\": \"<string>\",\n      \"type\": \"<string>\",\n      \"emailAddress\": \"<string>\",\n      \"description\": \"<string>\",\n      \"homeNumber\": \"<string>\",\n      \"mobileNumber\": \"<string>\",\n      \"avatar\": \"<string>\",\n      \"groupName\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"startDate\": \"<date>\",\n      \"middleName\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"invalidFieldContent\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b88e586f-7dbd-4014-8366-a067e95126c3",
+          "name": "Update drivers",
+          "request": {
+            "name": "Update drivers",
+            "description": {
+              "content": "Update existing drivers in the system.\n\nNotes:\n- This API endpoint expects a full representation of the driver. Omitting an optional field will clear the field.\n- This API endpoint does not support creating new drivers. If you need to create a new driver, use the `POST /v2/drivers` API endpoint instead.\n- Each request is atomic - either all drivers listed in the request are updated successfully, or none are updated.\n- No more than 1000 drivers can be updated in a single request - please break your request into multiple smaller chunks if you need to update more than 1000 drivers.\n- The specification of expected values for the `customAttributes` field and whether they are mandatory or not is determined by the attribute definitions in the \"Driver attributes\" preference in your Ops instance.\n  - Attributes with type `STRING` expect a string to be set for `customAttributes[attributeId]`.\n  - Attributes with type `NUMBER` expect a number to be set for `customAttributes[attributeId]`.\n  - Attributes with type `BOOLEAN` expect a boolean to be set for `customAttributes[attributeId]`.\n  - Attributes with type `DATE` expect a date string formatted as `YYYY-MM-dd` to be set for `customAttributes[attributeId]`.\n  - Attributes with type `SINGLE_SELECT` expect the `value` of one of the available select options to be set for `customAttributes[attributeId]`.\n  - Attributes with type `MULTI_SELECT` expect an array of strings (each one being the `value` of one of the available select options) to be set for `customAttributes[attributeId]`.\n  - Attributes with type `DURATION` expect a duration string formatted as `HH:mm` (where `HH` is an integer between 0 and 999, and `mm` is an integer between 0 and 59) to be set for `customAttributes[attributeId]`.\n- Certifications (as configured in the \"Certifications\" preference in your Ops instance) are set the same way: use the certification code as the attribute ID, and the expiry date (`YYYY-MM-dd`) as the value.\n- If the value of any custom attribute is updated compared to the existing value, a new entry will be added to the history of that attribute starting from the current date.\n  - If there is already an entry for a given attribute starting from today's date, it will be overwritten, and a `warnings` array will be included on the success response describing that case. The `warnings` property is omitted when there are no warnings.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "drivers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"drivers\": [\n    {\n      \"id\": \"<string>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"type\": \"<string>\",\n      \"middleName\": \"<string>\",\n      \"avatar\": \"<string>\",\n      \"mobileNumber\": \"<string>\",\n      \"homeNumber\": \"<string>\",\n      \"emailAddress\": \"<string>\",\n      \"grade\": \"<string>\",\n      \"union\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"key_1\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"type\": \"<string>\",\n      \"middleName\": \"<string>\",\n      \"avatar\": \"<string>\",\n      \"mobileNumber\": \"<string>\",\n      \"homeNumber\": \"<string>\",\n      \"emailAddress\": \"<string>\",\n      \"grade\": \"<string>\",\n      \"union\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"key_1\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"key_2\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"key_3\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "33d97123-5334-471b-a84f-32072e7a2b80",
+              "name": "Drivers updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "drivers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"drivers\": [\n    {\n      \"id\": \"<string>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"type\": \"<string>\",\n      \"middleName\": \"<string>\",\n      \"avatar\": \"<string>\",\n      \"mobileNumber\": \"<string>\",\n      \"homeNumber\": \"<string>\",\n      \"emailAddress\": \"<string>\",\n      \"grade\": \"<string>\",\n      \"union\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"type\": \"<string>\",\n      \"middleName\": \"<string>\",\n      \"avatar\": \"<string>\",\n      \"mobileNumber\": \"<string>\",\n      \"homeNumber\": \"<string>\",\n      \"emailAddress\": \"<string>\",\n      \"grade\": \"<string>\",\n      \"union\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"key_1\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"updatedDriverIds\": [\n    \"string\",\n    \"string\"\n  ],\n  \"warnings\": [\n    {\n      \"details\": [\n        {\n          \"attributeIds\": [\n            \"string\",\n            \"string\"\n          ],\n          \"driverId\": \"string\"\n        },\n        {\n          \"attributeIds\": [\n            \"string\",\n            \"string\"\n          ],\n          \"driverId\": \"string\"\n        }\n      ],\n      \"message\": \"string\",\n      \"type\": \"overwriteCustomAttributeEntry\"\n    },\n    {\n      \"details\": [\n        {\n          \"attributeIds\": [\n            \"string\",\n            \"string\"\n          ],\n          \"driverId\": \"string\"\n        },\n        {\n          \"attributeIds\": [\n            \"string\",\n            \"string\"\n          ],\n          \"driverId\": \"string\"\n        }\n      ],\n      \"message\": \"string\",\n      \"type\": \"overwriteCustomAttributeEntry\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "89d91e25-d8cf-4c03-b50c-65aec63a37b5",
+              "name": "Possible error types: `Invalid request schema` (schema of your request does not match the specification), `tooManyItems` (you specified >1000 items in your request), `invalidFieldContent` (the content of one or more fields in your request is invalid)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "drivers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"drivers\": [\n    {\n      \"id\": \"<string>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"type\": \"<string>\",\n      \"middleName\": \"<string>\",\n      \"avatar\": \"<string>\",\n      \"mobileNumber\": \"<string>\",\n      \"homeNumber\": \"<string>\",\n      \"emailAddress\": \"<string>\",\n      \"grade\": \"<string>\",\n      \"union\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"type\": \"<string>\",\n      \"middleName\": \"<string>\",\n      \"avatar\": \"<string>\",\n      \"mobileNumber\": \"<string>\",\n      \"homeNumber\": \"<string>\",\n      \"emailAddress\": \"<string>\",\n      \"grade\": \"<string>\",\n      \"union\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"key_1\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"conflictProcessingRequest\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc25f965-279c-4b5e-a24b-125791d942c1",
+              "name": "Possible error types: `conflictProcessingRequest` (temporary concurrency conflict, retry shortly)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "drivers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"drivers\": [\n    {\n      \"id\": \"<string>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"type\": \"<string>\",\n      \"middleName\": \"<string>\",\n      \"avatar\": \"<string>\",\n      \"mobileNumber\": \"<string>\",\n      \"homeNumber\": \"<string>\",\n      \"emailAddress\": \"<string>\",\n      \"grade\": \"<string>\",\n      \"union\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"type\": \"<string>\",\n      \"middleName\": \"<string>\",\n      \"avatar\": \"<string>\",\n      \"mobileNumber\": \"<string>\",\n      \"homeNumber\": \"<string>\",\n      \"emailAddress\": \"<string>\",\n      \"grade\": \"<string>\",\n      \"union\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"key_1\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"conflictProcessingRequest\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "145645a0-9169-4bfd-8e16-e49af8d9b311",
+              "name": "Possible error types: `driversNotFound` (one or more driver IDs specified in the request do not exist in the system)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "drivers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"drivers\": [\n    {\n      \"id\": \"<string>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"type\": \"<string>\",\n      \"middleName\": \"<string>\",\n      \"avatar\": \"<string>\",\n      \"mobileNumber\": \"<string>\",\n      \"homeNumber\": \"<string>\",\n      \"emailAddress\": \"<string>\",\n      \"grade\": \"<string>\",\n      \"union\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"type\": \"<string>\",\n      \"middleName\": \"<string>\",\n      \"avatar\": \"<string>\",\n      \"mobileNumber\": \"<string>\",\n      \"homeNumber\": \"<string>\",\n      \"emailAddress\": \"<string>\",\n      \"grade\": \"<string>\",\n      \"union\": \"<string>\",\n      \"customAttributes\": {\n        \"key_0\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"key_1\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"conflictProcessingRequest\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "439cf506-f68c-4873-85dd-f054f0c856cc",
+          "name": "Fetch driver region periods",
+          "request": {
+            "name": "Fetch driver region periods",
+            "description": {
+              "content": "Returns information about which regions and depots drivers are assigned to during different time periods.\nThe response is a map between the driver ID and an array of that driver's region periods.\n\nNotes:\n- Due to legacy reasons, this endpoint contains properties referring to 'depots' instead of 'regions'. Anywhere you\n  see 'depot' referenced, it really refers to 'region'. For example `depotId` is actually `regionUuid`. This inconsistency\n  will be improved in a future API version.\n- Here is a breakdown of the field meanings:\n  - `periodId`: A unique identifier for the period.\n  - `type`: The type of period (is it the driver's main region/depot, or were they just loaned there temporarily?)\n  - `driverUUID`: The ID of the driver.\n  - `depotId`: The ID of the **region** the driver is assigned to during the period.\n  - `opUnitId`: The ID of the **depot** (operational unit) within the region the driver is assigned to during the period.\n  - `groupId`: The ID of the driver group that the driver is assigned to during the period.\n  - `startDate`: The start date of the period.\n  - `endDate`: The end date of the period. If unspecified, the period is ongoing indefinitely.\n  - `startTime`: The start time of the period. If unspecified, the period starts at the beginning of the day.\n  - `endTime`: The end time of the period. If unspecified, the period ends at the end of the day.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "drivers",
+                "depot-period"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "driver",
+                  "value": "<string>",
+                  "description": "- Returns the region periods for the given driver IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "driver",
+                  "value": "<string>",
+                  "description": "- Returns the region periods for the given driver IDs"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "820f8020-62cb-4d2b-8d43-7393c3c385a3",
+              "name": "Driver region periods fetched successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "depot-period"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "driver",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driver",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": [\n    {\n      \"depotId\": \"string\",\n      \"driverUUID\": \"string\",\n      \"periodId\": \"string\",\n      \"startDate\": \"<date>\",\n      \"type\": \"LOAN\",\n      \"opUnitId\": \"string\",\n      \"endTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"endDate\": \"<date>\",\n      \"groupId\": \"string\"\n    },\n    {\n      \"depotId\": \"string\",\n      \"driverUUID\": \"string\",\n      \"periodId\": \"string\",\n      \"startDate\": \"<date>\",\n      \"type\": \"LOAN\",\n      \"opUnitId\": \"string\",\n      \"endTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"endDate\": \"<date>\",\n      \"groupId\": \"string\"\n    }\n  ],\n  \"key_1\": [\n    {\n      \"depotId\": \"string\",\n      \"driverUUID\": \"string\",\n      \"periodId\": \"string\",\n      \"startDate\": \"<date>\",\n      \"type\": \"LOAN\",\n      \"opUnitId\": \"string\",\n      \"endTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"endDate\": \"<date>\",\n      \"groupId\": \"string\"\n    },\n    {\n      \"depotId\": \"string\",\n      \"driverUUID\": \"string\",\n      \"periodId\": \"string\",\n      \"startDate\": \"<date>\",\n      \"type\": \"FIRST\",\n      \"opUnitId\": \"string\",\n      \"endTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"endDate\": \"<date>\",\n      \"groupId\": \"string\"\n    }\n  ],\n  \"key_2\": [\n    {\n      \"depotId\": \"string\",\n      \"driverUUID\": \"string\",\n      \"periodId\": \"string\",\n      \"startDate\": \"<date>\",\n      \"type\": \"LOAN\",\n      \"opUnitId\": \"string\",\n      \"endTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"endDate\": \"<date>\",\n      \"groupId\": \"string\"\n    },\n    {\n      \"depotId\": \"string\",\n      \"driverUUID\": \"string\",\n      \"periodId\": \"string\",\n      \"startDate\": \"<date>\",\n      \"type\": \"MAIN\",\n      \"opUnitId\": \"string\",\n      \"endTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"endDate\": \"<date>\",\n      \"groupId\": \"string\"\n    }\n  ],\n  \"key_3\": [\n    {\n      \"depotId\": \"string\",\n      \"driverUUID\": \"string\",\n      \"periodId\": \"string\",\n      \"startDate\": \"<date>\",\n      \"type\": \"FIRST\",\n      \"opUnitId\": \"string\",\n      \"endTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"endDate\": \"<date>\",\n      \"groupId\": \"string\"\n    },\n    {\n      \"depotId\": \"string\",\n      \"driverUUID\": \"string\",\n      \"periodId\": \"string\",\n      \"startDate\": \"<date>\",\n      \"type\": \"MAIN\",\n      \"opUnitId\": \"string\",\n      \"endTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"endDate\": \"<date>\",\n      \"groupId\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83cc97a5-d583-4500-ae16-218a97fe3d61",
+              "name": "The request URI exceeds 10240 bytes which is not supported. This probably results from trying to query more than a thousand drivers at the same time. Please consider chunking your request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "depot-period"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "driver",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driver",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request-URI Too Long",
+              "code": 414,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "6c52712a-b0ec-41b3-af5b-5ec6007d5d3e",
+    "name": "Optibus Operations Driver Absences Drivers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "**Welcome to the Optibus Operations API documentation!**\n\nOptibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations' functionality, allowing you to integrate it with your own applications and systems.\n\n\n",
+      "type": "text/plain"
+    }
+  }
+}

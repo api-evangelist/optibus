@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Optibus Operations Driver Absences Signing Times API",
+    "version": "2.8.17"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Signing Times",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List driver signing times for a date in a region",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v2/signing-times",
+            "params": [
+              {
+                "name": "date",
+                "value": "",
+                "type": "query",
+                "description": "- Operational date in `YYYY-MM-dd` format."
+              },
+              {
+                "name": "regionName",
+                "value": "",
+                "type": "query",
+                "description": "- Name of the region for which to return signing times."
+              },
+              {
+                "name": "driverIds",
+                "value": "",
+                "type": "query",
+                "description": "- Comma-separated list of driver IDs to further narrow the result. Only drivers whose main or loaned region is the requested region on the date are eligible regardless of this filter."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "- 1-indexed integer indicating which page of results to pull. Defaults to 1."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns matched expected/actual sign-on and sign-off times for drivers on a given date in a region.\n\nNotes:\n- The result is paginated by driver, 100 drivers per page. Check the `pagination` property in the response for total pages.\n- A driver appears in the response if their main or loaned region is the requested region on the date, regardless of whether they have a calendar task. Drivers without any tasks or actual signings on the date appear with `signingTimes: []`.\n- Orphaned signings (for ex"
+        },
+        {
+          "info": {
+            "name": "Fetch signing deviations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v1/drivers/signing-deviations",
+            "params": [
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "The start of the date range to get the signing deviations from"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "The end of the date range to get the signing deviations from"
+              },
+              {
+                "name": "regionUuid",
+                "value": "",
+                "type": "query",
+                "description": "The region to get the signing deviations from"
+              },
+              {
+                "name": "driverIds",
+                "value": "",
+                "type": "query",
+                "description": "The driver IDs for which to get the signing deviations. if empty all drivers will be returned"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Calculate the signing deviations for the drivers in the given date range and region. 'Signing deviations' refer to the difference between\nthe actual and expected sign-on and sign-off times for a driver. The expected times are calculated based on the driver's assigned work.\n\nDeviation might be classified either early or late, calculated according to a defined threshold."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

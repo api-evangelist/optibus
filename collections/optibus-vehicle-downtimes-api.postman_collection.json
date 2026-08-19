@@ -1,0 +1,574 @@
+{
+  "item": [
+    {
+      "id": "a46ca822-ad8d-4874-9bda-f141dd82c8fe",
+      "name": "Vehicle Downtimes",
+      "description": {
+        "content": "API endpoints for managing downtimes for vehicles - i.e. periods where they are unavailable for service.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5229a181-c21d-4c4e-b2f7-a6b2d5ee4a48",
+          "name": "List vehicle downtimes",
+          "request": {
+            "name": "List vehicle downtimes",
+            "description": {
+              "content": "List existing vehicle downtimes in the system, with optional filtering capability.\n\nNotes:\n- The result is paginated. Check the `pagination` property in the response to see the total number of pages and the current page number.\n- Information about the modelling of date/time periods for each entry:\n  - `startDate` is mandatory\n  - `endDate` is optional - if omitted, the downtime will be ongoing indefinitely\n  - `startTime` and `endTime` are optional - if omitted, the downtime will be for the entire day(s) specified by `startDate` and `endDate`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "vehicles",
+                "downtimes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "vehicleIds",
+                  "value": "<string>",
+                  "description": "- Comma-separated list of vehicle IDs to filter for"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<string>",
+                  "description": "- Date string formatted as `YYYY-MM-dd`. Only downtimes that end on or after this date are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<string>",
+                  "description": "- Date string formatted as `YYYY-MM-dd`. Only downtimes that start on or before this date are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "- 1-indexed integer indicating which page of results to pull"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2cbba65d-6e0f-49f6-94e2-08f6e4f0435b",
+              "name": "Vehicle downtimes fetched successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    "downtimes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vehicleIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pagination\": {\n    \"totalPages\": \"<integer>\",\n    \"currentPage\": \"<integer>\",\n    \"nextPage\": \"<integer>\"\n  },\n  \"downtimes\": [\n    {\n      \"startDate\": \"2025-07-05\",\n      \"vehicleId\": \"string\",\n      \"downtimeId\": \"string\",\n      \"note\": \"string\",\n      \"endTime\": 3825,\n      \"startTime\": 8926,\n      \"endDate\": \"1973-11-06\"\n    },\n    {\n      \"startDate\": \"1977-03-03\",\n      \"vehicleId\": \"string\",\n      \"downtimeId\": \"string\",\n      \"note\": \"string\",\n      \"endTime\": 6124,\n      \"startTime\": 8111,\n      \"endDate\": \"2018-11-23\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a7b36ca8-281b-49c9-ac3a-56240b702e26",
+              "name": "Possible error types: `Invalid request schema` (schema of your request does not match the specification), `invalidDatesCombination` (the combination of fromDate and toDate is invalid)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    "downtimes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vehicleIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"invalidDatesCombination\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a6d5cd7-f227-4164-a077-13091ac1569d",
+              "name": "Possible error types: `pageNotFound` (requested page number is out of range; details.totalPages indicates the number of pages available)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    "downtimes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vehicleIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"invalidDatesCombination\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "49f6f52a-3810-4c44-b842-eef2e9db22c6",
+          "name": "Create/update vehicle downtimes",
+          "request": {
+            "name": "Create/update vehicle downtimes",
+            "description": {
+              "content": "Creates or updates downtimes for vehicles. As input, provide a list of downtime entries to create or update.\n\nNotes:\n- Behaviour of the `downtimeId` field:\n  - If a `downtimeId` is specified and a downtime with that ID already exists, the existing downtime will be updated.\n  - If a `downtimeId` is specified and a downtime with that ID does not already exist, a new downtime will be created with the specified ID.\n  - If a `downtimeId` is not specified, a new downtime will be created with an automatically generated ID.\n- Information about the modelling of date/time periods for each entry:\n  - `startDate` is mandatory\n  - `endDate` is optional - if omitted, the downtime will be ongoing indefinitely\n  - `startTime` and `endTime` are optional - if omitted, the downtime will be for the entire day(s) specified by `startDate` and `endDate`\n- Each request is atomic - either all downtimes listed in the request are created/updated successfully, or none are created/updated.\n- No more than 1000 downtimes can be created/updated in a single request - please break your request into multiple smaller chunks if you need to create/update more than 1000 downtimes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "vehicles",
+                "downtimes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"downtimes\": [\n    {\n      \"startDate\": \"<date>\",\n      \"vehicleId\": \"<string>\",\n      \"note\": \"<string>\",\n      \"endTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"endDate\": \"<date>\",\n      \"downtimeId\": \"<string>\"\n    },\n    {\n      \"startDate\": \"<date>\",\n      \"vehicleId\": \"<string>\",\n      \"note\": \"<string>\",\n      \"endTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"endDate\": \"<date>\",\n      \"downtimeId\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "51620a56-a03f-4890-8caf-4942f239e494",
+              "name": "Vehicle downtimes created and/or updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    "downtimes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"downtimes\": [\n    {\n      \"startDate\": \"<date>\",\n      \"vehicleId\": \"<string>\",\n      \"note\": \"<string>\",\n      \"endTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"endDate\": \"<date>\",\n      \"downtimeId\": \"<string>\"\n    },\n    {\n      \"startDate\": \"<date>\",\n      \"vehicleId\": \"<string>\",\n      \"note\": \"<string>\",\n      \"endTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"endDate\": \"<date>\",\n      \"downtimeId\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createDowntimeIds\": [\n    \"item-123\",\n    \"item-456\",\n    \"item-789\"\n  ],\n  \"modifiedDowntimeIds\": [\n    \"item-123\",\n    \"item-456\",\n    \"item-789\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "557ab3bf-fe45-4f74-8423-9481b9043bb3",
+              "name": "Possible error types: `Invalid request schema` (schema of your request does not match the specification), `invalidFieldContent` (the content of one or more fields in your request is invalid), `noItems` (you specified 0 items in your request), `tooManyItems` (you specified >1000 items in your request)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    "downtimes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"downtimes\": [\n    {\n      \"startDate\": \"<date>\",\n      \"vehicleId\": \"<string>\",\n      \"note\": \"<string>\",\n      \"endTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"endDate\": \"<date>\",\n      \"downtimeId\": \"<string>\"\n    },\n    {\n      \"startDate\": \"<date>\",\n      \"vehicleId\": \"<string>\",\n      \"note\": \"<string>\",\n      \"endTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"endDate\": \"<date>\",\n      \"downtimeId\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"conflictProcessingRequest\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e1d9fd8-36ca-456d-9abc-68441db4a765",
+              "name": "Possible error types: `conflictProcessingRequest` (temporary concurrency conflict, retry shortly)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    "downtimes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"downtimes\": [\n    {\n      \"startDate\": \"<date>\",\n      \"vehicleId\": \"<string>\",\n      \"note\": \"<string>\",\n      \"endTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"endDate\": \"<date>\",\n      \"downtimeId\": \"<string>\"\n    },\n    {\n      \"startDate\": \"<date>\",\n      \"vehicleId\": \"<string>\",\n      \"note\": \"<string>\",\n      \"endTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"endDate\": \"<date>\",\n      \"downtimeId\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"conflictProcessingRequest\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "824f580d-d594-4307-bf01-e57d99b4df71",
+              "name": "Possible error types: `vehiclesNotFound` (one or more vehicle IDs specified in the request do not exist in the system)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    "downtimes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"downtimes\": [\n    {\n      \"startDate\": \"<date>\",\n      \"vehicleId\": \"<string>\",\n      \"note\": \"<string>\",\n      \"endTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"endDate\": \"<date>\",\n      \"downtimeId\": \"<string>\"\n    },\n    {\n      \"startDate\": \"<date>\",\n      \"vehicleId\": \"<string>\",\n      \"note\": \"<string>\",\n      \"endTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"endDate\": \"<date>\",\n      \"downtimeId\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"conflictProcessingRequest\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "54023835-f455-4528-a31e-4c10a92a7729",
+    "name": "Optibus Operations Driver Absences Vehicle Downtimes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "**Welcome to the Optibus Operations API documentation!**\n\nOptibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations' functionality, allowing you to integrate it with your own applications and systems.\n\n\n",
+      "type": "text/plain"
+    }
+  }
+}

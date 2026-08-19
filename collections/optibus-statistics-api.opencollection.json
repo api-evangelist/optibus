@@ -1,0 +1,159 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Optibus Operations Driver Absences Statistics API",
+    "version": "2.8.17"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Statistics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v2/stats",
+            "params": [
+              {
+                "name": "date",
+                "value": "",
+                "type": "query",
+                "description": "- The date for which statistics are to be retrieved. Required, in YYYY-MM-DD format."
+              },
+              {
+                "name": "depotId",
+                "value": "",
+                "type": "query",
+                "description": "- The ID of a specific depot for which statistics are to be retrieved. Either depotId or driverIds must be provided."
+              },
+              {
+                "name": "driverIds",
+                "value": "",
+                "type": "query",
+                "description": "- An array of driver IDs for whom statistics are to be retrieved. Either driverIds or depotId must be provided."
+              },
+              {
+                "name": "statIds",
+                "value": "",
+                "type": "query",
+                "description": "- Optional. An array of statistic IDs to filter the results. If not provided, all configured statistics are returned."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves statistics values for drivers on a specified date.\nStatistics are configured in the customer's preferences and can include normal (daily), yearly, and accumulated types.\nNormal stats are calculated via the work engine, while yearly and accumulated stats are fetched from the yearly cache.\nEither driverIds or depotId must be provided to scope the request. There is a calculation limit per request to avoid timeouts. For normal stats, the limit is based on the number of configured work-enti"
+        },
+        {
+          "info": {
+            "name": "Fetch per-task statistics for a date range",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v2/duty-stats",
+            "params": [
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "- Start of the date range (inclusive), YYYY-MM-DD."
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "- End of the date range (inclusive), YYYY-MM-DD. Must be `>= fromDate`."
+              },
+              {
+                "name": "depotIds",
+                "value": "",
+                "type": "query",
+                "description": "- Optional. Restrict to specific depots; all customer depots if omitted."
+              },
+              {
+                "name": "driverIds",
+                "value": "",
+                "type": "query",
+                "description": "- Optional. Restrict to duties assigned to these drivers."
+              },
+              {
+                "name": "includeUnassigned",
+                "value": "",
+                "type": "query",
+                "description": "- Optional. Defaults to `false` when `driverIds` is provided, `true` when omitted."
+              },
+              {
+                "name": "taskIds",
+                "value": "",
+                "type": "query",
+                "description": "- Optional. Filter by internal task UUIDs (not display IDs). Required when `daysLimit` is `0` — see above."
+              },
+              {
+                "name": "statIds",
+                "value": "",
+                "type": "query",
+                "description": "- Optional. Restrict which statistics to compute. `\"*\"` is not allowed."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves per-task statistics for a date range, mirroring the duty side panel in the Ops UI.\nOne response row per `(date, task)` pair, including the statistics configured under the customer's `dutyFilter` preference.\n\nTo avoid timeouts the calculation is capped. Call `GET /v2/duty-stats-calculation-limit` first with\nthe same dates and depots to size your requests. This endpoint returns 413 when:\n- the requested range spans more than `daysLimit` days, or\n- `daysLimit` is `0` (a day too dense to f"
+        },
+        {
+          "info": {
+            "name": "Fetch the request limits for /v2/duty-stats",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v2/duty-stats-calculation-limit",
+            "params": [
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "- Start of the probe range (inclusive), YYYY-MM-DD."
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "- End of the probe range (inclusive), YYYY-MM-DD. Must be `>= fromDate`."
+              },
+              {
+                "name": "depotIds",
+                "value": "",
+                "type": "query",
+                "description": "- Optional. Restrict to specific depots; all customer depots if omitted."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Sizing (pre-flight) call for `GET /v2/duty-stats`. It computes no statistics — it only reports the\nlimits that `/v2/duty-stats` will enforce for the given dates and depot scope, so callers can plan\ntheir requests up front. Call it with the same `fromDate`/`toDate`/`depotIds` you intend to query.\n\nHow to use the returned limits:\n- `daysLimit >= 1` — split the date range into `/v2/duty-stats` requests of at most `daysLimit`\n  days each. Task or driver filters do not change this limit.\n- `daysLimit"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

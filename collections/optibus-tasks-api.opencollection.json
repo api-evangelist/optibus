@@ -1,0 +1,91 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Optibus Operations Driver Absences Tasks API",
+    "version": "2.8.17"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tasks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch calendar tasks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/:depotId/calendar",
+            "params": [
+              {
+                "name": "depotId",
+                "value": "",
+                "type": "path",
+                "description": "- The depot to get the tasks from"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "- The start of the date range to return the tasks from"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "- The end of the date range to return the tasks from"
+              },
+              {
+                "name": "plan",
+                "value": "",
+                "type": "query",
+                "description": "-  Returns tasks from the given plans"
+              },
+              {
+                "name": "group",
+                "value": "",
+                "type": "query",
+                "description": "- Returns tasks from deployed plans for the given groups"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "- Returns tasks from the given types"
+              },
+              {
+                "name": "assignedOnly",
+                "value": "",
+                "type": "query",
+                "description": "-  Returns tasks that are either assigned or unassigned (depending on the input)"
+              },
+              {
+                "name": "includeStops",
+                "value": "",
+                "type": "query",
+                "description": "-  Returns the stops of tasks (false by default)"
+              },
+              {
+                "name": "driversIds",
+                "value": "",
+                "type": "query",
+                "description": "-  Returns the assignments of filtered driver"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the Daily and Weekly tasks for a specified date range, with filters.\nResponds with 302 redirect when payload is too big.\nOriginalDriverId refers to the driver that was assigned to the task in the plan page\n\n**Spare Types Support**: When the spare types feature flag is enabled, spare tasks will include additional properties:\n- `spareType`: The spare type code (e.g., \"SPARE1\", \"SPARE2\")\n- `displayId`: Will show the configured spare type name instead of the original display ID\n- `dutyType`:"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

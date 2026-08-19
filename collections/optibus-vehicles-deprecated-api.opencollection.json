@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Optibus Operations Driver Absences Vehicles (Deprecated) API",
+    "version": "2.8.17"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Vehicles (Deprecated)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch vehicles (deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/vehicles",
+            "params": [
+              {
+                "name": "vehicleIds",
+                "value": "",
+                "type": "query",
+                "description": "- Returns the information for the given vehicles by vehicle ID"
+              },
+              {
+                "name": "depotIds",
+                "value": "",
+                "type": "query",
+                "description": "- Returns the information for vehicles that are that are loaned or assigned to the given depot IDs, on the given date or today if date is not provided"
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "query",
+                "description": "- Returns the attributes information for the given date"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "**WARNING: This API endpoint is deprecated - you should use `GET /v1/vehicles` instead.**\n\nReturns the information for vehicles, with filters."
+        },
+        {
+          "info": {
+            "name": "Fetch vehicle attributes (deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v1/vehicle-attributes",
+            "params": [
+              {
+                "name": "vehicleIds",
+                "value": "",
+                "type": "query",
+                "description": "- Returns the vehicle attributes by vehicle ID"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "- Returns the attributes for a specified date range (both from and to are required)"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "- Returns the attributes for a specified date range (both from and to are required)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "**WARNING: This API endpoint is deprecated - you should use `GET /v1/vehicles/custom-attributes` instead.**\n\nReturns the vehicle attributes."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

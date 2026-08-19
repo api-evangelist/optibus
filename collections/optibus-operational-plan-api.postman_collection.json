@@ -1,0 +1,1419 @@
+{
+  "item": [
+    {
+      "id": "b4582c3d-6864-4486-8473-3d94146335a9",
+      "name": "Operational Plan",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a225bb9e-2716-4d8a-aed9-b2e53c3dcd4b",
+          "name": "Fetch operational plan (v2)",
+          "request": {
+            "name": "Fetch operational plan (v2)",
+            "description": {
+              "content": "Returns the daily operational plans for a specified date range. This endpoint provides comprehensive operational data including tasks, assignments, blocks, drivers, and vehicles.\n\n**Spare Types Support**: When the spare types feature flag is enabled, spare tasks will include additional properties:\n- `spareType`: The spare type code (e.g., \"SPARE1\", \"SPARE2\")\n- `displayId`: Will show the configured spare type name instead of the original display ID\n- `dutyType`: Will be set to \"spare\" for spare tasks\n- `startTime` and `endTime`: Will be included in the task summary for spare tasks based on the relevant spare type preference configuration",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "operational-plan"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<date>",
+                  "description": "(Required) - Returns the operational plans from this date (both fromDate and toDate are required). Date format is YYYY-MM-DD"
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<date>",
+                  "description": "(Required) - Returns the daily operational plans to this date (both fromDate and toDate are required). Date format is YYYY-MM-DD"
+                },
+                {
+                  "disabled": false,
+                  "key": "depotUuids",
+                  "value": "<string>",
+                  "description": "- When specified, the response will contain only these depots. When including more than one depot the request param can be a comma separated list (eg depotUuids=A,B) or you can use several request params (eg depotUuids=A?depotUuids=B)\""
+                },
+                {
+                  "disabled": false,
+                  "key": "driverUuids",
+                  "value": "<string>",
+                  "description": "- When specified, the response wil include only assignments for these drivers. When including more than one driver the request param can be a comma separated list (eg driverUuids=A,B) or you can use several request params (eg driverUuids=A?driverUuids=B)"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeStops",
+                  "value": "<string>",
+                  "description": "-  When true, the response will include a full stop list on each trip. Otherwise only origin and destination are included in request. (Usage may cause requests to take a long time)"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeUnassigned",
+                  "value": "<string>",
+                  "description": "-  In conjunction with supplying driver ids, When true return unassigned tasks as well as assigned tasks according to the driver filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "fetchPlannedAssignmentsProperties",
+                  "value": "<boolean>",
+                  "description": "- When true, the response will include the properties of the plannedAssignments"
+                },
+                {
+                  "disabled": false,
+                  "key": "taskDisplayIds",
+                  "value": "<string>",
+                  "description": "- When specified, filters tasks, blocks, task assignments, and block assignments to only include those associated with the provided task display IDs. Can be a comma separated list (eg taskDisplayIds=T1,T2)"
+                },
+                {
+                  "disabled": false,
+                  "key": "excludeCancelledTasks",
+                  "value": "<boolean>",
+                  "description": "- When true, exclude cancelled (disabled) tasks from driverAssignments, vehicleAssignments, and plannedAssignments. Defaults to false."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeActualSigningTimes",
+                  "value": "<boolean>",
+                  "description": "- When true, include actual signing times (signOnActual, signOffActual) in assignment properties attributes. Times are ISO 8601 datetime strings in the customer's operational timezone (no UTC offset), or null if the driver has not yet signed. Defaults to false."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "706bc526-cf01-45cc-99e8-e58cb7965e5a",
+              "name": "The daily operational plan for the specified time range.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "operational-plan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "depotUuids",
+                      "value": "72999313-c6d3-44a3-9e64-a8cbce779ed7,e09cc074-b949-4d39-97b5-d2fa5eb1cdc5"
+                    },
+                    {
+                      "key": "driverUuids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeStops",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeUnassigned",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fetchPlannedAssignmentsProperties",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "taskDisplayIds",
+                      "value": "T100,T200,T300"
+                    },
+                    {
+                      "key": "excludeCancelledTasks",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeActualSigningTimes",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"depotName\": \"(ED) Example Depot\",\n    \"depotUuid\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n    \"opUnits\": [\n      {\n        \"uuid\": \"e23c5e7f-4f24-45ad-8c06-7ea514ab3422\",\n        \"name\": \"Example Unit\",\n        \"code\": \"EXU\"\n      }\n    ],\n    \"assignments\": [\n      {\n        \"date\": \"2024-01-18\",\n        \"vehicleAssignments\": [\n          {\n            \"assignments\": [\n              \"0730b92a-082e-444c-9642-c5b92ead4d99\"\n            ]\n          }\n        ],\n        \"driverAssignments\": [\n          {\n            \"driver\": \"19380\",\n            \"assignments\": [\n              \"ff7a0520-c35d-49bd-8d55-cbf640ab2b27\"\n            ]\n          }\n        ],\n        \"plannedAssignments\": [\n          {\n            \"driver\": \"19380\",\n            \"assignments\": [\n              \"ff7a0520-c35d-49bd-8d55-cbf640ab2b27\"\n            ]\n          }\n        ],\n        \"properties\": [\n          {\n            \"taskId\": \"ff7a0520-c35d-49bd-8d55-cbf640ab2b27\",\n            \"labels\": [\n              {\n                \"name\": \"DirectExchange\",\n                \"code\": \"DX\"\n              }\n            ],\n            \"opUnitUuid\": \"e23c5e7f-4f24-45ad-8c06-7ea514ab3422\",\n            \"attributes\": {\n              \"distance\": 123\n            },\n            \"assignmentType\": \"driverAssignment\",\n            \"lastAssignedDriverId\": \"19380\"\n          },\n          {\n            \"taskId\": \"ff7a0520-c35d-49bd-8d55-cbf640ab2b27\",\n            \"opUnitUuid\": \"e23c5e7f-4f24-45ad-8c06-7ea514ab3422\",\n            \"assignmentType\": \"plannedAssignment\",\n            \"lastAssignedDriverId\": null\n          }\n        ]\n      }\n    ],\n    \"blocks\": [\n      {\n        \"id\": \"0730b92a-082e-444c-9642-c5b92ead4d99\",\n        \"displayId\": \"22606\",\n        \"type\": \"block\",\n        \"summary\": {\n          \"type\": \"Double Decker\",\n          \"serviceId\": \"elZ0TTBBclJhZWs9\",\n          \"rosterSourceId\": \"qF0tdEWiB\",\n          \"rosterDatasetId\": \"Fme9uj8Xo\",\n          \"scheduleDatasetId\": \"JuEsdCizGj\"\n        },\n        \"events\": [\n          {\n            \"dutyId\": \"86650e7e-c036-4fd1-b8e8-ff3e69ad2d15\",\n            \"eventId\": \"f09ae7f6-18b5-48d4-af80-ee72fe493ce9\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"86650e7e-c036-4fd1-b8e8-ff3e69ad2d15\",\n            \"eventId\": \"c3903f31-5e8b-4476-b110-2729a280f6ee\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"86650e7e-c036-4fd1-b8e8-ff3e69ad2d15\",\n            \"eventId\": \"55777353-328a-4ca1-a2d9-5fe37e1af0ba\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"86650e7e-c036-4fd1-b8e8-ff3e69ad2d15\",\n            \"eventId\": \"8a5cae94-47c6-49ac-88b0-64d5c46cbf52\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"86650e7e-c036-4fd1-b8e8-ff3e69ad2d15\",\n            \"eventId\": \"51b21adb-ff5d-4208-b733-d9329442a82e\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"86650e7e-c036-4fd1-b8e8-ff3e69ad2d15\",\n            \"eventId\": \"bababc2a-cdec-4bb4-bdde-90e01f57995e\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"86650e7e-c036-4fd1-b8e8-ff3e69ad2d15\",\n            \"eventId\": \"28d4ed4c-95a4-4e08-831a-8be5ead1e85e\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"86650e7e-c036-4fd1-b8e8-ff3e69ad2d15\",\n            \"eventId\": \"c3f98114-84c2-4112-833f-196f5f1d28bd\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"86650e7e-c036-4fd1-b8e8-ff3e69ad2d15\",\n            \"eventId\": \"6e9ec26f-4b1e-4f5b-bbee-c328b8f0e24b\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"2ee73657-a34f-426e-973d-fcba16f9ddb0\",\n            \"eventId\": \"b43ed3c4-1d29-4295-8883-b68bea736363\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"2ee73657-a34f-426e-973d-fcba16f9ddb0\",\n            \"eventId\": \"ecce2515-2f02-42dc-97d4-1b1d084c6fdc\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"2ee73657-a34f-426e-973d-fcba16f9ddb0\",\n            \"eventId\": \"71f87166-48b3-4c9e-8ca4-8fdb7c1a31f1\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"2ee73657-a34f-426e-973d-fcba16f9ddb0\",\n            \"eventId\": \"ecf600e2-b21d-498a-9ebf-c7d41bd33bde\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"2ee73657-a34f-426e-973d-fcba16f9ddb0\",\n            \"eventId\": \"c705dae3-6f18-42aa-ad31-a65977af6de9\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"2ee73657-a34f-426e-973d-fcba16f9ddb0\",\n            \"eventId\": \"7a58057f-89a7-4c89-8430-7af17f9f3ff5\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"2ee73657-a34f-426e-973d-fcba16f9ddb0\",\n            \"eventId\": \"3c2cda08-7f74-48ab-a01d-755981683686\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"2ee73657-a34f-426e-973d-fcba16f9ddb0\",\n            \"eventId\": \"44d4a7c4-da3b-4269-bc79-38dc493e2628\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"2ee73657-a34f-426e-973d-fcba16f9ddb0\",\n            \"eventId\": \"630e542b-3725-497f-8527-ebba6f7184b4\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"2ee73657-a34f-426e-973d-fcba16f9ddb0\",\n            \"eventId\": \"409a62bb-ebe4-4a10-8eb3-4125acec2380\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"2ee73657-a34f-426e-973d-fcba16f9ddb0\",\n            \"eventId\": \"ef33c7c5-082b-4899-a4f2-353fca477255\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"2ee73657-a34f-426e-973d-fcba16f9ddb0\",\n            \"eventId\": \"7ee6694a-ac6a-4630-b21a-71ff030014d3\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"2ee73657-a34f-426e-973d-fcba16f9ddb0\",\n            \"eventId\": \"b132ef5a-c4d4-46ba-b1d3-57b4d0f6c5ce\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"2ee73657-a34f-426e-973d-fcba16f9ddb0\",\n            \"eventId\": \"42a1c8d6-54aa-4d3c-a062-2dd878aaac6e\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"2ee73657-a34f-426e-973d-fcba16f9ddb0\",\n            \"eventId\": \"a03e3a04-e70c-425d-b389-388234390907\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"2ee73657-a34f-426e-973d-fcba16f9ddb0\",\n            \"eventId\": \"c2410c65-7a0b-4ebe-b78f-8c42e874f451\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"2ee73657-a34f-426e-973d-fcba16f9ddb0\",\n            \"eventId\": \"402952a9-3645-49de-872b-59836ef80e80\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"2ee73657-a34f-426e-973d-fcba16f9ddb0\",\n            \"eventId\": \"2fa57646-c5a7-4244-b749-807f5ba8082e\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"bc996392-974e-4e24-9b6a-237f6529de2e\",\n            \"eventId\": \"200cb944-d0ae-4a0a-856c-4b5ea8e363d4\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"bc996392-974e-4e24-9b6a-237f6529de2e\",\n            \"eventId\": \"7e16656c-e365-49e2-8ae8-177f5453798a\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"bc996392-974e-4e24-9b6a-237f6529de2e\",\n            \"eventId\": \"a9ffa0b7-4ddd-42c4-b9f0-612c0524114f\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"bc996392-974e-4e24-9b6a-237f6529de2e\",\n            \"eventId\": \"2012cd2e-74c1-445f-ad5a-feeee3943afe\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"bc996392-974e-4e24-9b6a-237f6529de2e\",\n            \"eventId\": \"56a3d8cb-f446-4da7-aded-32e8635c19a7\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"bc996392-974e-4e24-9b6a-237f6529de2e\",\n            \"eventId\": \"0d3a05e8-624c-4459-9286-347007fd1e3c\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"bc996392-974e-4e24-9b6a-237f6529de2e\",\n            \"eventId\": \"24a9d01b-8226-4f96-ab85-34cac9b86585\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"bc996392-974e-4e24-9b6a-237f6529de2e\",\n            \"eventId\": \"c687db43-580c-4f2b-aca8-f88b76e0c821\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"bc996392-974e-4e24-9b6a-237f6529de2e\",\n            \"eventId\": \"6ffad840-7597-4620-9f80-089790ec3649\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"bc996392-974e-4e24-9b6a-237f6529de2e\",\n            \"eventId\": \"2eec623a-1cd5-4a68-8f6c-cea9e00e5fae\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"bc996392-974e-4e24-9b6a-237f6529de2e\",\n            \"eventId\": \"ea6f68af-f80b-4d40-ab7b-a4fb5f910277\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"bc996392-974e-4e24-9b6a-237f6529de2e\",\n            \"eventId\": \"3d59860c-a55f-48d2-aace-f8ff0164f74e\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"bc996392-974e-4e24-9b6a-237f6529de2e\",\n            \"eventId\": \"9c60c6c2-b886-4a98-8bfd-652e95cd3850\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"bc996392-974e-4e24-9b6a-237f6529de2e\",\n            \"eventId\": \"865052ce-a151-470b-b1cf-e03c20157341\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"bc996392-974e-4e24-9b6a-237f6529de2e\",\n            \"eventId\": \"f17a09a2-5800-42c1-a7f4-015a81fa207d\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"bc996392-974e-4e24-9b6a-237f6529de2e\",\n            \"eventId\": \"54a23955-1fa9-480d-8026-984f6d5680ff\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"bc996392-974e-4e24-9b6a-237f6529de2e\",\n            \"eventId\": \"f2655562-02b8-42d4-a24d-bf171c2cbf6b\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          },\n          {\n            \"dutyId\": \"bc996392-974e-4e24-9b6a-237f6529de2e\",\n            \"eventId\": \"05f1caf2-7564-42a0-baaf-375773680fa5\",\n            \"originRosterId\": \"6a461756-8918-4043-9e9a-efb3ac3f691d\"\n          }\n        ],\n        \"disabled\": false,\n        \"optibusIds\": {\n          \"optibusRosterId\": \"qF0tdEWiB\",\n          \"optibusRosterDatasetId\": \"Fme9uj8Xo\",\n          \"optibusScheduleId\": \"JuEsdCizGj\",\n          \"optibusTimeplanId\": \"XNchdCce-Cy/8297\"\n        },\n        \"wasModifiedInOperations\": false,\n        \"source\": \"scheduling\"\n      }\n    ],\n    \"tasks\": [\n      {\n        \"displayId\": \"1004\",\n        \"summary\": {\n          \"routes\": [\n            \"201\"\n          ],\n          \"startTime\": 291,\n          \"endTime\": 811,\n          \"rosterSourceId\": \"qF0tdEWiB\",\n          \"rosterDatasetId\": \"Fme9uj8Xo\",\n          \"scheduleDatasetId\": \"JuEsdCizGj\",\n          \"serviceId\": \"elZ0TTBBclJhZWs9\",\n          \"serviceName\": \"Mon-Fri\",\n          \"originDepotId\": \"BT\",\n          \"originDepotLabel\": \"(ED) Example Depot\",\n          \"originDepotName\": \"Example Depot\",\n          \"originStopId\": \"BT\",\n          \"originStopLabel\": \"(ED) Example Depot\",\n          \"originStopName\": \"Example Depot\",\n          \"destinationStopId\": \"615068\",\n          \"destinationStopLabel\": \"(615068) Blantyre Ind Est E\",\n          \"destinationStopName\": \"Blantyre Ind Est E\"\n        },\n        \"events\": [\n          {\n            \"endTime\": 296,\n            \"eventType\": \"sign_on\",\n            \"startTime\": 291,\n            \"id\": \"3056bc22\",\n            \"dutyId\": \"1004\",\n            \"origin\": {\n              \"id\": \"BT\",\n              \"time\": \"04:51:00\"\n            },\n            \"destination\": {\n              \"id\": \"BT\",\n              \"time\": \"04:56:00\"\n            },\n            \"uuid\": \"3c21ad6c-f095-41a4-acf3-76497e110c0a\"\n          },\n          {\n            \"endTime\": 301,\n            \"eventType\": \"pre_trip\",\n            \"startTime\": 296,\n            \"id\": \"-f9b8089\",\n            \"dutyId\": \"1004\",\n            \"origin\": {\n              \"id\": \"BT\",\n              \"time\": \"04:56:00\"\n            },\n            \"vehicleId\": \"20106\",\n            \"destination\": {\n              \"id\": \"BT\",\n              \"time\": \"05:01:00\"\n            },\n            \"blockId\": \"20106\",\n            \"uuid\": \"9ab737ba-5c48-4447-b763-358c8f0fefb9\"\n          },\n          {\n            \"endTime\": 326,\n            \"eventType\": \"deadhead\",\n            \"startTime\": 301,\n            \"id\": \"62cb2714\",\n            \"dutyId\": \"1004\",\n            \"origin\": {\n              \"id\": \"BT\",\n              \"time\": \"05:01:00\"\n            },\n            \"depotId\": \"BT\",\n            \"subType\": \"depot_pull_out\",\n            \"distance\": 0,\n            \"generated\": false,\n            \"vehicleId\": \"20106\",\n            \"destination\": {\n              \"id\": \"6160946\",\n              \"time\": \"05:26:00\"\n            },\n            \"blockId\": \"20106\",\n            \"uuid\": \"6cb71fe8-a288-4fe7-8931-43a4ef748e95\"\n          },\n          {\n            \"endTime\": 339,\n            \"eventType\": \"service_trip\",\n            \"startTime\": 326,\n            \"id\": \"343_1\",\n            \"sign\": \"201\",\n            \"dutyId\": \"1004\",\n            \"origin\": {\n              \"id\": \"6160946\",\n              \"time\": \"05:26:00\",\n              \"isTimePoint\": true\n            },\n            \"pattern\": \"B\",\n            \"distance\": 2.7119999999999997,\n            \"parentId\": \"343\",\n            \"parentSubTrips\": [\n              \"343_1\",\n              \"343_2\",\n              \"343_3\",\n              \"343_4\"\n            ],\n            \"direction\": 2,\n            \"vehicleId\": \"20106\",\n            \"destination\": {\n              \"id\": \"6160744\",\n              \"time\": \"05:39:00\",\n              \"isTimePoint\": true\n            },\n            \"subTripIndex\": 1,\n            \"directionName\": \"INBOUND\",\n            \"parentEventId\": \"99c50f06-899a-415b-a06f-f063e3992fc4\",\n            \"optibusRouteId\": \"FGAO201-2-B_1\",\n            \"blockId\": \"20106\",\n            \"uuid\": \"6ea5b810-eda6-4cfd-8bb5-c919175067e4\"\n          },\n          {\n            \"endTime\": 378,\n            \"eventType\": \"service_trip\",\n            \"startTime\": 340,\n            \"id\": \"343_2\",\n            \"sign\": \"201\",\n            \"dutyId\": \"1004\",\n            \"origin\": {\n              \"id\": \"6160744\",\n              \"time\": \"05:40:00\",\n              \"isTimePoint\": true\n            },\n            \"pattern\": \"B\",\n            \"distance\": 10.866,\n            \"parentId\": \"343\",\n            \"parentSubTrips\": [\n              \"343_1\",\n              \"343_2\",\n              \"343_3\",\n              \"343_4\"\n            ],\n            \"direction\": 2,\n            \"vehicleId\": \"20106\",\n            \"destination\": {\n              \"id\": \"61501662\",\n              \"time\": \"06:18:00\",\n              \"isTimePoint\": true\n            },\n            \"subTripIndex\": 2,\n            \"directionName\": \"INBOUND\",\n            \"parentEventId\": \"99c50f06-899a-415b-a06f-f063e3992fc4\",\n            \"optibusRouteId\": \"FGAO201-2-B_2\",\n            \"blockId\": \"20106\",\n            \"uuid\": \"0ef122f3-7013-48bc-8ca7-252c755a2401\"\n          },\n          {\n            \"endTime\": 389,\n            \"eventType\": \"service_trip\",\n            \"startTime\": 381,\n            \"id\": \"343_3\",\n            \"sign\": \"201\",\n            \"dutyId\": \"1004\",\n            \"origin\": {\n              \"id\": \"61501662\",\n              \"time\": \"06:21:00\",\n              \"isTimePoint\": true\n            },\n            \"pattern\": \"B\",\n            \"distance\": 2.009,\n            \"parentId\": \"343\",\n            \"parentSubTrips\": [\n              \"343_1\",\n              \"343_2\",\n              \"343_3\",\n              \"343_4\"\n            ],\n            \"direction\": 2,\n            \"vehicleId\": \"20106\",\n            \"destination\": {\n              \"id\": \"615069\",\n              \"time\": \"06:29:00\",\n              \"isTimePoint\": true\n            },\n            \"subTripIndex\": 3,\n            \"directionName\": \"INBOUND\",\n            \"parentEventId\": \"99c50f06-899a-415b-a06f-f063e3992fc4\",\n            \"optibusRouteId\": \"FGAO201-2-B_3\",\n            \"blockId\": \"20106\",\n            \"uuid\": \"f2dfea4c-02a8-4112-9934-13212d203df4\"\n          },\n          {\n            \"endTime\": 422,\n            \"eventType\": \"service_trip\",\n            \"startTime\": 389,\n            \"id\": \"343_4\",\n            \"sign\": \"201\",\n            \"dutyId\": \"1004\",\n            \"origin\": {\n              \"id\": \"615069\",\n              \"time\": \"06:29:00\",\n              \"isTimePoint\": true\n            },\n            \"pattern\": \"B\",\n            \"distance\": 9.21,\n            \"parentId\": \"343\",\n            \"parentSubTrips\": [\n              \"343_1\",\n              \"343_2\",\n              \"343_3\",\n              \"343_4\"\n            ],\n            \"direction\": 2,\n            \"vehicleId\": \"20106\",\n            \"destination\": {\n              \"id\": \"6150892\",\n              \"time\": \"07:02:00\",\n              \"isTimePoint\": true\n            },\n            \"subTripIndex\": 4,\n            \"directionName\": \"INBOUND\",\n            \"parentEventId\": \"99c50f06-899a-415b-a06f-f063e3992fc4\",\n            \"optibusRouteId\": \"FGAO201-2-B_4\",\n            \"blockId\": \"20106\",\n            \"uuid\": \"63757824-e263-4b98-a3b7-78b68e5e7f28\"\n          },\n          {\n            \"endTime\": 471,\n            \"eventType\": \"service_trip\",\n            \"startTime\": 434,\n            \"id\": \"344_1\",\n            \"sign\": \"201\",\n            \"dutyId\": \"1004\",\n            \"origin\": {\n              \"id\": \"6150892\",\n              \"time\": \"07:14:00\",\n              \"isTimePoint\": true\n            },\n            \"pattern\": \"A\",\n            \"distance\": 8.921999999999999,\n            \"parentId\": \"344\",\n            \"parentSubTrips\": [\n              \"344_1\",\n              \"344_2\"\n            ],\n            \"direction\": 1,\n            \"vehicleId\": \"20106\",\n            \"destination\": {\n              \"id\": \"615068\",\n              \"time\": \"07:51:00\",\n              \"isTimePoint\": true\n            },\n            \"subTripIndex\": 1,\n            \"directionName\": \"OUTBOUND\",\n            \"parentEventId\": \"5256e566-835d-4712-b281-cc38b55ee597\",\n            \"optibusRouteId\": \"FGAO201-1-A_1\",\n            \"blockId\": \"20106\",\n            \"uuid\": \"fe8f6362-b7c4-4f89-a0a3-21fd6aa11ec0\"\n          },\n          {\n            \"endTime\": 481,\n            \"eventType\": \"taxi\",\n            \"startTime\": 471,\n            \"id\": \"-1dd80462\",\n            \"origin\": {\n              \"id\": \"615068\",\n              \"time\": \"07:51:00\"\n            },\n            \"distance\": 0.1,\n            \"passengers\": [\n              \"1004\"\n            ],\n            \"destination\": {\n              \"id\": \"BT\",\n              \"time\": \"08:01:00\"\n            },\n            \"isReliefCar\": true,\n            \"uuid\": \"ae506819-69d6-4bbb-82e9-53de004b658c\"\n          },\n          {\n            \"endTime\": 521,\n            \"eventType\": \"break\",\n            \"startTime\": 481,\n            \"breakId\": \"Meal Break Depot\",\n            \"event_id\": \"1da93417-f146-47f6-becd-f4158a0834f4\",\n            \"paidTime\": 40,\n            \"extraTime\": 0,\n            \"uuid\": \"1da93417-f146-47f6-becd-f4158a0834f4\"\n          },\n          {\n            \"endTime\": 531,\n            \"eventType\": \"taxi\",\n            \"startTime\": 521,\n            \"id\": \"-6b76d95d\",\n            \"origin\": {\n              \"id\": \"BT\",\n              \"time\": \"08:41:00\"\n            },\n            \"distance\": 0.1,\n            \"passengers\": [\n              \"1004\"\n            ],\n            \"destination\": {\n              \"id\": \"615068\",\n              \"time\": \"08:51:00\"\n            },\n            \"isReliefCar\": true,\n            \"uuid\": \"4bc9499d-8b13-4957-99bd-20485694945b\"\n          },\n          {\n            \"endTime\": 532,\n            \"eventType\": \"attendance\",\n            \"startTime\": 531,\n            \"id\": \"-5ed6cb27\",\n            \"dutyId\": \"1004\",\n            \"origin\": {\n              \"id\": \"615068\",\n              \"time\": \"08:51:00\"\n            },\n            \"vehicleId\": \"20112\",\n            \"destination\": {\n              \"id\": \"615068\",\n              \"time\": \"08:52:00\"\n            },\n            \"blockId\": \"20112\",\n            \"uuid\": \"55db950d-409e-410e-939c-ef0a85bb9db5\"\n          },\n          {\n            \"endTime\": 620,\n            \"eventType\": \"service_trip\",\n            \"startTime\": 532,\n            \"id\": \"383_2\",\n            \"sign\": \"201\",\n            \"dutyId\": \"1004\",\n            \"origin\": {\n              \"id\": \"615068\",\n              \"time\": \"08:52:00\",\n              \"isTimePoint\": true\n            },\n            \"pattern\": \"A\",\n            \"distance\": 17.408,\n            \"parentId\": \"383\",\n            \"parentSubTrips\": [\n              \"383_1\",\n              \"383_2\"\n            ],\n            \"direction\": 1,\n            \"vehicleId\": \"20112\",\n            \"destination\": {\n              \"id\": \"61601733\",\n              \"time\": \"10:20:00\",\n              \"isTimePoint\": true\n            },\n            \"subTripIndex\": 2,\n            \"directionName\": \"OUTBOUND\",\n            \"parentEventId\": \"ec2b948d-5ba3-4934-bfed-04f9cdab53b4\",\n            \"optibusRouteId\": \"FGAO201-1-A_2\",\n            \"blockId\": \"20112\",\n            \"uuid\": \"9e73b946-d260-4c04-810e-6acdee580873\"\n          },\n          {\n            \"endTime\": 663,\n            \"eventType\": \"service_trip\",\n            \"startTime\": 634,\n            \"id\": \"384_1\",\n            \"sign\": \"201\",\n            \"dutyId\": \"1004\",\n            \"origin\": {\n              \"id\": \"61601733\",\n              \"time\": \"10:34:00\",\n              \"isTimePoint\": true\n            },\n            \"pattern\": \"-\",\n            \"distance\": 5.387999999999999,\n            \"parentId\": \"384\",\n            \"parentSubTrips\": [\n              \"384_1\",\n              \"384_2\",\n              \"384_3\",\n              \"384_4\"\n            ],\n            \"direction\": 2,\n            \"vehicleId\": \"20112\",\n            \"destination\": {\n              \"id\": \"6160744\",\n              \"time\": \"11:03:00\",\n              \"isTimePoint\": true\n            },\n            \"subTripIndex\": 1,\n            \"directionName\": \"INBOUND\",\n            \"parentEventId\": \"d487a149-afe7-4aa8-ad41-f26676f10175\",\n            \"optibusRouteId\": \"FGAO201-2--_1\",\n            \"blockId\": \"20112\",\n            \"uuid\": \"00006cf7-486c-4d31-a5b6-120ee37b38b7\"\n          },\n          {\n            \"endTime\": 712,\n            \"eventType\": \"service_trip\",\n            \"startTime\": 665,\n            \"id\": \"384_2\",\n            \"sign\": \"201\",\n            \"dutyId\": \"1004\",\n            \"origin\": {\n              \"id\": \"6160744\",\n              \"time\": \"11:05:00\",\n              \"isTimePoint\": true\n            },\n            \"pattern\": \"-\",\n            \"distance\": 10.866,\n            \"parentId\": \"384\",\n            \"parentSubTrips\": [\n              \"384_1\",\n              \"384_2\",\n              \"384_3\",\n              \"384_4\"\n            ],\n            \"direction\": 2,\n            \"vehicleId\": \"20112\",\n            \"destination\": {\n              \"id\": \"61501662\",\n              \"time\": \"11:52:00\",\n              \"isTimePoint\": true\n            },\n            \"subTripIndex\": 2,\n            \"directionName\": \"INBOUND\",\n            \"parentEventId\": \"d487a149-afe7-4aa8-ad41-f26676f10175\",\n            \"optibusRouteId\": \"FGAO201-2--_2\",\n            \"blockId\": \"20112\",\n            \"uuid\": \"f4e114f2-ab5f-4420-91a3-b932bed49e30\"\n          },\n          {\n            \"endTime\": 725,\n            \"eventType\": \"service_trip\",\n            \"startTime\": 715,\n            \"id\": \"384_3\",\n            \"sign\": \"201\",\n            \"dutyId\": \"1004\",\n            \"origin\": {\n              \"id\": \"61501662\",\n              \"time\": \"11:55:00\",\n              \"isTimePoint\": true\n            },\n            \"pattern\": \"-\",\n            \"distance\": 2.009,\n            \"parentId\": \"384\",\n            \"parentSubTrips\": [\n              \"384_1\",\n              \"384_2\",\n              \"384_3\",\n              \"384_4\"\n            ],\n            \"direction\": 2,\n            \"vehicleId\": \"20112\",\n            \"destination\": {\n              \"id\": \"615069\",\n              \"time\": \"12:05:00\",\n              \"isTimePoint\": true\n            },\n            \"subTripIndex\": 3,\n            \"directionName\": \"INBOUND\",\n            \"parentEventId\": \"d487a149-afe7-4aa8-ad41-f26676f10175\",\n            \"optibusRouteId\": \"FGAO201-2--_3\",\n            \"blockId\": \"20112\",\n            \"uuid\": \"65ea83de-42f8-4b0d-b881-69d91c8500fc\"\n          },\n          {\n            \"endTime\": 760,\n            \"eventType\": \"service_trip\",\n            \"startTime\": 726,\n            \"id\": \"384_4\",\n            \"sign\": \"201\",\n            \"dutyId\": \"1004\",\n            \"origin\": {\n              \"id\": \"615069\",\n              \"time\": \"12:06:00\",\n              \"isTimePoint\": true\n            },\n            \"pattern\": \"-\",\n            \"distance\": 9.21,\n            \"parentId\": \"384\",\n            \"parentSubTrips\": [\n              \"384_1\",\n              \"384_2\",\n              \"384_3\",\n              \"384_4\"\n            ],\n            \"direction\": 2,\n            \"vehicleId\": \"20112\",\n            \"destination\": {\n              \"id\": \"6150892\",\n              \"time\": \"12:40:00\",\n              \"isTimePoint\": true\n            },\n            \"subTripIndex\": 4,\n            \"directionName\": \"INBOUND\",\n            \"parentEventId\": \"d487a149-afe7-4aa8-ad41-f26676f10175\",\n            \"optibusRouteId\": \"FGAO201-2--_4\",\n            \"blockId\": \"20112\",\n            \"uuid\": \"1ce3d503-18df-4cbf-bb2c-3eb1db676cda\"\n          },\n          {\n            \"endTime\": 811,\n            \"eventType\": \"service_trip\",\n            \"startTime\": 774,\n            \"id\": \"385_1\",\n            \"sign\": \"201\",\n            \"dutyId\": \"1004\",\n            \"origin\": {\n              \"id\": \"6150892\",\n              \"time\": \"12:54:00\",\n              \"isTimePoint\": true\n            },\n            \"pattern\": \"A\",\n            \"distance\": 8.921999999999999,\n            \"parentId\": \"385\",\n            \"parentSubTrips\": [\n              \"385_1\",\n              \"385_2\"\n            ],\n            \"direction\": 1,\n            \"vehicleId\": \"20112\",\n            \"destination\": {\n              \"id\": \"615068\",\n              \"time\": \"13:31:00\",\n              \"isTimePoint\": true\n            },\n            \"subTripIndex\": 1,\n            \"directionName\": \"OUTBOUND\",\n            \"parentEventId\": \"84b11531-6e1e-4c65-80b6-e82fac41c74f\",\n            \"optibusRouteId\": \"FGAO201-1-A_1\",\n            \"blockId\": \"20112\",\n            \"uuid\": \"9beb28f1-af1c-4fca-bec1-e655bf9599bf\"\n          }\n        ],\n        \"dutyType\": \"Early\",\n        \"optibusIds\": {\n          \"optibusRosterId\": \"qF0tdEWiB\",\n          \"optibusRosterDatasetId\": \"Fme9uj8Xo\",\n          \"optibusScheduleId\": \"JuEsdCizGj\",\n          \"optibusTimeplanId\": \"XNchdCce-Cy/8297\"\n        },\n        \"wasModifiedInOperations\": false,\n        \"source\": \"scheduling\",\n        \"id\": \"ff7a0520-c35d-49bd-8d55-cbf640ab2b27\",\n        \"type\": \"duty\",\n        \"attributes\": {\n          \"distance\": 321\n        }\n      }\n    ],\n    \"vehicles\": [\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"type\": \"A\",\n        \"id\": \"010\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"type\": \"A\",\n        \"id\": 12590,\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"type\": \"A\",\n        \"id\": \"0600\",\n        \"archived\": false,\n        \"accessories\": [\n          \"USB\",\n          \"WiFi\"\n        ]\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"type\": \"A\",\n        \"id\": \"1099\",\n        \"archived\": false,\n        \"doubledecker\": false,\n        \"mileage\": 3,\n        \"typology\": 6\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"type\": \"A\",\n        \"id\": \"13500\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"type\": \"A\",\n        \"id\": \"200\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"type\": \"A\",\n        \"id\": \"5500\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz Conecto G\",\n        \"licensePlate\": \"129\",\n        \"id\": \"A-001\",\n        \"archived\": false,\n        \"nextservice\": \"2024-01-31\"\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz Conecto G\",\n        \"licensePlate\": \"219\",\n        \"id\": \"A-002\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz Conecto G\",\n        \"licensePlate\": \"220\",\n        \"id\": \"A-003\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz Conecto G\",\n        \"licensePlate\": \"221\",\n        \"id\": \"A-004\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz Conecto G\",\n        \"licensePlate\": \"222\",\n        \"id\": \"A-005\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz Conecto G\",\n        \"licensePlate\": \"223\",\n        \"id\": \"A-006\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz Conecto G\",\n        \"licensePlate\": \"224\",\n        \"id\": \"A-007\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz Conecto G\",\n        \"licensePlate\": \"225\",\n        \"id\": \"A-008\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz Conecto G\",\n        \"licensePlate\": \"226\",\n        \"id\": \"A-009\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz Conecto G\",\n        \"licensePlate\": \"227\",\n        \"id\": \"A-010\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz Conecto G\",\n        \"licensePlate\": \"228\",\n        \"id\": \"A-011\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz Conecto G\",\n        \"licensePlate\": \"130\",\n        \"id\": \"A-012\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz Conecto G\",\n        \"licensePlate\": \"229\",\n        \"id\": \"A-013\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz Conecto G\",\n        \"licensePlate\": \"230\",\n        \"id\": \"A-014\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz Conecto G\",\n        \"licensePlate\": \"231\",\n        \"id\": \"A-015\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"New Routemaster\",\n        \"licensePlate\": \"135\",\n        \"id\": \"DD-001\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"New Routemaster\",\n        \"licensePlate\": \"136\",\n        \"id\": \"DD-002\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"New Routemaster\",\n        \"licensePlate\": \"137\",\n        \"id\": \"DD-003\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"New Routemaster\",\n        \"licensePlate\": \"138\",\n        \"id\": \"DD-004\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"New Routemaster\",\n        \"licensePlate\": \"139\",\n        \"id\": \"DD-005\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"140\",\n        \"id\": \"LF-001\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"141\",\n        \"id\": \"LF-002\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"142\",\n        \"id\": \"LF-003\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"143\",\n        \"id\": \"LF-004\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"144\",\n        \"id\": \"LF-005\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"145\",\n        \"id\": \"LF-006\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"146\",\n        \"id\": \"LF-007\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"147\",\n        \"id\": \"LF-008\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"148\",\n        \"id\": \"LF-009\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"149\",\n        \"id\": \"LF-010\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"150\",\n        \"id\": \"LF-011\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"151\",\n        \"id\": \"LF-012\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"152\",\n        \"id\": \"LF-013\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"153\",\n        \"id\": \"LF-014\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"154\",\n        \"id\": \"LF-015\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"155\",\n        \"id\": \"LF-016\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"156\",\n        \"id\": \"LF-017\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"157\",\n        \"id\": \"LF-018\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"158\",\n        \"id\": \"LF-019\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"123\",\n        \"id\": \"LF-020\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"159\",\n        \"id\": \"LF-021\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"160\",\n        \"id\": \"LF-022\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"161\",\n        \"id\": \"LF-023\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"162\",\n        \"id\": \"LF-024\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"163\",\n        \"id\": \"LF-025\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"164\",\n        \"id\": \"LF-026\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"165\",\n        \"id\": \"LF-027\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"166\",\n        \"id\": \"LF-028\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"167\",\n        \"id\": \"LF-029\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"168\",\n        \"id\": \"LF-030\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"124\",\n        \"id\": \"LF-031\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"169\",\n        \"id\": \"LF-032\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"170\",\n        \"id\": \"LF-033\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"171\",\n        \"id\": \"LF-034\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"172\",\n        \"id\": \"LF-035\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"173\",\n        \"id\": \"LF-036\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"174\",\n        \"id\": \"LF-037\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"175\",\n        \"id\": \"LF-038\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"176\",\n        \"id\": \"LF-039\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"177\",\n        \"id\": \"LF-040\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"178\",\n        \"id\": \"LF-041\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"125\",\n        \"id\": \"LF-042\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"179\",\n        \"id\": \"LF-043\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"180\",\n        \"id\": \"LF-044\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"181\",\n        \"id\": \"LF-045\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"182\",\n        \"id\": \"LF-046\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"183\",\n        \"id\": \"LF-047\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"184\",\n        \"id\": \"LF-048\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"185\",\n        \"id\": \"LF-049\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"186\",\n        \"id\": \"LF-050\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"187\",\n        \"id\": \"LF-051\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"188\",\n        \"id\": \"LF-052\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"126\",\n        \"id\": \"LF-053\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"189\",\n        \"id\": \"LF-054\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"190\",\n        \"id\": \"LF-055\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"191\",\n        \"id\": \"LF-056\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"192\",\n        \"id\": \"LF-057\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"193\",\n        \"id\": \"LF-058\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"194\",\n        \"id\": \"LF-059\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"195\",\n        \"id\": \"LF-060\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"196\",\n        \"id\": \"LF-061\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"197\",\n        \"id\": \"LF-062\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"198\",\n        \"id\": \"LF-063\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"127\",\n        \"id\": \"LF-064\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"199\",\n        \"id\": \"LF-065\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"200\",\n        \"id\": \"LF-066\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"201\",\n        \"id\": \"LF-067\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"202\",\n        \"id\": \"LF-068\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"203\",\n        \"id\": \"LF-069\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"204\",\n        \"id\": \"LF-070\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"205\",\n        \"id\": \"LF-071\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"206\",\n        \"id\": \"LF-072\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"207\",\n        \"id\": \"LF-073\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"208\",\n        \"id\": \"LF-074\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"128\",\n        \"id\": \"LF-075\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"209\",\n        \"id\": \"LF-076\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"210\",\n        \"id\": \"LF-077\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"211\",\n        \"id\": \"LF-078\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"212\",\n        \"id\": \"LF-079\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"213\",\n        \"id\": \"LF-080\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"214\",\n        \"id\": \"LF-081\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"215\",\n        \"id\": \"LF-082\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"216\",\n        \"id\": \"LF-083\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"217\",\n        \"id\": \"LF-084\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"218\",\n        \"id\": \"LF-085\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"232\",\n        \"id\": \"SD-001\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"233\",\n        \"id\": \"SD-002\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"234\",\n        \"id\": \"SD-003\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"235\",\n        \"id\": \"SD-004\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"236\",\n        \"id\": \"SD-005\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"237\",\n        \"id\": \"SD-006\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"238\",\n        \"id\": \"SD-007\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"131\",\n        \"id\": \"SD-008\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"239\",\n        \"id\": \"SD-009\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"133\",\n        \"id\": \"SD-010\",\n        \"archived\": false\n      },\n      {\n        \"depot\": \"4ed91508-d43c-4267-958e-65dd61060d2c\",\n        \"description\": \"some desc\",\n        \"model\": \"Mercedes-Benz O530 Citaro G\",\n        \"licensePlate\": \"134\",\n        \"id\": \"SD-011\",\n        \"archived\": false\n      }\n    ],\n    \"drivers\": [\n      {\n        \"uuid\": \"19380\",\n        \"id\": \"19380\",\n        \"firstName\": \"Daniel\",\n        \"lastName\": \"Doe\",\n        \"middleName\": \"\",\n        \"archived\": false\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "90514cf4-163f-4564-aa8b-da5916030bc3",
+              "name": "For very large responses, the result is served as a presigned S3 file. This redirection is handled automatically by the majority of clients.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "operational-plan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "depotUuids",
+                      "value": "72999313-c6d3-44a3-9e64-a8cbce779ed7,e09cc074-b949-4d39-97b5-d2fa5eb1cdc5"
+                    },
+                    {
+                      "key": "driverUuids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeStops",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeUnassigned",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fetchPlannedAssignmentsProperties",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "taskDisplayIds",
+                      "value": "T100,T200,T300"
+                    },
+                    {
+                      "key": "excludeCancelledTasks",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeActualSigningTimes",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Found",
+              "code": 302,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f21debb3-27bc-4306-8ebd-d5ad1b064137",
+              "name": "Missing request parameters. Both toDate and fromDate are required. For example, ?fromDate=2022-032-7&toDate=2022-04-16",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "operational-plan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "depotUuids",
+                      "value": "72999313-c6d3-44a3-9e64-a8cbce779ed7,e09cc074-b949-4d39-97b5-d2fa5eb1cdc5"
+                    },
+                    {
+                      "key": "driverUuids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeStops",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeUnassigned",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fetchPlannedAssignmentsProperties",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "taskDisplayIds",
+                      "value": "T100,T200,T300"
+                    },
+                    {
+                      "key": "excludeCancelledTasks",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeActualSigningTimes",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e579bd6c-2def-4cba-9668-7e6f3c752f99",
+              "name": "The request was not successfully authenticated. Ensure the authentication header is correctly set.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "operational-plan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "depotUuids",
+                      "value": "72999313-c6d3-44a3-9e64-a8cbce779ed7,e09cc074-b949-4d39-97b5-d2fa5eb1cdc5"
+                    },
+                    {
+                      "key": "driverUuids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeStops",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeUnassigned",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fetchPlannedAssignmentsProperties",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "taskDisplayIds",
+                      "value": "T100,T200,T300"
+                    },
+                    {
+                      "key": "excludeCancelledTasks",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeActualSigningTimes",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d2951866-5c37-4162-8990-e117b788c750",
+              "name": "One or more of the requested depots was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "operational-plan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "depotUuids",
+                      "value": "72999313-c6d3-44a3-9e64-a8cbce779ed7,e09cc074-b949-4d39-97b5-d2fa5eb1cdc5"
+                    },
+                    {
+                      "key": "driverUuids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeStops",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeUnassigned",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fetchPlannedAssignmentsProperties",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "taskDisplayIds",
+                      "value": "T100,T200,T300"
+                    },
+                    {
+                      "key": "excludeCancelledTasks",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeActualSigningTimes",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bd20f0a0-9434-4868-a13c-2b87a9518549",
+              "name": "The request URI exceeds 10240 bytes which is not supported. This probably results from trying to query more than a thousand driverIds at the same time. Please consider chunking your request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "operational-plan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "depotUuids",
+                      "value": "72999313-c6d3-44a3-9e64-a8cbce779ed7,e09cc074-b949-4d39-97b5-d2fa5eb1cdc5"
+                    },
+                    {
+                      "key": "driverUuids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeStops",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeUnassigned",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fetchPlannedAssignmentsProperties",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "taskDisplayIds",
+                      "value": "T100,T200,T300"
+                    },
+                    {
+                      "key": "excludeCancelledTasks",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeActualSigningTimes",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request-URI Too Long",
+              "code": 414,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cbfafbdd-d41c-407d-99fb-ca7b52b68da5",
+              "name": "The request was not successful.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "operational-plan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "depotUuids",
+                      "value": "72999313-c6d3-44a3-9e64-a8cbce779ed7,e09cc074-b949-4d39-97b5-d2fa5eb1cdc5"
+                    },
+                    {
+                      "key": "driverUuids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeStops",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeUnassigned",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fetchPlannedAssignmentsProperties",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "taskDisplayIds",
+                      "value": "T100,T200,T300"
+                    },
+                    {
+                      "key": "excludeCancelledTasks",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeActualSigningTimes",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f929d70e-d2c0-475b-9032-162db523797c",
+              "name": "The request was not successful. Please try again.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "operational-plan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "depotUuids",
+                      "value": "72999313-c6d3-44a3-9e64-a8cbce779ed7,e09cc074-b949-4d39-97b5-d2fa5eb1cdc5"
+                    },
+                    {
+                      "key": "driverUuids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeStops",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeUnassigned",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fetchPlannedAssignmentsProperties",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "taskDisplayIds",
+                      "value": "T100,T200,T300"
+                    },
+                    {
+                      "key": "excludeCancelledTasks",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeActualSigningTimes",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e520453e-3f44-452f-8f5a-4d81eb9f3e4e",
+          "name": "List calendar planned assignments",
+          "request": {
+            "name": "List calendar planned assignments",
+            "description": {
+              "content": "Returns the calendar planned assignments and tasks, with filters.\n\n**Spare Types Support**: When the spare types feature flag is enabled, spare tasks will include additional properties:\n- `spareType`: The spare type code (e.g., \"SPARE1\", \"SPARE2\")\n- `displayId`: Will show the configured spare type name instead of the original display ID\n- `dutyType`: Will be set to \"spare\" for spare tasks\n- `startTime` and `endTime`: Will be included in the task summary for spare tasks based on the relevant spare type preference configuration",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "calendar-planned-assignments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "depotId",
+                  "value": "<string>",
+                  "description": "(Required) - Returns the calendar planned assignments for this depot ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>",
+                  "description": "(Required) - Returns the calendar planned assignments from this date (both startDate and endDate are required)"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "(Required) - Returns the calendar planned assignments to this date (both startDate and endDate are required)"
+                },
+                {
+                  "disabled": false,
+                  "key": "assignedOnly",
+                  "value": "<boolean>",
+                  "description": "- optional. When true, the response will *only* contain planned assignments that have drivers assigned to them"
+                },
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "- optional. Returns the calendar planned assignments for the filtered driver IDs (when this filter is used, the response won't include unassigned tasks)"
+                },
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "- optional. Returns the calendar planned assignments for the filtered driver IDs (when this filter is used, the response won't include unassigned tasks)"
+                },
+                {
+                  "disabled": false,
+                  "key": "fetchStops",
+                  "value": "<boolean>",
+                  "description": "-  optional. When true, the response will *also* contain the tasks stops"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f2aa3150-dc08-4316-80ee-3d1c7dfcc5d5",
+              "name": "The operational planned assignment for the specified time range",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calendar-planned-assignments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depotId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "assignedOnly",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fetchStops",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tasks\": [\n    {\n      \"spareType\": \"string\",\n      \"events\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    },\n    {\n      \"spareType\": \"string\",\n      \"events\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    }\n  ],\n  \"calendarDailyPlannedInformation\": [\n    {\n      \"tasks\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"date\": \"<date>\"\n    },\n    {\n      \"tasks\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"date\": \"<date>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c7a2c7b-f706-498c-89a2-6b100041a03e",
+              "name": "The request was not successfully authenticated. Ensure the authentication header is correctly set.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calendar-planned-assignments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depotId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "assignedOnly",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fetchStops",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "210c4bd4-5f45-4d54-8e04-a5d2b9b67275",
+              "name": "One or more of the requested depots was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calendar-planned-assignments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depotId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "assignedOnly",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fetchStops",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b8ad39d0-e7e3-4dc9-97ec-3ceee97c1485",
+              "name": "The request URI exceeds 10240 bytes which is not supported. This probably results from trying to query more than a thousand driversIds/taskIds at the same time. Please consider chunking your request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calendar-planned-assignments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "depotId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "assignedOnly",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fetchStops",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request-URI Too Long",
+              "code": 414,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9f512db2-af37-4621-96a9-efdbbf76cb75",
+          "name": "List driver day labels",
+          "request": {
+            "name": "List driver day labels",
+            "description": {
+              "content": "Returns the calendar planned assignments and tasks, with filters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "calendar-driver-day-labels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<date>",
+                  "description": "(Required) - Returns the driver day labels from this date (both fromDate and toDate are required)"
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<date>",
+                  "description": "(Required) - Returns the the driver day labels to this date (both fromDate and toDate are required)"
+                },
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "- optional. Returns the driver day labels for the filtered driver IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "- optional. Returns the driver day labels for the filtered driver IDs"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "309491c1-25b1-481e-800c-dbc3ded4ebd7",
+              "name": "The driver day labels for the specified time range",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "calendar-driver-day-labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"labelName\": \"string\",\n    \"labelCode\": \"string\",\n    \"driverId\": \"string\",\n    \"date\": \"<date>\"\n  },\n  {\n    \"labelName\": \"string\",\n    \"labelCode\": \"string\",\n    \"driverId\": \"string\",\n    \"date\": \"<date>\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "99dc9beb-86a8-42f0-a5be-276e46537e8e",
+              "name": "The request was not successfully authenticated. Ensure the authentication header is correctly set.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "calendar-driver-day-labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "834b4cdc-868a-4218-9596-1a4148c0784b",
+              "name": "The request URI exceeds 10240 bytes which is not supported. This probably results from trying to query more than a thousand driversIds/taskIds at the same time. Please consider chunking your request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "calendar-driver-day-labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request-URI Too Long",
+              "code": 414,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b19c340e-8e06-489f-8cf6-3e0a8ba9d979",
+    "name": "Optibus Operations Driver Absences Operational Plan API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "**Welcome to the Optibus Operations API documentation!**\n\nOptibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations' functionality, allowing you to integrate it with your own applications and systems.\n\n\n",
+      "type": "text/plain"
+    }
+  }
+}

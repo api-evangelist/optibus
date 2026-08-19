@@ -1,0 +1,1149 @@
+{
+  "item": [
+    {
+      "id": "5d25b84b-959c-4c4d-9f81-d251610257ff",
+      "name": "Driver Absences",
+      "description": {
+        "content": "API endpoints for managing absences for drivers - i.e. periods where they are unavailable for work.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "970ac01e-6561-4e5b-bf46-ca2491fb13ba",
+          "name": "List driver absences",
+          "request": {
+            "name": "List driver absences",
+            "description": {
+              "content": "List existing driver absences in the system, with optional filtering capability.\n\nNotes:\n- The result is paginated. Check the `pagination` property in the response to see the total number of pages and the current page number.\n- Information about the modelling of date/time periods for each entry:\n  - `startDate` is mandatory\n  - `endDate` is optional - if omitted, the absence will be ongoing indefinitely\n  - `startTime` and `endTime` are optional - if omitted, the absence will be for the entire day(s) specified by `startDate` and `endDate`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "drivers",
+                "absences"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "- Comma-separated list of driver IDs to filter for"
+                },
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "- Comma-separated list of driver IDs to filter for"
+                },
+                {
+                  "disabled": false,
+                  "key": "absenceCode",
+                  "value": "<string>",
+                  "description": "- Comma-separated list of absence type codes to filter for"
+                },
+                {
+                  "disabled": false,
+                  "key": "absenceCode",
+                  "value": "<string>",
+                  "description": "- Comma-separated list of absence type codes to filter for"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<date>",
+                  "description": "- Date string formatted as `YYYY-MM-dd`. Only absences that end on or after this date are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<date>",
+                  "description": "- Date string formatted as `YYYY-MM-dd`. Only absences that start on or before this date are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "- 1-indexed integer indicating which page of results to pull"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a66c771a-79d0-4c74-ba28-8fcf14cd1bc2",
+              "name": "Driver absences fetched successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "drivers",
+                    "absences"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "absenceCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "absenceCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pagination\": {\n    \"totalPages\": \"<integer>\",\n    \"currentPage\": \"<integer>\",\n    \"nextPage\": \"<integer>\"\n  },\n  \"absences\": [\n    {\n      \"startDate\": \"<date>\",\n      \"driverId\": \"string\",\n      \"absenceCode\": \"string\",\n      \"absenceId\": \"string\",\n      \"note\": \"string\",\n      \"endTime\": 3543,\n      \"startTime\": 9230,\n      \"endDate\": \"<date>\",\n      \"absenceRequestId\": \"string\",\n      \"updatedOn\": \"2004-04-22T00:36:51.533Z\",\n      \"createdOn\": \"1995-03-16T13:16:07.537Z\"\n    },\n    {\n      \"startDate\": \"<date>\",\n      \"driverId\": \"string\",\n      \"absenceCode\": \"string\",\n      \"absenceId\": \"string\",\n      \"note\": \"string\",\n      \"endTime\": 4124,\n      \"startTime\": 2405,\n      \"endDate\": \"<date>\",\n      \"absenceRequestId\": \"string\",\n      \"updatedOn\": \"1965-06-20T07:46:54.808Z\",\n      \"createdOn\": \"1984-06-07T21:08:30.728Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0961d3d-fff7-4e0c-bbd6-c2bc389cc068",
+              "name": "Possible error types: `Invalid request schema` (schema of your request does not match the specification), `invalidDatesCombination` (the combination of fromDate and toDate is invalid)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "drivers",
+                    "absences"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "absenceCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "absenceCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"invalidDatesCombination\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2afeef17-2b11-4a8f-8a3a-9ab52d334750",
+              "name": "Possible error types: `pageNotFound` (requested page number is out of range; details.totalPages indicates the number of pages available)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "drivers",
+                    "absences"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "absenceCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "absenceCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"invalidDatesCombination\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4e7aaabc-5be7-468c-b895-633086699205",
+          "name": "Create/update driver absences",
+          "request": {
+            "name": "Create/update driver absences",
+            "description": {
+              "content": "Creates or updates absences for drivers. As input, provide a list of absence entries to create or update.\n\nNotes:\n- Behaviour of the `absenceId` field:\n  - If an `absenceId` is specified that already exists, the existing absence will be updated.\n  - If an `absenceId` is specified that does not already exist, a new absence will be created with the specified ID.\n  - We recommend you set the `absenceId` to a corresponding fixed identifier from your external system that you are synchronizing with.\n- Information about the modelling of date/time periods for each entry:\n  - `startDate` is mandatory\n  - `endDate` is optional - if omitted, the downtime will be ongoing indefinitely\n  - `startTime` and `endTime` are optional - if omitted, the downtime will be for the entire day(s) specified by `startDate` and `endDate`\n- Each request is atomic - either all downtimes listed in the request are created/updated successfully, or none are created/updated.\n- This API does not auto-unassign overlapping duties. When absences are created via the web client, the UI automatically unassigns drivers from any duties that overlap the new absences. This API does not perform that step — drivers will remain assigned to any overlapping duties.\n- If your Ops instance has the `entitlementBanksEffectiveDate` feature active (you can ask your Optibus contact about this), then the API will perform additional validations:\n  - The API will validate that the absences do not cause negative balance violations for entitlement banks that do not allow negative balances.\n  - If violations are detected, the API will return HTTP 422 with details about which drivers have violations and which banks are affected.\n  - The HTTP 422 error can only occur when ALL of the following conditions are met:\n    - The `entitlementBanksEffectiveDate` feature flag is enabled\n    - Entitlement banks are configured and do NOT allow negative balances\n    - The driver has entitlements\n    - The absence is connected to the bank (by absence type)\n    - The driver would violate the balance constraints (would cause negative balance)\n    - The `skipBalanceValidation` query parameter is NOT set to `true` (validation is enabled by default when the parameter is not provided)\n- If your Ops instance has the `entitlementBanksDeductionOrder` feature active and absence-type yearly caps are enabled (via the `absenceCapEnabled` Absences preference), the API will additionally validate that no absence-type exceeds its configured yearly `maxCap` (in calendar days, per bank-year window):\n  - If, after applying the imports, a driver would exceed the cap for a given absence type, the API will return HTTP 422 with error type `absenceTypeCapExceeded` and a list of the (driver, absence-type) pairs that exceed the cap. Individual absence IDs are NOT enumerated — the driver is the unit that exceeds the cap, and the caller resolves it by reducing the driver's total days for that absence type however they choose.\n  - The `skipBalanceValidation=true` query parameter ALSO skips this cap validation (a single opt-out for all entitlement-driven validation).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "absences"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "skipBalanceValidation",
+                  "value": "<boolean>",
+                  "description": "- Optional query parameter. When set to `true`, skips ALL entitlement-driven validation: both negative-balance checks (when `entitlementBanksEffectiveDate` is enabled) and absence-type yearly-cap checks (when `entitlementBanksDeductionOrder` + `absenceCapEnabled` are enabled).\n  Defaults to `false` (validation enabled)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"absenceCode\": \"<string>\",\n    \"absenceId\": \"<string>\",\n    \"driver\": \"<string>\",\n    \"startDate\": \"<date>\",\n    \"endTimeNextDay\": \"<boolean>\",\n    \"startTimeNextDay\": \"<boolean>\",\n    \"endTime\": \"<integer>\",\n    \"endDate\": \"<date>\",\n    \"startTime\": \"<integer>\",\n    \"absenceRequestId\": \"<string>\",\n    \"updatedOn\": \"<dateTime>\",\n    \"createdOn\": \"<dateTime>\",\n    \"metadata\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"note\": \"<string>\"\n  },\n  {\n    \"absenceCode\": \"<string>\",\n    \"absenceId\": \"<string>\",\n    \"driver\": \"<string>\",\n    \"startDate\": \"<date>\",\n    \"endTimeNextDay\": \"<boolean>\",\n    \"startTimeNextDay\": \"<boolean>\",\n    \"endTime\": \"<integer>\",\n    \"endDate\": \"<date>\",\n    \"startTime\": \"<integer>\",\n    \"absenceRequestId\": \"<string>\",\n    \"updatedOn\": \"<dateTime>\",\n    \"createdOn\": \"<dateTime>\",\n    \"metadata\": {\n      \"key_0\": {}\n    },\n    \"note\": \"<string>\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8a0f5dbb-da4c-4280-bbd1-4f342daae1a1",
+              "name": "Drivers information imported",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "absences"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skipBalanceValidation",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"absenceCode\": \"<string>\",\n    \"absenceId\": \"<string>\",\n    \"driver\": \"<string>\",\n    \"startDate\": \"<date>\",\n    \"endTimeNextDay\": \"<boolean>\",\n    \"startTimeNextDay\": \"<boolean>\",\n    \"endTime\": \"<integer>\",\n    \"endDate\": \"<date>\",\n    \"startTime\": \"<integer>\",\n    \"absenceRequestId\": \"<string>\",\n    \"updatedOn\": \"<dateTime>\",\n    \"createdOn\": \"<dateTime>\",\n    \"metadata\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {},\n      \"key_3\": {}\n    },\n    \"note\": \"<string>\"\n  },\n  {\n    \"absenceCode\": \"<string>\",\n    \"absenceId\": \"<string>\",\n    \"driver\": \"<string>\",\n    \"startDate\": \"<date>\",\n    \"endTimeNextDay\": \"<boolean>\",\n    \"startTimeNextDay\": \"<boolean>\",\n    \"endTime\": \"<integer>\",\n    \"endDate\": \"<date>\",\n    \"startTime\": \"<integer>\",\n    \"absenceRequestId\": \"<string>\",\n    \"updatedOn\": \"<dateTime>\",\n    \"createdOn\": \"<dateTime>\",\n    \"metadata\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"note\": \"<string>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "537bc3cc-e180-463b-a0da-8ca3e3617dbb",
+              "name": "Possible error types: `Invalid request schema` (schema of your request does not match the specification). Other errors are possible and will returned in the legacy style in an array of `messages` in the root of the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "absences"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skipBalanceValidation",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"absenceCode\": \"<string>\",\n    \"absenceId\": \"<string>\",\n    \"driver\": \"<string>\",\n    \"startDate\": \"<date>\",\n    \"endTimeNextDay\": \"<boolean>\",\n    \"startTimeNextDay\": \"<boolean>\",\n    \"endTime\": \"<integer>\",\n    \"endDate\": \"<date>\",\n    \"startTime\": \"<integer>\",\n    \"absenceRequestId\": \"<string>\",\n    \"updatedOn\": \"<dateTime>\",\n    \"createdOn\": \"<dateTime>\",\n    \"metadata\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {},\n      \"key_3\": {}\n    },\n    \"note\": \"<string>\"\n  },\n  {\n    \"absenceCode\": \"<string>\",\n    \"absenceId\": \"<string>\",\n    \"driver\": \"<string>\",\n    \"startDate\": \"<date>\",\n    \"endTimeNextDay\": \"<boolean>\",\n    \"startTimeNextDay\": \"<boolean>\",\n    \"endTime\": \"<integer>\",\n    \"endDate\": \"<date>\",\n    \"startTime\": \"<integer>\",\n    \"absenceRequestId\": \"<string>\",\n    \"updatedOn\": \"<dateTime>\",\n    \"createdOn\": \"<dateTime>\",\n    \"metadata\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"note\": \"<string>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorDetails\": \"\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "791872d2-9091-4b98-95fe-e0ce9928926f",
+              "name": "Possible error types: `negativeBalanceViolation` (one or more absences would cause negative balance violations), `absenceTypeCapExceeded` (one or more absences would push a driver past the configured yearly cap for their absence type)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "absences"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skipBalanceValidation",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"absenceCode\": \"<string>\",\n    \"absenceId\": \"<string>\",\n    \"driver\": \"<string>\",\n    \"startDate\": \"<date>\",\n    \"endTimeNextDay\": \"<boolean>\",\n    \"startTimeNextDay\": \"<boolean>\",\n    \"endTime\": \"<integer>\",\n    \"endDate\": \"<date>\",\n    \"startTime\": \"<integer>\",\n    \"absenceRequestId\": \"<string>\",\n    \"updatedOn\": \"<dateTime>\",\n    \"createdOn\": \"<dateTime>\",\n    \"metadata\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {},\n      \"key_3\": {}\n    },\n    \"note\": \"<string>\"\n  },\n  {\n    \"absenceCode\": \"<string>\",\n    \"absenceId\": \"<string>\",\n    \"driver\": \"<string>\",\n    \"startDate\": \"<date>\",\n    \"endTimeNextDay\": \"<boolean>\",\n    \"startTimeNextDay\": \"<boolean>\",\n    \"endTime\": \"<integer>\",\n    \"endDate\": \"<date>\",\n    \"startTime\": \"<integer>\",\n    \"absenceRequestId\": \"<string>\",\n    \"updatedOn\": \"<dateTime>\",\n    \"createdOn\": \"<dateTime>\",\n    \"metadata\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"note\": \"<string>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"negativeBalanceViolation\",\n    \"message\": \"One or more absences would cause negative balance violations\",\n    \"details\": {\n      \"drivers\": [\n        {\n          \"driverId\": \"string\",\n          \"violatedBanks\": [\n            \"string\"\n          ]\n        }\n      ],\n      \"summary\": {\n        \"affectedDrivers\": 0\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2b5d1160-4099-4150-b858-58917f5ed3b4",
+          "name": "List driver time-off balances",
+          "request": {
+            "name": "List driver time-off balances",
+            "description": {
+              "content": "Returns time off (entitlement) balances for drivers grouped by driver and bank.\n\nEach driver's balances are grouped by bank. For each bank you get the total balance, used portion,\nplanned future usage, remaining balance, and historical balance changes. Use this endpoint to sync\ntime-off data with external HR systems or to display balance dashboards.\n\nNotes:\n- Numeric fields can be null when data is unavailable.\n- If querying many drivers, consider chunking requests to avoid hitting URI length limits.\n- When the `entitlementBanksEffectiveDate` feature flag is enabled, the balance calculation uses\n  effective-date logic for entitlement banks;\n- When the `scheduledPayout` feature flag is enabled, scheduled payouts (partial and remaining)\n  are factored into the balance calculation and may appear in `payoutDates` (as arrays per date) and affect\n  `usedBalance` and `plannedBalance`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "drivers",
+                "time-off-balances"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "(Required) - Filter by driver IDs (required)"
+                },
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "(Required) - Filter by driver IDs (required)"
+                },
+                {
+                  "disabled": false,
+                  "key": "bankNames",
+                  "value": "<string>",
+                  "description": "- Filter by bank names; if omitted default banks may be returned (optional)"
+                },
+                {
+                  "disabled": false,
+                  "key": "bankNames",
+                  "value": "<string>",
+                  "description": "- Filter by bank names; if omitted default banks may be returned (optional)"
+                },
+                {
+                  "disabled": false,
+                  "key": "onDate",
+                  "value": "<date>",
+                  "description": "- Calculate balances as of this date (YYYY-MM-DD); defaults to today (optional)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8e8f39b6-7daf-41f7-960a-8bef8f23322d",
+              "name": "Driver time off balances",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "time-off-balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankNames",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankNames",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "onDate",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"banks\": [\n      {\n        \"balances\": [\n          {\n            \"totalBalance\": 1797.946294411652,\n            \"effectiveDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"totalBalance\": 5519.705338488431,\n            \"effectiveDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"remainingBalance\": 1454.0867856912698,\n        \"plannedBalance\": 4981.440197753988,\n        \"usedBalance\": 710.3713291031332,\n        \"totalBalance\": 7532.597174575665,\n        \"unit\": \"days\",\n        \"bankName\": \"string\",\n        \"payoutDates\": {\n          \"key_0\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"key_1\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"key_2\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      {\n        \"balances\": [\n          {\n            \"totalBalance\": 5184.759438105264,\n            \"effectiveDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"totalBalance\": 7474.497160850986,\n            \"effectiveDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"remainingBalance\": 1190.6181358896906,\n        \"plannedBalance\": 5502.791169634029,\n        \"usedBalance\": 6484.72409018368,\n        \"totalBalance\": 9410.864278768277,\n        \"unit\": \"days\",\n        \"bankName\": \"string\",\n        \"payoutDates\": {\n          \"key_0\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"key_1\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      }\n    ],\n    \"driverId\": \"<string>\"\n  },\n  {\n    \"banks\": [\n      {\n        \"balances\": [\n          {\n            \"totalBalance\": 8507.11504393969,\n            \"effectiveDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"totalBalance\": 1439.9430723450878,\n            \"effectiveDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"remainingBalance\": 6203.79119112878,\n        \"plannedBalance\": 8278.322743646928,\n        \"usedBalance\": 7091.713233387749,\n        \"totalBalance\": 7174.384913084434,\n        \"unit\": \"days\",\n        \"bankName\": \"string\",\n        \"payoutDates\": {\n          \"key_0\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"key_1\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      {\n        \"balances\": [\n          {\n            \"totalBalance\": 37.14571689085177,\n            \"effectiveDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"totalBalance\": 2420.550228848318,\n            \"effectiveDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"remainingBalance\": 9608.166608785654,\n        \"plannedBalance\": 7167.287903231752,\n        \"usedBalance\": 8827.45387634266,\n        \"totalBalance\": 9252.30557498888,\n        \"unit\": \"days\",\n        \"bankName\": \"string\",\n        \"payoutDates\": {\n          \"key_0\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      }\n    ],\n    \"driverId\": \"<string>\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "49407221-41c3-452f-afcf-996b4bd19fc2",
+              "name": "The request URI exceeds 10240 bytes which is not supported. This usually results from querying more than a thousand driverIds at once. Please chunk your request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "time-off-balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankNames",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankNames",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "onDate",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request-URI Too Long",
+              "code": 414,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "65ef092b-c680-4f92-bea9-c511875eb6c7",
+          "name": "Create/update driver time-off balances",
+          "request": {
+            "name": "Create/update driver time-off balances",
+            "description": {
+              "content": "Updates time off (entitlement) balances for drivers with effective dates.\n\nUse this endpoint to import accrual-based policies from an external HR system or to pre-load\nbalances for upcoming years. Each record sets the total balance for a driver/bank as of a\nspecific effective date. The system will merge these with existing absences and payouts.\n\nNotes:\n- Each request is atomic — either all records are applied successfully, or none are.\n- Bank names must match the entitlement bank configuration (case-insensitive).\n- If `unit` is omitted, the bank's configured unit (days or hours) is used.\n- Negative balance validation: by default, the API rejects imports that would create negative\n  balances for banks that do not allow them. Set `skipNegativeBalanceValidation: true` to allow\n  such imports (e.g. for migration or correction scenarios).\n- The negative balance validation uses the same balance calculation as the GET endpoint\n  (`getTimeOffBalances`), so it is affected by the `entitlementBanksEffectiveDate` and\n  `scheduledPayout` feature flags. Contact your Optibus representative for feature flag availability.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "drivers",
+                "time-off-balances"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"balances\": [\n    {\n      \"totalBalance\": \"<double>\",\n      \"effectiveDate\": \"<date>\",\n      \"bankName\": \"<string>\",\n      \"driverId\": \"<string>\",\n      \"unit\": \"<string>\"\n    },\n    {\n      \"totalBalance\": \"<double>\",\n      \"effectiveDate\": \"<date>\",\n      \"bankName\": \"<string>\",\n      \"driverId\": \"<string>\",\n      \"unit\": \"<string>\"\n    }\n  ],\n  \"skipNegativeBalanceValidation\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0004930c-412e-4445-8c58-1991fa5a883e",
+              "name": "Time off balances updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "time-off-balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"balances\": [\n    {\n      \"totalBalance\": \"<double>\",\n      \"effectiveDate\": \"<date>\",\n      \"bankName\": \"<string>\",\n      \"driverId\": \"<string>\",\n      \"unit\": \"<string>\"\n    },\n    {\n      \"totalBalance\": \"<double>\",\n      \"effectiveDate\": \"<date>\",\n      \"bankName\": \"<string>\",\n      \"driverId\": \"<string>\",\n      \"unit\": \"<string>\"\n    }\n  ],\n  \"skipNegativeBalanceValidation\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e85cac09-cd33-46f7-926d-7b3139640b69",
+              "name": "Invalid request schema, empty balances array, invalid date format (expected YYYY-MM-DD), invalid balance values, invalid units, missing drivers, or invalid bank names.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "time-off-balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"balances\": [\n    {\n      \"totalBalance\": \"<double>\",\n      \"effectiveDate\": \"<date>\",\n      \"bankName\": \"<string>\",\n      \"driverId\": \"<string>\",\n      \"unit\": \"<string>\"\n    },\n    {\n      \"totalBalance\": \"<double>\",\n      \"effectiveDate\": \"<date>\",\n      \"bankName\": \"<string>\",\n      \"driverId\": \"<string>\",\n      \"unit\": \"<string>\"\n    }\n  ],\n  \"skipNegativeBalanceValidation\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"Invalid request schema\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "90dc34f1-be56-42af-9963-aa03745f9b85",
+          "name": "List absence quota usage",
+          "request": {
+            "name": "List absence quota usage",
+            "description": {
+              "content": "Returns configured **absence quota** definitions for the customer together with **aggregated usage**\n(unique drivers per day / per week, by absence type where applicable) for the requested calendar window.\n\nQuotas and limits come from Ops preferences (same configuration as the internal planner). Usage is derived\nfrom all drivers' absences and depot/operational-unit assignments in the widened date range needed for\nweekly quota windows.\n\n**Request scope**\n- `from` / `to` (inclusive, `YYYY-MM-DD`) define the visible range for `usage.byDay` and `meta`. Weekly\n  aggregates in `usage.byWeek` still reflect full ISO weeks that overlap that range.\n- Optional `depotId`: restrict results to quotas for that region (depot) and count only driver-days\n  attributed to that depot.\n- Optional `unitIds`: further restrict to quotas that apply to those operational units\n  and count only driver-days in those units. Omit or leave empty for no unit filter.\n\n**Unit quotas vs depot-level `quota`**\n- When a quota row has **unit-level limits** (`depotQuota.unitQuotas` is non-empty), effective caps and\n  aggregate usage follow those **per-unit** rows. Inspect `usage.byUnit` for per-unit usage; the\n  optional top-level `depotQuota.quota` field is **not** the active limit for totals in that configuration\n  (it may still be present in the response for schema compatibility—**ignore it for enforcement** when\n  unit rows exist).\n- When there are **no** unit rows (`unitQuotas` is an empty array), the depot-level `depotQuota.quota`\n  applies to the whole depot bucket for that quota.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "drivers",
+                "absence-quotas-query"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to\": \"<date>\",\n  \"from\": \"<date>\",\n  \"unitIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"depotId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4775b0f5-b2f1-4986-a5f1-978d5b9bf987",
+              "name": "Absence quotas and usage",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "absence-quotas-query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"to\": \"<date>\",\n  \"from\": \"<date>\",\n  \"unitIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"depotId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"quotas\": [\n    {\n      \"usage\": {\n        \"byWeek\": {\n          \"key_0\": {\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"used\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"used\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"byDay\": {\n          \"key_0\": {\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"used\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"used\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_2\": {\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"used\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_3\": {\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"used\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"byUnit\": {\n          \"key_0\": {\n            \"byWeek\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"byDay\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"byAbsenceType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"byWeek\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"byDay\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"byAbsenceType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"byAbsenceType\": {\n          \"key_0\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_2\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      \"depotQuota\": {\n        \"unitQuotas\": [\n          {\n            \"quota\": 3489.0227094673965,\n            \"unitId\": \"string\"\n          },\n          {\n            \"quota\": 2037.5713983427734,\n            \"unitId\": \"string\"\n          }\n        ],\n        \"depotId\": \"string\",\n        \"quota\": 1427.2754227114083\n      },\n      \"absenceTypes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"calculationTimeFrame\": \"daily\",\n      \"allowExceedQuota\": false,\n      \"hidden\": false,\n      \"quotaName\": \"string\",\n      \"quotaId\": \"string\"\n    },\n    {\n      \"usage\": {\n        \"byWeek\": {\n          \"key_0\": {\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"used\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"used\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_2\": {\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"used\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"byDay\": {\n          \"key_0\": {\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"used\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"byUnit\": {\n          \"key_0\": {\n            \"byWeek\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"byDay\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"byAbsenceType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"byAbsenceType\": {\n          \"key_0\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_2\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      \"depotQuota\": {\n        \"unitQuotas\": [\n          {\n            \"quota\": 3756.7115128004934,\n            \"unitId\": \"string\"\n          },\n          {\n            \"quota\": 6482.034087642947,\n            \"unitId\": \"string\"\n          }\n        ],\n        \"depotId\": \"string\",\n        \"quota\": 3179.4889320033058\n      },\n      \"absenceTypes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"calculationTimeFrame\": \"daily\",\n      \"allowExceedQuota\": false,\n      \"hidden\": false,\n      \"quotaName\": \"string\",\n      \"quotaId\": \"string\"\n    }\n  ],\n  \"meta\": {\n    \"unitIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"depotId\": \"string\",\n    \"to\": \"string\",\n    \"from\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "52da47da-5db5-422b-8b19-57816fb7ae58",
+              "name": "Possible error types: `Invalid request schema` (e.g. missing `from`/`to` or invalid date format)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "absence-quotas-query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"to\": \"<date>\",\n  \"from\": \"<date>\",\n  \"unitIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"depotId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"Invalid request schema\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "9c5a2f05-14e0-4f46-a008-b92bcfad489d",
+    "name": "Optibus Operations Driver Absences API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "**Welcome to the Optibus Operations API documentation!**\n\nOptibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations' functionality, allowing you to integrate it with your own applications and systems.\n\n\n",
+      "type": "text/plain"
+    }
+  }
+}

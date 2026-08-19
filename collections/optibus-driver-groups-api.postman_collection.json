@@ -1,0 +1,168 @@
+{
+  "item": [
+    {
+      "id": "fc15bc02-046c-4646-b612-4ffba222028b",
+      "name": "Driver Groups",
+      "description": {
+        "content": "API endpoints for managing driver groups.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dd0f7336-dedf-4bfe-9940-ff060ec064a8",
+          "name": "List driver groups",
+          "request": {
+            "name": "List driver groups",
+            "description": {
+              "content": "List driver groups that exist in the system.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "group"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "regionUuids",
+                  "value": "<string>",
+                  "description": "- Comma-separated list of region IDs to filter for"
+                },
+                {
+                  "disabled": false,
+                  "key": "regionUuids",
+                  "value": "<string>",
+                  "description": "- Comma-separated list of region IDs to filter for"
+                },
+                {
+                  "disabled": false,
+                  "key": "depotsIds",
+                  "value": "<string>",
+                  "description": "- [deprecated - use `regionUuids` instead] Comma-separated list of _region_ IDs to filter for"
+                },
+                {
+                  "disabled": false,
+                  "key": "depotsIds",
+                  "value": "<string>",
+                  "description": "- [deprecated - use `regionUuids` instead] Comma-separated list of _region_ IDs to filter for"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0a0549ce-4e85-4c59-957a-c7a7e1da9116",
+              "name": "Driver groups fetched successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "group"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "regionUuids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "regionUuids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "depotsIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "depotsIds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"depot\": \"<string>\",\n    \"id\": \"<string>\",\n    \"name\": \"string\",\n    \"regionUuid\": \"string\",\n    \"regionName\": \"string\",\n    \"meta\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  },\n  {\n    \"depot\": \"<string>\",\n    \"id\": \"<string>\",\n    \"name\": \"string\",\n    \"regionUuid\": \"string\",\n    \"regionName\": \"string\",\n    \"meta\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a4a33092-b977-4c45-bb9c-1187a9bd775e",
+    "name": "Optibus Operations Driver Absences Driver Groups API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "**Welcome to the Optibus Operations API documentation!**\n\nOptibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations' functionality, allowing you to integrate it with your own applications and systems.\n\n\n",
+      "type": "text/plain"
+    }
+  }
+}

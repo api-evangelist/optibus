@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Optibus Operations Driver Absences Tacho Ingestion API",
+    "version": "2.8.17"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tacho Ingestion",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Ingest Tachograph activity data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v1/tacho-activity",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "⚠️ **Unstable — not yet available for use.** This endpoint is published for design review\nand integration planning only. It currently accepts and validates payloads but does not\npersist any data. The request/response shape may still change without notice. Do not rely\non it in production integrations until this notice is removed.\n\nAccepts a bulk upload of normalized Tachograph activities. Validates that\nall driver and vehicle IDs in the payload refer to existing entities."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

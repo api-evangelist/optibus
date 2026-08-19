@@ -1,0 +1,122 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Optibus Operations Driver Absences Private Hires API",
+    "version": "2.8.17"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Private Hires",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create private hire order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/private_hires/order",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "### Creation of a private hire order with one or more trips\n\nThis endpoint operates on eventual consistency. This means the private hire order is validated and enqueued for processing which is confirmed by a http 202 status response.\nThe actual processing happens asynchronously and typically takes a few seconds. To verify the order was successfully added, use the `GetPrivateHireOrder` endpoint below specifying the the `orderId` you used in this request.\n\nPrivate hire orders and trips should be u"
+        },
+        {
+          "info": {
+            "name": "Fetch private hire order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/private_hires/order/:orderId/info",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "External identifier of a private hire order that should be unique within the system"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "### Get information about a private hire order and its trips\n\nAs details of a private hire order and its trips can be modified in the OPS platform, external parties can use this endpoint to get the current state and details of a specific order, its trips, as well as the vehicle and driver resources associated.\n\n#### Getting updates\n\nCurrently there's no support of a pushing mechanism in order to notify API consumers when something changes in resources that belong to a private hire order.\nAs an a"
+        },
+        {
+          "info": {
+            "name": "Update private hire order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/private_hires/order/:orderId",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "External identifier of a private hire order that should be unique within the system"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "### Update a private hire order status\n\n- `confirmed`: status to determine that the order has been paid by the hiring entity.\nIn the OPS Optibus platform, when a trip has any driver or vehicle associated to a confirmed order, a warning message will be displayed to inform the dispatchers about this fact.\n- `cancelled`: status to cancel the order, freeing up resources associated to trips belonging to the order, such as drivers and vehicles."
+        },
+        {
+          "info": {
+            "name": "Update private hire order trips",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/private_hires/order/:orderId/trips",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "External identifier of a private hire order that should be unique within the system"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "### Update or cancel private hire tasks of an order\n\nOne or more private hire tasks can be updated/cancelled in the same request. Only send the private hire tasks that are meant to be updated or cancel, if tasks don't need to be modified, refrain to include them in the request.\nUpdates for a subset of private hire tasks won't be supported, the request should be successful for all the intended private hire trips included in the request.\n\n\n#### Splitting tasks in Optibus OPS platform\nThe private h"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

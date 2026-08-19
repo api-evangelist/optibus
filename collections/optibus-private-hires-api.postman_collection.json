@@ -1,0 +1,1289 @@
+{
+  "item": [
+    {
+      "id": "47266fc9-7804-4aa8-94c2-1799c98f1a87",
+      "name": "Private Hires",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2960b154-515a-4864-84c5-82d8a6bdd62e",
+          "name": "Create private hire order",
+          "request": {
+            "name": "Create private hire order",
+            "description": {
+              "content": "### Creation of a private hire order with one or more trips\n\nThis endpoint operates on eventual consistency. This means the private hire order is validated and enqueued for processing which is confirmed by a http 202 status response.\nThe actual processing happens asynchronously and typically takes a few seconds. To verify the order was successfully added, use the `GetPrivateHireOrder` endpoint below specifying the the `orderId` you used in this request.\n\nPrivate hire orders and trips should be unique by `orderId`, `taskId` and `date` respectively in the system.\n\nOnce the order is created, resources to fulfill the trips, such as drivers and vehicles, can be only assigned through the Optibus OPS platform.\n\nAn order can be created directly with a status 'confirmed' or the status of an order can be updated using the endpoint `PATCH /private_hires/order/{orderId}`.\nBy default on creation, if there's no status being set, the order is being consider virtually as `pending`.\n\n#### Multi-day trips:\n\nMulti-day trips must be divided into individual trips per operational day. Trips can commence as early as `00:00` and extend up to a maximum of `36:00` local time, meaning trips can conclude as late as `12:00` noon the following day.\nUse cases that require trips to start and finish in different time zones are currently not supported.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "private_hires",
+                "order"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderId\": \"<string>\",\n  \"privateHires\": [\n    {\n      \"events\": [\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"date\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"noVehicleNeeded\": \"<boolean>\",\n      \"note\": \"<string>\",\n      \"labelCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"events\": [\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"date\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"noVehicleNeeded\": \"<boolean>\",\n      \"note\": \"<string>\",\n      \"labelCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"orderStatus\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "61896935-e1ef-4d27-a1e6-4a69449e7cf3",
+              "name": "Private hire order request passed validations and has been enqueued for processing",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "private_hires",
+                    "order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderId\": \"<string>\",\n  \"privateHires\": [\n    {\n      \"events\": [\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"date\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"noVehicleNeeded\": \"<boolean>\",\n      \"note\": \"<string>\",\n      \"labelCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"events\": [\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"date\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"noVehicleNeeded\": \"<boolean>\",\n      \"note\": \"<string>\",\n      \"labelCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"orderStatus\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31f2a899-5ed2-4a44-ba4e-d1bf47725b7b",
+              "name": "Invalid request for creating an order",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "private_hires",
+                    "order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderId\": \"<string>\",\n  \"privateHires\": [\n    {\n      \"events\": [\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"date\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"noVehicleNeeded\": \"<boolean>\",\n      \"note\": \"<string>\",\n      \"labelCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"events\": [\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"date\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"noVehicleNeeded\": \"<boolean>\",\n      \"note\": \"<string>\",\n      \"labelCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"orderStatus\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"invalidEventTimeFormat\",\n      \"message\": \"Invalid request for creating an order\",\n      \"details\": {\n        \"taskId\": \"123\",\n        \"eventErrors\": [\n          {\n            \"eventIndex\": 1,\n            \"startTime\": \"2021-01-01T00:00:00Z\",\n            \"endTime\": \"2021-01-01T00:00:00Z\"\n          }\n        ]\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fcbb8234-232e-4394-9cfc-17446250a90e",
+              "name": "The request cannot be processed because events created from the web application are still being processed sequentially",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "private_hires",
+                    "order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderId\": \"<string>\",\n  \"privateHires\": [\n    {\n      \"events\": [\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"date\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"noVehicleNeeded\": \"<boolean>\",\n      \"note\": \"<string>\",\n      \"labelCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"events\": [\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"date\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"noVehicleNeeded\": \"<boolean>\",\n      \"note\": \"<string>\",\n      \"labelCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"orderStatus\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"conflictProcessingRequest\",\n      \"message\": \"The request cannot be processed right now, because the system is currently sequentially processing other requests received briefly ago. Please wait and try again in a few seconds.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7a671e9f-a440-4fc5-862f-a2ee1396c17d",
+              "name": "Server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "private_hires",
+                    "order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderId\": \"<string>\",\n  \"privateHires\": [\n    {\n      \"events\": [\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"date\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"noVehicleNeeded\": \"<boolean>\",\n      \"note\": \"<string>\",\n      \"labelCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"events\": [\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": \"<double>\",\n            \"lat\": \"<double>\",\n            \"address\": \"<string>\"\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"date\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"noVehicleNeeded\": \"<boolean>\",\n      \"note\": \"<string>\",\n      \"labelCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"orderStatus\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"serverError\",\n      \"message\": \"serverError\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c3fc65e8-6ca1-4e95-b0f9-9784c39bb829",
+          "name": "Fetch private hire order",
+          "request": {
+            "name": "Fetch private hire order",
+            "description": {
+              "content": "### Get information about a private hire order and its trips\n\nAs details of a private hire order and its trips can be modified in the OPS platform, external parties can use this endpoint to get the current state and details of a specific order, its trips, as well as the vehicle and driver resources associated.\n\n#### Getting updates\n\nCurrently there's no support of a pushing mechanism in order to notify API consumers when something changes in resources that belong to a private hire order.\nAs an alternative, until the push mechanism is implemented, this endpoint can be used following a polling strategy in order to identify changes that happen in a private hire order and the trips that belong to it.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "private_hires",
+                "order",
+                ":orderId",
+                "info"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) External identifier of a private hire order that should be unique within the system"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "443b76fd-57c5-421c-95ee-a96dd68b0557",
+              "name": "Private hire order and trips were successfully fetched",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "private_hires",
+                    "order",
+                    ":orderId",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) External identifier of a private hire order that should be unique within the system"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cancelledAt\": \"1974-08-18\",\n  \"confirmedAt\": \"1989-05-31\",\n  \"orderId\": \"<string>\",\n  \"privateHires\": [\n    {\n      \"date\": \"string\",\n      \"depotCode\": \"string\",\n      \"depotName\": \"string\",\n      \"driver\": {\n        \"id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"firstName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"lastName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"events\": [\n        {\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"eventId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"note\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"endLocation\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startLocation\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"eventId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"note\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"endLocation\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startLocation\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"labels\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"lockedAt\": \"1988-12-14\",\n      \"regionName\": \"string\",\n      \"taskId\": \"string\",\n      \"vehicles\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"note\": \"string\"\n    },\n    {\n      \"date\": \"string\",\n      \"depotCode\": \"string\",\n      \"depotName\": \"string\",\n      \"driver\": {\n        \"id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"firstName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"lastName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"events\": [\n        {\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"eventId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"note\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"endLocation\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startLocation\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"eventId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"note\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"endLocation\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startLocation\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"labels\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"lockedAt\": \"1994-11-30\",\n      \"regionName\": \"string\",\n      \"taskId\": \"string\",\n      \"vehicles\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"note\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4270db3f-18e5-4cef-83bc-afb7ec21ad61",
+              "name": "Order does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "private_hires",
+                    "order",
+                    ":orderId",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) External identifier of a private hire order that should be unique within the system"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"orderNonExistent\",\n      \"message\": \"Private hire order doesn't exist\",\n      \"details\": {\n        \"orderId\": \"non-existent-order-id\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac036f7b-511a-4fd1-a3f3-a1ee72755d47",
+              "name": "Server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "private_hires",
+                    "order",
+                    ":orderId",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) External identifier of a private hire order that should be unique within the system"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"serverError\",\n      \"message\": \"serverError\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "de601ef4-36fe-4578-8aff-38e20aab1420",
+          "name": "Update private hire order",
+          "request": {
+            "name": "Update private hire order",
+            "description": {
+              "content": "### Update a private hire order status\n\n- `confirmed`: status to determine that the order has been paid by the hiring entity.\nIn the OPS Optibus platform, when a trip has any driver or vehicle associated to a confirmed order, a warning message will be displayed to inform the dispatchers about this fact.\n- `cancelled`: status to cancel the order, freeing up resources associated to trips belonging to the order, such as drivers and vehicles.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "private_hires",
+                "order",
+                ":orderId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) External identifier of a private hire order that should be unique within the system"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderStatus\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ebede9fc-ff68-405e-ada1-ab5cc72afde7",
+              "name": "Private hire order status modification has been successfully enqueued for processing",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "private_hires",
+                    "order",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) External identifier of a private hire order that should be unique within the system"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderStatus\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3767a3f7-e470-4631-a1ca-9ef8487312cd",
+              "name": "Invalid request for updating an order",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "private_hires",
+                    "order",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) External identifier of a private hire order that should be unique within the system"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderStatus\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"orderAlreadyConfirmed\",\n      \"message\": \"Private hire order has been already confirmed\",\n      \"details\": {\n        \"orderId\": \"123\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "782a6fad-fa7b-43ff-9687-6675c1779473",
+              "name": "Order does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "private_hires",
+                    "order",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) External identifier of a private hire order that should be unique within the system"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderStatus\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"orderNonExistent\",\n      \"message\": \"Private hire order doesn't exist\",\n      \"details\": {\n        \"orderId\": \"123\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5cea373e-dd66-4671-b6e1-4e176d07f63f",
+              "name": "The request cannot be processed because events created from the web application are still being processed sequentially",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "private_hires",
+                    "order",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) External identifier of a private hire order that should be unique within the system"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderStatus\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"conflictProcessingRequest\",\n      \"message\": \"The request cannot be processed right now, because the system is currently sequentially processing other requests received briefly ago. Please wait and try again in a few seconds.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e100e9cc-6a0d-42d5-9975-707852e8d114",
+              "name": "Server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "private_hires",
+                    "order",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) External identifier of a private hire order that should be unique within the system"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderStatus\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"serverError\",\n      \"message\": \"serverError\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "44286ed1-d1cb-4f96-9b5e-f095787683e8",
+          "name": "Update private hire order trips",
+          "request": {
+            "name": "Update private hire order trips",
+            "description": {
+              "content": "### Update or cancel private hire tasks of an order\n\nOne or more private hire tasks can be updated/cancelled in the same request. Only send the private hire tasks that are meant to be updated or cancel, if tasks don't need to be modified, refrain to include them in the request.\nUpdates for a subset of private hire tasks won't be supported, the request should be successful for all the intended private hire trips included in the request.\n\n\n#### Splitting tasks in Optibus OPS platform\nThe private hire attribute `taskId` and `date` define the uniqueness of a task and is what's being used to find the private hire task to be updated or cancelled.\nIn case the private hire is being updated, in certain cases they will be deleted and recreated, changing the event IDs. So in case these IDs\nare being consumed in any way, it's something to take into consideration.\n\n#### Updates with unassign\nWhen updating the 'date' or times of the events, the driver and vehicle will be automatically unassign, because the API doesn't account\nfor potential overlaps or regulation compliance violations, unlike the OPS web client, for drivers and vehicles.\n\nDispatchers can split/cut these trips (a.k.a. driver duties), creating 2 trips or more. This action causes as a side effect, the renaming of the original value for the attribute `taskId`.\nAs an example, if an original private hire trip had the attribute `taskId` as the value `task-display-id`, after a dispatcher splits the trip in the OPS Optibus platform,\nit will create 2 trips whose `taskIds` values will be `task-display-id (1/2)` and `task-display-id (2/2)`.\n\n#### Supported update use cases for private hire trips:\n- Cancellation\n- Events addition or removal\n- Modification of `startTime` or/and `endTime` in an event (sub-trip)\n- Update of the `date`\n\n**Note**: At this moment, all the supported modifications will free up all the vehicles and drivers associated to the private hire trip, if there were any, given that it will cause a risk\nto violate regulation compliance rules, which are currently computed in the Optibus OPS web application.\n\nIf there's a modification that's not supported, the response status code returned will be a 400 malformed request, with an informative error that will point out that the change is not supported.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "private_hires",
+                "order",
+                ":orderId",
+                "trips"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) External identifier of a private hire order that should be unique within the system"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"privateHires\": [\n    {\n      \"events\": [\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"date\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"noVehicleNeeded\": \"<boolean>\",\n      \"note\": \"<string>\",\n      \"labelCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"events\": [\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"date\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"noVehicleNeeded\": \"<boolean>\",\n      \"note\": \"<string>\",\n      \"labelCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "91724d68-1cee-40af-8ca7-70efc02747e9",
+              "name": "Request to either cancel or update private hire tasks has passed validations and has been enqueued for processing",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "private_hires",
+                    "order",
+                    ":orderId",
+                    "trips"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) External identifier of a private hire order that should be unique within the system"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"privateHires\": [\n    {\n      \"events\": [\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"date\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"noVehicleNeeded\": \"<boolean>\",\n      \"note\": \"<string>\",\n      \"labelCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"events\": [\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"date\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"noVehicleNeeded\": \"<boolean>\",\n      \"note\": \"<string>\",\n      \"labelCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "93e79206-cef0-4a67-900e-e39c00ff8b84",
+              "name": "Invalid request for upading an order",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "private_hires",
+                    "order",
+                    ":orderId",
+                    "trips"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) External identifier of a private hire order that should be unique within the system"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"privateHires\": [\n    {\n      \"events\": [\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"date\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"noVehicleNeeded\": \"<boolean>\",\n      \"note\": \"<string>\",\n      \"labelCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"events\": [\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"date\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"noVehicleNeeded\": \"<boolean>\",\n      \"note\": \"<string>\",\n      \"labelCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"updatePrivateHireTripRegionNotAllowed\",\n      \"message\": \"We currently don't allow to change the depot.\",\n      \"details\": {\n        \"currentRegionName\": \"regionName1\",\n        \"currentDepotName\": \"depotName1\",\n        \"newRegionName\": \"regionName2\",\n        \"newDepotName\": \"depotName2\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8ca9b971-9189-4653-8e76-daf453326baf",
+              "name": "Private hire order or trip does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "private_hires",
+                    "order",
+                    ":orderId",
+                    "trips"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) External identifier of a private hire order that should be unique within the system"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"privateHires\": [\n    {\n      \"events\": [\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"date\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"noVehicleNeeded\": \"<boolean>\",\n      \"note\": \"<string>\",\n      \"labelCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"events\": [\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"date\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"noVehicleNeeded\": \"<boolean>\",\n      \"note\": \"<string>\",\n      \"labelCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"privateHireTripNotFound\",\n      \"message\": \"We couldn't find a trip whose 'task-id-1'\",\n      \"details\": {\n        \"taskId\": \"task-id-1\",\n        \"availableTaskIds\": [\n          \"task-id-2\",\n          \"task-id-3\"\n        ]\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd8436fe-7037-4cbe-a9d5-63a50a2f4909",
+              "name": "The request cannot be processed because events created from the web application are still being processed sequentially",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "private_hires",
+                    "order",
+                    ":orderId",
+                    "trips"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) External identifier of a private hire order that should be unique within the system"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"privateHires\": [\n    {\n      \"events\": [\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"date\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"noVehicleNeeded\": \"<boolean>\",\n      \"note\": \"<string>\",\n      \"labelCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"events\": [\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"date\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"noVehicleNeeded\": \"<boolean>\",\n      \"note\": \"<string>\",\n      \"labelCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"conflictProcessingRequest\",\n      \"message\": \"The request cannot be processed right now, because the system is currently sequentially processing other requests received briefly ago. Please wait and try again in a few seconds.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a70ca88-993f-4324-9bdc-ebd77bd76864",
+              "name": "Server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "private_hires",
+                    "order",
+                    ":orderId",
+                    "trips"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) External identifier of a private hire order that should be unique within the system"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"privateHires\": [\n    {\n      \"events\": [\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"date\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"noVehicleNeeded\": \"<boolean>\",\n      \"note\": \"<string>\",\n      \"labelCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"events\": [\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"endLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"startLocation\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lng\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lat\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"startTime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"distance\": \"<double>\",\n          \"note\": \"<string>\",\n          \"labelCodes\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"date\": \"<string>\",\n      \"depotName\": \"<string>\",\n      \"taskId\": \"<string>\",\n      \"noVehicleNeeded\": \"<boolean>\",\n      \"note\": \"<string>\",\n      \"labelCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"serverError\",\n      \"message\": \"serverError\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "6ea4eac9-c301-4512-92bb-039645fc796e",
+    "name": "Optibus Operations Driver Absences Private Hires API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "**Welcome to the Optibus Operations API documentation!**\n\nOptibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations' functionality, allowing you to integrate it with your own applications and systems.\n\n\n",
+      "type": "text/plain"
+    }
+  }
+}

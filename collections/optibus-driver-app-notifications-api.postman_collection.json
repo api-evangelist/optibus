@@ -1,0 +1,104 @@
+{
+  "item": [
+    {
+      "id": "85733bfe-58e1-4e6c-aa72-e707e9658380",
+      "name": "Driver App Notifications",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f1b2cb01-e074-4d45-9fc3-dfb997906526",
+          "name": "Fetch driver app notifications custom action public key",
+          "request": {
+            "name": "Fetch driver app notifications custom action public key",
+            "description": {
+              "content": "Returns the public key that can be used to verify the payloads attached to URLs\nopened via a custom action attached to a notification received in the Optibus Driver App.\n\nNo authentication is required to access this endpoint.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "driver-app",
+                "notifications-custom-action-public-key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c6e80b74-9ac8-4d3a-94ae-a89fdbb00dfc",
+              "name": "Public key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "driver-app",
+                    "notifications-custom-action-public-key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"publicKeyType\": \"string\",\n  \"publicKey\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "202a4efd-a8ac-44bc-a916-0b54639789ce",
+    "name": "Optibus Operations Driver Absences Driver App Notifications API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "**Welcome to the Optibus Operations API documentation!**\n\nOptibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations' functionality, allowing you to integrate it with your own applications and systems.\n\n\n",
+      "type": "text/plain"
+    }
+  }
+}

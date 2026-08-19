@@ -1,0 +1,363 @@
+{
+  "item": [
+    {
+      "id": "965f9398-a38d-4c91-a689-8eb76b4356d2",
+      "name": "Tasks",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c97e58c4-8b68-4154-8822-c673ba0f4374",
+          "name": "Fetch calendar tasks",
+          "request": {
+            "name": "Fetch calendar tasks",
+            "description": {
+              "content": "Returns the Daily and Weekly tasks for a specified date range, with filters.\nResponds with 302 redirect when payload is too big.\nOriginalDriverId refers to the driver that was assigned to the task in the plan page\n\n**Spare Types Support**: When the spare types feature flag is enabled, spare tasks will include additional properties:\n- `spareType`: The spare type code (e.g., \"SPARE1\", \"SPARE2\")\n- `displayId`: Will show the configured spare type name instead of the original display ID\n- `dutyType`: Will be set to \"spare\" for spare tasks\n- `startTime` and `endTime`: Will be included in the task summary for spare tasks based on the relevant spare type preference configuration",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ":depotId",
+                "calendar"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<date>",
+                  "description": "(Required) - The start of the date range to return the tasks from"
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<date>",
+                  "description": "(Required) - The end of the date range to return the tasks from"
+                },
+                {
+                  "disabled": false,
+                  "key": "plan",
+                  "value": "<string>",
+                  "description": "-  Returns tasks from the given plans"
+                },
+                {
+                  "disabled": false,
+                  "key": "plan",
+                  "value": "<string>",
+                  "description": "-  Returns tasks from the given plans"
+                },
+                {
+                  "disabled": false,
+                  "key": "group",
+                  "value": "<string>",
+                  "description": "- Returns tasks from deployed plans for the given groups"
+                },
+                {
+                  "disabled": false,
+                  "key": "group",
+                  "value": "<string>",
+                  "description": "- Returns tasks from deployed plans for the given groups"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "- Returns tasks from the given types"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "- Returns tasks from the given types"
+                },
+                {
+                  "disabled": false,
+                  "key": "assignedOnly",
+                  "value": "<boolean>",
+                  "description": "-  Returns tasks that are either assigned or unassigned (depending on the input)"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeStops",
+                  "value": "<boolean>",
+                  "description": "-  Returns the stops of tasks (false by default)"
+                },
+                {
+                  "disabled": false,
+                  "key": "driversIds",
+                  "value": "<string>",
+                  "description": "-  Returns the assignments of filtered driver"
+                },
+                {
+                  "disabled": false,
+                  "key": "driversIds",
+                  "value": "<string>",
+                  "description": "-  Returns the assignments of filtered driver"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "depotId",
+                  "description": "(Required) - The depot to get the tasks from"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "cd7dd23e-3776-4ab7-86a6-4607d4cdf104",
+              "name": "calendar tasks info",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ":depotId",
+                    "calendar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "plan",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "plan",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "group",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "group",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "assignedOnly",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeStops",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "driversIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driversIds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "depotId",
+                      "description": "(Required) - The depot to get the tasks from"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"calendarVehicleAssignments\": [\n    {\n      \"tasks\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"date\": \"<date>\"\n    },\n    {\n      \"tasks\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"date\": \"<date>\"\n    }\n  ],\n  \"blocks\": [\n    {\n      \"disabled\": true,\n      \"summary\": {\n        \"type\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"type\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"displayId\": \"string\",\n      \"id\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"srcBlockId\": \"string\",\n      \"data\": \"\",\n      \"events\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"description\": \"string\"\n    },\n    {\n      \"disabled\": false,\n      \"summary\": {\n        \"type\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"type\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"displayId\": \"string\",\n      \"id\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"srcBlockId\": \"string\",\n      \"data\": \"\",\n      \"events\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"description\": \"string\"\n    }\n  ],\n  \"tasks\": [\n    {\n      \"spareType\": \"string\",\n      \"events\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    },\n    {\n      \"spareType\": \"string\",\n      \"events\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    }\n  ],\n  \"DailyTasks\": [\n    {\n      \"tasks\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"date\": \"<date>\"\n    },\n    {\n      \"tasks\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"date\": \"<date>\"\n    }\n  ],\n  \"deployedPlans\": [\n    {\n      \"deployDateRange\": {\n        \"to\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"from\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"group\": \"string\",\n      \"rosterId\": \"<string>\",\n      \"plan\": \"<string>\"\n    },\n    {\n      \"deployDateRange\": {\n        \"to\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"from\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"group\": \"string\",\n      \"rosterId\": \"<string>\",\n      \"plan\": \"<string>\"\n    }\n  ],\n  \"depotId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26d9634f-0100-47ab-8a3e-786e97c63db2",
+              "name": "redirect url",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ":depotId",
+                    "calendar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "plan",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "plan",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "group",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "group",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "assignedOnly",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeStops",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "driversIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driversIds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "depotId",
+                      "description": "(Required) - The depot to get the tasks from"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Found",
+              "code": 302,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "90cd7005-509b-42f1-b359-7496e73c8d53",
+    "name": "Optibus Operations Driver Absences Tasks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "**Welcome to the Optibus Operations API documentation!**\n\nOptibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations' functionality, allowing you to integrate it with your own applications and systems.\n\n\n",
+      "type": "text/plain"
+    }
+  }
+}

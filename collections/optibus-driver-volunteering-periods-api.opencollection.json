@@ -1,0 +1,61 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Optibus Operations Driver Absences Driver Volunteering Periods API",
+    "version": "2.8.17"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Driver Volunteering Periods",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List driver volunteering periods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co/v1/drivers/volunteering-periods",
+            "params": [
+              {
+                "name": "driverIds",
+                "value": "",
+                "type": "query",
+                "description": "- Comma-separated list of driver IDs to filter for"
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "- Date string formatted as `YYYY-MM-dd`. Only volunteering periods that end on or after this date are returned."
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "- Date string formatted as `YYYY-MM-dd`. Only volunteering periods that start on or before this date are returned."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "- 1-indexed integer indicating which page of results to pull"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List existing driver volunteering periods in the system, with optional filtering capability.\n\nNotes:\n- The result is paginated. Check the `pagination` property in the response to see the total number of pages and the current page number.\n- A volunteering period matches the date-range filter when it overlaps the `[fromDate, toDate]` window.\n- The time range (`startTime`, `endTime`, `timePeriodCode`) is either fully present or all `null` for a given period."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

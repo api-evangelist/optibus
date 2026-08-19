@@ -1,0 +1,686 @@
+{
+  "item": [
+    {
+      "id": "97fc9bc6-5380-4562-b7ba-85c64fbb67c0",
+      "name": "Statistics",
+      "description": {
+        "content": "API endpoints for fetching computed statistics over a date range - per-task duty statistics (mirroring the duty side panel in the Ops UI) and the calculation limits that bound a single request.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1ef3c8e6-8810-4919-b5c0-50f3d9c9badb",
+          "name": "Fetch statistics",
+          "request": {
+            "name": "Fetch statistics",
+            "description": {
+              "content": "Retrieves statistics values for drivers on a specified date.\nStatistics are configured in the customer's preferences and can include normal (daily), yearly, and accumulated types.\nNormal stats are calculated via the work engine, while yearly and accumulated stats are fetched from the yearly cache.\nEither driverIds or depotId must be provided to scope the request. There is a calculation limit per request to avoid timeouts. For normal stats, the limit is based on the number of configured work-entities (204k total calculations). For yearly/accumulated stats, the limit is based on the number of requested cache entities. In case the limit is exceeded, a 413 error code will be returned, together with the allowed number of drivers.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "date",
+                  "value": "<date>",
+                  "description": "(Required) - The date for which statistics are to be retrieved. Required, in YYYY-MM-DD format."
+                },
+                {
+                  "disabled": false,
+                  "key": "depotId",
+                  "value": "<string>",
+                  "description": "- The ID of a specific depot for which statistics are to be retrieved. Either depotId or driverIds must be provided."
+                },
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "- An array of driver IDs for whom statistics are to be retrieved. Either driverIds or depotId must be provided."
+                },
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "- An array of driver IDs for whom statistics are to be retrieved. Either driverIds or depotId must be provided."
+                },
+                {
+                  "disabled": false,
+                  "key": "statIds",
+                  "value": "<string>",
+                  "description": "- Optional. An array of statistic IDs to filter the results. If not provided, all configured statistics are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "statIds",
+                  "value": "<string>",
+                  "description": "- Optional. An array of statistic IDs to filter the results. If not provided, all configured statistics are returned."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "52e30df1-00ac-4bec-98fe-34794b977651",
+              "name": "Statistics Information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "depotId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statIds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"lastYearlyCalculationDate\": \"string\",\n    \"value\": {\n      \"value\": true,\n      \"type\": \"Boolean\"\n    },\n    \"entityId\": \"string\",\n    \"datesRange\": {\n      \"endDate\": \"<date>\",\n      \"startDate\": \"<date>\"\n    },\n    \"workingDriver\": {\n      \"driverExternalId\": \"string\",\n      \"driverUuid\": \"<string>\"\n    },\n    \"timeType\": {\n      \"type\": \"day\"\n    },\n    \"statType\": \"normal\",\n    \"statId\": \"string\",\n    \"depotId\": \"<string>\"\n  },\n  {\n    \"lastYearlyCalculationDate\": \"string\",\n    \"value\": {\n      \"value\": true,\n      \"type\": \"Boolean\"\n    },\n    \"entityId\": \"string\",\n    \"datesRange\": {\n      \"endDate\": \"<date>\",\n      \"startDate\": \"<date>\"\n    },\n    \"workingDriver\": {\n      \"driverExternalId\": \"string\",\n      \"driverUuid\": \"<string>\"\n    },\n    \"timeType\": {\n      \"type\": \"day\"\n    },\n    \"statType\": \"normal\",\n    \"statId\": \"string\",\n    \"depotId\": \"<string>\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cbec16b1-44db-4dc4-8a94-68704771336d",
+              "name": "The request is too long. Please reduce the number of drivers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "depotId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statIds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d29be0f8-8b26-434d-b1d7-5512621d3713",
+          "name": "Fetch per-task statistics for a date range",
+          "request": {
+            "name": "Fetch per-task statistics for a date range",
+            "description": {
+              "content": "Retrieves per-task statistics for a date range, mirroring the duty side panel in the Ops UI.\nOne response row per `(date, task)` pair, including the statistics configured under the customer's `dutyFilter` preference.\n\nTo avoid timeouts the calculation is capped. Call `GET /v2/duty-stats-calculation-limit` first with\nthe same dates and depots to size your requests. This endpoint returns 413 when:\n- the requested range spans more than `daysLimit` days, or\n- `daysLimit` is `0` (a day too dense to fetch whole) and the request is not a single day\n  (`fromDate` equal to `toDate`) with a `taskIds` filter of at most `tasksLimit` tasks.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "duty-stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<date>",
+                  "description": "(Required) - Start of the date range (inclusive), YYYY-MM-DD."
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<date>",
+                  "description": "(Required) - End of the date range (inclusive), YYYY-MM-DD. Must be `>= fromDate`."
+                },
+                {
+                  "disabled": false,
+                  "key": "depotIds",
+                  "value": "<string>",
+                  "description": "- Optional. Restrict to specific depots; all customer depots if omitted."
+                },
+                {
+                  "disabled": false,
+                  "key": "depotIds",
+                  "value": "<string>",
+                  "description": "- Optional. Restrict to specific depots; all customer depots if omitted."
+                },
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "- Optional. Restrict to duties assigned to these drivers."
+                },
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "- Optional. Restrict to duties assigned to these drivers."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeUnassigned",
+                  "value": "<boolean>",
+                  "description": "- Optional. Defaults to `false` when `driverIds` is provided, `true` when omitted."
+                },
+                {
+                  "disabled": false,
+                  "key": "taskIds",
+                  "value": "<string>",
+                  "description": "- Optional. Filter by internal task UUIDs (not display IDs). Required when `daysLimit` is `0` — see above."
+                },
+                {
+                  "disabled": false,
+                  "key": "taskIds",
+                  "value": "<string>",
+                  "description": "- Optional. Filter by internal task UUIDs (not display IDs). Required when `daysLimit` is `0` — see above."
+                },
+                {
+                  "disabled": false,
+                  "key": "statIds",
+                  "value": "<string>",
+                  "description": "- Optional. Restrict which statistics to compute. `\"*\"` is not allowed."
+                },
+                {
+                  "disabled": false,
+                  "key": "statIds",
+                  "value": "<string>",
+                  "description": "- Optional. Restrict which statistics to compute. `\"*\"` is not allowed."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e0d44b7b-f62f-4d6a-862c-3fa2a6ee66ef",
+              "name": "Duty statistics for the requested range",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "duty-stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "depotIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "depotIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeUnassigned",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "taskIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "taskIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statIds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"statistics\": [\n      {\n        \"type\": \"error\",\n        \"id\": \"string\",\n        \"error\": \"string\",\n        \"value\": 9015.490204824855,\n        \"displayName\": \"string\"\n      },\n      {\n        \"type\": \"boolean\",\n        \"id\": \"string\",\n        \"error\": \"string\",\n        \"value\": 2260.890682602584,\n        \"displayName\": \"string\"\n      }\n    ],\n    \"cancelled\": false,\n    \"dutyType\": \"custom\",\n    \"date\": \"<date>\",\n    \"depotId\": \"<string>\",\n    \"dutyExternalId\": \"string\",\n    \"dutyId\": \"<string>\"\n  },\n  {\n    \"statistics\": [\n      {\n        \"type\": \"error\",\n        \"id\": \"string\",\n        \"error\": \"string\",\n        \"value\": 4127.121958636477,\n        \"displayName\": \"string\"\n      },\n      {\n        \"type\": \"error\",\n        \"id\": \"string\",\n        \"error\": \"string\",\n        \"value\": 2234.986905468557,\n        \"displayName\": \"string\"\n      }\n    ],\n    \"cancelled\": false,\n    \"dutyType\": \"duty\",\n    \"date\": \"<date>\",\n    \"depotId\": \"<string>\",\n    \"dutyExternalId\": \"string\",\n    \"dutyId\": \"<string>\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a25aaea-15b5-4fbd-94b3-650a32392e7f",
+              "name": "The request exceeds the calculation limit. Size it with GET /v2/duty-stats-calculation-limit: at most daysLimit days per request, or — when daysLimit is 0 — one day per request with at most tasksLimit taskIds.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "duty-stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "depotIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "depotIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeUnassigned",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "taskIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "taskIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statIds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e121d27f-9493-4ce5-a975-ba870380b28e",
+          "name": "Fetch the request limits for /v2/duty-stats",
+          "request": {
+            "name": "Fetch the request limits for /v2/duty-stats",
+            "description": {
+              "content": "Sizing (pre-flight) call for `GET /v2/duty-stats`. It computes no statistics — it only reports the\nlimits that `/v2/duty-stats` will enforce for the given dates and depot scope, so callers can plan\ntheir requests up front. Call it with the same `fromDate`/`toDate`/`depotIds` you intend to query.\n\nHow to use the returned limits:\n- `daysLimit >= 1` — split the date range into `/v2/duty-stats` requests of at most `daysLimit`\n  days each. Task or driver filters do not change this limit.\n- `daysLimit = 0` — the data is too dense for even one full day. Send one day per request\n  (`fromDate` equal to `toDate`) with a `taskIds` filter of at most `tasksLimit` tasks, repeating\n  until the day's tasks are covered.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "duty-stats-calculation-limit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<date>",
+                  "description": "(Required) - Start of the probe range (inclusive), YYYY-MM-DD."
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<date>",
+                  "description": "(Required) - End of the probe range (inclusive), YYYY-MM-DD. Must be `>= fromDate`."
+                },
+                {
+                  "disabled": false,
+                  "key": "depotIds",
+                  "value": "<string>",
+                  "description": "- Optional. Restrict to specific depots; all customer depots if omitted."
+                },
+                {
+                  "disabled": false,
+                  "key": "depotIds",
+                  "value": "<string>",
+                  "description": "- Optional. Restrict to specific depots; all customer depots if omitted."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "14207b08-0049-48bc-9a0f-8ad9189a4df8",
+              "name": "Duty-stats calculation limit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "duty-stats-calculation-limit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "depotIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "depotIds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tasksLimit\": 250,\n  \"daysLimit\": 5\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "5fa55e25-b2f3-45a1-ad7b-f121c5fc063f",
+    "name": "Optibus Operations Driver Absences Statistics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "**Welcome to the Optibus Operations API documentation!**\n\nOptibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations' functionality, allowing you to integrate it with your own applications and systems.\n\n\n",
+      "type": "text/plain"
+    }
+  }
+}

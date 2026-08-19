@@ -1,0 +1,584 @@
+{
+  "item": [
+    {
+      "id": "6bfb2ed5-e610-4988-b2f3-02b82f4174e2",
+      "name": "Signing Times",
+      "description": {
+        "content": "API endpoints for fetching sign-on/off times & deviations for drivers - i.e. the actual and expected sign-on and sign-off times for a driver and how much they deviate from each other.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0deb0643-bcdf-41d2-b573-890ff92e585c",
+          "name": "List driver signing times for a date in a region",
+          "request": {
+            "name": "List driver signing times for a date in a region",
+            "description": {
+              "content": "Returns matched expected/actual sign-on and sign-off times for drivers on a given date in a region.\n\nNotes:\n- The result is paginated by driver, 100 drivers per page. Check the `pagination` property in the response for total pages.\n- A driver appears in the response if their main or loaned region is the requested region on the date, regardless of whether they have a calendar task. Drivers without any tasks or actual signings on the date appear with `signingTimes: []`.\n- Orphaned signings (for example, an actual sign-on left behind after a previously-assigned task was unassigned or sign-on/off task-event was deleted) still appear here as entries with `orphaned: true`. If the original expected time is known, it will still be returned; otherwise `expectedTime` will be `null`.\n- `regionName` must match the name of a region returned by `GET /v1/regions`. An unknown region returns an empty result (no error).\n- Driver IDs in the response are the same external driver IDs accepted by `GET /v2/drivers` and other v2 endpoints.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "signing-times"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "date",
+                  "value": "<date>",
+                  "description": "(Required) - Operational date in `YYYY-MM-dd` format."
+                },
+                {
+                  "disabled": false,
+                  "key": "regionName",
+                  "value": "<string>",
+                  "description": "(Required) - Name of the region for which to return signing times."
+                },
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "- Comma-separated list of driver IDs to further narrow the result. Only drivers whose main or loaned region is the requested region on the date are eligible regardless of this filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "- Comma-separated list of driver IDs to further narrow the result. Only drivers whose main or loaned region is the requested region on the date are eligible regardless of this filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "- 1-indexed integer indicating which page of results to pull. Defaults to 1."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "aaae91f1-3f26-4bd5-b345-33bda2ea69b6",
+              "name": "Signing times fetched successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "signing-times"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "regionName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pagination\": {\n    \"totalPages\": \"<integer>\",\n    \"currentPage\": \"<integer>\",\n    \"nextPage\": \"<integer>\"\n  },\n  \"drivers\": [\n    {\n      \"signingTimes\": [\n        {\n          \"orphaned\": false,\n          \"expectedTime\": 7672.520104098527,\n          \"type\": \"signOn\",\n          \"actualTime\": 2843.013963903791\n        },\n        {\n          \"orphaned\": true,\n          \"expectedTime\": 6849.035801368949,\n          \"type\": \"signOff\",\n          \"actualTime\": 1860.100688194819\n        }\n      ],\n      \"id\": \"string\"\n    },\n    {\n      \"signingTimes\": [\n        {\n          \"orphaned\": true,\n          \"expectedTime\": 6196.785676974894,\n          \"type\": \"signOn\",\n          \"actualTime\": 3403.2924784808893\n        },\n        {\n          \"orphaned\": false,\n          \"expectedTime\": 4121.531267341997,\n          \"type\": \"signOff\",\n          \"actualTime\": 4639.615114752313\n        }\n      ],\n      \"id\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c479f5f9-33f5-4759-9830-04e2463d9de8",
+              "name": "Possible error types: `Invalid request schema` (schema of your request does not match the specification — e.g. `date` or `regionName` not supplied, or `date` is not a valid `YYYY-MM-DD` date)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "signing-times"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "regionName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"Invalid request schema\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f67021e0-988f-4e5e-982c-21babe553d9d",
+              "name": "Possible error types: `pageNotFound` (requested page number is out of range; details.totalPages indicates the number of pages available)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "signing-times"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "regionName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"pageNotFound\",\n    \"details\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8e12fe92-a6c3-4d5d-b73f-7a0fffd96890",
+          "name": "Fetch signing deviations",
+          "request": {
+            "name": "Fetch signing deviations",
+            "description": {
+              "content": "Calculate the signing deviations for the drivers in the given date range and region. 'Signing deviations' refer to the difference between\nthe actual and expected sign-on and sign-off times for a driver. The expected times are calculated based on the driver's assigned work.\n\nDeviation might be classified either early or late, calculated according to a defined threshold.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "drivers",
+                "signing-deviations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<date>",
+                  "description": "(Required) The start of the date range to get the signing deviations from"
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<date>",
+                  "description": "(Required) The end of the date range to get the signing deviations from"
+                },
+                {
+                  "disabled": false,
+                  "key": "regionUuid",
+                  "value": "<string>",
+                  "description": "(Required) The region to get the signing deviations from"
+                },
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "The driver IDs for which to get the signing deviations. if empty all drivers will be returned"
+                },
+                {
+                  "disabled": false,
+                  "key": "driverIds",
+                  "value": "<string>",
+                  "description": "The driver IDs for which to get the signing deviations. if empty all drivers will be returned"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "804b836c-d524-4ea4-984e-cc9d62ba9844",
+              "name": "Drivers signing deviations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "signing-deviations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "regionUuid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": {\n    \"key_0\": [\n      {\n        \"expectedTime\": \"2024-06-30T23:30:00+02:00\",\n        \"actualTime\": \"2024-06-30T23:30:00+02:00\",\n        \"deviation\": 6060.792411411032,\n        \"signingType\": \"signOff\",\n        \"signingDeviationType\": \"early\"\n      },\n      {\n        \"expectedTime\": \"2024-06-30T23:30:00+02:00\",\n        \"actualTime\": \"2024-06-30T23:30:00+02:00\",\n        \"deviation\": 873.1919182363479,\n        \"signingType\": \"signOff\",\n        \"signingDeviationType\": \"late\"\n      }\n    ]\n  },\n  \"key_1\": {\n    \"key_0\": [\n      {\n        \"expectedTime\": \"2024-06-30T23:30:00+02:00\",\n        \"actualTime\": \"2024-06-30T23:30:00+02:00\",\n        \"deviation\": 9885.32127181467,\n        \"signingType\": \"signOff\",\n        \"signingDeviationType\": \"early\"\n      },\n      {\n        \"expectedTime\": \"2024-06-30T23:30:00+02:00\",\n        \"actualTime\": \"2024-06-30T23:30:00+02:00\",\n        \"deviation\": 1474.6311127551348,\n        \"signingType\": \"signOn\",\n        \"signingDeviationType\": \"late\"\n      }\n    ],\n    \"key_1\": [\n      {\n        \"expectedTime\": \"2024-06-30T23:30:00+02:00\",\n        \"actualTime\": \"2024-06-30T23:30:00+02:00\",\n        \"deviation\": 1745.7104016482572,\n        \"signingType\": \"signOn\",\n        \"signingDeviationType\": \"late\"\n      },\n      {\n        \"expectedTime\": \"2024-06-30T23:30:00+02:00\",\n        \"actualTime\": \"2024-06-30T23:30:00+02:00\",\n        \"deviation\": 7227.7140203520485,\n        \"signingType\": \"signOn\",\n        \"signingDeviationType\": \"late\"\n      }\n    ]\n  },\n  \"key_2\": {\n    \"key_0\": [\n      {\n        \"expectedTime\": \"2024-06-30T23:30:00+02:00\",\n        \"actualTime\": \"2024-06-30T23:30:00+02:00\",\n        \"deviation\": 7464.429585250741,\n        \"signingType\": \"signOff\",\n        \"signingDeviationType\": \"early\"\n      },\n      {\n        \"expectedTime\": \"2024-06-30T23:30:00+02:00\",\n        \"actualTime\": \"2024-06-30T23:30:00+02:00\",\n        \"deviation\": 6308.772538168209,\n        \"signingType\": \"signOff\",\n        \"signingDeviationType\": \"early\"\n      }\n    ],\n    \"key_1\": [\n      {\n        \"expectedTime\": \"2024-06-30T23:30:00+02:00\",\n        \"actualTime\": \"2024-06-30T23:30:00+02:00\",\n        \"deviation\": 1486.9564457337037,\n        \"signingType\": \"signOn\",\n        \"signingDeviationType\": \"early\"\n      },\n      {\n        \"expectedTime\": \"2024-06-30T23:30:00+02:00\",\n        \"actualTime\": \"2024-06-30T23:30:00+02:00\",\n        \"deviation\": 1696.8894336767914,\n        \"signingType\": \"signOn\",\n        \"signingDeviationType\": \"early\"\n      }\n    ]\n  },\n  \"key_3\": {\n    \"key_0\": [\n      {\n        \"expectedTime\": \"2024-06-30T23:30:00+02:00\",\n        \"actualTime\": \"2024-06-30T23:30:00+02:00\",\n        \"deviation\": 5420.617928964861,\n        \"signingType\": \"signOn\",\n        \"signingDeviationType\": \"early\"\n      },\n      {\n        \"expectedTime\": \"2024-06-30T23:30:00+02:00\",\n        \"actualTime\": \"2024-06-30T23:30:00+02:00\",\n        \"deviation\": 6711.420467427056,\n        \"signingType\": \"signOff\",\n        \"signingDeviationType\": \"early\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "55524e3c-e987-43d9-8e03-f7e6f69a3ee4",
+              "name": "End date cannot be before start date",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "signing-deviations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "regionUuid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "539b4a6c-0d33-47a8-b464-168a699853f2",
+              "name": "Signing deviations validation rules are not defined for this customer",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "signing-deviations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "regionUuid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "driverIds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://YOUR-OPTIBUS-ACCOUNT.api.ops.optibus.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "2ea82034-fdd3-41b8-9bb2-67971f65a96c",
+    "name": "Optibus Operations Driver Absences Signing Times API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "**Welcome to the Optibus Operations API documentation!**\n\nOptibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations' functionality, allowing you to integrate it with your own applications and systems.\n\n\n",
+      "type": "text/plain"
+    }
+  }
+}
