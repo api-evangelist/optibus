@@ -1,0 +1,80 @@
+slug: optibus
+provider: Optibus
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Automotive & Mobility
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 6
+edges:
+- tag: Driver Absences
+  spec_file: optibus-driver-absences-api-openapi.yml
+  capability_id: BC-300.70
+  capability_id_l1: BC-300
+  capability_name: HR Operations Management
+  confidence: 0.78
+  evidence: GET /v2/drivers/absences  List driver absences; GET /v1/drivers/time-off-balances  List driver
+    time-off balances; schema TimeOffBankBalance, AbsenceQuotaWithUsage
+  reason: Operations administer employee absence records, time-off bank balances and absence quotas for
+    drivers — classic HR absence/leave administration, which falls under HR Operations Management (employee
+    records and payroll-adjacent administration).
+- tag: Driver Employment Periods
+  spec_file: optibus-driver-employment-periods-api-openapi.yml
+  capability_id: BC-300.70
+  capability_id_l1: BC-300
+  capability_name: HR Operations Management
+  confidence: 0.75
+  evidence: GET /v2/drivers/employment-periods  List driver employment periods; POST /v1/drivers/employment-periods  Create
+    driver employment period; schema EmploymentPeriodV2
+  reason: Operations record and amend employment periods for drivers — employment/employee record administration,
+    which is HR Operations Management rather than any transit-specific capability in this frame.
+- tag: Payroll
+  spec_file: optibus-payroll-api-openapi.yml
+  capability_id: BC-300.70
+  capability_id_l1: BC-300
+  capability_name: HR Operations Management
+  confidence: 0.75
+  evidence: GET /v2/payroll  GetPayroll  Fetch payroll; schemas GetPayrollV2Response, PayrollV2External,
+    WorkingDriver, CycleType
+  reason: The single operation returns payroll data per working driver over pay cycles, which is payroll
+    administration — HR Operations Management. Confidence held below 0.8 because it is read-only extraction
+    of computed pay data rather than full payroll processing.
+- tag: Drivers
+  spec_file: optibus-drivers-api-openapi.yml
+  capability_id: BC-300.70
+  capability_id_l1: BC-300
+  capability_name: HR Operations Management
+  confidence: 0.72
+  evidence: GET /v2/drivers  List drivers; POST /v2/drivers  Create drivers; PUT /v2/drivers  Update drivers;
+    schemas NewDriver, EditedDriver, DepotPeriod
+  reason: CRUD over the driver (employee) master record including depot/region assignment periods — maintenance
+    of workforce records, i.e. HR Operations Management. Optibus is a transit operations vendor, but this
+    specific surface realises employee record administration.
+- tag: Drivers (Deprecated)
+  spec_file: optibus-drivers-deprecated-api-openapi.yml
+  capability_id: BC-300.70
+  capability_id_l1: BC-300
+  capability_name: HR Operations Management
+  confidence: 0.7
+  evidence: POST /v1/drivers  Create/update drivers (deprecated); GET /v1/absences  List driver absences
+    (deprecated); GET /v2/driver-attributes  Fetch driver attributes (deprecated)
+  reason: 'Legacy versions of the same surface: driver records, attributes and absence quotas. Same realisation
+    as the current Drivers/Absences tags — employee record and absence administration under HR Operations
+    Management.'
+- tag: Private Hires
+  spec_file: optibus-private-hires-api-openapi.yml
+  capability_id: BC-3490.20
+  capability_id_l1: BC-3490
+  capability_name: Trip and Booking Operations
+  confidence: 0.7
+  evidence: POST /private_hires/order  PostPrivateHireOrder  Create private hire order; PATCH /private_hires/order/{orderId}/trips  Update
+    private hire order trips; schemas PrivateHireOrderInResponse, PrivateHireTask, SupportedOrderStatus
+  reason: Full lifecycle (create, fetch, update, amend trips) of private-hire charter orders and their
+    trips for a transport operator — this is capture and lifecycle management of mobility bookings and
+    trips. Some ambiguity with generic order management keeps it at 0.7.

@@ -761,6 +761,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/optibus-capability-edges.yml
+  name: Optibus Business Capability Map
 - type: MCPServer
   url: mcp/optibus-mcp.yml
 - type: Overlay
