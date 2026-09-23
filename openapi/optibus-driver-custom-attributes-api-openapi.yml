@@ -1,15 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Optibus Operations Driver Absences Driver Custom Attributes API
+  title: Optibus Operations Driver Custom Attributes API
   version: 2.8.17
   description: '**Welcome to the Optibus Operations API documentation!**
 
 
-    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.
-
-
-
-    '
+    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.'
   license:
     name: Optibus Ltd, All rights reserved
   contact: {}
@@ -44,7 +40,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetDriversCustomAttributesErrorResponse'
-      description: "List custom attribute entries for drivers, with filters. Although the `GET /v2/drivers` API endpoint also returns custom attribute values for\neach driver, it is more limited, as it only returns attribute values for the specified date. This API endpoint allows you to query the full history\nof attribute values for drivers, and see the date range in which those values applied.\n\nNotes:\n- The result is paginated. Check the `pagination` property in the response to see the total number of pages and the current page number.\n  - The exact number of entries per page may vary, as the results are paginated by _driver_ rather than count of entries.\n- The entry history for the `type`, `union` and `grade` fields are also queryable through this endpoint. These entries appear under attribute ID `driverType`, `driverUnion` and `driverGrade`.\n- The specification for values and whether they are mandatory or not is determined by the attribute definitions in the \"Driver attributes\" preference in your Ops instance.\n  - Attributes with type `STRING` will have `value` set to a string\n  - Attributes with type `NUMBER` will have `value` set to a number\n  - Attributes with type `BOOLEAN` will have `value` set to a boolean\n  - Attributes with type `DATE` will have `value` set to a date string formatted as `YYYY-MM-dd`\n  - Attributes with type `SINGLE_SELECT` will have `value` set to the `value` of one of the available select options\n  - Attributes with type `MULTI_SELECT` will have `value` set to an array of strings (each one being the `value` of one of the available select options)\n  - Attributes with type `DURATION` will have `value` set to a duration string formatted as `HH:mm` (where `HH` is an integer between 0 and 999, and `mm` is an integer between 0 and 59)\n  - Attributes configured with `\"isMandatory\": false` may possibly have periods where the value is not set - in that case, the `value` will be omitted from the response\n- Information about the modelling of date periods for each entry:\n  - `startDate` is mandatory\n  - `endDate` is optional - if omitted, the entry value will be ongoing indefinitely into the future"
+      description: 'List custom attribute entries for drivers, with filters. Although the `GET /v2/drivers` API endpoint also returns custom attribute values for
+
+        each driver, it is more limited, as it only returns attribute values for the specified date. This API endpoint allows you to query the full history
+
+        of attribute values for drivers, and see the date range in which those values applied.
+
+
+        Notes:
+
+        - The result is paginated. Check the `pagination` property in the response to see the total number of pages and the current page number.
+
+        - The exact number of entries per page may vary, as the results are paginated by _driver_ rather than count of entries.
+
+        - The entry history for the `type`, `union` and `grade` fields are also queryable through this endpoint. These entries appear under attribute ID `driverType`, `driverUnion` and `driverGrade`.
+
+        - The specification for values and whether they are mandatory or not is determined by the attribute definitions in the "Driver attributes" preference in your Ops instance.
+
+        - Attributes with type `STRING` will have `value` set to a string
+
+        - Attributes with type `NUMBER` will have `value` set to a number
+
+        - Attributes with type `BOOLEAN` will have `value` set to a boolean
+
+        - Attributes with type `DATE` will have `value` set to a date string formatted as `YYYY-MM-dd`
+
+        - Attributes with type `SINGLE_SELECT` will have `value` set to the `value` of one of the available select options
+
+        - Attributes with type `MULTI_SELECT` will have `value` set to an array of strings (each one being the `value` of one of the available select options)
+
+        - Attributes with type `DURATION` will have `value` set to a duration string formatted as `HH:mm` (where `HH` is an integer between 0 and 999, and `mm` is an integer between 0 and 59)
+
+        - Attributes configured with `"isMandatory": false` may possibly have periods where the value is not set - in that case, the `value` will be omitted from the response
+
+        - Information about the modelling of date periods for each entry:
+
+        - `startDate` is mandatory
+
+        - `endDate` is optional - if omitted, the entry value will be ongoing indefinitely into the future'
       summary: List driver custom attributes
       tags:
       - Driver Custom Attributes
@@ -114,7 +147,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PutDriversCustomAttributesErrorResponse'
-      description: "Creates or updates custom attribute entries for drivers. Although the `POST /v2/drivers` and `PUT /v2/drivers` API endpoints also allow you to create and update custom attribute values,\nthey are more limited in that they only allow you to create and update custom attribute values as of the current date. This API endpoint allows you to manage the full history of\ncustom attribute values for drivers.\n\nNotes:\n- The specification of expected values and whether they are mandatory or not is determined by the attribute definitions in the \"Driver attributes\" preference in your Ops instance.\n  - Attributes with type `STRING` expect a string to be set for `value`.\n  - Attributes with type `NUMBER` expect a number to be set for `value`.\n  - Attributes with type `BOOLEAN` expect a boolean to be set for `value`.\n  - Attributes with type `DATE` expect a date string formatted as `YYYY-MM-dd` to be set for `value`.\n  - Attributes with type `SINGLE_SELECT` expect the `value` of one of the available select options to be set for `value`.\n  - Attributes with type `MULTI_SELECT` expect an array of strings (each one being the `value` of one of the available select options) to be set for `value`.\n  - Attributes with type `DURATION` expect a duration string formatted as `HH:mm` (where `HH` is an integer between 0 and 999, and `mm` is an integer between 0 and 59) to be set for `value`.\n  - Attributes configured with `\"isMandatory\": false` allow the value to be 'unset' - simply omit the `value` field for that entry to unset it.\n- Behaviour of the `entryId` field:\n  - If an `entryId` is specified and an entry with that ID already exists, the existing entry will be updated.\n  - If an `entryId` is specified and an entry with that ID does not already exist, a new entry will be created with the specified ID.\n  - If an `entryId` is not specified, a new entry will be created with an automatically generated ID.\n- You must maintain the consistency of the attribute timeline:\n  - No entries for a given attribute on a given driver should overlap each other\n  - There should be no gap between the date periods of entries for a given attribute on a given driver (i.e. if one entry ends on `2024-01-01`, the next entry should start on `2024-01-02`)\n  - Each attribute on a given driver should have exactly one entry with no end date\n- For non-mandatory attributes, if you wish to represent a period with 'no value set', create an entry with no `value` field for that date period.\n- Each request is atomic - either all entries listed in the request are created/updated successfully, or none are created/updated.\n- No more than 1000 entries can be created/updated in a single request - please break your request into multiple smaller chunks if you need to create/update more than 1000 entries."
+      description: 'Creates or updates custom attribute entries for drivers. Although the `POST /v2/drivers` and `PUT /v2/drivers` API endpoints also allow you to create and update custom attribute values,
+
+        they are more limited in that they only allow you to create and update custom attribute values as of the current date. This API endpoint allows you to manage the full history of
+
+        custom attribute values for drivers.
+
+
+        Notes:
+
+        - The specification of expected values and whether they are mandatory or not is determined by the attribute definitions in the "Driver attributes" preference in your Ops instance.
+
+        - Attributes with type `STRING` expect a string to be set for `value`.
+
+        - Attributes with type `NUMBER` expect a number to be set for `value`.
+
+        - Attributes with type `BOOLEAN` expect a boolean to be set for `value`.
+
+        - Attributes with type `DATE` expect a date string formatted as `YYYY-MM-dd` to be set for `value`.
+
+        - Attributes with type `SINGLE_SELECT` expect the `value` of one of the available select options to be set for `value`.
+
+        - Attributes with type `MULTI_SELECT` expect an array of strings (each one being the `value` of one of the available select options) to be set for `value`.
+
+        - Attributes with type `DURATION` expect a duration string formatted as `HH:mm` (where `HH` is an integer between 0 and 999, and `mm` is an integer between 0 and 59) to be set for `value`.
+
+        - Attributes configured with `"isMandatory": false` allow the value to be ''unset'' - simply omit the `value` field for that entry to unset it.
+
+        - Behaviour of the `entryId` field:
+
+        - If an `entryId` is specified and an entry with that ID already exists, the existing entry will be updated.
+
+        - If an `entryId` is specified and an entry with that ID does not already exist, a new entry will be created with the specified ID.
+
+        - If an `entryId` is not specified, a new entry will be created with an automatically generated ID.
+
+        - You must maintain the consistency of the attribute timeline:
+
+        - No entries for a given attribute on a given driver should overlap each other
+
+        - There should be no gap between the date periods of entries for a given attribute on a given driver (i.e. if one entry ends on `2024-01-01`, the next entry should start on `2024-01-02`)
+
+        - Each attribute on a given driver should have exactly one entry with no end date
+
+        - For non-mandatory attributes, if you wish to represent a period with ''no value set'', create an entry with no `value` field for that date period.
+
+        - Each request is atomic - either all entries listed in the request are created/updated successfully, or none are created/updated.
+
+        - No more than 1000 entries can be created/updated in a single request - please break your request into multiple smaller chunks if you need to create/update more than 1000 entries.'
       summary: Create/update driver custom attributes
       tags:
       - Driver Custom Attributes
@@ -129,19 +209,69 @@ paths:
               $ref: '#/components/schemas/PutDriversCustomAttributesRequest'
 components:
   schemas:
-    DriverId:
-      type: string
-      description: The Id of the driver
-    TypedApiErrorResponse_Invalidrequestschema_:
+    IdList:
+      items:
+        $ref: '#/components/schemas/UUID'
+      type: array
+      example:
+      - item-123
+      - item-456
+      - item-789
+      description: A list of IDs.
+    Pagination:
       properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_Invalidrequestschema_'
+        totalPages:
+          $ref: '#/components/schemas/Integer'
+          description: Total number of pages.
+        nextPage:
+          $ref: '#/components/schemas/PageNumber'
+          description: Next page number (1-indexed). If undefined, there is no next page.
+        currentPage:
+          $ref: '#/components/schemas/PageNumber'
+          description: Current page number (1-indexed).
       required:
-      - error
+      - totalPages
+      - currentPage
       type: object
+      description: 'Metadata about the pagination of a list of items. When a list of items is too large to be returned in a single response, it is split into multiple pages.
+
+        This object informs you about the current page, the next page, and the total number of pages.'
     UUID:
       type: string
       description: Stringified ID for a resource. Cannot exceed 36 characters.
+    AttributeValue:
+      anyOf:
+      - items:
+          anyOf:
+          - type: number
+            format: double
+          - type: string
+        type: array
+      - type: string
+      - type: boolean
+      - type: number
+        format: double
+    PutDriversCustomAttributesErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_PutDriversCustomAttributesErrorTypes_'
+    PutDriversCustomAttributesErrorTypes:
+      type: string
+      enum:
+      - tooManyItems
+      - noItems
+      - invalidFieldContent
+      - driversNotFound
+      - invalidAttributeTimeline
+      - conflictProcessingRequest
+    DriverId:
+      type: string
+      description: The Id of the driver
+    TypedApiErrorResponse_PutDriversCustomAttributesErrorTypes_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_PutDriversCustomAttributesErrorTypes_'
+      required:
+      - error
+      type: object
     TypedErrorResponse_Invalidrequestschema_:
       properties:
         details: {}
@@ -151,7 +281,6 @@ components:
           type: string
           enum:
           - Invalid request schema
-          nullable: false
       required:
       - message
       - type
@@ -184,42 +313,6 @@ components:
       - attributeId
       - driverId
       type: object
-    GetDriversCustomAttributesErrorTypes:
-      type: string
-      enum:
-      - invalidDatesCombination
-      - pageNotFound
-    Pagination:
-      properties:
-        totalPages:
-          $ref: '#/components/schemas/Integer'
-          description: Total number of pages.
-        nextPage:
-          $ref: '#/components/schemas/PageNumber'
-          description: Next page number (1-indexed). If undefined, there is no next page.
-        currentPage:
-          $ref: '#/components/schemas/PageNumber'
-          description: Current page number (1-indexed).
-      required:
-      - totalPages
-      - currentPage
-      type: object
-      description: 'Metadata about the pagination of a list of items. When a list of items is too large to be returned in a single response, it is split into multiple pages.
-
-        This object informs you about the current page, the next page, and the total number of pages.'
-    PutDriversCustomAttributesRequest:
-      properties:
-        entries:
-          items:
-            $ref: '#/components/schemas/PutDriversCustomAttributesEntry'
-          type: array
-      required:
-      - entries
-      type: object
-    PageNumber:
-      $ref: '#/components/schemas/Integer'
-      description: Page number (1-indexed). Defaults to 1.
-      minimum: 1
     DriverCustomAttributeEntry:
       properties:
         attributeId:
@@ -251,83 +344,15 @@ components:
       - createdEntryIds
       - modifiedEntryIds
       type: object
-    PutDriversCustomAttributesErrorTypes:
-      type: string
-      enum:
-      - tooManyItems
-      - noItems
-      - invalidFieldContent
-      - driversNotFound
-      - invalidAttributeTimeline
-      - conflictProcessingRequest
-    TypedApiErrorResponse_GetDriversCustomAttributesErrorTypes_:
+    PutDriversCustomAttributesRequest:
       properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_GetDriversCustomAttributesErrorTypes_'
+        entries:
+          items:
+            $ref: '#/components/schemas/PutDriversCustomAttributesEntry'
+          type: array
       required:
-      - error
+      - entries
       type: object
-    GetDriversCustomAttributesErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_GetDriversCustomAttributesErrorTypes_'
-    TypedErrorResponse_GetDriversCustomAttributesErrorTypes_:
-      properties:
-        details: {}
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/GetDriversCustomAttributesErrorTypes'
-      required:
-      - message
-      - type
-      type: object
-    Integer:
-      type: integer
-      format: int32
-    TypedApiErrorResponse_PutDriversCustomAttributesErrorTypes_:
-      properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_PutDriversCustomAttributesErrorTypes_'
-      required:
-      - error
-      type: object
-    AttributeValue:
-      anyOf:
-      - items:
-          anyOf:
-          - type: number
-            format: double
-          - type: string
-        type: array
-      - type: string
-      - type: boolean
-      - type: number
-        format: double
-    TypedErrorResponse_PutDriversCustomAttributesErrorTypes_:
-      properties:
-        details: {}
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/PutDriversCustomAttributesErrorTypes'
-      required:
-      - message
-      - type
-      type: object
-    IdList:
-      items:
-        $ref: '#/components/schemas/UUID'
-      type: array
-      example:
-      - item-123
-      - item-456
-      - item-789
-      description: A list of IDs.
-    StringifyDate:
-      type: string
-      format: date
-      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
-    SchemaValidationErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
     GetDriversCustomAttributesSuccess:
       properties:
         pagination:
@@ -357,8 +382,62 @@ components:
           currentPage: 1
           nextPage: 2
           totalPages: 10
-    PutDriversCustomAttributesErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_PutDriversCustomAttributesErrorTypes_'
+    GetDriversCustomAttributesErrorTypes:
+      type: string
+      enum:
+      - invalidDatesCombination
+      - pageNotFound
+    Integer:
+      type: integer
+      format: int32
+    TypedErrorResponse_GetDriversCustomAttributesErrorTypes_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/GetDriversCustomAttributesErrorTypes'
+      required:
+      - message
+      - type
+      type: object
+    PageNumber:
+      $ref: '#/components/schemas/Integer'
+      description: Page number (1-indexed). Defaults to 1.
+      minimum: 1
+    GetDriversCustomAttributesErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_GetDriversCustomAttributesErrorTypes_'
+    TypedApiErrorResponse_Invalidrequestschema_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_Invalidrequestschema_'
+      required:
+      - error
+      type: object
+    StringifyDate:
+      type: string
+      format: date
+      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
+    TypedErrorResponse_PutDriversCustomAttributesErrorTypes_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/PutDriversCustomAttributesErrorTypes'
+      required:
+      - message
+      - type
+      type: object
+    SchemaValidationErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
+    TypedApiErrorResponse_GetDriversCustomAttributesErrorTypes_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_GetDriversCustomAttributesErrorTypes_'
+      required:
+      - error
+      type: object
   securitySchemes:
     api_key:
       type: apiKey

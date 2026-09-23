@@ -1,15 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Optibus Operations Driver Absences Driver Groups API
+  title: Optibus Operations Driver Groups API
   version: 2.8.17
   description: '**Welcome to the Optibus Operations API documentation!**
 
 
-    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.
-
-
-
-    '
+    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.'
   license:
     name: Optibus Ltd, All rights reserved
   contact: {}
@@ -56,6 +52,24 @@ paths:
         deprecated: true
 components:
   schemas:
+    GroupWithRegionAliases:
+      allOf:
+      - properties:
+          depot:
+            type: string
+            description: ID of the _region_ the driver group is associated with. Deprecated in favor of `regionUuid`.
+            deprecated: true
+          regionName:
+            type: string
+            description: Name of the region the driver group is associated with.
+          regionUuid:
+            type: string
+            description: ID of the region the driver group is associated with.
+        required:
+        - depot
+        - regionUuid
+        type: object
+      - $ref: '#/components/schemas/Group'
     Group:
       properties:
         meta:
@@ -77,24 +91,6 @@ components:
       - name
       - id
       type: object
-    GroupWithRegionAliases:
-      allOf:
-      - properties:
-          depot:
-            type: string
-            description: ID of the _region_ the driver group is associated with. Deprecated in favor of `regionUuid`.
-            deprecated: true
-          regionName:
-            type: string
-            description: Name of the region the driver group is associated with.
-          regionUuid:
-            type: string
-            description: ID of the region the driver group is associated with.
-        required:
-        - depot
-        - regionUuid
-        type: object
-      - $ref: '#/components/schemas/Group'
     UUID:
       type: string
       description: Stringified ID for a resource. Cannot exceed 36 characters.

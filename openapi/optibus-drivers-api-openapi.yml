@@ -1,15 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Optibus Operations Driver Absences Drivers API
+  title: Optibus Operations Drivers API
   version: 2.8.17
   description: '**Welcome to the Optibus Operations API documentation!**
 
 
-    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.
-
-
-
-    '
+    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.'
   license:
     name: Optibus Ltd, All rights reserved
   contact: {}
@@ -125,7 +121,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostDriversV2ErrorResponse'
-      description: "Add new drivers to the system.\n\nNotes:\n- This API endpoint does not support modifying existing drivers. If you need to update an existing driver, use the `PUT /v2/drivers` API endpoint instead.\n- Each request is atomic - either all drivers listed in the request are created successfully, or none are created.\n- No more than 1000 drivers can be created in a single request - please break your request into multiple smaller chunks if you need to create more than 1000 drivers.\n- `startDate` is an optional field, but if provided, an initial employment period will be automatically created with this start date.\n- The specification of expected values for the `customAttributes` field and whether they are mandatory or not is determined by the attribute definitions in the \"Driver attributes\" preference in your Ops instance.\n  - Attributes with type `STRING` expect a string to be set for `customAttributes[attributeId]`.\n  - Attributes with type `NUMBER` expect a number to be set for `customAttributes[attributeId]`.\n  - Attributes with type `BOOLEAN` expect a boolean to be set for `customAttributes[attributeId]`.\n  - Attributes with type `DATE` expect a date string formatted as `YYYY-MM-dd` to be set for `customAttributes[attributeId]`.\n  - Attributes with type `SINGLE_SELECT` expect the `value` of one of the available select options to be set for `customAttributes[attributeId]`.\n  - Attributes with type `MULTI_SELECT` expect an array of strings (each one being the `value` of one of the available select options) to be set for `customAttributes[attributeId]`.\n  - Attributes with type `DURATION` expect a duration string formatted as `HH:mm` (where `HH` is an integer between 0 and 999, and `mm` is an integer between 0 and 59) to be set for `customAttributes[attributeId]`.\n- Certifications (as configured in the \"Certifications\" preference in your Ops instance) are set the same way: use the certification code as the attribute ID, and the expiry date (`YYYY-MM-dd`) as the value."
+      description: 'Add new drivers to the system.
+
+
+        Notes:
+
+        - This API endpoint does not support modifying existing drivers. If you need to update an existing driver, use the `PUT /v2/drivers` API endpoint instead.
+
+        - Each request is atomic - either all drivers listed in the request are created successfully, or none are created.
+
+        - No more than 1000 drivers can be created in a single request - please break your request into multiple smaller chunks if you need to create more than 1000 drivers.
+
+        - `startDate` is an optional field, but if provided, an initial employment period will be automatically created with this start date.
+
+        - The specification of expected values for the `customAttributes` field and whether they are mandatory or not is determined by the attribute definitions in the "Driver attributes" preference in your Ops instance.
+
+        - Attributes with type `STRING` expect a string to be set for `customAttributes[attributeId]`.
+
+        - Attributes with type `NUMBER` expect a number to be set for `customAttributes[attributeId]`.
+
+        - Attributes with type `BOOLEAN` expect a boolean to be set for `customAttributes[attributeId]`.
+
+        - Attributes with type `DATE` expect a date string formatted as `YYYY-MM-dd` to be set for `customAttributes[attributeId]`.
+
+        - Attributes with type `SINGLE_SELECT` expect the `value` of one of the available select options to be set for `customAttributes[attributeId]`.
+
+        - Attributes with type `MULTI_SELECT` expect an array of strings (each one being the `value` of one of the available select options) to be set for `customAttributes[attributeId]`.
+
+        - Attributes with type `DURATION` expect a duration string formatted as `HH:mm` (where `HH` is an integer between 0 and 999, and `mm` is an integer between 0 and 59) to be set for `customAttributes[attributeId]`.
+
+        - Certifications (as configured in the "Certifications" preference in your Ops instance) are set the same way: use the certification code as the attribute ID, and the expiry date (`YYYY-MM-dd`) as the value.'
       summary: Create drivers
       tags:
       - Drivers
@@ -167,7 +192,40 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PutDriversV2ErrorResponse'
-      description: "Update existing drivers in the system.\n\nNotes:\n- This API endpoint expects a full representation of the driver. Omitting an optional field will clear the field.\n- This API endpoint does not support creating new drivers. If you need to create a new driver, use the `POST /v2/drivers` API endpoint instead.\n- Each request is atomic - either all drivers listed in the request are updated successfully, or none are updated.\n- No more than 1000 drivers can be updated in a single request - please break your request into multiple smaller chunks if you need to update more than 1000 drivers.\n- The specification of expected values for the `customAttributes` field and whether they are mandatory or not is determined by the attribute definitions in the \"Driver attributes\" preference in your Ops instance.\n  - Attributes with type `STRING` expect a string to be set for `customAttributes[attributeId]`.\n  - Attributes with type `NUMBER` expect a number to be set for `customAttributes[attributeId]`.\n  - Attributes with type `BOOLEAN` expect a boolean to be set for `customAttributes[attributeId]`.\n  - Attributes with type `DATE` expect a date string formatted as `YYYY-MM-dd` to be set for `customAttributes[attributeId]`.\n  - Attributes with type `SINGLE_SELECT` expect the `value` of one of the available select options to be set for `customAttributes[attributeId]`.\n  - Attributes with type `MULTI_SELECT` expect an array of strings (each one being the `value` of one of the available select options) to be set for `customAttributes[attributeId]`.\n  - Attributes with type `DURATION` expect a duration string formatted as `HH:mm` (where `HH` is an integer between 0 and 999, and `mm` is an integer between 0 and 59) to be set for `customAttributes[attributeId]`.\n- Certifications (as configured in the \"Certifications\" preference in your Ops instance) are set the same way: use the certification code as the attribute ID, and the expiry date (`YYYY-MM-dd`) as the value.\n- If the value of any custom attribute is updated compared to the existing value, a new entry will be added to the history of that attribute starting from the current date.\n  - If there is already an entry for a given attribute starting from today's date, it will be overwritten, and a `warnings` array will be included on the success response describing that case. The `warnings` property is omitted when there are no warnings."
+      description: 'Update existing drivers in the system.
+
+
+        Notes:
+
+        - This API endpoint expects a full representation of the driver. Omitting an optional field will clear the field.
+
+        - This API endpoint does not support creating new drivers. If you need to create a new driver, use the `POST /v2/drivers` API endpoint instead.
+
+        - Each request is atomic - either all drivers listed in the request are updated successfully, or none are updated.
+
+        - No more than 1000 drivers can be updated in a single request - please break your request into multiple smaller chunks if you need to update more than 1000 drivers.
+
+        - The specification of expected values for the `customAttributes` field and whether they are mandatory or not is determined by the attribute definitions in the "Driver attributes" preference in your Ops instance.
+
+        - Attributes with type `STRING` expect a string to be set for `customAttributes[attributeId]`.
+
+        - Attributes with type `NUMBER` expect a number to be set for `customAttributes[attributeId]`.
+
+        - Attributes with type `BOOLEAN` expect a boolean to be set for `customAttributes[attributeId]`.
+
+        - Attributes with type `DATE` expect a date string formatted as `YYYY-MM-dd` to be set for `customAttributes[attributeId]`.
+
+        - Attributes with type `SINGLE_SELECT` expect the `value` of one of the available select options to be set for `customAttributes[attributeId]`.
+
+        - Attributes with type `MULTI_SELECT` expect an array of strings (each one being the `value` of one of the available select options) to be set for `customAttributes[attributeId]`.
+
+        - Attributes with type `DURATION` expect a duration string formatted as `HH:mm` (where `HH` is an integer between 0 and 999, and `mm` is an integer between 0 and 59) to be set for `customAttributes[attributeId]`.
+
+        - Certifications (as configured in the "Certifications" preference in your Ops instance) are set the same way: use the certification code as the attribute ID, and the expiry date (`YYYY-MM-dd`) as the value.
+
+        - If the value of any custom attribute is updated compared to the existing value, a new entry will be added to the history of that attribute starting from the current date.
+
+        - If there is already an entry for a given attribute starting from today''s date, it will be overwritten, and a `warnings` array will be included on the success response describing that case. The `warnings` property is omitted when there are no warnings.'
       summary: Update drivers
       tags:
       - Drivers
@@ -192,7 +250,40 @@ paths:
                 $ref: '#/components/schemas/GetDriversDepotPeriodsResponse'
         '414':
           description: The request URI exceeds 10240 bytes which is not supported. This probably results from trying to query more than a thousand drivers at the same time. Please consider chunking your request.
-      description: "Returns information about which regions and depots drivers are assigned to during different time periods.\nThe response is a map between the driver ID and an array of that driver's region periods.\n\nNotes:\n- Due to legacy reasons, this endpoint contains properties referring to 'depots' instead of 'regions'. Anywhere you\n  see 'depot' referenced, it really refers to 'region'. For example `depotId` is actually `regionUuid`. This inconsistency\n  will be improved in a future API version.\n- Here is a breakdown of the field meanings:\n  - `periodId`: A unique identifier for the period.\n  - `type`: The type of period (is it the driver's main region/depot, or were they just loaned there temporarily?)\n  - `driverUUID`: The ID of the driver.\n  - `depotId`: The ID of the **region** the driver is assigned to during the period.\n  - `opUnitId`: The ID of the **depot** (operational unit) within the region the driver is assigned to during the period.\n  - `groupId`: The ID of the driver group that the driver is assigned to during the period.\n  - `startDate`: The start date of the period.\n  - `endDate`: The end date of the period. If unspecified, the period is ongoing indefinitely.\n  - `startTime`: The start time of the period. If unspecified, the period starts at the beginning of the day.\n  - `endTime`: The end time of the period. If unspecified, the period ends at the end of the day."
+      description: 'Returns information about which regions and depots drivers are assigned to during different time periods.
+
+        The response is a map between the driver ID and an array of that driver''s region periods.
+
+
+        Notes:
+
+        - Due to legacy reasons, this endpoint contains properties referring to ''depots'' instead of ''regions''. Anywhere you
+
+        see ''depot'' referenced, it really refers to ''region''. For example `depotId` is actually `regionUuid`. This inconsistency
+
+        will be improved in a future API version.
+
+        - Here is a breakdown of the field meanings:
+
+        - `periodId`: A unique identifier for the period.
+
+        - `type`: The type of period (is it the driver''s main region/depot, or were they just loaned there temporarily?)
+
+        - `driverUUID`: The ID of the driver.
+
+        - `depotId`: The ID of the **region** the driver is assigned to during the period.
+
+        - `opUnitId`: The ID of the **depot** (operational unit) within the region the driver is assigned to during the period.
+
+        - `groupId`: The ID of the driver group that the driver is assigned to during the period.
+
+        - `startDate`: The start date of the period.
+
+        - `endDate`: The end date of the period. If unspecified, the period is ongoing indefinitely.
+
+        - `startTime`: The start time of the period. If unspecified, the period starts at the beginning of the day.
+
+        - `endTime`: The end time of the period. If unspecified, the period ends at the end of the day.'
       summary: Fetch driver region periods
       tags:
       - Drivers
@@ -209,22 +300,190 @@ paths:
             $ref: '#/components/schemas/UUID'
 components:
   schemas:
-    TypedApiErrorResponse_Invalidrequestschema_:
+    TypedApiErrorResponse_PutDriversV2ErrorTypes_:
       properties:
         error:
-          $ref: '#/components/schemas/TypedErrorResponse_Invalidrequestschema_'
+          $ref: '#/components/schemas/TypedErrorResponse_PutDriversV2ErrorTypes_'
       required:
       - error
       type: object
-    PostDriversV2SuccessResponse:
+    Pagination:
       properties:
-        createdDriverIds:
-          items:
-            type: string
-          type: array
-          description: IDs of drivers that were created.
+        totalPages:
+          $ref: '#/components/schemas/Integer'
+          description: Total number of pages.
+        nextPage:
+          $ref: '#/components/schemas/PageNumber'
+          description: Next page number (1-indexed). If undefined, there is no next page.
+        currentPage:
+          $ref: '#/components/schemas/PageNumber'
+          description: Current page number (1-indexed).
       required:
-      - createdDriverIds
+      - totalPages
+      - currentPage
+      type: object
+      description: 'Metadata about the pagination of a list of items. When a list of items is too large to be returned in a single response, it is split into multiple pages.
+
+        This object informs you about the current page, the next page, and the total number of pages.'
+    UUID:
+      type: string
+      description: Stringified ID for a resource. Cannot exceed 36 characters.
+    AttributeValue:
+      anyOf:
+      - items:
+          anyOf:
+          - type: number
+            format: double
+          - type: string
+        type: array
+      - type: string
+      - type: boolean
+      - type: number
+        format: double
+    PutDriversV2Request:
+      properties:
+        drivers:
+          items:
+            $ref: '#/components/schemas/EditedDriver'
+          type: array
+          description: List of drivers to update.
+      required:
+      - drivers
+      type: object
+      example:
+        drivers:
+        - id: driver-123
+          firstName: John
+          middleName: Michael
+          lastName: Doe
+          avatar: https://example.com/avatar.jpg
+          mobileNumber: '1234567890'
+          homeNumber: 0987654321
+          description: Driver description
+          emailAddress: john.doe@example.com
+          type: Full-Time
+          grade: A
+          union: Union A
+          customAttributes:
+            key: value
+    DepotPeriod:
+      allOf:
+      - $ref: '#/components/schemas/BaseDepotPeriod'
+      - properties:
+          groupId:
+            type: string
+          driverUUID:
+            type: string
+        required:
+        - driverUUID
+        type: object
+    TypedErrorResponse_GetDriversV2ErrorTypes_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/GetDriversV2ErrorTypes'
+      required:
+      - message
+      - type
+      type: object
+    TypedErrorResponse_PostDriversV2ErrorTypes_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/PostDriversV2ErrorTypes'
+      required:
+      - message
+      - type
+      type: object
+    GetDriversDepotPeriodsResponse:
+      properties: {}
+      additionalProperties:
+        items:
+          $ref: '#/components/schemas/DepotPeriod'
+        type: array
+      type: object
+    TypedErrorResponse_Invalidrequestschema_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - Invalid request schema
+      required:
+      - message
+      - type
+      type: object
+    GetDriversV2ErrorTypes:
+      type: string
+      enum:
+      - pageNotFound
+    Pick_NewDriver.Exclude_keyofNewDriver.startDate-or-regionName-or-depotName-or-groupName__:
+      properties:
+        id:
+          type: string
+          description: The driver ID. Cannot exceed 36 characters.
+          minLength: 1
+        description:
+          type: string
+          description: Optional free-text description or notes about the driver. Cannot exceed 65,535 characters.
+        type:
+          type: string
+          description: Driver type code as configured in preferences. May be mandatory depending on the configuration of the 'Driver types' preference in your Ops instance.
+        firstName:
+          type: string
+          description: The driver’s first name. Cannot exceed 256 characters.
+        lastName:
+          type: string
+          description: The driver’s last name. Cannot exceed 256 characters.
+        middleName:
+          type: string
+          description: The driver’s middle name. Cannot exceed 256 characters.
+        avatar:
+          type: string
+          description: A URL pointing to the driver's avatar image.
+        mobileNumber:
+          type: string
+          description: The driver’s mobile phone number. Cannot exceed 100 characters.
+        homeNumber:
+          type: string
+          description: The driver’s home phone number. Cannot exceed 100 characters.
+        emailAddress:
+          type: string
+          description: The driver’s email address. Cannot exceed 256 characters and must be a valid email address.
+        grade:
+          type: string
+          description: Driver grade code as configured in preferences. May be mandatory depending on the configuration of the 'Driver grades' preference in your Ops instance.
+        union:
+          type: string
+          description: Driver union code as configured in preferences. May be mandatory depending on the configuration of the 'Driver unions' preference in your Ops instance.
+        customAttributes:
+          properties: {}
+          additionalProperties:
+            $ref: '#/components/schemas/AttributeValue'
+          type: object
+          description: 'Custom attributes for the driver. Note that some custom attributes may be mandatory, according to the ''Driver attributes'' preference in your Ops instance.
+
+            Should be a mapping of the ''attributeId'' (configured in your Ops instance) to the initial value for that custom attribute. The value will be validated according
+
+            to the attribute definition configured in your Ops instance.'
+      required:
+      - id
+      - firstName
+      - lastName
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
+    TypedApiErrorResponse_GetDriversV2ErrorTypes_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_GetDriversV2ErrorTypes_'
+      required:
+      - error
       type: object
     BaseDepotPeriod:
       properties:
@@ -250,22 +509,29 @@ components:
       - type
       - periodId
       type: object
-    PutDriversV2SuccessResponse:
+    Omit_NewDriver.startDate-or-regionName-or-depotName-or-groupName_:
+      $ref: '#/components/schemas/Pick_NewDriver.Exclude_keyofNewDriver.startDate-or-regionName-or-depotName-or-groupName__'
+      description: Construct a type with the properties of T except for those in type K.
+    TypedErrorResponse_PutDriversV2ErrorTypes_:
       properties:
-        warnings:
-          items:
-            $ref: '#/components/schemas/PutDriversV2Warning'
-          type: array
-          description: 'Non-fatal warnings about side effects of the request (for example, entries starting today being overwritten).
-
-            Omitted when there are no warnings.'
-        updatedDriverIds:
+        details: {}
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/PutDriversV2ErrorTypes'
+      required:
+      - message
+      - type
+      type: object
+    PostDriversV2SuccessResponse:
+      properties:
+        createdDriverIds:
           items:
             type: string
           type: array
-          description: IDs of drivers that were updated.
+          description: IDs of drivers that were created.
       required:
-      - updatedDriverIds
+      - createdDriverIds
       type: object
     DriverV2:
       properties:
@@ -345,228 +611,12 @@ components:
       - firstName
       - id
       type: object
-    PutDriversV2Warning:
-      properties:
-        details:
-          items:
-            properties:
-              attributeIds:
-                items:
-                  type: string
-                type: array
-              driverId:
-                type: string
-            required:
-            - attributeIds
-            - driverId
-            type: object
-          type: array
-          description: Per-driver breakdown of which custom attribute IDs had their entry starting today overwritten.
-        message:
-          type: string
-          description: Human-readable description of the warning.
-        type:
-          type: string
-          enum:
-          - overwriteCustomAttributeEntry
-          nullable: false
-      required:
-      - details
-      - message
-      - type
-      type: object
-    UUID:
-      type: string
-      description: Stringified ID for a resource. Cannot exceed 36 characters.
-    PostDriversV2ErrorTypes:
-      type: string
+    DepotPeriodType:
       enum:
-      - tooManyItems
-      - invalidFieldContent
-      - driverAlreadyExists
-      - conflictProcessingRequest
-    TypedErrorResponse_Invalidrequestschema_:
-      properties:
-        details: {}
-        message:
-          type: string
-        type:
-          type: string
-          enum:
-          - Invalid request schema
-          nullable: false
-      required:
-      - message
-      - type
-      type: object
-    DepotPeriod:
-      allOf:
-      - $ref: '#/components/schemas/BaseDepotPeriod'
-      - properties:
-          groupId:
-            type: string
-          driverUUID:
-            type: string
-        required:
-        - driverUUID
-        type: object
-    Pagination:
-      properties:
-        totalPages:
-          $ref: '#/components/schemas/Integer'
-          description: Total number of pages.
-        nextPage:
-          $ref: '#/components/schemas/PageNumber'
-          description: Next page number (1-indexed). If undefined, there is no next page.
-        currentPage:
-          $ref: '#/components/schemas/PageNumber'
-          description: Current page number (1-indexed).
-      required:
-      - totalPages
-      - currentPage
-      type: object
-      description: 'Metadata about the pagination of a list of items. When a list of items is too large to be returned in a single response, it is split into multiple pages.
-
-        This object informs you about the current page, the next page, and the total number of pages.'
-    PutDriversV2Request:
-      properties:
-        drivers:
-          items:
-            $ref: '#/components/schemas/EditedDriver'
-          type: array
-          description: List of drivers to update.
-      required:
-      - drivers
-      type: object
-      example:
-        drivers:
-        - id: driver-123
-          firstName: John
-          middleName: Michael
-          lastName: Doe
-          avatar: https://example.com/avatar.jpg
-          mobileNumber: '1234567890'
-          homeNumber: 0987654321
-          description: Driver description
-          emailAddress: john.doe@example.com
-          type: Full-Time
-          grade: A
-          union: Union A
-          customAttributes:
-            key: value
-    PageNumber:
-      $ref: '#/components/schemas/Integer'
-      description: Page number (1-indexed). Defaults to 1.
-      minimum: 1
-    TypedApiErrorResponse_PutDriversV2ErrorTypes_:
-      properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_PutDriversV2ErrorTypes_'
-      required:
-      - error
-      type: object
-    TypedErrorResponse_PostDriversV2ErrorTypes_:
-      properties:
-        details: {}
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/PostDriversV2ErrorTypes'
-      required:
-      - message
-      - type
-      type: object
-    GetDriversV2ErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_GetDriversV2ErrorTypes_'
-    GetDriversV2SuccessfulResponse:
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        drivers:
-          items:
-            $ref: '#/components/schemas/DriverV2'
-          type: array
-      required:
-      - pagination
-      - drivers
-      type: object
-      example:
-        pagination:
-          currentPage: 1
-          nextPage: 2
-          totalPages: 10
-        drivers:
-        - id: ad681aa0-b99c-42db-912e-94ddef5f1387
-          firstName: John
-          middleName: Michael
-          lastName: Doe
-          mainRegionPeriod:
-            regionName: North
-            depotName: North Depot
-            groupName: Full-Time Drivers
-          loanedRegionPeriods:
-          - regionName: South
-            depotName: South Depot
-            groupName: Part-Time Drivers
-          avatar: https://example.com/avatar.jpg
-          mobileNumber: '1234567890'
-          homeNumber: 0987654321
-          description: Driver description
-          emailAddress: john.doe@example.com
-          type: Full-Time
-          grade: A
-          union: Union A
-          customAttributes:
-            key: value
-    TypedApiErrorResponse_GetDriversV2ErrorTypes_:
-      properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_GetDriversV2ErrorTypes_'
-      required:
-      - error
-      type: object
-    GetDriversV2ErrorTypes:
+      - MAIN
+      - LOAN
+      - FIRST
       type: string
-      enum:
-      - pageNotFound
-      nullable: false
-    GetDriversDepotPeriodsResponse:
-      properties: {}
-      additionalProperties:
-        items:
-          $ref: '#/components/schemas/DepotPeriod'
-        type: array
-      type: object
-    PostDriversV2Request:
-      properties:
-        drivers:
-          items:
-            $ref: '#/components/schemas/NewDriver'
-          type: array
-          description: List of drivers to create.
-      required:
-      - drivers
-      type: object
-      example:
-        drivers:
-        - id: driver-123
-          firstName: John
-          middleName: Michael
-          lastName: Doe
-          startDate: '2026-01-01'
-          regionName: North
-          depotName: North Depot
-          groupName: Full-Time Drivers
-          avatar: https://example.com/avatar.jpg
-          mobileNumber: '1234567890'
-          homeNumber: 0987654321
-          description: Driver description
-          emailAddress: john.doe@example.com
-          type: Full-Time
-          grade: A
-          union: Union A
-          customAttributes:
-            key: value
     NewDriver:
       properties:
         customAttributes:
@@ -634,60 +684,9 @@ components:
       - firstName
       - id
       type: object
-    DepotPeriodType:
-      enum:
-      - MAIN
-      - LOAN
-      - FIRST
-      type: string
-    TypedErrorResponse_PutDriversV2ErrorTypes_:
-      properties:
-        details: {}
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/PutDriversV2ErrorTypes'
-      required:
-      - message
-      - type
-      type: object
-    Omit_NewDriver.startDate-or-regionName-or-depotName-or-groupName_:
-      $ref: '#/components/schemas/Pick_NewDriver.Exclude_keyofNewDriver.startDate-or-regionName-or-depotName-or-groupName__'
-      description: Construct a type with the properties of T except for those in type K.
-    TypedErrorResponse_GetDriversV2ErrorTypes_:
-      properties:
-        details: {}
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/GetDriversV2ErrorTypes'
-      required:
-      - message
-      - type
-      type: object
     Integer:
       type: integer
       format: int32
-    EditedDriver:
-      $ref: '#/components/schemas/Omit_NewDriver.startDate-or-regionName-or-depotName-or-groupName_'
-    AttributeValue:
-      anyOf:
-      - items:
-          anyOf:
-          - type: number
-            format: double
-          - type: string
-        type: array
-      - type: string
-      - type: boolean
-      - type: number
-        format: double
-    PostDriversV2ErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_PostDriversV2ErrorTypes_'
-    StringifyDate:
-      type: string
-      format: date
-      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
     SchemaValidationErrorResponse:
       $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
     PutDriversV2ErrorTypes:
@@ -697,8 +696,61 @@ components:
       - invalidFieldContent
       - driversNotFound
       - conflictProcessingRequest
-    PutDriversV2ErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_PutDriversV2ErrorTypes_'
+    GetDriversV2SuccessfulResponse:
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        drivers:
+          items:
+            $ref: '#/components/schemas/DriverV2'
+          type: array
+      required:
+      - pagination
+      - drivers
+      type: object
+      example:
+        pagination:
+          currentPage: 1
+          nextPage: 2
+          totalPages: 10
+        drivers:
+        - id: ad681aa0-b99c-42db-912e-94ddef5f1387
+          firstName: John
+          middleName: Michael
+          lastName: Doe
+          mainRegionPeriod:
+            regionName: North
+            depotName: North Depot
+            groupName: Full-Time Drivers
+          loanedRegionPeriods:
+          - regionName: South
+            depotName: South Depot
+            groupName: Part-Time Drivers
+          avatar: https://example.com/avatar.jpg
+          mobileNumber: '1234567890'
+          homeNumber: 0987654321
+          description: Driver description
+          emailAddress: john.doe@example.com
+          type: Full-Time
+          grade: A
+          union: Union A
+          customAttributes:
+            key: value
+    PageNumber:
+      $ref: '#/components/schemas/Integer'
+      description: Page number (1-indexed). Defaults to 1.
+      minimum: 1
+    PostDriversV2ErrorTypes:
+      type: string
+      enum:
+      - tooManyItems
+      - invalidFieldContent
+      - driverAlreadyExists
+      - conflictProcessingRequest
+    GetDriversV2ErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_GetDriversV2ErrorTypes_'
+    PostDriversV2ErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_PostDriversV2ErrorTypes_'
     TypedApiErrorResponse_PostDriversV2ErrorTypes_:
       properties:
         error:
@@ -706,61 +758,97 @@ components:
       required:
       - error
       type: object
-    Pick_NewDriver.Exclude_keyofNewDriver.startDate-or-regionName-or-depotName-or-groupName__:
+    PostDriversV2Request:
       properties:
-        id:
+        drivers:
+          items:
+            $ref: '#/components/schemas/NewDriver'
+          type: array
+          description: List of drivers to create.
+      required:
+      - drivers
+      type: object
+      example:
+        drivers:
+        - id: driver-123
+          firstName: John
+          middleName: Michael
+          lastName: Doe
+          startDate: '2026-01-01'
+          regionName: North
+          depotName: North Depot
+          groupName: Full-Time Drivers
+          avatar: https://example.com/avatar.jpg
+          mobileNumber: '1234567890'
+          homeNumber: 0987654321
+          description: Driver description
+          emailAddress: john.doe@example.com
+          type: Full-Time
+          grade: A
+          union: Union A
+          customAttributes:
+            key: value
+    PutDriversV2ErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_PutDriversV2ErrorTypes_'
+    TypedApiErrorResponse_Invalidrequestschema_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_Invalidrequestschema_'
+      required:
+      - error
+      type: object
+    StringifyDate:
+      type: string
+      format: date
+      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
+    PutDriversV2Warning:
+      properties:
+        details:
+          items:
+            properties:
+              attributeIds:
+                items:
+                  type: string
+                type: array
+              driverId:
+                type: string
+            required:
+            - attributeIds
+            - driverId
+            type: object
+          type: array
+          description: Per-driver breakdown of which custom attribute IDs had their entry starting today overwritten.
+        message:
           type: string
-          description: The driver ID. Cannot exceed 36 characters.
-          minLength: 1
-        description:
-          type: string
-          description: Optional free-text description or notes about the driver. Cannot exceed 65,535 characters.
+          description: Human-readable description of the warning.
         type:
           type: string
-          description: Driver type code as configured in preferences. May be mandatory depending on the configuration of the 'Driver types' preference in your Ops instance.
-        firstName:
-          type: string
-          description: The driver’s first name. Cannot exceed 256 characters.
-        lastName:
-          type: string
-          description: The driver’s last name. Cannot exceed 256 characters.
-        middleName:
-          type: string
-          description: The driver’s middle name. Cannot exceed 256 characters.
-        avatar:
-          type: string
-          description: A URL pointing to the driver's avatar image.
-        mobileNumber:
-          type: string
-          description: The driver’s mobile phone number. Cannot exceed 100 characters.
-        homeNumber:
-          type: string
-          description: The driver’s home phone number. Cannot exceed 100 characters.
-        emailAddress:
-          type: string
-          description: The driver’s email address. Cannot exceed 256 characters and must be a valid email address.
-        grade:
-          type: string
-          description: Driver grade code as configured in preferences. May be mandatory depending on the configuration of the 'Driver grades' preference in your Ops instance.
-        union:
-          type: string
-          description: Driver union code as configured in preferences. May be mandatory depending on the configuration of the 'Driver unions' preference in your Ops instance.
-        customAttributes:
-          properties: {}
-          additionalProperties:
-            $ref: '#/components/schemas/AttributeValue'
-          type: object
-          description: 'Custom attributes for the driver. Note that some custom attributes may be mandatory, according to the ''Driver attributes'' preference in your Ops instance.
-
-            Should be a mapping of the ''attributeId'' (configured in your Ops instance) to the initial value for that custom attribute. The value will be validated according
-
-            to the attribute definition configured in your Ops instance.'
+          enum:
+          - overwriteCustomAttributeEntry
       required:
-      - id
-      - firstName
-      - lastName
+      - details
+      - message
+      - type
       type: object
-      description: From T, pick a set of properties whose keys are in the union K
+    EditedDriver:
+      $ref: '#/components/schemas/Omit_NewDriver.startDate-or-regionName-or-depotName-or-groupName_'
+    PutDriversV2SuccessResponse:
+      properties:
+        warnings:
+          items:
+            $ref: '#/components/schemas/PutDriversV2Warning'
+          type: array
+          description: 'Non-fatal warnings about side effects of the request (for example, entries starting today being overwritten).
+
+            Omitted when there are no warnings.'
+        updatedDriverIds:
+          items:
+            type: string
+          type: array
+          description: IDs of drivers that were updated.
+      required:
+      - updatedDriverIds
+      type: object
   securitySchemes:
     api_key:
       type: apiKey

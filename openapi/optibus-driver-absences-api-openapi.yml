@@ -1,15 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Optibus Operations Driver Absences API
   version: 2.8.17
   description: '**Welcome to the Optibus Operations API documentation!**
 
 
-    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.
-
-
-
-    '
+    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.'
   license:
     name: Optibus Ltd, All rights reserved
   contact: {}
@@ -44,7 +40,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetAbsencesV2ErrorResponse'
-      description: "List existing driver absences in the system, with optional filtering capability.\n\nNotes:\n- The result is paginated. Check the `pagination` property in the response to see the total number of pages and the current page number.\n- Information about the modelling of date/time periods for each entry:\n  - `startDate` is mandatory\n  - `endDate` is optional - if omitted, the absence will be ongoing indefinitely\n  - `startTime` and `endTime` are optional - if omitted, the absence will be for the entire day(s) specified by `startDate` and `endDate`"
+      description: 'List existing driver absences in the system, with optional filtering capability.
+
+
+        Notes:
+
+        - The result is paginated. Check the `pagination` property in the response to see the total number of pages and the current page number.
+
+        - Information about the modelling of date/time periods for each entry:
+
+        - `startDate` is mandatory
+
+        - `endDate` is optional - if omitted, the absence will be ongoing indefinitely
+
+        - `startTime` and `endTime` are optional - if omitted, the absence will be for the entire day(s) specified by `startDate` and `endDate`'
       summary: List driver absences
       tags:
       - Driver Absences
@@ -122,7 +131,56 @@ paths:
                           - string
                         summary:
                           affectedDrivers: 0
-      description: "Creates or updates absences for drivers. As input, provide a list of absence entries to create or update.\n\nNotes:\n- Behaviour of the `absenceId` field:\n  - If an `absenceId` is specified that already exists, the existing absence will be updated.\n  - If an `absenceId` is specified that does not already exist, a new absence will be created with the specified ID.\n  - We recommend you set the `absenceId` to a corresponding fixed identifier from your external system that you are synchronizing with.\n- Information about the modelling of date/time periods for each entry:\n  - `startDate` is mandatory\n  - `endDate` is optional - if omitted, the downtime will be ongoing indefinitely\n  - `startTime` and `endTime` are optional - if omitted, the downtime will be for the entire day(s) specified by `startDate` and `endDate`\n- Each request is atomic - either all downtimes listed in the request are created/updated successfully, or none are created/updated.\n- This API does not auto-unassign overlapping duties. When absences are created via the web client, the UI automatically unassigns drivers from any duties that overlap the new absences. This API does not perform that step — drivers will remain assigned to any overlapping duties.\n- If your Ops instance has the `entitlementBanksEffectiveDate` feature active (you can ask your Optibus contact about this), then the API will perform additional validations:\n  - The API will validate that the absences do not cause negative balance violations for entitlement banks that do not allow negative balances.\n  - If violations are detected, the API will return HTTP 422 with details about which drivers have violations and which banks are affected.\n  - The HTTP 422 error can only occur when ALL of the following conditions are met:\n    - The `entitlementBanksEffectiveDate` feature flag is enabled\n    - Entitlement banks are configured and do NOT allow negative balances\n    - The driver has entitlements\n    - The absence is connected to the bank (by absence type)\n    - The driver would violate the balance constraints (would cause negative balance)\n    - The `skipBalanceValidation` query parameter is NOT set to `true` (validation is enabled by default when the parameter is not provided)\n- If your Ops instance has the `entitlementBanksDeductionOrder` feature active and absence-type yearly caps are enabled (via the `absenceCapEnabled` Absences preference), the API will additionally validate that no absence-type exceeds its configured yearly `maxCap` (in calendar days, per bank-year window):\n  - If, after applying the imports, a driver would exceed the cap for a given absence type, the API will return HTTP 422 with error type `absenceTypeCapExceeded` and a list of the (driver, absence-type) pairs that exceed the cap. Individual absence IDs are NOT enumerated — the driver is the unit that exceeds the cap, and the caller resolves it by reducing the driver's total days for that absence type however they choose.\n  - The `skipBalanceValidation=true` query parameter ALSO skips this cap validation (a single opt-out for all entitlement-driven validation)."
+      description: 'Creates or updates absences for drivers. As input, provide a list of absence entries to create or update.
+
+
+        Notes:
+
+        - Behaviour of the `absenceId` field:
+
+        - If an `absenceId` is specified that already exists, the existing absence will be updated.
+
+        - If an `absenceId` is specified that does not already exist, a new absence will be created with the specified ID.
+
+        - We recommend you set the `absenceId` to a corresponding fixed identifier from your external system that you are synchronizing with.
+
+        - Information about the modelling of date/time periods for each entry:
+
+        - `startDate` is mandatory
+
+        - `endDate` is optional - if omitted, the downtime will be ongoing indefinitely
+
+        - `startTime` and `endTime` are optional - if omitted, the downtime will be for the entire day(s) specified by `startDate` and `endDate`
+
+        - Each request is atomic - either all downtimes listed in the request are created/updated successfully, or none are created/updated.
+
+        - This API does not auto-unassign overlapping duties. When absences are created via the web client, the UI automatically unassigns drivers from any duties that overlap the new absences. This API does not perform that step — drivers will remain assigned to any overlapping duties.
+
+        - If your Ops instance has the `entitlementBanksEffectiveDate` feature active (you can ask your Optibus contact about this), then the API will perform additional validations:
+
+        - The API will validate that the absences do not cause negative balance violations for entitlement banks that do not allow negative balances.
+
+        - If violations are detected, the API will return HTTP 422 with details about which drivers have violations and which banks are affected.
+
+        - The HTTP 422 error can only occur when ALL of the following conditions are met:
+
+        - The `entitlementBanksEffectiveDate` feature flag is enabled
+
+        - Entitlement banks are configured and do NOT allow negative balances
+
+        - The driver has entitlements
+
+        - The absence is connected to the bank (by absence type)
+
+        - The driver would violate the balance constraints (would cause negative balance)
+
+        - The `skipBalanceValidation` query parameter is NOT set to `true` (validation is enabled by default when the parameter is not provided)
+
+        - If your Ops instance has the `entitlementBanksDeductionOrder` feature active and absence-type yearly caps are enabled (via the `absenceCapEnabled` Absences preference), the API will additionally validate that no absence-type exceeds its configured yearly `maxCap` (in calendar days, per bank-year window):
+
+        - If, after applying the imports, a driver would exceed the cap for a given absence type, the API will return HTTP 422 with error type `absenceTypeCapExceeded` and a list of the (driver, absence-type) pairs that exceed the cap. Individual absence IDs are NOT enumerated — the driver is the unit that exceeds the cap, and the caller resolves it by reducing the driver''s total days for that absence type however they choose.
+
+        - The `skipBalanceValidation=true` query parameter ALSO skips this cap validation (a single opt-out for all entitlement-driven validation).'
       summary: Create/update driver absences
       tags:
       - Driver Absences
@@ -153,7 +211,31 @@ paths:
                 $ref: '#/components/schemas/GetTimeOffBalancesResponse'
         '414':
           description: The request URI exceeds 10240 bytes which is not supported. This usually results from querying more than a thousand driverIds at once. Please chunk your request.
-      description: "Returns time off (entitlement) balances for drivers grouped by driver and bank.\n\nEach driver's balances are grouped by bank. For each bank you get the total balance, used portion,\nplanned future usage, remaining balance, and historical balance changes. Use this endpoint to sync\ntime-off data with external HR systems or to display balance dashboards.\n\nNotes:\n- Numeric fields can be null when data is unavailable.\n- If querying many drivers, consider chunking requests to avoid hitting URI length limits.\n- When the `entitlementBanksEffectiveDate` feature flag is enabled, the balance calculation uses\n  effective-date logic for entitlement banks;\n- When the `scheduledPayout` feature flag is enabled, scheduled payouts (partial and remaining)\n  are factored into the balance calculation and may appear in `payoutDates` (as arrays per date) and affect\n  `usedBalance` and `plannedBalance`."
+      description: 'Returns time off (entitlement) balances for drivers grouped by driver and bank.
+
+
+        Each driver''s balances are grouped by bank. For each bank you get the total balance, used portion,
+
+        planned future usage, remaining balance, and historical balance changes. Use this endpoint to sync
+
+        time-off data with external HR systems or to display balance dashboards.
+
+
+        Notes:
+
+        - Numeric fields can be null when data is unavailable.
+
+        - If querying many drivers, consider chunking requests to avoid hitting URI length limits.
+
+        - When the `entitlementBanksEffectiveDate` feature flag is enabled, the balance calculation uses
+
+        effective-date logic for entitlement banks;
+
+        - When the `scheduledPayout` feature flag is enabled, scheduled payouts (partial and remaining)
+
+        are factored into the balance calculation and may appear in `payoutDates` (as arrays per date) and affect
+
+        `usedBalance` and `plannedBalance`.'
       summary: List driver time-off balances
       tags:
       - Driver Absences
@@ -197,7 +279,35 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SchemaValidationErrorResponse'
-      description: "Updates time off (entitlement) balances for drivers with effective dates.\n\nUse this endpoint to import accrual-based policies from an external HR system or to pre-load\nbalances for upcoming years. Each record sets the total balance for a driver/bank as of a\nspecific effective date. The system will merge these with existing absences and payouts.\n\nNotes:\n- Each request is atomic — either all records are applied successfully, or none are.\n- Bank names must match the entitlement bank configuration (case-insensitive).\n- If `unit` is omitted, the bank's configured unit (days or hours) is used.\n- Negative balance validation: by default, the API rejects imports that would create negative\n  balances for banks that do not allow them. Set `skipNegativeBalanceValidation: true` to allow\n  such imports (e.g. for migration or correction scenarios).\n- The negative balance validation uses the same balance calculation as the GET endpoint\n  (`getTimeOffBalances`), so it is affected by the `entitlementBanksEffectiveDate` and\n  `scheduledPayout` feature flags. Contact your Optibus representative for feature flag availability."
+      description: 'Updates time off (entitlement) balances for drivers with effective dates.
+
+
+        Use this endpoint to import accrual-based policies from an external HR system or to pre-load
+
+        balances for upcoming years. Each record sets the total balance for a driver/bank as of a
+
+        specific effective date. The system will merge these with existing absences and payouts.
+
+
+        Notes:
+
+        - Each request is atomic — either all records are applied successfully, or none are.
+
+        - Bank names must match the entitlement bank configuration (case-insensitive).
+
+        - If `unit` is omitted, the bank''s configured unit (days or hours) is used.
+
+        - Negative balance validation: by default, the API rejects imports that would create negative
+
+        balances for banks that do not allow them. Set `skipNegativeBalanceValidation: true` to allow
+
+        such imports (e.g. for migration or correction scenarios).
+
+        - The negative balance validation uses the same balance calculation as the GET endpoint
+
+        (`getTimeOffBalances`), so it is affected by the `entitlementBanksEffectiveDate` and
+
+        `scheduledPayout` feature flags. Contact your Optibus representative for feature flag availability.'
       summary: Create/update driver time-off balances
       tags:
       - Driver Absences
@@ -226,7 +336,48 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SchemaValidationErrorResponse'
-      description: "Returns configured **absence quota** definitions for the customer together with **aggregated usage**\n(unique drivers per day / per week, by absence type where applicable) for the requested calendar window.\n\nQuotas and limits come from Ops preferences (same configuration as the internal planner). Usage is derived\nfrom all drivers' absences and depot/operational-unit assignments in the widened date range needed for\nweekly quota windows.\n\n**Request scope**\n- `from` / `to` (inclusive, `YYYY-MM-DD`) define the visible range for `usage.byDay` and `meta`. Weekly\n  aggregates in `usage.byWeek` still reflect full ISO weeks that overlap that range.\n- Optional `depotId`: restrict results to quotas for that region (depot) and count only driver-days\n  attributed to that depot.\n- Optional `unitIds`: further restrict to quotas that apply to those operational units\n  and count only driver-days in those units. Omit or leave empty for no unit filter.\n\n**Unit quotas vs depot-level `quota`**\n- When a quota row has **unit-level limits** (`depotQuota.unitQuotas` is non-empty), effective caps and\n  aggregate usage follow those **per-unit** rows. Inspect `usage.byUnit` for per-unit usage; the\n  optional top-level `depotQuota.quota` field is **not** the active limit for totals in that configuration\n  (it may still be present in the response for schema compatibility—**ignore it for enforcement** when\n  unit rows exist).\n- When there are **no** unit rows (`unitQuotas` is an empty array), the depot-level `depotQuota.quota`\n  applies to the whole depot bucket for that quota."
+      description: 'Returns configured **absence quota** definitions for the customer together with **aggregated usage**
+
+        (unique drivers per day / per week, by absence type where applicable) for the requested calendar window.
+
+
+        Quotas and limits come from Ops preferences (same configuration as the internal planner). Usage is derived
+
+        from all drivers'' absences and depot/operational-unit assignments in the widened date range needed for
+
+        weekly quota windows.
+
+
+        **Request scope**
+
+        - `from` / `to` (inclusive, `YYYY-MM-DD`) define the visible range for `usage.byDay` and `meta`. Weekly
+
+        aggregates in `usage.byWeek` still reflect full ISO weeks that overlap that range.
+
+        - Optional `depotId`: restrict results to quotas for that region (depot) and count only driver-days
+
+        attributed to that depot.
+
+        - Optional `unitIds`: further restrict to quotas that apply to those operational units
+
+        and count only driver-days in those units. Omit or leave empty for no unit filter.
+
+
+        **Unit quotas vs depot-level `quota`**
+
+        - When a quota row has **unit-level limits** (`depotQuota.unitQuotas` is non-empty), effective caps and
+
+        aggregate usage follow those **per-unit** rows. Inspect `usage.byUnit` for per-unit usage; the
+
+        optional top-level `depotQuota.quota` field is **not** the active limit for totals in that configuration
+
+        (it may still be present in the response for schema compatibility—**ignore it for enforcement** when
+
+        unit rows exist).
+
+        - When there are **no** unit rows (`unitQuotas` is an empty array), the depot-level `depotQuota.quota`
+
+        applies to the whole depot bucket for that quota.'
       summary: List absence quota usage
       tags:
       - Driver Absences
@@ -241,138 +392,30 @@ paths:
               $ref: '#/components/schemas/GetAbsenceQuotasRequest'
 components:
   schemas:
-    DayUsage:
+    TimeOffBankHistoricalBalance:
       properties:
-        limit:
-          type: number
+        totalBalance:
+          type:
+          - number
+          - 'null'
           format: double
-          nullable: true
-          description: '`null` = no numeric cap for that day.'
-        used:
-          type: number
-          format: double
+          description: Total balance value that became effective on this date
+        effectiveDate:
+          $ref: '#/components/schemas/StringifyDate'
+          description: Effective date for which this total balance applied
       required:
-      - limit
-      - used
+      - totalBalance
+      - effectiveDate
       type: object
-      description: 'One calendar day: actual daily `used` + effective `limit` (after exceptions, scope).'
-    TypedApiErrorResponse_Invalidrequestschema_:
-      properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_Invalidrequestschema_'
-      required:
-      - error
-      type: object
+    UUID:
+      type: string
+      description: Stringified ID for a resource. Cannot exceed 36 characters.
     TypedApiErrorResponse_PostDriverAbsencesErrorTypes_:
       properties:
         error:
           $ref: '#/components/schemas/TypedErrorResponse_PostDriverAbsencesErrorTypes_'
       required:
       - error
-      type: object
-    AbsenceQuotasMeta:
-      properties:
-        unitIds:
-          items:
-            type: string
-          type: array
-          description: Selected operational units; empty = no unit filter (depot / fallback rules).
-        depotId:
-          type: string
-          nullable: true
-        to:
-          type: string
-          description: Inclusive, `YYYY-MM-DD`.
-        from:
-          type: string
-          description: Inclusive, `YYYY-MM-DD`.
-      required:
-      - unitIds
-      - depotId
-      - to
-      - from
-      type: object
-    TypedErrorResponse_GetAbsencesV2ErrorTypes_:
-      properties:
-        details: {}
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/GetAbsencesV2ErrorTypes'
-      required:
-      - message
-      - type
-      type: object
-    Record_string.WeekUsage_:
-      properties: {}
-      additionalProperties:
-        $ref: '#/components/schemas/WeekUsage'
-      type: object
-      description: Construct a type with a set of properties K of type T
-    CalculationTimeFrame:
-      type: string
-      enum:
-      - daily
-      - weekly
-    QuotaUsage:
-      properties:
-        byUnit:
-          $ref: '#/components/schemas/Record_string.UnitQuotaUsage_'
-          description: 'Present when `depotQuota.unitQuotas` is non-empty. Keys = `unitId`.
-
-            Omitted when `unitQuotas` is `[]`.'
-        byAbsenceType:
-          $ref: '#/components/schemas/Record_string.Record_string._used-number___'
-          description: 'Outer key: ISO date.'
-        byWeek:
-          $ref: '#/components/schemas/Record_string.WeekUsage_'
-        byDay:
-          $ref: '#/components/schemas/Record_string.DayUsage_'
-      required:
-      - byWeek
-      - byDay
-      type: object
-    PostDriverAbsencesSuccess:
-      properties: {}
-      type: object
-    UUID:
-      type: string
-      description: Stringified ID for a resource. Cannot exceed 36 characters.
-    ScheduledPayoutType:
-      enum:
-      - remainingBalance
-      - partialBalance
-      type: string
-    PayoutData:
-      properties:
-        type:
-          $ref: '#/components/schemas/ScheduledPayoutType'
-          description: Type of the payout
-        effectiveDate:
-          $ref: '#/components/schemas/StringifyDate'
-          description: Effective date of the payout
-        amount:
-          type: number
-          format: double
-          description: Amount paid out on this date
-      required:
-      - type
-      - effectiveDate
-      - amount
-      type: object
-    TypedErrorResponse_Invalidrequestschema_:
-      properties:
-        details: {}
-        message:
-          type: string
-        type:
-          type: string
-          enum:
-          - Invalid request schema
-          nullable: false
-      required:
-      - message
-      - type
       type: object
     Pagination:
       properties:
@@ -392,6 +435,43 @@ components:
       description: 'Metadata about the pagination of a list of items. When a list of items is too large to be returned in a single response, it is split into multiple pages.
 
         This object informs you about the current page, the next page, and the total number of pages.'
+    ScheduledPayoutType:
+      enum:
+      - remainingBalance
+      - partialBalance
+      type: string
+    PostDriverAbsencesRequest:
+      items:
+        $ref: '#/components/schemas/DriverAbsence'
+      type: array
+    DriverAbsence:
+      allOf:
+      - $ref: '#/components/schemas/BaseAbsence'
+      - properties:
+          driver:
+            $ref: '#/components/schemas/UUID'
+            description: Which driver have this absence
+        required:
+        - driver
+        type: object
+    QuotaUsage:
+      properties:
+        byUnit:
+          $ref: '#/components/schemas/Record_string.UnitQuotaUsage_'
+          description: 'Present when `depotQuota.unitQuotas` is non-empty. Keys = `unitId`.
+
+            Omitted when `unitQuotas` is `[]`.'
+        byAbsenceType:
+          $ref: '#/components/schemas/Record_string.Record_string._used-number___'
+          description: 'Outer key: ISO date.'
+        byWeek:
+          $ref: '#/components/schemas/Record_string.WeekUsage_'
+        byDay:
+          $ref: '#/components/schemas/Record_string.DayUsage_'
+      required:
+      - byWeek
+      - byDay
+      type: object
     UnitQuotaDef:
       properties:
         quota:
@@ -404,68 +484,18 @@ components:
       - unitId
       type: object
       description: Unit-level quota definition inside the API response (distinct from the preference-stored `UnitQuota`).
-    SameDayMinutesFromMidnightTime:
-      type: integer
-      format: int32
-      description: 'Same-calendar-day wall clock time, represented as minutes since midnight. For example, `0` is midnight (start of the day), `120` is 02:00 (2 hours after midnight), `180` is 02:30 (2.5 hours after midnight), etc.
-
-        Valid range is 0–1439 (00:00 through 23:59). Cross-midnight ranges must use the next date rather than values at or above 1440.'
-    PageNumber:
-      $ref: '#/components/schemas/Integer'
-      description: Page number (1-indexed). Defaults to 1.
-      minimum: 1
-    PostDriverAbsencesErrorTypes:
-      type: string
-      enum:
-      - negativeBalanceViolation
-      - absenceTypeCapExceeded
-    GetAbsencesV2SuccessfulResponse:
+    PutTimeOffBalancesRequest:
       properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-          description: Pagination metadata
-        absences:
+        skipNegativeBalanceValidation:
+          type: boolean
+          description: Optional flag to skip negative balance validation (allow importing values that would result in negative balances)
+        balances:
           items:
-            $ref: '#/components/schemas/DriverAbsenceV2'
+            $ref: '#/components/schemas/TimeOffBalanceRecord'
           type: array
-          description: Array of driver absences
+          description: Array of time-off balance records to import
       required:
-      - pagination
-      - absences
-      type: object
-    TypedApiErrorResponse_GetAbsencesV2ErrorTypes_:
-      properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_GetAbsencesV2ErrorTypes_'
-      required:
-      - error
-      type: object
-    BaseAbsenceTime:
-      properties:
-        endTimeNextDay:
-          type: boolean
-          deprecated: true
-        startTimeNextDay:
-          type: boolean
-          deprecated: true
-        endTime:
-          $ref: '#/components/schemas/SameDayMinutesFromMidnightTime'
-          description: 'The end time in minutes from midnight (on the end date).
-
-            Without end time the absence is until the end of the operational day'
-        endDate:
-          $ref: '#/components/schemas/StringifyDate'
-          description: The absence end date. absence can be without end date
-        startTime:
-          $ref: '#/components/schemas/SameDayMinutesFromMidnightTime'
-          description: 'The start time in minutes from midnight (on the start date).
-
-            Without start time the absence is form the start of the operational day'
-        startDate:
-          $ref: '#/components/schemas/StringifyDate'
-          description: The absence start date
-      required:
-      - startDate
+      - balances
       type: object
     TimeOffBankBalance:
       properties:
@@ -478,24 +508,28 @@ components:
           type: array
           description: Historical total balance changes (ascending by effectiveDate)
         remainingBalance:
-          type: number
+          type:
+          - number
+          - 'null'
           format: double
-          nullable: true
           description: Remaining = total - used - planned (null if total is null)
         plannedBalance:
-          type: number
+          type:
+          - number
+          - 'null'
           format: double
-          nullable: true
           description: Planned future usage after onDate
         usedBalance:
-          type: number
+          type:
+          - number
+          - 'null'
           format: double
-          nullable: true
           description: Used portion up to onDate (exclusive of planned)
         totalBalance:
-          type: number
+          type:
+          - number
+          - 'null'
           format: double
-          nullable: true
           description: Latest total balance effective on / before onDate
         unit:
           type: string
@@ -515,6 +549,75 @@ components:
       - unit
       - bankName
       type: object
+    GetAbsencesV2ErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_GetAbsencesV2ErrorTypes_'
+    TypedApiErrorResponse_GetAbsencesV2ErrorTypes_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_GetAbsencesV2ErrorTypes_'
+      required:
+      - error
+      type: object
+    UnitQuotaUsage:
+      properties:
+        byAbsenceType:
+          $ref: '#/components/schemas/Record_string.Record_string._used-number___'
+        byWeek:
+          $ref: '#/components/schemas/Record_string.WeekUsage_'
+        byDay:
+          $ref: '#/components/schemas/Record_string.DayUsage_'
+      required:
+      - byWeek
+      - byDay
+      type: object
+    GetAbsencesV2ErrorTypes:
+      type: string
+      enum:
+      - invalidDatesCombination
+      - pageNotFound
+    StringifyDateTime:
+      type: string
+      format: date-time
+      description: 'Stringified date-time.
+
+        date-time notation as defined by [RFC 3339](https://tools.ietf.org/html/rfc3339#section-5.6), section 5.6, for example,2017-07-21T17:32:28Z'
+    Record_string.DayUsage_:
+      properties: {}
+      additionalProperties:
+        $ref: '#/components/schemas/DayUsage'
+      type: object
+      description: Construct a type with a set of properties K of type T
+    WeekUsage:
+      properties:
+        limit:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: '`null` = no numeric cap for that week.'
+        used:
+          type: number
+          format: double
+      required:
+      - limit
+      - used
+      type: object
+      description: 'Roll-up for a calendar week overlapping `meta.from`…`meta.to`.
+
+        Key = week-start Monday `YYYY-MM-DD`.'
+    TypedErrorResponse_Invalidrequestschema_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - Invalid request schema
+      required:
+      - message
+      - type
+      type: object
     Record_StringifyDate.PayoutData-Array_:
       properties: {}
       additionalProperties:
@@ -523,12 +626,87 @@ components:
         type: array
       type: object
       description: Construct a type with a set of properties K of type T
-    Record_string.Record_string._used-number___:
-      properties: {}
-      additionalProperties:
-        $ref: '#/components/schemas/Record_string._used-number__'
+    PostDriverAbsencesErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_PostDriverAbsencesErrorTypes_'
+    GetAbsencesV2SuccessfulResponse:
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+          description: Pagination metadata
+        absences:
+          items:
+            $ref: '#/components/schemas/DriverAbsenceV2'
+          type: array
+          description: Array of driver absences
+      required:
+      - pagination
+      - absences
       type: object
-      description: Construct a type with a set of properties K of type T
+    BaseAbsence:
+      allOf:
+      - $ref: '#/components/schemas/BaseAbsenceTime'
+      - properties:
+          absenceRequestId:
+            $ref: '#/components/schemas/UUID'
+            description: Links this absence to the absence request that created it (if applicable).
+          updatedOn:
+            $ref: '#/components/schemas/StringifyDateTime'
+            description: 'UTC ISO datetime when absence was last updated.
+
+              Set/maintained by the system.'
+          createdOn:
+            $ref: '#/components/schemas/StringifyDateTime'
+            description: 'UTC ISO datetime when absence was created.
+
+              Set/maintained by the system.'
+          metadata:
+            properties: {}
+            additionalProperties: {}
+            type: object
+            description: Additional data about the absence
+          note:
+            type: string
+            description: 'The note provided by the user.
+
+              Cannot exceed 255 characters.'
+          absenceCode:
+            type: string
+            description: The absence code provided by the user
+          absenceId:
+            $ref: '#/components/schemas/UUID'
+            description: 'The absence ID in the Ops platform.
+
+              Cannot exceed 36 characters.'
+        required:
+        - absenceCode
+        - absenceId
+        type: object
+    PostDriverAbsencesSuccess:
+      properties: {}
+      type: object
+    AbsenceQuotasMeta:
+      properties:
+        unitIds:
+          items:
+            type: string
+          type: array
+          description: Selected operational units; empty = no unit filter (depot / fallback rules).
+        depotId:
+          type:
+          - string
+          - 'null'
+        to:
+          type: string
+          description: Inclusive, `YYYY-MM-DD`.
+        from:
+          type: string
+          description: Inclusive, `YYYY-MM-DD`.
+      required:
+      - unitIds
+      - depotId
+      - to
+      - from
+      type: object
     ResponseDepotQuota:
       properties:
         unitQuotas:
@@ -546,20 +724,12 @@ components:
       - unitQuotas
       - depotId
       type: object
-    PostDriverAbsencesErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_PostDriverAbsencesErrorTypes_'
-    Record_string._used-number__:
-      properties: {}
-      additionalProperties:
-        properties:
-          used:
-            type: number
-            format: double
-        required:
-        - used
-        type: object
-      type: object
-      description: Construct a type with a set of properties K of type T
+    SameDayMinutesFromMidnightTime:
+      type: integer
+      format: int32
+      description: 'Same-calendar-day wall clock time, represented as minutes since midnight. For example, `0` is midnight (start of the day), `120` is 02:00 (2 hours after midnight), `180` is 02:30 (2.5 hours after midnight), etc.
+
+        Valid range is 0–1439 (00:00 through 23:59). Cross-midnight ranges must use the next date rather than values at or above 1440.'
     DriverAbsenceV2:
       properties:
         note:
@@ -601,63 +771,60 @@ components:
       - absenceId
       type: object
       description: A single driver absence record in the V2 response format
-    GetAbsenceQuotasRequest:
-      properties:
-        unitIds:
-          items:
-            type: string
-          type: array
-          description: Operational unit IDs to scope unit-level quota limits; omit or empty for depot-only behaviour.
-        depotId:
-          type: string
-        to:
-          $ref: '#/components/schemas/StringifyDate'
-        from:
-          $ref: '#/components/schemas/StringifyDate'
-      required:
-      - to
-      - from
+    Record_string.WeekUsage_:
+      properties: {}
+      additionalProperties:
+        $ref: '#/components/schemas/WeekUsage'
       type: object
-    UnitQuotaUsage:
-      properties:
-        byAbsenceType:
-          $ref: '#/components/schemas/Record_string.Record_string._used-number___'
-        byWeek:
-          $ref: '#/components/schemas/Record_string.WeekUsage_'
-        byDay:
-          $ref: '#/components/schemas/Record_string.DayUsage_'
-      required:
-      - byWeek
-      - byDay
+      description: Construct a type with a set of properties K of type T
+    Record_string.UnitQuotaUsage_:
+      properties: {}
+      additionalProperties:
+        $ref: '#/components/schemas/UnitQuotaUsage'
       type: object
-    DriverAbsence:
-      allOf:
-      - $ref: '#/components/schemas/BaseAbsence'
-      - properties:
-          driver:
-            $ref: '#/components/schemas/UUID'
-            description: Which driver have this absence
+      description: Construct a type with a set of properties K of type T
+    Record_string._used-number__:
+      properties: {}
+      additionalProperties:
+        properties:
+          used:
+            type: number
+            format: double
         required:
-        - driver
+        - used
         type: object
-    PostDriverAbsencesRequest:
-      items:
-        $ref: '#/components/schemas/DriverAbsence'
-      type: array
-    TimeOffBankHistoricalBalance:
+      type: object
+      description: Construct a type with a set of properties K of type T
+    TimeOffBalanceRecord:
       properties:
+        unit:
+          type: string
+          enum:
+          - days
+          - hours
+          description: Measurement unit (days or hours); defaults to bank configuration if not provided
         totalBalance:
           type: number
           format: double
-          nullable: true
-          description: Total balance value that became effective on this date
+          description: Total balance value
         effectiveDate:
           $ref: '#/components/schemas/StringifyDate'
-          description: Effective date for which this total balance applied
+          description: Effective date for this balance (YYYY-MM-DD format)
+        bankName:
+          type: string
+          description: Bank identifier or display name
+        driverId:
+          $ref: '#/components/schemas/UUID'
+          description: Driver identifier (UUID)
       required:
       - totalBalance
       - effectiveDate
+      - bankName
+      - driverId
       type: object
+    Integer:
+      type: integer
+      format: int32
     TypedErrorResponse_PostDriverAbsencesErrorTypes_:
       properties:
         details: {}
@@ -668,6 +835,33 @@ components:
       required:
       - message
       - type
+      type: object
+    BaseAbsenceTime:
+      properties:
+        endTimeNextDay:
+          type: boolean
+          deprecated: true
+        startTimeNextDay:
+          type: boolean
+          deprecated: true
+        endTime:
+          $ref: '#/components/schemas/SameDayMinutesFromMidnightTime'
+          description: 'The end time in minutes from midnight (on the end date).
+
+            Without end time the absence is until the end of the operational day'
+        endDate:
+          $ref: '#/components/schemas/StringifyDate'
+          description: The absence end date. absence can be without end date
+        startTime:
+          $ref: '#/components/schemas/SameDayMinutesFromMidnightTime'
+          description: 'The start time in minutes from midnight (on the start date).
+
+            Without start time the absence is form the start of the operational day'
+        startDate:
+          $ref: '#/components/schemas/StringifyDate'
+          description: The absence start date
+      required:
+      - startDate
       type: object
     AbsenceQuotaWithUsage:
       properties:
@@ -707,39 +901,84 @@ components:
       description: 'Quota config from preferences (base depot + unit rows). Effective caps after exceptions
 
         and scope are in `usage.byDay` / `usage.byWeek` (and `usage.byUnit`).'
-    TimeOffBalanceRecord:
+    CalculationTimeFrame:
+      type: string
+      enum:
+      - daily
+      - weekly
+    GetTimeOffBalancesResponse:
+      items:
+        $ref: '#/components/schemas/TimeOffBalances'
+      type: array
+      description: Collection of time off balances for requested drivers
+    LegacyImportErrorResponse:
       properties:
-        unit:
-          type: string
-          enum:
-          - days
-          - hours
-          description: Measurement unit (days or hours); defaults to bank configuration if not provided
-        totalBalance:
-          type: number
-          format: double
-          description: Total balance value
-        effectiveDate:
-          $ref: '#/components/schemas/StringifyDate'
-          description: Effective date for this balance (YYYY-MM-DD format)
-        bankName:
-          type: string
-          description: Bank identifier or display name
-        driverId:
-          $ref: '#/components/schemas/UUID'
-          description: Driver identifier (UUID)
+        errorDetails: {}
+        messages:
+          items:
+            type: string
+          type: array
       required:
-      - totalBalance
-      - effectiveDate
-      - bankName
-      - driverId
+      - errorDetails
+      - messages
       type: object
-    Record_string.UnitQuotaUsage_:
+    TypedErrorResponse_GetAbsencesV2ErrorTypes_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/GetAbsencesV2ErrorTypes'
+      required:
+      - message
+      - type
+      type: object
+    Record_string.Record_string._used-number___:
       properties: {}
       additionalProperties:
-        $ref: '#/components/schemas/UnitQuotaUsage'
+        $ref: '#/components/schemas/Record_string._used-number__'
       type: object
       description: Construct a type with a set of properties K of type T
+    PageNumber:
+      $ref: '#/components/schemas/Integer'
+      description: Page number (1-indexed). Defaults to 1.
+      minimum: 1
+    PutTimeOffBalancesResponse:
+      properties: {}
+      type: object
+    DayUsage:
+      properties:
+        limit:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: '`null` = no numeric cap for that day.'
+        used:
+          type: number
+          format: double
+      required:
+      - limit
+      - used
+      type: object
+      description: 'One calendar day: actual daily `used` + effective `limit` (after exceptions, scope).'
+    PostDriverAbsencesErrorTypes:
+      type: string
+      enum:
+      - negativeBalanceViolation
+      - absenceTypeCapExceeded
+    GetAbsenceQuotasResponse:
+      properties:
+        quotas:
+          items:
+            $ref: '#/components/schemas/AbsenceQuotaWithUsage'
+          type: array
+        meta:
+          $ref: '#/components/schemas/AbsenceQuotasMeta'
+      required:
+      - quotas
+      - meta
+      type: object
     TimeOffBalances:
       properties:
         banks:
@@ -754,134 +993,53 @@ components:
       - banks
       - driverId
       type: object
-    Integer:
-      type: integer
-      format: int32
-    GetAbsencesV2ErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_GetAbsencesV2ErrorTypes_'
-    WeekUsage:
-      properties:
-        limit:
-          type: number
-          format: double
-          nullable: true
-          description: '`null` = no numeric cap for that week.'
-        used:
-          type: number
-          format: double
-      required:
-      - limit
-      - used
-      type: object
-      description: 'Roll-up for a calendar week overlapping `meta.from`…`meta.to`.
-
-        Key = week-start Monday `YYYY-MM-DD`.'
-    LegacyImportErrorResponse:
-      properties:
-        errorDetails: {}
-        messages:
-          items:
-            type: string
-          type: array
-      required:
-      - errorDetails
-      - messages
-      type: object
-    GetAbsencesV2ErrorTypes:
-      type: string
-      enum:
-      - invalidDatesCombination
-      - pageNotFound
     StringifyDate:
       type: string
       format: date
       description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
+    TypedApiErrorResponse_Invalidrequestschema_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_Invalidrequestschema_'
+      required:
+      - error
+      type: object
+    PayoutData:
+      properties:
+        type:
+          $ref: '#/components/schemas/ScheduledPayoutType'
+          description: Type of the payout
+        effectiveDate:
+          $ref: '#/components/schemas/StringifyDate'
+          description: Effective date of the payout
+        amount:
+          type: number
+          format: double
+          description: Amount paid out on this date
+      required:
+      - type
+      - effectiveDate
+      - amount
+      type: object
     SchemaValidationErrorResponse:
       $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
-    StringifyDateTime:
-      type: string
-      format: date-time
-      description: 'Stringified date-time.
-
-        date-time notation as defined by [RFC 3339](https://tools.ietf.org/html/rfc3339#section-5.6), section 5.6, for example,2017-07-21T17:32:28Z'
-    PutTimeOffBalancesRequest:
+    GetAbsenceQuotasRequest:
       properties:
-        skipNegativeBalanceValidation:
-          type: boolean
-          description: Optional flag to skip negative balance validation (allow importing values that would result in negative balances)
-        balances:
+        unitIds:
           items:
-            $ref: '#/components/schemas/TimeOffBalanceRecord'
-          type: array
-          description: Array of time-off balance records to import
-      required:
-      - balances
-      type: object
-    PutTimeOffBalancesResponse:
-      properties: {}
-      type: object
-    GetTimeOffBalancesResponse:
-      items:
-        $ref: '#/components/schemas/TimeOffBalances'
-      type: array
-      description: Collection of time off balances for requested drivers
-    BaseAbsence:
-      allOf:
-      - $ref: '#/components/schemas/BaseAbsenceTime'
-      - properties:
-          absenceRequestId:
-            $ref: '#/components/schemas/UUID'
-            description: Links this absence to the absence request that created it (if applicable).
-          updatedOn:
-            $ref: '#/components/schemas/StringifyDateTime'
-            description: 'UTC ISO datetime when absence was last updated.
-
-              Set/maintained by the system.'
-          createdOn:
-            $ref: '#/components/schemas/StringifyDateTime'
-            description: 'UTC ISO datetime when absence was created.
-
-              Set/maintained by the system.'
-          metadata:
-            properties: {}
-            additionalProperties: {}
-            type: object
-            description: Additional data about the absence
-          note:
             type: string
-            description: 'The note provided by the user.
-
-              Cannot exceed 255 characters.'
-          absenceCode:
-            type: string
-            description: The absence code provided by the user
-          absenceId:
-            $ref: '#/components/schemas/UUID'
-            description: 'The absence ID in the Ops platform.
-
-              Cannot exceed 36 characters.'
-        required:
-        - absenceCode
-        - absenceId
-        type: object
-    GetAbsenceQuotasResponse:
-      properties:
-        quotas:
-          items:
-            $ref: '#/components/schemas/AbsenceQuotaWithUsage'
           type: array
-        meta:
-          $ref: '#/components/schemas/AbsenceQuotasMeta'
+          description: Operational unit IDs to scope unit-level quota limits; omit or empty for depot-only behaviour.
+        depotId:
+          type: string
+        to:
+          $ref: '#/components/schemas/StringifyDate'
+        from:
+          $ref: '#/components/schemas/StringifyDate'
       required:
-      - quotas
-      - meta
+      - to
+      - from
       type: object
-    Record_string.DayUsage_:
-      properties: {}
-      additionalProperties:
-        $ref: '#/components/schemas/DayUsage'
-      type: object
-      description: Construct a type with a set of properties K of type T
   securitySchemes:
     api_key:
       type: apiKey

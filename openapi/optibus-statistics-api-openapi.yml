@@ -1,15 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Optibus Operations Driver Absences Statistics API
+  title: Optibus Operations Statistics API
   version: 2.8.17
   description: '**Welcome to the Optibus Operations API documentation!**
 
 
-    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.
-
-
-
-    '
+    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.'
   license:
     name: Optibus Ltd, All rights reserved
   contact: {}
@@ -85,7 +81,20 @@ paths:
                 $ref: '#/components/schemas/GetDutyStatsResponse'
         '413':
           description: 'The request exceeds the calculation limit. Size it with GET /v2/duty-stats-calculation-limit: at most daysLimit days per request, or — when daysLimit is 0 — one day per request with at most tasksLimit taskIds.'
-      description: "Retrieves per-task statistics for a date range, mirroring the duty side panel in the Ops UI.\nOne response row per `(date, task)` pair, including the statistics configured under the customer's `dutyFilter` preference.\n\nTo avoid timeouts the calculation is capped. Call `GET /v2/duty-stats-calculation-limit` first with\nthe same dates and depots to size your requests. This endpoint returns 413 when:\n- the requested range spans more than `daysLimit` days, or\n- `daysLimit` is `0` (a day too dense to fetch whole) and the request is not a single day\n  (`fromDate` equal to `toDate`) with a `taskIds` filter of at most `tasksLimit` tasks."
+      description: 'Retrieves per-task statistics for a date range, mirroring the duty side panel in the Ops UI.
+
+        One response row per `(date, task)` pair, including the statistics configured under the customer''s `dutyFilter` preference.
+
+
+        To avoid timeouts the calculation is capped. Call `GET /v2/duty-stats-calculation-limit` first with
+
+        the same dates and depots to size your requests. This endpoint returns 413 when:
+
+        - the requested range spans more than `daysLimit` days, or
+
+        - `daysLimit` is `0` (a day too dense to fetch whole) and the request is not a single day
+
+        (`fromDate` equal to `toDate`) with a `taskIds` filter of at most `tasksLimit` tasks.'
       summary: Fetch per-task statistics for a date range
       tags:
       - Statistics
@@ -152,7 +161,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetDutyStatsCalculationLimitResponse'
-      description: "Sizing (pre-flight) call for `GET /v2/duty-stats`. It computes no statistics — it only reports the\nlimits that `/v2/duty-stats` will enforce for the given dates and depot scope, so callers can plan\ntheir requests up front. Call it with the same `fromDate`/`toDate`/`depotIds` you intend to query.\n\nHow to use the returned limits:\n- `daysLimit >= 1` — split the date range into `/v2/duty-stats` requests of at most `daysLimit`\n  days each. Task or driver filters do not change this limit.\n- `daysLimit = 0` — the data is too dense for even one full day. Send one day per request\n  (`fromDate` equal to `toDate`) with a `taskIds` filter of at most `tasksLimit` tasks, repeating\n  until the day's tasks are covered."
+      description: 'Sizing (pre-flight) call for `GET /v2/duty-stats`. It computes no statistics — it only reports the
+
+        limits that `/v2/duty-stats` will enforce for the given dates and depot scope, so callers can plan
+
+        their requests up front. Call it with the same `fromDate`/`toDate`/`depotIds` you intend to query.
+
+
+        How to use the returned limits:
+
+        - `daysLimit >= 1` — split the date range into `/v2/duty-stats` requests of at most `daysLimit`
+
+        days each. Task or driver filters do not change this limit.
+
+        - `daysLimit = 0` — the data is too dense for even one full day. Send one day per request
+
+        (`fromDate` equal to `toDate`) with a `taskIds` filter of at most `tasksLimit` tasks, repeating
+
+        until the day''s tasks are covered.'
       summary: Fetch the request limits for /v2/duty-stats
       tags:
       - Statistics
@@ -181,32 +207,109 @@ paths:
             $ref: '#/components/schemas/UUID'
 components:
   schemas:
-    GetDutyStatsResponse:
-      items:
-        $ref: '#/components/schemas/DutyStatsExternal'
-      type: array
-    WorkEntityId:
-      type: string
-    DepotId:
-      $ref: '#/components/schemas/UUID'
-      description: The depot unique identifier in the Ops system.
     WorkEntitiesAPIValueTypesEnum.Distance:
       enum:
       - Distance
       type: string
+    UUID:
+      type: string
+      description: Stringified ID for a resource. Cannot exceed 36 characters.
+    TimeTypeKind.Cycle:
+      enum:
+      - cycle
+      type: string
+    WorkEntitiesAPIValueTypesEnum.Boolean:
+      enum:
+      - Boolean
+      type: string
+    DutyStatistic:
+      properties:
+        error:
+          type: string
+          description: Present when `type` is `error`. Short message describing why the statistic could not be computed.
+        value:
+          anyOf:
+          - type: number
+            format: double
+          - type: boolean
+          description: 'For `time` and `number` types: a number (durations are in minutes).
+
+            For `boolean` type: a boolean.
+
+            Omitted when `type` is `error`.'
+        type:
+          $ref: '#/components/schemas/DutyStatisticValueType'
+        displayName:
+          type: string
+        id:
+          type: string
+      required:
+      - type
+      - id
+      type: object
+    TimeTypeKind.Dynamic:
+      enum:
+      - dynamic
+      type: string
+    ISOWithTimeDate:
+      type: string
+      format: date
+      description: Stringified ISO8601 date in the form of 2017-07-21T23:59:00+03:00
     _TimeType:
       anyOf:
       - $ref: '#/components/schemas/_TimeTypeDay'
       - $ref: '#/components/schemas/TimeTypeWeeks'
       - $ref: '#/components/schemas/_TimeTypeCycle'
       - $ref: '#/components/schemas/_TimeTypeDynamic'
-    TimeTypeKind.Cycle:
+    WorkEntitiesAPIValueTypesEnum.TimeIntervals:
       enum:
-      - cycle
+      - timeInterval
       type: string
-    UUID:
+    WorkEntitiesAPIValueTypesEnum.Error:
+      enum:
+      - error
       type: string
-      description: Stringified ID for a resource. Cannot exceed 36 characters.
+    WorkEntityErrorValue:
+      properties:
+        value:
+          type: string
+        type:
+          $ref: '#/components/schemas/WorkEntitiesAPIValueTypesEnum.Error'
+      required:
+      - value
+      - type
+      type: object
+    WorkEntityAPIValues:
+      anyOf:
+      - $ref: '#/components/schemas/WorkEntityBooleanValue'
+      - $ref: '#/components/schemas/WorkEntityDurationInMinutesValue'
+      - $ref: '#/components/schemas/WorkEntityIntervalsValue'
+      - $ref: '#/components/schemas/WorkEntityNumberValue'
+      - $ref: '#/components/schemas/WorkEntityErrorValue'
+      - $ref: '#/components/schemas/WorkEntityDistanceValue'
+    WorkEntityBooleanValue:
+      properties:
+        value:
+          type: boolean
+        type:
+          $ref: '#/components/schemas/WorkEntitiesAPIValueTypesEnum.Boolean'
+      required:
+      - value
+      - type
+      type: object
+    TimeTypeKind.Weeks:
+      enum:
+      - weeks
+      type: string
+    WorkEntityId:
+      type: string
+    _TimeTypeDynamic:
+      properties:
+        type:
+          $ref: '#/components/schemas/TimeTypeKind.Dynamic'
+      required:
+      - type
+      type: object
     GetDutyStatsCalculationLimitResponse:
       properties:
         tasksLimit:
@@ -239,117 +342,45 @@ components:
       - tasksLimit
       - daysLimit
       type: object
-    TimeTypeKind.Dynamic:
-      enum:
-      - dynamic
-      type: string
-    WorkEntityBooleanValue:
+    DutyStatsExternal:
       properties:
-        value:
+        statistics:
+          items:
+            $ref: '#/components/schemas/DutyStatistic'
+          type: array
+        cancelled:
           type: boolean
-        type:
-          $ref: '#/components/schemas/WorkEntitiesAPIValueTypesEnum.Boolean'
+          description: 'True when the duty has been cancelled (the underlying task is `disabled`).
+
+            Statistics are still computed for cancelled duties.'
+        dutyType:
+          $ref: '#/components/schemas/TaskType'
+        date:
+          $ref: '#/components/schemas/StringifyDate'
+        depotId:
+          $ref: '#/components/schemas/DepotId'
+        dutyExternalId:
+          type: string
+        dutyId:
+          $ref: '#/components/schemas/UUID'
       required:
-      - value
-      - type
+      - statistics
+      - cancelled
+      - dutyType
+      - date
+      - depotId
+      - dutyExternalId
+      - dutyId
       type: object
-    WorkEntityNumberValue:
-      properties:
-        value:
-          type: number
-          format: double
-        type:
-          $ref: '#/components/schemas/WorkEntitiesAPIValueTypesEnum.Number'
-      required:
-      - value
-      - type
-      type: object
-    TaskType:
-      enum:
-      - duty
-      - day_off
-      - standby
-      - spare
-      - custom
-      type: string
+    DriverUuid:
+      $ref: '#/components/schemas/UUID'
+      description: The driver unique identifier in the Ops system (not the driver personal id)
     CycleType:
       enum:
       - weekly
       - biWeekly
       - monthly
       type: string
-    ISOWithTimeDate:
-      type: string
-      format: date
-      description: Stringified ISO8601 date in the form of 2017-07-21T23:59:00+03:00
-    DutyStatistic:
-      properties:
-        error:
-          type: string
-          description: Present when `type` is `error`. Short message describing why the statistic could not be computed.
-        value:
-          anyOf:
-          - type: number
-            format: double
-          - type: boolean
-          description: 'For `time` and `number` types: a number (durations are in minutes).
-
-            For `boolean` type: a boolean.
-
-            Omitted when `type` is `error`.'
-        type:
-          $ref: '#/components/schemas/DutyStatisticValueType'
-        displayName:
-          type: string
-        id:
-          type: string
-      required:
-      - type
-      - id
-      type: object
-    _TimeTypeDay:
-      properties:
-        type:
-          $ref: '#/components/schemas/TimeTypeKind.Day'
-      required:
-      - type
-      type: object
-    DriverUuid:
-      $ref: '#/components/schemas/UUID'
-      description: The driver unique identifier in the Ops system (not the driver personal id)
-    WorkEntitiesAPIValueTypesEnum.Boolean:
-      enum:
-      - Boolean
-      type: string
-    GetStatsResponse:
-      items:
-        $ref: '#/components/schemas/StatExternal'
-      type: array
-    WorkEntityDistanceValue:
-      properties:
-        value:
-          type: number
-          format: double
-        type:
-          $ref: '#/components/schemas/WorkEntitiesAPIValueTypesEnum.Distance'
-      required:
-      - value
-      - type
-      type: object
-    WorkEntitiesAPIValueTypesEnum.TimeIntervals:
-      enum:
-      - timeInterval
-      type: string
-    WorkEntityDurationInMinutesValue:
-      properties:
-        value:
-          $ref: '#/components/schemas/Minutes'
-        type:
-          $ref: '#/components/schemas/WorkEntitiesAPIValueTypesEnum.DurationInMinutes'
-      required:
-      - value
-      - type
-      type: object
     _TimeTypeCycle:
       properties:
         cycleType:
@@ -360,49 +391,30 @@ components:
       - cycleType
       - type
       type: object
-    TimeTypeWeeks:
+    WorkEntityDurationInMinutesValue:
       properties:
-        count:
-          type: number
-          format: double
+        value:
+          $ref: '#/components/schemas/Minutes'
         type:
-          $ref: '#/components/schemas/TimeTypeKind.Weeks'
+          $ref: '#/components/schemas/WorkEntitiesAPIValueTypesEnum.DurationInMinutes'
       required:
-      - count
+      - value
       - type
       type: object
-    Minutes:
-      type: integer
-      format: int32
-      description: time measure in minutes
+    GetStatsResponse:
+      items:
+        $ref: '#/components/schemas/StatExternal'
+      type: array
     WorkEntitiesAPIValueTypesEnum.DurationInMinutes:
       enum:
       - durationInMinutes
       type: string
-    WorkEntityAPIValues:
-      anyOf:
-      - $ref: '#/components/schemas/WorkEntityBooleanValue'
-      - $ref: '#/components/schemas/WorkEntityDurationInMinutesValue'
-      - $ref: '#/components/schemas/WorkEntityIntervalsValue'
-      - $ref: '#/components/schemas/WorkEntityNumberValue'
-      - $ref: '#/components/schemas/WorkEntityErrorValue'
-      - $ref: '#/components/schemas/WorkEntityDistanceValue'
-    WorkEntitiesAPIValueTypesEnum.Error:
-      enum:
-      - error
-      type: string
-    _TimeTypeDynamic:
-      properties:
-        type:
-          $ref: '#/components/schemas/TimeTypeKind.Dynamic'
-      required:
-      - type
-      type: object
     StatExternal:
       properties:
         lastYearlyCalculationDate:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         value:
           $ref: '#/components/schemas/WorkEntityAPIValues'
         entityId:
@@ -457,14 +469,77 @@ components:
       - boolean
       - error
       type: string
+    Minutes:
+      type: integer
+      format: int32
+      description: time measure in minutes
+    DepotId:
+      $ref: '#/components/schemas/UUID'
+      description: The depot unique identifier in the Ops system.
+    WorkEntityDistanceValue:
+      properties:
+        value:
+          type: number
+          format: double
+        type:
+          $ref: '#/components/schemas/WorkEntitiesAPIValueTypesEnum.Distance'
+      required:
+      - value
+      - type
+      type: object
+    _TimeTypeDay:
+      properties:
+        type:
+          $ref: '#/components/schemas/TimeTypeKind.Day'
+      required:
+      - type
+      type: object
+    TimeTypeKind.Day:
+      enum:
+      - day
+      type: string
+    GetDutyStatsResponse:
+      items:
+        $ref: '#/components/schemas/DutyStatsExternal'
+      type: array
+    TaskType:
+      enum:
+      - duty
+      - day_off
+      - standby
+      - spare
+      - custom
+      type: string
     WorkEntitiesAPIValueTypesEnum.Number:
       enum:
       - Number
       type: string
-    TimeTypeKind.Weeks:
-      enum:
-      - weeks
+    TimeTypeWeeks:
+      properties:
+        count:
+          type: number
+          format: double
+        type:
+          $ref: '#/components/schemas/TimeTypeKind.Weeks'
+      required:
+      - count
+      - type
+      type: object
+    WorkEntityNumberValue:
+      properties:
+        value:
+          type: number
+          format: double
+        type:
+          $ref: '#/components/schemas/WorkEntitiesAPIValueTypesEnum.Number'
+      required:
+      - value
+      - type
+      type: object
+    StringifyDate:
       type: string
+      format: date
+      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
     WorkEntityIntervalsValue:
       properties:
         value:
@@ -474,40 +549,6 @@ components:
       required:
       - value
       - type
-      type: object
-    StringifyDate:
-      type: string
-      format: date
-      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
-    DutyStatsExternal:
-      properties:
-        statistics:
-          items:
-            $ref: '#/components/schemas/DutyStatistic'
-          type: array
-        cancelled:
-          type: boolean
-          description: 'True when the duty has been cancelled (the underlying task is `disabled`).
-
-            Statistics are still computed for cancelled duties.'
-        dutyType:
-          $ref: '#/components/schemas/TaskType'
-        date:
-          $ref: '#/components/schemas/StringifyDate'
-        depotId:
-          $ref: '#/components/schemas/DepotId'
-        dutyExternalId:
-          type: string
-        dutyId:
-          $ref: '#/components/schemas/UUID'
-      required:
-      - statistics
-      - cancelled
-      - dutyType
-      - date
-      - depotId
-      - dutyExternalId
-      - dutyId
       type: object
     ApiTimeInterval:
       items:
@@ -521,20 +562,6 @@ components:
         - start
         type: object
       type: array
-    WorkEntityErrorValue:
-      properties:
-        value:
-          type: string
-        type:
-          $ref: '#/components/schemas/WorkEntitiesAPIValueTypesEnum.Error'
-      required:
-      - value
-      - type
-      type: object
-    TimeTypeKind.Day:
-      enum:
-      - day
-      type: string
   securitySchemes:
     api_key:
       type: apiKey

@@ -1,15 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Optibus Operations Driver Absences Signing Times API
+  title: Optibus Operations Signing Times API
   version: 2.8.17
   description: '**Welcome to the Optibus Operations API documentation!**
 
 
-    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.
-
-
-
-    '
+    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.'
   license:
     name: Optibus Ltd, All rights reserved
   contact: {}
@@ -142,45 +138,9 @@ paths:
             $ref: '#/components/schemas/DriverId'
 components:
   schemas:
-    DriverId:
-      type: string
-      description: The Id of the driver
-    TypedApiErrorResponse_Invalidrequestschema_:
-      properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_Invalidrequestschema_'
-      required:
-      - error
-      type: object
-    GetSigningTimesV2ErrorTypes:
-      type: string
-      enum:
-      - pageNotFound
-      nullable: false
-    DepotId:
-      $ref: '#/components/schemas/UUID'
-      description: The depot unique identifier in the Ops system.
-    ISO8601Time:
-      type: string
-      example: '2024-06-30T23:30:00+02:00'
-      description: Representation of the time in ISO8601 format, where the minimum is at the start of the operational day (12am night) and the maximum 12 hours the day after the operational date of the private hire trip (12pm noon the day after)
     UUID:
       type: string
       description: Stringified ID for a resource. Cannot exceed 36 characters.
-    TypedErrorResponse_Invalidrequestschema_:
-      properties:
-        details: {}
-        message:
-          type: string
-        type:
-          type: string
-          enum:
-          - Invalid request schema
-          nullable: false
-      required:
-      - message
-      - type
-      type: object
     Pagination:
       properties:
         totalPages:
@@ -199,32 +159,12 @@ components:
       description: 'Metadata about the pagination of a list of items. When a list of items is too large to be returned in a single response, it is split into multiple pages.
 
         This object informs you about the current page, the next page, and the total number of pages.'
-    PageNumber:
-      $ref: '#/components/schemas/Integer'
-      description: Page number (1-indexed). Defaults to 1.
-      minimum: 1
-    GetSigningTimesV2ErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_GetSigningTimesV2ErrorTypes_'
     TypedApiErrorResponse_GetSigningTimesV2ErrorTypes_:
       properties:
         error:
           $ref: '#/components/schemas/TypedErrorResponse_GetSigningTimesV2ErrorTypes_'
       required:
       - error
-      type: object
-    DriverUuid:
-      $ref: '#/components/schemas/UUID'
-      description: The driver unique identifier in the Ops system (not the driver personal id)
-    TypedErrorResponse_GetSigningTimesV2ErrorTypes_:
-      properties:
-        details: {}
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/GetSigningTimesV2ErrorTypes'
-      required:
-      - message
-      - type
       type: object
     SigningDeviationItem:
       properties:
@@ -252,6 +192,35 @@ components:
       - signingType
       - signingDeviationType
       type: object
+    GetSigningTimesV2DriverEntry:
+      properties:
+        signingTimes:
+          items:
+            $ref: '#/components/schemas/SigningTimeV2'
+          type: array
+          description: Matched expected/actual signing records for this driver on the date. May be empty.
+        id:
+          $ref: '#/components/schemas/DriverUuid'
+          description: External driver ID.
+      required:
+      - signingTimes
+      - id
+      type: object
+      description: Signing times for a single driver on the requested date.
+    TypedErrorResponse_GetSigningTimesV2ErrorTypes_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/GetSigningTimesV2ErrorTypes'
+      required:
+      - message
+      - type
+      type: object
+    DriverId:
+      type: string
+      description: The Id of the driver
     GetSigningTimesV2SuccessfulResponse:
       properties:
         pagination:
@@ -284,30 +253,26 @@ components:
         - id: driver-335
           signingTimes: []
       description: Paginated response containing per-driver signing times for a date in a region.
-    Integer:
-      type: integer
-      format: int32
-    GetSigningTimesV2DriverEntry:
+    TypedErrorResponse_Invalidrequestschema_:
       properties:
-        signingTimes:
-          items:
-            $ref: '#/components/schemas/SigningTimeV2'
-          type: array
-          description: Matched expected/actual signing records for this driver on the date. May be empty.
-        id:
-          $ref: '#/components/schemas/DriverUuid'
-          description: External driver ID.
+        details: {}
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - Invalid request schema
       required:
-      - signingTimes
-      - id
+      - message
+      - type
       type: object
-      description: Signing times for a single driver on the requested date.
-    StringifyDate:
+    GetSigningTimesV2ErrorTypes:
       type: string
-      format: date
-      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
-    SchemaValidationErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
+      enum:
+      - pageNotFound
+    DriverUuid:
+      $ref: '#/components/schemas/UUID'
+      description: The driver unique identifier in the Ops system (not the driver personal id)
     GetSigningDeviationsResponse:
       properties: {}
       additionalProperties:
@@ -330,9 +295,10 @@ components:
 
             Omitted when no actual signing has been recorded.'
         expectedTime:
-          type: number
+          type:
+          - number
+          - 'null'
           format: double
-          nullable: true
           description: 'Expected signing time in minutes from midnight of the operational date.
 
             `null` when there is an actual signing that does not match any expected event (orphaned).'
@@ -348,6 +314,35 @@ components:
       - type
       type: object
       description: A single matched expected/actual signing record.
+    Integer:
+      type: integer
+      format: int32
+    DepotId:
+      $ref: '#/components/schemas/UUID'
+      description: The depot unique identifier in the Ops system.
+    PageNumber:
+      $ref: '#/components/schemas/Integer'
+      description: Page number (1-indexed). Defaults to 1.
+      minimum: 1
+    ISO8601Time:
+      type: string
+      example: '2024-06-30T23:30:00+02:00'
+      description: Representation of the time in ISO8601 format, where the minimum is at the start of the operational day (12am night) and the maximum 12 hours the day after the operational date of the private hire trip (12pm noon the day after)
+    GetSigningTimesV2ErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_GetSigningTimesV2ErrorTypes_'
+    TypedApiErrorResponse_Invalidrequestschema_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_Invalidrequestschema_'
+      required:
+      - error
+      type: object
+    StringifyDate:
+      type: string
+      format: date
+      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
+    SchemaValidationErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
   securitySchemes:
     api_key:
       type: apiKey

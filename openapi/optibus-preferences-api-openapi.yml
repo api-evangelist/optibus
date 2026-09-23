@@ -1,15 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Optibus Operations Driver Absences Preferences API
+  title: Optibus Operations Preferences API
   version: 2.8.17
   description: '**Welcome to the Optibus Operations API documentation!**
 
 
-    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.
-
-
-
-    '
+    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.'
   license:
     name: Optibus Ltd, All rights reserved
   contact: {}
@@ -68,6 +64,33 @@ paths:
       parameters: []
 components:
   schemas:
+    AbsenceType:
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+      required:
+      - name
+      - code
+      type: object
+    GetPreferencesHolidaysResponse:
+      items:
+        $ref: '#/components/schemas/HolidayInfo'
+      type: array
+    StringifyDate:
+      type: string
+      format: date
+      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
+    GetPreferencesAbsenceTypesResponse:
+      properties:
+        absenceTypes:
+          items:
+            $ref: '#/components/schemas/AbsenceType'
+          type: array
+      required:
+      - absenceTypes
+      type: object
     PreferenceDateRange:
       properties:
         to:
@@ -93,33 +116,6 @@ components:
       - name
       - timeDefinition
       type: object
-    StringifyDate:
-      type: string
-      format: date
-      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
-    AbsenceType:
-      properties:
-        name:
-          type: string
-        code:
-          type: string
-      required:
-      - name
-      - code
-      type: object
-    GetPreferencesAbsenceTypesResponse:
-      properties:
-        absenceTypes:
-          items:
-            $ref: '#/components/schemas/AbsenceType'
-          type: array
-      required:
-      - absenceTypes
-      type: object
-    GetPreferencesHolidaysResponse:
-      items:
-        $ref: '#/components/schemas/HolidayInfo'
-      type: array
   securitySchemes:
     api_key:
       type: apiKey

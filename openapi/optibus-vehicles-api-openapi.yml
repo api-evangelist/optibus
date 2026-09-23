@@ -1,15 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Optibus Operations Driver Absences Vehicles API
+  title: Optibus Operations Vehicles API
   version: 2.8.17
   description: '**Welcome to the Optibus Operations API documentation!**
 
 
-    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.
-
-
-
-    '
+    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.'
   license:
     name: Optibus Ltd, All rights reserved
   contact: {}
@@ -107,7 +103,32 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostVehiclesErrorResponse'
-      description: "Add new vehicles to the system.\n\nNotes:\n- This API endpoint does not support modifying existing vehicles. If you need to update an existing vehicle, use the `PUT /v1/vehicles` API endpoint instead.\n- Each request is atomic - either all vehicles listed in the request are created successfully, or none are created.\n- No more than 1000 vehicles can be created in a single request - please break your request into multiple smaller chunks if you need to create more than 1000 vehicles.\n- The specification of expected values for the `customAttributes` field and whether they are mandatory or not is determined by the attribute definitions in the \"Vehicle attributes\" preference in your Ops instance.\n  - Attributes with type `STRING` expect a string to be set for `customAttributes[attributeId]`.\n  - Attributes with type `NUMBER` expect a number to be set for `customAttributes[attributeId]`.\n  - Attributes with type `BOOLEAN` expect a boolean to be set for `customAttributes[attributeId]`.\n  - Attributes with type `DATE` expect a date string formatted as `YYYY-MM-dd` to be set for `customAttributes[attributeId]`.\n  - Attributes with type `SINGLE_SELECT` expect the `value` of one of the available select options to be set for `customAttributes[attributeId]`.\n  - Attributes with type `MULTI_SELECT` expect an array of strings (each one being the `value` of one of the available select options) to be set for `customAttributes[attributeId]`.\n  - Attributes with type `DURATION` expect a duration string formatted as `HH:mm` (where `HH` is an integer between 0 and 999, and `mm` is an integer between 0 and 59) to be set for `customAttributes[attributeId]`."
+      description: 'Add new vehicles to the system.
+
+
+        Notes:
+
+        - This API endpoint does not support modifying existing vehicles. If you need to update an existing vehicle, use the `PUT /v1/vehicles` API endpoint instead.
+
+        - Each request is atomic - either all vehicles listed in the request are created successfully, or none are created.
+
+        - No more than 1000 vehicles can be created in a single request - please break your request into multiple smaller chunks if you need to create more than 1000 vehicles.
+
+        - The specification of expected values for the `customAttributes` field and whether they are mandatory or not is determined by the attribute definitions in the "Vehicle attributes" preference in your Ops instance.
+
+        - Attributes with type `STRING` expect a string to be set for `customAttributes[attributeId]`.
+
+        - Attributes with type `NUMBER` expect a number to be set for `customAttributes[attributeId]`.
+
+        - Attributes with type `BOOLEAN` expect a boolean to be set for `customAttributes[attributeId]`.
+
+        - Attributes with type `DATE` expect a date string formatted as `YYYY-MM-dd` to be set for `customAttributes[attributeId]`.
+
+        - Attributes with type `SINGLE_SELECT` expect the `value` of one of the available select options to be set for `customAttributes[attributeId]`.
+
+        - Attributes with type `MULTI_SELECT` expect an array of strings (each one being the `value` of one of the available select options) to be set for `customAttributes[attributeId]`.
+
+        - Attributes with type `DURATION` expect a duration string formatted as `HH:mm` (where `HH` is an integer between 0 and 999, and `mm` is an integer between 0 and 59) to be set for `customAttributes[attributeId]`.'
       summary: Create vehicles
       tags:
       - Vehicles
@@ -149,7 +170,40 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PutVehiclesErrorResponse'
-      description: "Update existing vehicles in the system.\n\nNotes:\n- This API endpoint expects a full representation of the vehicle. Omitting an optional field will clear the field, with one exception: `mainRegionPeriod` (see below).\n- This API endpoint does not support creating new vehicles. If you need to create a new vehicle, use the `POST /v1/vehicles` API endpoint instead.\n- Each request is atomic - either all vehicles listed in the request are updated successfully, or none are updated.\n- No more than 1000 vehicles can be updated in a single request - please break your request into multiple smaller chunks if you need to update more than 1000 vehicles.\n- The specification of expected values for the `customAttributes` field and whether they are mandatory or not is determined by the attribute definitions in the \"Vehicle attributes\" preference in your Ops instance.\n  - Attributes with type `STRING` expect a string to be set for `customAttributes[attributeId]`.\n  - Attributes with type `NUMBER` expect a number to be set for `customAttributes[attributeId]`.\n  - Attributes with type `BOOLEAN` expect a boolean to be set for `customAttributes[attributeId]`.\n  - Attributes with type `DATE` expect a date string formatted as `YYYY-MM-dd` to be set for `customAttributes[attributeId]`.\n  - Attributes with type `SINGLE_SELECT` expect the `value` of one of the available select options to be set for `customAttributes[attributeId]`.\n  - Attributes with type `MULTI_SELECT` expect an array of strings (each one being the `value` of one of the available select options) to be set for `customAttributes[attributeId]`.\n  - Attributes with type `DURATION` expect a duration string formatted as `HH:mm` (where `HH` is an integer between 0 and 999, and `mm` is an integer between 0 and 59) to be set for `customAttributes[attributeId]`.\n- If the value of any custom attribute is updated compared to the existing value, a new entry will be added to the history of that attribute starting from the current date. If an entry for that attribute already exists starting today, it will be overwritten instead, and an `overwriteCustomAttributeEntry` warning will be returned in the response.\n- `mainRegionPeriod` is the **only optional field whose omission does not clear the value**. Every vehicle must always belong to a region, so there is no way to remove a region assignment - you can only change it to a different region. Omitting `mainRegionPeriod` (or sending the same value currently returned by `GET /v1/vehicles`) leaves the vehicle's region assignment untouched. Sending a different region/depot creates a new region period starting today; if a region period already starts today it is overwritten in place and an `overwriteMainRegionPeriodEntry` warning is returned in the response.\n- When there are non-fatal side effects (for example, today's entries being overwritten), the response includes a `warnings` array describing them. The property is omitted when there are no warnings. The request is still considered successful when warnings are returned."
+      description: 'Update existing vehicles in the system.
+
+
+        Notes:
+
+        - This API endpoint expects a full representation of the vehicle. Omitting an optional field will clear the field, with one exception: `mainRegionPeriod` (see below).
+
+        - This API endpoint does not support creating new vehicles. If you need to create a new vehicle, use the `POST /v1/vehicles` API endpoint instead.
+
+        - Each request is atomic - either all vehicles listed in the request are updated successfully, or none are updated.
+
+        - No more than 1000 vehicles can be updated in a single request - please break your request into multiple smaller chunks if you need to update more than 1000 vehicles.
+
+        - The specification of expected values for the `customAttributes` field and whether they are mandatory or not is determined by the attribute definitions in the "Vehicle attributes" preference in your Ops instance.
+
+        - Attributes with type `STRING` expect a string to be set for `customAttributes[attributeId]`.
+
+        - Attributes with type `NUMBER` expect a number to be set for `customAttributes[attributeId]`.
+
+        - Attributes with type `BOOLEAN` expect a boolean to be set for `customAttributes[attributeId]`.
+
+        - Attributes with type `DATE` expect a date string formatted as `YYYY-MM-dd` to be set for `customAttributes[attributeId]`.
+
+        - Attributes with type `SINGLE_SELECT` expect the `value` of one of the available select options to be set for `customAttributes[attributeId]`.
+
+        - Attributes with type `MULTI_SELECT` expect an array of strings (each one being the `value` of one of the available select options) to be set for `customAttributes[attributeId]`.
+
+        - Attributes with type `DURATION` expect a duration string formatted as `HH:mm` (where `HH` is an integer between 0 and 999, and `mm` is an integer between 0 and 59) to be set for `customAttributes[attributeId]`.
+
+        - If the value of any custom attribute is updated compared to the existing value, a new entry will be added to the history of that attribute starting from the current date. If an entry for that attribute already exists starting today, it will be overwritten instead, and an `overwriteCustomAttributeEntry` warning will be returned in the response.
+
+        - `mainRegionPeriod` is the **only optional field whose omission does not clear the value**. Every vehicle must always belong to a region, so there is no way to remove a region assignment - you can only change it to a different region. Omitting `mainRegionPeriod` (or sending the same value currently returned by `GET /v1/vehicles`) leaves the vehicle''s region assignment untouched. Sending a different region/depot creates a new region period starting today; if a region period already starts today it is overwritten in place and an `overwriteMainRegionPeriodEntry` warning is returned in the response.
+
+        - When there are non-fatal side effects (for example, today''s entries being overwritten), the response includes a `warnings` array describing them. The property is omitted when there are no warnings. The request is still considered successful when warnings are returned.'
       summary: Update vehicles
       tags:
       - Vehicles
@@ -191,37 +245,84 @@ paths:
             type: string
 components:
   schemas:
-    TypedApiErrorResponse_Invalidrequestschema_:
+    PostVehiclesErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_PostVehiclesErrorTypes_'
+    IdList:
+      items:
+        $ref: '#/components/schemas/UUID'
+      type: array
+      example:
+      - item-123
+      - item-456
+      - item-789
+      description: A list of IDs.
+    PutVehiclesErrorTypes:
+      type: string
+      enum:
+      - tooManyItems
+      - noItems
+      - invalidFieldContent
+      - vehiclesNotFound
+      - conflictProcessingRequest
+    PutVehiclesErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_PutVehiclesErrorTypes_'
+    PostVehiclesRequest:
       properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_Invalidrequestschema_'
+        vehicles:
+          items:
+            $ref: '#/components/schemas/NewVehicle'
+          type: array
       required:
-      - error
+      - vehicles
       type: object
-    BaseDepotPeriod:
+      example:
+        vehicles:
+        - id: abc-123
+          regionName: North
+          depotName: Main
+          licensePlate: XYZ 999
+          parkingLocation: Bay 30
+          description: A note about the vehicle
+          type: Double Decker
+          model: Routemaster
+          decommissioned: false
+          customAttributes:
+            color: red
+            capacity: 42
+        - id: def-456
+          regionName: South
+          depotName: Substation
+          licensePlate: XYZ 999
+          parkingLocation: Bay 31
+          description: Another note about a vehicle
+          type: Single Deck
+          model: Metrodecker
+          decommissioned: true
+          decommissionedOnDate: '2024-01-01'
+          customAttributes:
+            color: blue
+            capacity: 36
+    UUID:
+      type: string
+      description: Stringified ID for a resource. Cannot exceed 36 characters.
+    Pagination:
       properties:
-        opUnitId:
-          type: string
-        endTime:
+        totalPages:
           $ref: '#/components/schemas/Integer'
-        startTime:
-          $ref: '#/components/schemas/Integer'
-        endDate:
-          $ref: '#/components/schemas/StringifyDate'
-        startDate:
-          $ref: '#/components/schemas/StringifyDate'
-        depotId:
-          type: string
-        type:
-          $ref: '#/components/schemas/DepotPeriodType'
-        periodId:
-          type: string
+          description: Total number of pages.
+        nextPage:
+          $ref: '#/components/schemas/PageNumber'
+          description: Next page number (1-indexed). If undefined, there is no next page.
+        currentPage:
+          $ref: '#/components/schemas/PageNumber'
+          description: Current page number (1-indexed).
       required:
-      - startDate
-      - depotId
-      - type
-      - periodId
+      - totalPages
+      - currentPage
       type: object
+      description: 'Metadata about the pagination of a list of items. When a list of items is too large to be returned in a single response, it is split into multiple pages.
+
+        This object informs you about the current page, the next page, and the total number of pages.'
     NewVehicle:
       properties:
         customAttributes:
@@ -270,139 +371,33 @@ components:
       - regionName
       - id
       type: object
-    UUID:
-      type: string
-      description: Stringified ID for a resource. Cannot exceed 36 characters.
-    TypedErrorResponse_PutVehiclesErrorTypes_:
+    AttributeValue:
+      anyOf:
+      - items:
+          anyOf:
+          - type: number
+            format: double
+          - type: string
+        type: array
+      - type: string
+      - type: boolean
+      - type: number
+        format: double
+    TypedApiErrorResponse_PutVehiclesErrorTypes_:
       properties:
-        details: {}
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/PutVehiclesErrorTypes'
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_PutVehiclesErrorTypes_'
       required:
-      - message
-      - type
+      - error
       type: object
-    VehicleDepotPeriod:
-      allOf:
-      - $ref: '#/components/schemas/BaseDepotPeriod'
-      - properties:
-          vehicleId:
-            type: string
-        required:
-        - vehicleId
-        type: object
-    TypedErrorResponse_Invalidrequestschema_:
-      properties:
-        details: {}
-        message:
-          type: string
-        type:
-          type: string
-          enum:
-          - Invalid request schema
-          nullable: false
-      required:
-      - message
-      - type
-      type: object
-    PutVehiclesErrorTypes:
+    PostVehiclesErrorTypes:
       type: string
       enum:
       - tooManyItems
       - noItems
       - invalidFieldContent
-      - vehiclesNotFound
+      - vehicleAlreadyExists
       - conflictProcessingRequest
-    Pagination:
-      properties:
-        totalPages:
-          $ref: '#/components/schemas/Integer'
-          description: Total number of pages.
-        nextPage:
-          $ref: '#/components/schemas/PageNumber'
-          description: Next page number (1-indexed). If undefined, there is no next page.
-        currentPage:
-          $ref: '#/components/schemas/PageNumber'
-          description: Current page number (1-indexed).
-      required:
-      - totalPages
-      - currentPage
-      type: object
-      description: 'Metadata about the pagination of a list of items. When a list of items is too large to be returned in a single response, it is split into multiple pages.
-
-        This object informs you about the current page, the next page, and the total number of pages.'
-    GetVehiclesV1ErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_GetVehiclesV1ErrorTypes_'
-    GetVehiclesDepotPeriodsResponse:
-      properties: {}
-      additionalProperties:
-        items:
-          $ref: '#/components/schemas/VehicleDepotPeriod'
-        type: array
-      type: object
-    PageNumber:
-      $ref: '#/components/schemas/Integer'
-      description: Page number (1-indexed). Defaults to 1.
-      minimum: 1
-    PutVehiclesWarning:
-      anyOf:
-      - properties:
-          details:
-            items:
-              properties:
-                vehicleId:
-                  type: string
-              required:
-              - vehicleId
-              type: object
-            type: array
-            description: IDs of the vehicles whose existing region period starting today was overwritten.
-          message:
-            type: string
-            description: Human-readable description of the warning.
-          type:
-            type: string
-            enum:
-            - overwriteMainRegionPeriodEntry
-            nullable: false
-        required:
-        - details
-        - message
-        - type
-        type: object
-      - properties:
-          details:
-            items:
-              properties:
-                attributeIds:
-                  items:
-                    type: string
-                  type: array
-                vehicleId:
-                  type: string
-              required:
-              - attributeIds
-              - vehicleId
-              type: object
-            type: array
-            description: Per-vehicle breakdown of which custom attribute IDs had their entry starting today overwritten.
-          message:
-            type: string
-            description: Human-readable description of the warning.
-          type:
-            type: string
-            enum:
-            - overwriteCustomAttributeEntry
-            nullable: false
-        required:
-        - details
-        - message
-        - type
-        type: object
-    PostVehiclesErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_PostVehiclesErrorTypes_'
     TypedErrorResponse_GetVehiclesV1ErrorTypes_:
       properties:
         details: {}
@@ -414,63 +409,41 @@ components:
       - message
       - type
       type: object
-    PostVehiclesRequest:
+    PutVehiclesSuccessResponse:
       properties:
-        vehicles:
+        warnings:
           items:
-            $ref: '#/components/schemas/NewVehicle'
+            $ref: '#/components/schemas/PutVehiclesWarning'
           type: array
-      required:
-      - vehicles
-      type: object
-      example:
-        vehicles:
-        - id: abc-123
-          regionName: North
-          depotName: Main
-          licensePlate: XYZ 999
-          parkingLocation: Bay 30
-          description: A note about the vehicle
-          type: Double Decker
-          model: Routemaster
-          decommissioned: false
-          customAttributes:
-            color: red
-            capacity: 42
-        - id: def-456
-          regionName: South
-          depotName: Substation
-          licensePlate: XYZ 999
-          parkingLocation: Bay 31
-          description: Another note about a vehicle
-          type: Single Deck
-          model: Metrodecker
-          decommissioned: true
-          decommissionedOnDate: '2024-01-01'
-          customAttributes:
-            color: blue
-            capacity: 36
-    PostVehiclesSuccessResponse:
-      properties:
-        createdVehicleIds:
+          description: 'Non-fatal warnings about side effects of the request (for example, entries starting today being overwritten).
+
+            Omitted when there are no warnings.'
+        updatedVehicleIds:
           $ref: '#/components/schemas/IdList'
-          description: List of vehicle IDs that were created.
+          description: List of vehicle IDs that were updated.
       required:
-      - createdVehicleIds
+      - updatedVehicleIds
       type: object
-    GetVehiclesV1ErrorTypes:
-      type: string
-      enum:
-      - pageNotFound
-      nullable: false
-    PostVehiclesErrorTypes:
-      type: string
-      enum:
-      - tooManyItems
-      - noItems
-      - invalidFieldContent
-      - vehicleAlreadyExists
-      - conflictProcessingRequest
+    TypedErrorResponse_Invalidrequestschema_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - Invalid request schema
+      required:
+      - message
+      - type
+      type: object
+    TypedApiErrorResponse_GetVehiclesV1ErrorTypes_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_GetVehiclesV1ErrorTypes_'
+      required:
+      - error
+      type: object
     PutVehiclesRequest:
       properties:
         vehicles:
@@ -503,6 +476,8 @@ components:
           customAttributes:
             color: blue
             capacity: 36
+    GetVehiclesV1ErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_GetVehiclesV1ErrorTypes_'
     EditedVehicle:
       properties:
         customAttributes:
@@ -554,42 +529,29 @@ components:
       required:
       - id
       type: object
-    DepotPeriodType:
-      enum:
-      - MAIN
-      - LOAN
-      - FIRST
-      type: string
-    PutVehiclesErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_PutVehiclesErrorTypes_'
-    TypedApiErrorResponse_PutVehiclesErrorTypes_:
+    BaseDepotPeriod:
       properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_PutVehiclesErrorTypes_'
+        opUnitId:
+          type: string
+        endTime:
+          $ref: '#/components/schemas/Integer'
+        startTime:
+          $ref: '#/components/schemas/Integer'
+        endDate:
+          $ref: '#/components/schemas/StringifyDate'
+        startDate:
+          $ref: '#/components/schemas/StringifyDate'
+        depotId:
+          type: string
+        type:
+          $ref: '#/components/schemas/DepotPeriodType'
+        periodId:
+          type: string
       required:
-      - error
-      type: object
-    Integer:
-      type: integer
-      format: int32
-    AttributeValue:
-      anyOf:
-      - items:
-          anyOf:
-          - type: number
-            format: double
-          - type: string
-        type: array
-      - type: string
-      - type: boolean
-      - type: number
-        format: double
-    TypedApiErrorResponse_GetVehiclesV1ErrorTypes_:
-      properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_GetVehiclesV1ErrorTypes_'
-      required:
-      - error
+      - startDate
+      - depotId
+      - type
+      - periodId
       type: object
     GetVehiclesV1SuccessfulResponse:
       properties:
@@ -603,6 +565,118 @@ components:
       - pagination
       - vehicles
       type: object
+    PostVehiclesSuccessResponse:
+      properties:
+        createdVehicleIds:
+          $ref: '#/components/schemas/IdList'
+          description: List of vehicle IDs that were created.
+      required:
+      - createdVehicleIds
+      type: object
+    GetVehiclesV1ErrorTypes:
+      type: string
+      enum:
+      - pageNotFound
+    DepotPeriodType:
+      enum:
+      - MAIN
+      - LOAN
+      - FIRST
+      type: string
+    TypedApiErrorResponse_PostVehiclesErrorTypes_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_PostVehiclesErrorTypes_'
+      required:
+      - error
+      type: object
+    Integer:
+      type: integer
+      format: int32
+    PutVehiclesWarning:
+      anyOf:
+      - properties:
+          details:
+            items:
+              properties:
+                vehicleId:
+                  type: string
+              required:
+              - vehicleId
+              type: object
+            type: array
+            description: IDs of the vehicles whose existing region period starting today was overwritten.
+          message:
+            type: string
+            description: Human-readable description of the warning.
+          type:
+            type: string
+            enum:
+            - overwriteMainRegionPeriodEntry
+        required:
+        - details
+        - message
+        - type
+        type: object
+      - properties:
+          details:
+            items:
+              properties:
+                attributeIds:
+                  items:
+                    type: string
+                  type: array
+                vehicleId:
+                  type: string
+              required:
+              - attributeIds
+              - vehicleId
+              type: object
+            type: array
+            description: Per-vehicle breakdown of which custom attribute IDs had their entry starting today overwritten.
+          message:
+            type: string
+            description: Human-readable description of the warning.
+          type:
+            type: string
+            enum:
+            - overwriteCustomAttributeEntry
+        required:
+        - details
+        - message
+        - type
+        type: object
+    PageNumber:
+      $ref: '#/components/schemas/Integer'
+      description: Page number (1-indexed). Defaults to 1.
+      minimum: 1
+    GetVehiclesDepotPeriodsResponse:
+      properties: {}
+      additionalProperties:
+        items:
+          $ref: '#/components/schemas/VehicleDepotPeriod'
+        type: array
+      type: object
+    VehicleDepotPeriod:
+      allOf:
+      - $ref: '#/components/schemas/BaseDepotPeriod'
+      - properties:
+          vehicleId:
+            type: string
+        required:
+        - vehicleId
+        type: object
+    TypedApiErrorResponse_Invalidrequestschema_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_Invalidrequestschema_'
+      required:
+      - error
+      type: object
+    StringifyDate:
+      type: string
+      format: date
+      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
     VehicleV1:
       properties:
         customAttributes:
@@ -664,26 +738,6 @@ components:
       - mainRegionPeriod
       - id
       type: object
-    IdList:
-      items:
-        $ref: '#/components/schemas/UUID'
-      type: array
-      example:
-      - item-123
-      - item-456
-      - item-789
-      description: A list of IDs.
-    TypedApiErrorResponse_PostVehiclesErrorTypes_:
-      properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_PostVehiclesErrorTypes_'
-      required:
-      - error
-      type: object
-    StringifyDate:
-      type: string
-      format: date
-      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
     SchemaValidationErrorResponse:
       $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
     TypedErrorResponse_PostVehiclesErrorTypes_:
@@ -697,20 +751,16 @@ components:
       - message
       - type
       type: object
-    PutVehiclesSuccessResponse:
+    TypedErrorResponse_PutVehiclesErrorTypes_:
       properties:
-        warnings:
-          items:
-            $ref: '#/components/schemas/PutVehiclesWarning'
-          type: array
-          description: 'Non-fatal warnings about side effects of the request (for example, entries starting today being overwritten).
-
-            Omitted when there are no warnings.'
-        updatedVehicleIds:
-          $ref: '#/components/schemas/IdList'
-          description: List of vehicle IDs that were updated.
+        details: {}
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/PutVehiclesErrorTypes'
       required:
-      - updatedVehicleIds
+      - message
+      - type
       type: object
   securitySchemes:
     api_key:

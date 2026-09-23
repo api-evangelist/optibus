@@ -1,15 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Optibus Operations Driver Absences Driver Employment Periods API
+  title: Optibus Operations Driver Employment Periods API
   version: 2.8.17
   description: '**Welcome to the Optibus Operations API documentation!**
 
 
-    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.
-
-
-
-    '
+    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.'
   license:
     name: Optibus Ltd, All rights reserved
   contact: {}
@@ -44,7 +40,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetEmploymentPeriodsV2ErrorResponse'
-      description: "List existing driver employment periods in the system, with optional filtering capability.\n\nNotes:\n- The result is paginated. Check the `pagination` property in the response to see the total number of pages and the current page number.\n- Information about the modelling of date periods for each entry:\n  - `startDate` is mandatory\n  - `endDate` is optional - if omitted, the employment period will be ongoing indefinitely"
+      description: 'List existing driver employment periods in the system, with optional filtering capability.
+
+
+        Notes:
+
+        - The result is paginated. Check the `pagination` property in the response to see the total number of pages and the current page number.
+
+        - Information about the modelling of date periods for each entry:
+
+        - `startDate` is mandatory
+
+        - `endDate` is optional - if omitted, the employment period will be ongoing indefinitely'
       summary: List driver employment periods
       tags:
       - Driver Employment Periods
@@ -107,7 +114,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostDriverEmploymentPeriodsErrorResponse'
-      description: "Creates a single driver employment period.\n\nNotes:\n- Behaviour of the `periodId` field:\n  - If a `periodId` is specified that already exists, you will receive an error (this endpoint does not support updating existing employment\n    periods - use the `PUT /v1/drivers/employment-periods/{periodId}` endpoint instead)\n  - If a `periodId` is specified that does not already exist, a new employment period will be created with the specified ID.\n  - If a `periodId` is not specified, a new employment period will be created with an automatically generated ID.\n  - We recommend you set the `periodId` to a corresponding fixed identifier from your external system that you are synchronizing with, if such an identifier exists.\n- Employment periods for a single driver may not overlap each other."
+      description: 'Creates a single driver employment period.
+
+
+        Notes:
+
+        - Behaviour of the `periodId` field:
+
+        - If a `periodId` is specified that already exists, you will receive an error (this endpoint does not support updating existing employment
+
+        periods - use the `PUT /v1/drivers/employment-periods/{periodId}` endpoint instead)
+
+        - If a `periodId` is specified that does not already exist, a new employment period will be created with the specified ID.
+
+        - If a `periodId` is not specified, a new employment period will be created with an automatically generated ID.
+
+        - We recommend you set the `periodId` to a corresponding fixed identifier from your external system that you are synchronizing with, if such an identifier exists.
+
+        - Employment periods for a single driver may not overlap each other.'
       summary: Create driver employment period
       tags:
       - Driver Employment Periods
@@ -165,7 +189,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PutDriverEmploymentPeriodsErrorResponse'
-      description: "Updates a single driver employment period by ID.\n\nNotes:\n- You can only update the `startDate` and `endDate` fields of an employment period, not the `driverId`.\n- If you set `shouldAutoUnassignFromEndDate` to `true`, the system will auto-unassign duties from the day after the `endDate` if\n  this is the last employment period chronologically for the driver.\n  - If auto-unassignment fails for any of the regions which the driver has work in, a warning will be returned in the response to allow for manual intervention."
+      description: 'Updates a single driver employment period by ID.
+
+
+        Notes:
+
+        - You can only update the `startDate` and `endDate` fields of an employment period, not the `driverId`.
+
+        - If you set `shouldAutoUnassignFromEndDate` to `true`, the system will auto-unassign duties from the day after the `endDate` if
+
+        this is the last employment period chronologically for the driver.
+
+        - If auto-unassignment fails for any of the regions which the driver has work in, a warning will be returned in the response to allow for manual intervention.'
       summary: Update driver employment period
       tags:
       - Driver Employment Periods
@@ -186,24 +221,178 @@ paths:
               $ref: '#/components/schemas/PutDriverEmploymentPeriodsRequest'
 components:
   schemas:
-    TypedApiErrorResponse_Invalidrequestschema_:
+    PostDriverEmploymentPeriodsErrorTypes:
+      type: string
+      enum:
+      - invalidFieldContent
+      - alreadyExists
+      - employmentPeriodOverlap
+      - conflictProcessingRequest
+    PutDriverEmploymentPeriodsErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_PutDriverEmploymentPeriodsErrorTypes_'
+    PostDriverEmploymentPeriodsRequest:
       properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_Invalidrequestschema_'
+        endDate:
+          $ref: '#/components/schemas/StringifyDate'
+          description: End date (YYYY-MM-DD). Optional; open-ended period when omitted.
+        startDate:
+          $ref: '#/components/schemas/StringifyDate'
+          description: Start date (YYYY-MM-DD).
+        driverId:
+          type: string
+          description: ID of the driver this employment period belongs to.
+        periodId:
+          type: string
+          description: 'The ID of the employment period to create or update. If omitted, a new period will be created.
+
+            Cannot exceed 36 characters.'
       required:
-      - error
+      - startDate
+      - driverId
       type: object
-    TypedErrorResponse_PutDriverEmploymentPeriodsErrorTypes_:
+      example:
+        periodId: period-123
+        driverId: driver-123
+        startDate: '2026-01-01'
+        endDate: '2027-05-17'
+    Pagination:
+      properties:
+        totalPages:
+          $ref: '#/components/schemas/Integer'
+          description: Total number of pages.
+        nextPage:
+          $ref: '#/components/schemas/PageNumber'
+          description: Next page number (1-indexed). If undefined, there is no next page.
+        currentPage:
+          $ref: '#/components/schemas/PageNumber'
+          description: Current page number (1-indexed).
+      required:
+      - totalPages
+      - currentPage
+      type: object
+      description: 'Metadata about the pagination of a list of items. When a list of items is too large to be returned in a single response, it is split into multiple pages.
+
+        This object informs you about the current page, the next page, and the total number of pages.'
+    TypedErrorResponse_PostDriverEmploymentPeriodsErrorTypes_:
       properties:
         details: {}
         message:
           type: string
         type:
-          $ref: '#/components/schemas/PutDriverEmploymentPeriodsErrorTypes'
+          $ref: '#/components/schemas/PostDriverEmploymentPeriodsErrorTypes'
       required:
       - message
       - type
       type: object
+    PutDriverEmploymentPeriodsSuccess:
+      properties:
+        warnings:
+          items:
+            $ref: '#/components/schemas/PutDriverEmploymentPeriodsWarning'
+          type: array
+          description: Warnings for non-fatal issues that occurred during the operation.
+      type: object
+    PostDriverEmploymentPeriodsSuccess:
+      $ref: '#/components/schemas/PostDriverEmploymentPeriodsRequest'
+    PutDriverEmploymentPeriodsRequest:
+      properties:
+        shouldAutoUnassignFromEndDate:
+          type: boolean
+          description: When true, auto-unassign duties from the day after endDate if this is the last employment period.
+        endDate:
+          $ref: '#/components/schemas/StringifyDate'
+          description: End date (YYYY-MM-DD). Optional; open-ended period when omitted.
+        startDate:
+          $ref: '#/components/schemas/StringifyDate'
+          description: Start date (YYYY-MM-DD).
+        driverId:
+          type: string
+          description: ID of the driver this employment period belongs to.
+      required:
+      - shouldAutoUnassignFromEndDate
+      - startDate
+      - driverId
+      type: object
+      example:
+        driverId: driver-123
+        startDate: '2026-01-01'
+        endDate: '2027-05-17'
+        shouldAutoUnassignFromEndDate: true
+    TypedErrorResponse_Invalidrequestschema_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - Invalid request schema
+      required:
+      - message
+      - type
+      type: object
+    PutDriverEmploymentPeriodsErrorTypes:
+      type: string
+      enum:
+      - invalidFieldContent
+      - notFound
+      - employmentPeriodOverlap
+      - cannotChangeField
+      - conflictProcessingRequest
+    PostDriverEmploymentPeriodsErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_PostDriverEmploymentPeriodsErrorTypes_'
+    TypedApiErrorResponse_PutDriverEmploymentPeriodsErrorTypes_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_PutDriverEmploymentPeriodsErrorTypes_'
+      required:
+      - error
+      type: object
+    EmploymentPeriodV2:
+      properties:
+        endDate:
+          $ref: '#/components/schemas/StringifyDate'
+          description: The end date of the employment period (YYYY-MM-DD). Optional - employment period may be open-ended.
+        startDate:
+          $ref: '#/components/schemas/StringifyDate'
+          description: The start date of the employment period (YYYY-MM-DD)
+        periodId:
+          type: string
+          description: The unique identifier for this employment period
+        driverId:
+          type: string
+          description: The driver ID this employment period belongs to
+      required:
+      - startDate
+      - periodId
+      - driverId
+      type: object
+      description: A single driver employment period record in the V2 response format
+    TypedErrorResponse_GetEmploymentPeriodsV2ErrorTypes_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/GetEmploymentPeriodsV2ErrorTypes'
+      required:
+      - message
+      - type
+      type: object
+    PutDriverEmploymentPeriodsWarning:
+      properties:
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - autoUnassignFailed
+      required:
+      - message
+      - type
+      type: object
+    GetEmploymentPeriodsV2ErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_GetEmploymentPeriodsV2ErrorTypes_'
     GetEmploymentPeriodsV2SuccessfulResponse:
       properties:
         pagination:
@@ -232,114 +421,18 @@ components:
           periodId: period-456
           startDate: '2027-01-01'
       description: Paginated response containing driver employment periods
-    PutDriverEmploymentPeriodsWarning:
-      properties:
-        message:
-          type: string
-        type:
-          type: string
-          enum:
-          - autoUnassignFailed
-          nullable: false
-      required:
-      - message
-      - type
-      type: object
-    PutDriverEmploymentPeriodsSuccess:
-      properties:
-        warnings:
-          items:
-            $ref: '#/components/schemas/PutDriverEmploymentPeriodsWarning'
-          type: array
-          description: Warnings for non-fatal issues that occurred during the operation.
-      type: object
-    TypedErrorResponse_GetEmploymentPeriodsV2ErrorTypes_:
-      properties:
-        details: {}
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/GetEmploymentPeriodsV2ErrorTypes'
-      required:
-      - message
-      - type
-      type: object
-    PostDriverEmploymentPeriodsErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_PostDriverEmploymentPeriodsErrorTypes_'
-    TypedErrorResponse_Invalidrequestschema_:
-      properties:
-        details: {}
-        message:
-          type: string
-        type:
-          type: string
-          enum:
-          - Invalid request schema
-          nullable: false
-      required:
-      - message
-      - type
-      type: object
-    EmploymentPeriodV2:
-      properties:
-        endDate:
-          $ref: '#/components/schemas/StringifyDate'
-          description: The end date of the employment period (YYYY-MM-DD). Optional - employment period may be open-ended.
-        startDate:
-          $ref: '#/components/schemas/StringifyDate'
-          description: The start date of the employment period (YYYY-MM-DD)
-        periodId:
-          type: string
-          description: The unique identifier for this employment period
-        driverId:
-          type: string
-          description: The driver ID this employment period belongs to
-      required:
-      - startDate
-      - periodId
-      - driverId
-      type: object
-      description: A single driver employment period record in the V2 response format
-    Pagination:
-      properties:
-        totalPages:
-          $ref: '#/components/schemas/Integer'
-          description: Total number of pages.
-        nextPage:
-          $ref: '#/components/schemas/PageNumber'
-          description: Next page number (1-indexed). If undefined, there is no next page.
-        currentPage:
-          $ref: '#/components/schemas/PageNumber'
-          description: Current page number (1-indexed).
-      required:
-      - totalPages
-      - currentPage
-      type: object
-      description: 'Metadata about the pagination of a list of items. When a list of items is too large to be returned in a single response, it is split into multiple pages.
-
-        This object informs you about the current page, the next page, and the total number of pages.'
-    TypedApiErrorResponse_PostDriverEmploymentPeriodsErrorTypes_:
-      properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_PostDriverEmploymentPeriodsErrorTypes_'
-      required:
-      - error
-      type: object
+    Integer:
+      type: integer
+      format: int32
     PageNumber:
       $ref: '#/components/schemas/Integer'
       description: Page number (1-indexed). Defaults to 1.
       minimum: 1
-    TypedErrorResponse_PostDriverEmploymentPeriodsErrorTypes_:
-      properties:
-        details: {}
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/PostDriverEmploymentPeriodsErrorTypes'
-      required:
-      - message
-      - type
-      type: object
+    GetEmploymentPeriodsV2ErrorTypes:
+      type: string
+      enum:
+      - invalidDatesCombination
+      - pageNotFound
     TypedApiErrorResponse_GetEmploymentPeriodsV2ErrorTypes_:
       properties:
         error:
@@ -347,97 +440,37 @@ components:
       required:
       - error
       type: object
-    PostDriverEmploymentPeriodsSuccess:
-      $ref: '#/components/schemas/PostDriverEmploymentPeriodsRequest'
-    GetEmploymentPeriodsV2ErrorTypes:
-      type: string
-      enum:
-      - invalidDatesCombination
-      - pageNotFound
-    PostDriverEmploymentPeriodsErrorTypes:
-      type: string
-      enum:
-      - invalidFieldContent
-      - alreadyExists
-      - employmentPeriodOverlap
-      - conflictProcessingRequest
-    TypedApiErrorResponse_PutDriverEmploymentPeriodsErrorTypes_:
+    TypedApiErrorResponse_Invalidrequestschema_:
       properties:
         error:
-          $ref: '#/components/schemas/TypedErrorResponse_PutDriverEmploymentPeriodsErrorTypes_'
+          $ref: '#/components/schemas/TypedErrorResponse_Invalidrequestschema_'
       required:
       - error
       type: object
-    PutDriverEmploymentPeriodsErrorTypes:
-      type: string
-      enum:
-      - invalidFieldContent
-      - notFound
-      - employmentPeriodOverlap
-      - cannotChangeField
-      - conflictProcessingRequest
-    PutDriverEmploymentPeriodsErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_PutDriverEmploymentPeriodsErrorTypes_'
-    Integer:
-      type: integer
-      format: int32
-    PutDriverEmploymentPeriodsRequest:
-      properties:
-        shouldAutoUnassignFromEndDate:
-          type: boolean
-          description: When true, auto-unassign duties from the day after endDate if this is the last employment period.
-        endDate:
-          $ref: '#/components/schemas/StringifyDate'
-          description: End date (YYYY-MM-DD). Optional; open-ended period when omitted.
-        startDate:
-          $ref: '#/components/schemas/StringifyDate'
-          description: Start date (YYYY-MM-DD).
-        driverId:
-          type: string
-          description: ID of the driver this employment period belongs to.
-      required:
-      - shouldAutoUnassignFromEndDate
-      - startDate
-      - driverId
-      type: object
-      example:
-        driverId: driver-123
-        startDate: '2026-01-01'
-        endDate: '2027-05-17'
-        shouldAutoUnassignFromEndDate: true
     StringifyDate:
       type: string
       format: date
       description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
+    TypedApiErrorResponse_PostDriverEmploymentPeriodsErrorTypes_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_PostDriverEmploymentPeriodsErrorTypes_'
+      required:
+      - error
+      type: object
+    TypedErrorResponse_PutDriverEmploymentPeriodsErrorTypes_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/PutDriverEmploymentPeriodsErrorTypes'
+      required:
+      - message
+      - type
+      type: object
     SchemaValidationErrorResponse:
       $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
-    PostDriverEmploymentPeriodsRequest:
-      properties:
-        endDate:
-          $ref: '#/components/schemas/StringifyDate'
-          description: End date (YYYY-MM-DD). Optional; open-ended period when omitted.
-        startDate:
-          $ref: '#/components/schemas/StringifyDate'
-          description: Start date (YYYY-MM-DD).
-        driverId:
-          type: string
-          description: ID of the driver this employment period belongs to.
-        periodId:
-          type: string
-          description: 'The ID of the employment period to create or update. If omitted, a new period will be created.
-
-            Cannot exceed 36 characters.'
-      required:
-      - startDate
-      - driverId
-      type: object
-      example:
-        periodId: period-123
-        driverId: driver-123
-        startDate: '2026-01-01'
-        endDate: '2027-05-17'
-    GetEmploymentPeriodsV2ErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_GetEmploymentPeriodsV2ErrorTypes_'
   securitySchemes:
     api_key:
       type: apiKey

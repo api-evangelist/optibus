@@ -1,15 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Optibus Operations Driver Absences Payroll API
+  title: Optibus Operations Payroll API
   version: 2.8.17
   description: '**Welcome to the Optibus Operations API documentation!**
 
 
-    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.
-
-
-
-    '
+    Optibus Operations is a cloud-based software solution that enables public transport providers to optimize their operations, planning, and scheduling. Our API provides programmatic access to Optibus Operations'' functionality, allowing you to integrate it with your own applications and systems.'
   license:
     name: Optibus Ltd, All rights reserved
   contact: {}
@@ -87,38 +83,60 @@ paths:
           type: boolean
 components:
   schemas:
-    CycleTypeWithDaily:
-      anyOf:
-      - $ref: '#/components/schemas/CycleType'
-      - type: string
-        enum:
-        - daily
+    DriverUuid:
+      $ref: '#/components/schemas/UUID'
+      description: The driver unique identifier in the Ops system (not the driver personal id)
     CycleType:
       enum:
       - weekly
       - biWeekly
       - monthly
       type: string
-    GetPayrollV2Response:
+    TimeUnit:
+      enum:
+      - Minutes
+      - Hours
+      - Days
+      - Number
+      type: string
+    UUID:
+      type: string
+      description: Stringified ID for a resource. Cannot exceed 36 characters.
+    WorkEntityId:
+      type: string
+    CycleTypeWithDaily:
+      anyOf:
+      - $ref: '#/components/schemas/CycleType'
+      - type: string
+        enum:
+        - daily
+    StringifyDate:
+      type: string
+      format: date
+      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
+    ApiTimeInterval:
       items:
-        $ref: '#/components/schemas/PayrollV2External'
+        properties:
+          end:
+            $ref: '#/components/schemas/ISOWithTimeDate'
+          start:
+            $ref: '#/components/schemas/ISOWithTimeDate'
+        required:
+        - end
+        - start
+        type: object
       type: array
     ISOWithTimeDate:
       type: string
       format: date
       description: Stringified ISO8601 date in the form of 2017-07-21T23:59:00+03:00
-    StringifyDate:
-      type: string
-      format: date
-      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
-    WorkEntityId:
-      type: string
     DepotId:
       $ref: '#/components/schemas/UUID'
       description: The depot unique identifier in the Ops system.
-    DriverUuid:
-      $ref: '#/components/schemas/UUID'
-      description: The driver unique identifier in the Ops system (not the driver personal id)
+    GetPayrollV2Response:
+      items:
+        $ref: '#/components/schemas/PayrollV2External'
+      type: array
     PayrollV2External:
       properties:
         occurrenceDates:
@@ -167,21 +185,6 @@ components:
       - workingDriver
       - depotId
       type: object
-    ApiTimeInterval:
-      items:
-        properties:
-          end:
-            $ref: '#/components/schemas/ISOWithTimeDate'
-          start:
-            $ref: '#/components/schemas/ISOWithTimeDate'
-        required:
-        - end
-        - start
-        type: object
-      type: array
-    UUID:
-      type: string
-      description: Stringified ID for a resource. Cannot exceed 36 characters.
     CodeId:
       type: string
     WorkingDriver:
@@ -194,13 +197,6 @@ components:
       - driverExternalId
       - driverUuid
       type: object
-    TimeUnit:
-      enum:
-      - Minutes
-      - Hours
-      - Days
-      - Number
-      type: string
   securitySchemes:
     api_key:
       type: apiKey
