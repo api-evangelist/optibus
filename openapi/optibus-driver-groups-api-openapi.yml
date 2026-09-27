@@ -52,24 +52,26 @@ paths:
         deprecated: true
 components:
   schemas:
-    GroupWithRegionAliases:
-      allOf:
-      - properties:
-          depot:
-            type: string
-            description: ID of the _region_ the driver group is associated with. Deprecated in favor of `regionUuid`.
-            deprecated: true
-          regionName:
-            type: string
-            description: Name of the region the driver group is associated with.
-          regionUuid:
-            type: string
-            description: ID of the region the driver group is associated with.
-        required:
-        - depot
-        - regionUuid
-        type: object
-      - $ref: '#/components/schemas/Group'
+    UUID:
+      type: string
+      description: Stringified ID for a resource. Cannot exceed 36 characters.
+    GetGroupResponse:
+      items:
+        $ref: '#/components/schemas/GroupWithRegionAliases'
+      type: array
+      example:
+      - id: ad681aa0-b99c-42db-912e-94ddef5f1387
+        name: Full-Time Drivers
+        regionUuid: c808109c-7c99-4038-9266-f3d241c53f5b
+        regionName: North
+        depot: c808109c-7c99-4038-9266-f3d241c53f5b
+        meta: {}
+      - id: ad681aa0-b99c-42db-912e-94ddef5f1387
+        name: Part-Time Drivers
+        regionUuid: c808109c-7c99-4038-9266-f3d241c53f5b
+        regionName: North
+        depot: c808109c-7c99-4038-9266-f3d241c53f5b
+        meta: {}
     Group:
       properties:
         meta:
@@ -91,26 +93,24 @@ components:
       - name
       - id
       type: object
-    UUID:
-      type: string
-      description: Stringified ID for a resource. Cannot exceed 36 characters.
-    GetGroupResponse:
-      items:
-        $ref: '#/components/schemas/GroupWithRegionAliases'
-      type: array
-      example:
-      - id: ad681aa0-b99c-42db-912e-94ddef5f1387
-        name: Full-Time Drivers
-        regionUuid: c808109c-7c99-4038-9266-f3d241c53f5b
-        regionName: North
-        depot: c808109c-7c99-4038-9266-f3d241c53f5b
-        meta: {}
-      - id: ad681aa0-b99c-42db-912e-94ddef5f1387
-        name: Part-Time Drivers
-        regionUuid: c808109c-7c99-4038-9266-f3d241c53f5b
-        regionName: North
-        depot: c808109c-7c99-4038-9266-f3d241c53f5b
-        meta: {}
+    GroupWithRegionAliases:
+      allOf:
+      - properties:
+          depot:
+            type: string
+            description: ID of the _region_ the driver group is associated with. Deprecated in favor of `regionUuid`.
+            deprecated: true
+          regionName:
+            type: string
+            description: Name of the region the driver group is associated with.
+          regionUuid:
+            type: string
+            description: ID of the region the driver group is associated with.
+        required:
+        - depot
+        - regionUuid
+        type: object
+      - $ref: '#/components/schemas/Group'
   securitySchemes:
     api_key:
       type: apiKey

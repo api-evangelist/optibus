@@ -34,10 +34,6 @@ paths:
       parameters: []
 components:
   schemas:
-    GetStopsResponse:
-      items:
-        $ref: '#/components/schemas/Stop'
-      type: array
     Stop:
       properties:
         shortDescription:
@@ -55,6 +51,10 @@ components:
       - shortDescription
       - stopId
       type: object
+    GetStopsResponse:
+      items:
+        $ref: '#/components/schemas/Stop'
+      type: array
   securitySchemes:
     api_key:
       type: apiKey

@@ -388,27 +388,320 @@ paths:
               $ref: '#/components/schemas/PatchPrivateHireTripsBodyRequest'
 components:
   schemas:
-    ExternalPatchPrivateHireErrorTypesEnum.OrderAlreadyCancelled:
+    PrivateHireTripNotFoundDetails:
+      properties:
+        availableTaskIds:
+          items:
+            type: string
+          type: array
+        taskId:
+          $ref: '#/components/schemas/TaskDisplayIdString'
+      required:
+      - availableTaskIds
+      - taskId
+      type: object
+    PrivateHireErrorServer:
+      properties:
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.ServerError'
+      required:
+      - message
+      - type
+      type: object
+    PrivateHireOrderError:
+      properties:
+        orderId:
+          $ref: '#/components/schemas/OrderIdString'
+      required:
+      - orderId
+      type: object
+    PrivateHireOrderDoesNotHavePrivateHiresError:
+      properties:
+        details:
+          $ref: '#/components/schemas/PrivateHireOrderError'
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/ExternalPatchPrivateHireErrorTypesEnum.OrderDoesNotHavePrivateHires'
+      required:
+      - details
+      - message
+      - type
+      type: object
+    PrivateHireWarningResponse:
+      properties:
+        warnings:
+          items:
+            $ref: '#/components/schemas/ExternalPrivateHireErrorWarning'
+          type: array
+      type: object
+    PrivateHireEventTypes:
+      anyOf:
+      - $ref: '#/components/schemas/OnScheduleEventsTypes.Deadhead'
+      - $ref: '#/components/schemas/OnScheduleEventsTypes.Custom'
+      - $ref: '#/components/schemas/OnScheduleEventsTypes.Break'
+      - $ref: '#/components/schemas/OtherEventTypes.PullIn'
+      - $ref: '#/components/schemas/OtherEventTypes.PullOut'
+      - $ref: '#/components/schemas/OtherEventTypes.PrivateHire'
+    ExternalPrivateHireErrorTypesEnum.ServerError:
       enum:
-      - orderAlreadyCancelled
+      - serverError
       type: string
-    ExternalPrivateHireErrorTypesEnum.DepotsForMultipleRegionsError:
+    PrivateHireErrorInvalidOrderIdFormatDetails:
+      properties:
+        orderId:
+          $ref: '#/components/schemas/OrderIdString'
+      required:
+      - orderId
+      type: object
+    VehicleInResponse:
+      allOf:
+      - $ref: '#/components/schemas/Pick_Vehicle.id_'
+      - properties:
+          eventIds:
+            items:
+              type: string
+            type: array
+            description: Mapping of the events that the vehicle will fulfil.
+          attributes:
+            $ref: '#/components/schemas/Pick_Vehicle.licensePlate-or-type-or-model-or-availableSeats_'
+        required:
+        - eventIds
+        - attributes
+        type: object
+    ExternalPatchPrivateHireErrorTypesEnum.OrderDoesNotHavePrivateHires:
       enum:
-      - depotsForMultipleRegionsError
+      - orderDoesNotHavePrivateHires
       type: string
-    PrivateHireErrorEventOverlap:
+    OnScheduleEventsTypes.Deadhead:
+      enum:
+      - deadhead
+      type: string
+    PrivateHireErrorEmptyPrivateHires:
+      properties:
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.PrivateHiresEmpty'
+      required:
+      - message
+      - type
+      type: object
+    Undefinable_Pick_DriverBaseInformation.id-or-firstName-or-lastName__:
+      $ref: '#/components/schemas/Pick_DriverBaseInformation.id-or-firstName-or-lastName_'
+    ExternalPatchPrivateHireErrorTypesEnum.OrderNonExistent:
+      enum:
+      - orderNonExistent
+      type: string
+    PatchPrivateHireOrderTripsNotFoundError:
+      anyOf:
+      - $ref: '#/components/schemas/PrivateHireTripNotFoundError'
+      - $ref: '#/components/schemas/PrivateHireOrderNonExistentError'
+    TaskDisplayIdString:
+      type: string
+      description: External identifier of a private hire trip that should be unique within the system and that will be used internally in Optibus as the display ID.
+      minLength: 1
+      maxLength: 1000
+    PrivateHireTripNotFoundError:
+      properties:
+        details:
+          $ref: '#/components/schemas/PrivateHireTripNotFoundDetails'
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/ExternalPatchPrivateHireTripErrorTypesEnum.PrivateHireTripNotFound'
+      required:
+      - details
+      - message
+      - type
+      type: object
+    PatchPrivateHireOrderResponse:
+      properties:
+        errors:
+          items:
+            $ref: '#/components/schemas/PatchPrivateHireOrderRequestError'
+          type: array
+      type:
+      - object
+      - 'null'
+    PrivateHireErrorDuplicateTaskIdDetails:
+      properties:
+        taskId:
+          $ref: '#/components/schemas/TaskDisplayIdString'
+      required:
+      - taskId
+      type: object
+    ExternalPrivateHireErrorTypesEnum.PrivateHireEventsEmpty:
+      enum:
+      - privateHireEventsEmpty
+      type: string
+    PrivateHireErrorResponse:
+      properties:
+        errors:
+          items:
+            $ref: '#/components/schemas/ExternalPrivateHireError'
+          type: array
+      type: object
+    PrivateHireWarningInvalidLabelCode:
+      properties:
+        details:
+          $ref: '#/components/schemas/PrivateHireWarningInvalidLabelCodeDetails'
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/ExternalPrivateHireWarningTypesEnum.InvalidLabelCode'
+      required:
+      - details
+      - message
+      - type
+      type: object
+    OnScheduleEventsTypes.Custom:
+      enum:
+      - custom
+      type: string
+    GetPrivateHireOrderResponseError:
+      $ref: '#/components/schemas/PatchPrivateHireOrderNotExistResponse'
+    Pick_PreferencesLabel.Exclude_keyofPreferencesLabel.type__:
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+      required:
+      - name
+      - code
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
+    Label:
+      $ref: '#/components/schemas/Omit_PreferencesLabel.type_'
+    PrivateHireErrorEventChronologicalOrder:
       properties:
         details:
           $ref: '#/components/schemas/PrivateHireErrorEventTimeDetails'
         message:
           type: string
         type:
-          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.InvalidEventsTimeOverlap'
+          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.InvalidEventsChronologicalOrder'
       required:
       - details
       - message
       - type
       type: object
+    HourMinuteDuration:
+      type: string
+      example: '23:30'
+      description: Representation of the time in `HH:mm` format, where the minimum is `00:00` and maximum `36:00` (12:00 at noon the day after)
+    Pick_Vehicle.id_:
+      properties:
+        id:
+          type: string
+      required:
+      - id
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
+    OnScheduleEventsTypes.Break:
+      enum:
+      - break
+      type: string
+    PrivateHireErrorTaskDateDetails:
+      properties:
+        date:
+          type: string
+        taskId:
+          type: string
+      required:
+      - date
+      - taskId
+      type: object
+    PatchPrivateHireOrderTripsNotFoundErrorResponse:
+      properties:
+        errors:
+          items:
+            $ref: '#/components/schemas/PatchPrivateHireOrderTripsNotFoundError'
+          type: array
+      type: object
+    UpdatePrivateHireTripLockedNotAllowedErrorDetails:
+      properties:
+        taskId:
+          $ref: '#/components/schemas/TaskDisplayIdString'
+      required:
+      - taskId
+      type: object
+    ExternalPrivateHireErrorTypesEnum.InvalidEventsTimeOverlap:
+      enum:
+      - invalidEventsTimeOverlap
+      type: string
+    PrivateHireAPIEvent:
+      properties:
+        distance:
+          type: number
+          format: double
+          description: Estimated distance in meters for the sub-trip that the vehicle will have to travel.
+        note:
+          type: string
+          description: Additional information relating to the sub-trip that could be relevant for the dispatchers.
+        labelCodes:
+          items:
+            type: string
+          type: array
+          description: A collection of label codes where each label specifies a particular characteristic of the private hire event.
+        endLocation:
+          $ref: '#/components/schemas/PrivateHireLocation'
+          description: Geographical information about the sub-trip's destination.
+        startLocation:
+          $ref: '#/components/schemas/PrivateHireLocation'
+          description: Geographical information about the sub-trip's origin.
+        endTime:
+          $ref: '#/components/schemas/TimeHHmmOrISO8601'
+        startTime:
+          $ref: '#/components/schemas/TimeHHmmOrISO8601'
+        type:
+          $ref: '#/components/schemas/PrivateHireEventTypes'
+      required:
+      - endLocation
+      - startLocation
+      - endTime
+      - startTime
+      - type
+      type: object
+    ExternalPrivateHireErrorTypesEnum.TaskIdsAlreadyExists:
+      enum:
+      - taskIdsAlreadyExists
+      type: string
+    ExternalPrivateHireErrorTypesEnum.ConflictProcessingRequest:
+      enum:
+      - conflictProcessingRequest
+      type: string
+    SupportedOrderStatus:
+      type: string
+      enum:
+      - confirmed
+      - cancelled
+      - deleted
+      description: 'Private hire order status.
+
+
+        - `confirmed`: the order is meant to have been paid by the hiring entity.
+
+        In the OPS Optibus platform, when a trip has any driver or vehicle associated, a warning message will be displayed to the inform the dispatchers about this fact.
+
+        - `cancelled`: all trips of a private hire order have been cancelled and the resources associated to it, such as drivers and vehicles, have been freed up.
+
+        - `deleted`: the order has been deleted as well as the trips belonging to that order. The resources associated to it, such as drivers and vehicles, have been freed up.'
+    ExternalPrivateHireErrorTypesEnum.InvalidEventTimeFormat:
+      enum:
+      - invalidEventTimeFormat
+      type: string
+    ExternalPrivateHireErrorTypesEnum.DepotsForMultipleRegionsError:
+      enum:
+      - depotsForMultipleRegionsError
+      type: string
+    ExternalPrivateHireErrorTypesEnum.InvalidEventsChronologicalOrder:
+      enum:
+      - invalidEventsChronologicalOrder
+      type: string
     PrivateHireErrorBeyond36Hours:
       properties:
         details:
@@ -422,27 +715,41 @@ components:
       - message
       - type
       type: object
-    TimeHHmmOrISO8601:
-      anyOf:
-      - $ref: '#/components/schemas/ISO8601Time'
-      - $ref: '#/components/schemas/HourMinuteDuration'
-    PrivateHireErrorInvalidOrderIdFormat:
+    ExternalPatchPrivateHireErrorTypesEnum.OrderAlreadyCancelled:
+      enum:
+      - orderAlreadyCancelled
+      type: string
+    Pick_Vehicle.licensePlate-or-type-or-model-or-availableSeats_:
       properties:
-        details:
-          $ref: '#/components/schemas/PrivateHireErrorInvalidOrderIdFormatDetails'
+        availableSeats:
+          type: number
+          format: double
+        licensePlate:
+          type: string
+        type:
+          type: string
+          deprecated: true
+        model:
+          type: string
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
+    PrivateHireErrorEmptyEvents:
+      properties:
         message:
           type: string
         type:
-          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.InvalidOrderIdFormat'
+          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.PrivateHireEventsEmpty'
       required:
-      - details
       - message
       - type
       type: object
-    ISOWithTimeDate:
-      type: string
-      format: date
-      description: Stringified ISO8601 date in the form of 2017-07-21T23:59:00+03:00
+    PrivateHireErrorDuplicateOrderIdDetails:
+      properties:
+        orderId:
+          $ref: '#/components/schemas/OrderIdString'
+      required:
+      - orderId
+      type: object
     PrivateHireTask:
       properties:
         noVehicleNeeded:
@@ -479,164 +786,46 @@ components:
       - depotName
       - taskId
       type: object
-    ExternalPrivateHireErrorTypesEnum.InvalidEventsChronologicalOrder:
-      enum:
-      - invalidEventsChronologicalOrder
+    NonEmptyString:
       type: string
-    ExternalPatchPrivateHireTripErrorTypesEnum.PrivateHireTripNotFound:
-      enum:
-      - privateHireTripNotFound
-      type: string
-    Omit_PreferencesLabel.type_:
-      $ref: '#/components/schemas/Pick_PreferencesLabel.Exclude_keyofPreferencesLabel.type__'
-      description: Construct a type with the properties of T except for those in type K.
-    ExternalPrivateHireError:
-      anyOf:
-      - $ref: '#/components/schemas/DateTimeValidationErrors'
-      - $ref: '#/components/schemas/PrivateHireErrorDepotName'
-      - $ref: '#/components/schemas/PrivateHireErrorMultipleRegions'
-      - $ref: '#/components/schemas/PrivateHireErrorEmptyPrivateHires'
-      - $ref: '#/components/schemas/PrivateHireErrorEmptyEvents'
-      - $ref: '#/components/schemas/PrivateHireErrorDuplicateOrderId'
-      - $ref: '#/components/schemas/PrivateHireErrorInvalidOrderIdFormat'
-      - $ref: '#/components/schemas/PrivateHiresNonUniqueError'
-      - $ref: '#/components/schemas/PrivateHireErrorDuplicateTaskIds'
-    DateTimeValidationErrors:
-      anyOf:
-      - $ref: '#/components/schemas/PrivateHireErrorEventTime'
-      - $ref: '#/components/schemas/PrivateHireErrorInvalidEventTimeFormat'
-      - $ref: '#/components/schemas/PrivateHireErrorBeyond36Hours'
-      - $ref: '#/components/schemas/PrivateHireErrorEventOverlap'
-      - $ref: '#/components/schemas/PrivateHireErrorEventChronologicalOrder'
-      - $ref: '#/components/schemas/PrivateHireErrorTaskDate'
-    ExternalPrivateHireErrorTypesEnum.InvalidDepotName:
-      enum:
-      - invalidDepotName
-      type: string
-    UpdatePrivateHireTripCancelledNotAllowedError:
+      minLength: 1
+    UpdatePrivateHireTripRegionNotAllowedDetails:
+      properties:
+        newRegionName:
+          type: string
+        newDepotName:
+          type: string
+        currentRegionName:
+          type: string
+        currentDepotName:
+          type: string
+      required:
+      - newRegionName
+      - newDepotName
+      - currentRegionName
+      - currentDepotName
+      type: object
+    PrivateHireErrorTaskDate:
       properties:
         details:
-          $ref: '#/components/schemas/UpdatePrivateHireTripCancelledNotAllowedErrorDetails'
+          $ref: '#/components/schemas/PrivateHireErrorTaskDateDetails'
         message:
           type: string
         type:
-          $ref: '#/components/schemas/ExternalPatchPrivateHireTripErrorTypesEnum.UpdatePrivateHireTripCancelledNotAllowed'
+          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.InvalidDateFormat'
       required:
       - details
       - message
       - type
       type: object
-    PrivateHireWarningInvalidLabelCodeDetails:
+    Pick_PrivateHireTask.taskId_:
       properties:
-        labelCodes:
-          items:
-            type: string
-          type: array
-        eventIndex:
-          type: number
-          format: double
         taskId:
           type: string
       required:
-      - labelCodes
       - taskId
       type: object
-    PatchPrivateHireOrderTripsBadRequestErrorResponse:
-      properties:
-        errors:
-          items:
-            $ref: '#/components/schemas/PatchPrivateHireOrderTripsBadRequestError'
-          type: array
-      type: object
-    OnScheduleEventsTypes.Custom:
-      enum:
-      - custom
-      type: string
-    ConflictProcessingRequestErrorResponse:
-      properties:
-        errors:
-          items:
-            $ref: '#/components/schemas/PrivateHireConflictProcessingRequestError'
-          type: array
-      type: object
-    PrivateHireOrderError:
-      properties:
-        orderId:
-          $ref: '#/components/schemas/OrderIdString'
-      required:
-      - orderId
-      type: object
-    HourMinuteDuration:
-      type: string
-      example: '23:30'
-      description: Representation of the time in `HH:mm` format, where the minimum is `00:00` and maximum `36:00` (12:00 at noon the day after)
-    PrivateHireTripsWithoutChangesError:
-      properties:
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/ExternalPatchPrivateHireTripErrorTypesEnum.PrivateHireTripsWithoutChanges'
-      required:
-      - message
-      - type
-      type: object
-    PatchPrivateHireOrderRequestError:
-      anyOf:
-      - $ref: '#/components/schemas/PrivateHireOrderAlreadyConfirmedError'
-      - $ref: '#/components/schemas/PrivateHireOrderDoesNotHavePrivateHiresError'
-      - $ref: '#/components/schemas/PrivateHireOrderAlreadyCancelledError'
-      - $ref: '#/components/schemas/PrivateHireOrderNonExistentError'
-    ExternalPatchPrivateHireErrorTypesEnum.OrderAlreadyConfirmed:
-      enum:
-      - orderAlreadyConfirmed
-      type: string
-    Pick_Vehicle.id_:
-      properties:
-        id:
-          type: string
-      required:
-      - id
-      type: object
       description: From T, pick a set of properties whose keys are in the union K
-    ISO8601Time:
-      type: string
-      example: '2024-06-30T23:30:00+02:00'
-      description: Representation of the time in ISO8601 format, where the minimum is at the start of the operational day (12am night) and the maximum 12 hours the day after the operational date of the private hire trip (12pm noon the day after)
-    Label:
-      $ref: '#/components/schemas/Omit_PreferencesLabel.type_'
-    PrivateHireErrorMultipleRegions:
-      properties:
-        details:
-          $ref: '#/components/schemas/PrivateHireErrorMultipleRegionsDetails'
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.DepotsForMultipleRegionsError'
-      required:
-      - details
-      - message
-      - type
-      type: object
-    PrivateHireErrorDepotName:
-      properties:
-        details:
-          $ref: '#/components/schemas/PrivateHireErrorDepotNameDetails'
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.InvalidDepotName'
-      required:
-      - details
-      - message
-      - type
-      type: object
-    PrivateHireWarningResponse:
-      properties:
-        warnings:
-          items:
-            $ref: '#/components/schemas/ExternalPrivateHireErrorWarning'
-          type: array
-      type: object
     Pick_PrivateHireTask.taskId-or-depotName-or-date-or-note_:
       properties:
         taskId:
@@ -658,10 +847,42 @@ components:
       - date
       type: object
       description: From T, pick a set of properties whose keys are in the union K
-    ExternalPrivateHireErrorTypesEnum.PrivateHireEventsEmpty:
+    PrivateHireErrorMultipleRegions:
+      properties:
+        details:
+          $ref: '#/components/schemas/PrivateHireErrorMultipleRegionsDetails'
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.DepotsForMultipleRegionsError'
+      required:
+      - details
+      - message
+      - type
+      type: object
+    OtherEventTypes.PullOut:
       enum:
-      - privateHireEventsEmpty
+      - depot_pull_out
       type: string
+    PrivateHireServerErrorResponse:
+      properties:
+        errors:
+          items:
+            $ref: '#/components/schemas/PrivateHireErrorServer'
+          type: array
+      type: object
+    ExternalPrivateHireErrorTypesEnum.PrivateHiresEmpty:
+      enum:
+      - privateHiresEmpty
+      type: string
+    DateTimeValidationErrors:
+      anyOf:
+      - $ref: '#/components/schemas/PrivateHireErrorEventTime'
+      - $ref: '#/components/schemas/PrivateHireErrorInvalidEventTimeFormat'
+      - $ref: '#/components/schemas/PrivateHireErrorBeyond36Hours'
+      - $ref: '#/components/schemas/PrivateHireErrorEventOverlap'
+      - $ref: '#/components/schemas/PrivateHireErrorEventChronologicalOrder'
+      - $ref: '#/components/schemas/PrivateHireErrorTaskDate'
     PrivateHireErrorInvalidEventTimeFormat:
       properties:
         details:
@@ -675,16 +896,119 @@ components:
       - message
       - type
       type: object
-    PrivateHireErrorEmptyPrivateHires:
+    Undefinable_ISOWithTimeDate_:
+      $ref: '#/components/schemas/ISOWithTimeDate'
+    OtherEventTypes.PrivateHire:
+      enum:
+      - private_hire
+      type: string
+    PrivateHireOrderAlreadyCancelledError:
       properties:
+        details:
+          $ref: '#/components/schemas/PrivateHireOrderError'
         message:
           type: string
         type:
-          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.PrivateHiresEmpty'
+          $ref: '#/components/schemas/ExternalPatchPrivateHireErrorTypesEnum.OrderAlreadyCancelled'
       required:
+      - details
       - message
       - type
       type: object
+    ExternalPatchPrivateHireTripErrorTypesEnum.PrivateHireTripNotFound:
+      enum:
+      - privateHireTripNotFound
+      type: string
+    PatchPrivateHireOrderBodyRequest:
+      properties:
+        orderStatus:
+          $ref: '#/components/schemas/SupportedOrderStatus'
+      required:
+      - orderStatus
+      type: object
+    PrivateHireOrderNonExistentError:
+      properties:
+        details:
+          $ref: '#/components/schemas/PrivateHireOrderError'
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/ExternalPatchPrivateHireErrorTypesEnum.OrderNonExistent'
+      required:
+      - details
+      - message
+      - type
+      type: object
+    OtherEventTypes.PullIn:
+      enum:
+      - depot_pull_in
+      type: string
+    PrivateHireEventInResponse:
+      properties:
+        note:
+          type: string
+          description: Additional information relating to the sub-trip that could be relevant for the dispatchers.
+        endLocation:
+          $ref: '#/components/schemas/PrivateHireLocation'
+          description: Geographical information about the sub-trip's destination.
+        startLocation:
+          $ref: '#/components/schemas/PrivateHireLocation'
+          description: Geographical information about the sub-trip's origin.
+        endTime:
+          $ref: '#/components/schemas/TimeHHmmOrISO8601'
+        startTime:
+          $ref: '#/components/schemas/TimeHHmmOrISO8601'
+        distance:
+          type: number
+          format: double
+          description: Estimated distance in meters for the sub-trip that the vehicle will have to travel.
+        type:
+          $ref: '#/components/schemas/PrivateHireEventTypes'
+        eventId:
+          type: string
+          description: Internal UUID to help mapping what vehicle will fulfill the event.
+      required:
+      - endTime
+      - startTime
+      - type
+      - eventId
+      type: object
+    PrivateHireErrorMultipleRegionsDetails:
+      items:
+        properties:
+          depotName:
+            type: string
+          regionName:
+            type: string
+        required:
+        - depotName
+        - regionName
+        type: object
+      type: array
+    UpdatePrivateHireTripCancelledNotAllowedErrorDetails:
+      properties:
+        taskId:
+          type: string
+      required:
+      - taskId
+      type: object
+    PrivateHiresNonUniqueError:
+      properties:
+        details:
+          $ref: '#/components/schemas/PrivateHiresNonUniqueDetails'
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.PrivateHiresNonUnique'
+      required:
+      - details
+      - message
+      - type
+      type: object
+    ExternalPrivateHireWarningTypesEnum.InvalidLabelCode:
+      enum:
+      - invalidLabelCode
+      type: string
     PrivateHireLocation:
       properties:
         lng:
@@ -704,164 +1028,69 @@ components:
       required:
       - name
       type: object
-    ExternalPrivateHireErrorTypesEnum.InvalidEventTimeFormat:
-      enum:
-      - invalidEventTimeFormat
-      type: string
-    ExternalPatchPrivateHireTripErrorTypesEnum.UpdatePrivateHireTripLockedNotAllowed:
-      enum:
-      - UpdatePrivateHireTripLockedNotAllowed
-      type: string
-    PrivateHireOrderInResponse:
+    PatchPrivateHireOrderRequestError:
+      anyOf:
+      - $ref: '#/components/schemas/PrivateHireOrderAlreadyConfirmedError'
+      - $ref: '#/components/schemas/PrivateHireOrderDoesNotHavePrivateHiresError'
+      - $ref: '#/components/schemas/PrivateHireOrderAlreadyCancelledError'
+      - $ref: '#/components/schemas/PrivateHireOrderNonExistentError'
+    PatchPrivateHireTripsBodyRequest:
       properties:
-        cancelledAt:
-          $ref: '#/components/schemas/Undefinable_ISOWithTimeDate_'
-        confirmedAt:
-          $ref: '#/components/schemas/Undefinable_ISOWithTimeDate_'
-        orderId:
-          $ref: '#/components/schemas/OrderIdString'
-      required:
-      - cancelledAt
-      - confirmedAt
-      - orderId
-      type: object
-    ExternalPatchPrivateHireErrorTypesEnum.OrderNonExistent:
-      enum:
-      - orderNonExistent
-      type: string
-    PatchPrivateHireOrderResponse:
-      properties:
-        errors:
+        privateHires:
           items:
-            $ref: '#/components/schemas/PatchPrivateHireOrderRequestError'
+            anyOf:
+            - $ref: '#/components/schemas/PrivateHireTask'
+            - $ref: '#/components/schemas/PatchPrivateHireCancellation'
           type: array
-      type:
-      - object
-      - 'null'
-    PrivateHireErrorEventTime:
+      required:
+      - privateHires
+      type: object
+    Pick_DriverBaseInformation.id-or-firstName-or-lastName_:
       properties:
-        details:
-          $ref: '#/components/schemas/PrivateHireErrorEventTimeDetails'
-        message:
+        id:
           type: string
-        type:
-          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.InvalidEventsTimeOrder'
-      required:
-      - details
-      - message
-      - type
-      type: object
-    PrivateHireOrderNonExistentError:
-      properties:
-        details:
-          $ref: '#/components/schemas/PrivateHireOrderError'
-        message:
+          description: The driver ID provided by the user. It can be up to 36 characters with no gaps.
+        firstName:
           type: string
-        type:
-          $ref: '#/components/schemas/ExternalPatchPrivateHireErrorTypesEnum.OrderNonExistent'
-      required:
-      - details
-      - message
-      - type
-      type: object
-    UpdatePrivateHireTripLockedNotAllowedErrorDetails:
-      properties:
-        taskId:
-          $ref: '#/components/schemas/TaskDisplayIdString'
-      required:
-      - taskId
-      type: object
-    ExternalPatchPrivateHireTripErrorTypesEnum.PrivateHireTripsWithoutChanges:
-      enum:
-      - privateHireTripsWithoutChanges
-      type: string
-    ExternalPrivateHireErrorTypesEnum.TaskIdsAlreadyExists:
-      enum:
-      - taskIdsAlreadyExists
-      type: string
-    OtherEventTypes.PullIn:
-      enum:
-      - depot_pull_in
-      type: string
-    ExternalPrivateHireWarningTypesEnum.InvalidLabelCode:
-      enum:
-      - invalidLabelCode
-      type: string
-    OnScheduleEventsTypes.Deadhead:
-      enum:
-      - deadhead
-      type: string
-    PrivateHireErrorDuplicateTaskIds:
-      properties:
-        details:
-          $ref: '#/components/schemas/PrivateHireErrorDuplicateTaskIdDetails'
-        message:
+          description: The driver’s first name
+        lastName:
           type: string
-        type:
-          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.TaskIdsAlreadyExists'
+          description: The driver’s last name
       required:
-      - details
-      - message
-      - type
+      - id
+      - firstName
+      - lastName
       type: object
-    PrivateHireTripNotFoundError:
-      properties:
-        details:
-          $ref: '#/components/schemas/PrivateHireTripNotFoundDetails'
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/ExternalPatchPrivateHireTripErrorTypesEnum.PrivateHireTripNotFound'
-      required:
-      - details
-      - message
-      - type
-      type: object
+      description: From T, pick a set of properties whose keys are in the union K
     ExternalPrivateHireErrorTypesEnum.PrivateHiresNonUnique:
       enum:
       - privateHiresNonUnique
       type: string
-    PrivateHireErrorEventChronologicalOrder:
-      properties:
-        details:
-          $ref: '#/components/schemas/PrivateHireErrorEventTimeDetails'
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.InvalidEventsChronologicalOrder'
-      required:
-      - details
-      - message
-      - type
-      type: object
-    PrivateHireWarningInvalidLabelCode:
-      properties:
-        details:
-          $ref: '#/components/schemas/PrivateHireWarningInvalidLabelCodeDetails'
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/ExternalPrivateHireWarningTypesEnum.InvalidLabelCode'
-      required:
-      - details
-      - message
-      - type
-      type: object
     ExternalPatchPrivateHireTripErrorTypesEnum.UpdatePrivateHireTripCancelledNotAllowed:
       enum:
       - updatePrivateHireTripCancelledNotAllowed
       type: string
-    PrivateHireServerErrorResponse:
+    UpdatePrivateHireTripRegionNotAllowedError:
       properties:
-        errors:
-          items:
-            $ref: '#/components/schemas/PrivateHireErrorServer'
-          type: array
+        details:
+          $ref: '#/components/schemas/UpdatePrivateHireTripRegionNotAllowedDetails'
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/ExternalPatchPrivateHireTripErrorTypesEnum.UpdatePrivateHireTripRegionNotAllowed'
+      required:
+      - details
+      - message
+      - type
       type: object
-    ExternalPatchPrivateHireTripErrorTypesEnum.UpdatePrivateHireTripRegionNotAllowed:
-      enum:
-      - updatePrivateHireTripRegionNotAllowed
+    TimeHHmmOrISO8601:
+      anyOf:
+      - $ref: '#/components/schemas/ISO8601Time'
+      - $ref: '#/components/schemas/HourMinuteDuration'
+    ISOWithTimeDate:
       type: string
+      format: date
+      description: Stringified ISO8601 date in the form of 2017-07-21T23:59:00+03:00
     PrivateHireErrorDepotNameDetails:
       properties:
         status:
@@ -888,56 +1117,102 @@ components:
       - depotName
       - taskId
       type: object
-    TaskDisplayIdString:
-      type: string
-      description: External identifier of a private hire trip that should be unique within the system and that will be used internally in Optibus as the display ID.
-      minLength: 1
-      maxLength: 1000
-    PrivateHireErrorInvalidOrderIdFormatDetails:
+    PostPrivateHireOrderRequest:
       properties:
+        orderStatus:
+          type: string
+          enum:
+          - confirmed
         orderId:
           $ref: '#/components/schemas/OrderIdString'
+        privateHires:
+          items:
+            $ref: '#/components/schemas/PrivateHireTask'
+          type: array
+          description: Representation of trips within a private hire order
       required:
       - orderId
+      - privateHires
       type: object
-    PatchPrivateHireOrderNotExistResponse:
+    PrivateHireErrorEventTime:
+      properties:
+        details:
+          $ref: '#/components/schemas/PrivateHireErrorEventTimeDetails'
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.InvalidEventsTimeOrder'
+      required:
+      - details
+      - message
+      - type
+      type: object
+    PrivateHireErrorInvalidOrderIdFormat:
+      properties:
+        details:
+          $ref: '#/components/schemas/PrivateHireErrorInvalidOrderIdFormatDetails'
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.InvalidOrderIdFormat'
+      required:
+      - details
+      - message
+      - type
+      type: object
+    PatchPrivateHireOrderTripsBadRequestError:
+      anyOf:
+      - $ref: '#/components/schemas/DateTimeValidationErrors'
+      - $ref: '#/components/schemas/PrivateHireOrderDoesNotHavePrivateHiresError'
+      - $ref: '#/components/schemas/UpdatePrivateHireTripRegionNotAllowedError'
+      - $ref: '#/components/schemas/PrivateHireTripsWithoutChangesError'
+      - $ref: '#/components/schemas/PrivateHireErrorDepotName'
+      - $ref: '#/components/schemas/PrivateHireErrorEmptyPrivateHires'
+      - $ref: '#/components/schemas/PrivateHireErrorEmptyEvents'
+      - $ref: '#/components/schemas/PrivateHireErrorInvalidOrderIdFormat'
+      - $ref: '#/components/schemas/UpdatePrivateHireTripCancelledNotAllowedError'
+      - $ref: '#/components/schemas/PrivateHiresNonUniqueError'
+      - $ref: '#/components/schemas/UpdatePrivateHireTripLockedNotAllowedError'
+    Omit_PreferencesLabel.type_:
+      $ref: '#/components/schemas/Pick_PreferencesLabel.Exclude_keyofPreferencesLabel.type__'
+      description: Construct a type with the properties of T except for those in type K.
+    PrivateHireErrorDepotName:
+      properties:
+        details:
+          $ref: '#/components/schemas/PrivateHireErrorDepotNameDetails'
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.InvalidDepotName'
+      required:
+      - details
+      - message
+      - type
+      type: object
+    ConflictProcessingRequestErrorResponse:
       properties:
         errors:
           items:
-            $ref: '#/components/schemas/PrivateHireOrderNonExistentError'
+            $ref: '#/components/schemas/PrivateHireConflictProcessingRequestError'
           type: array
       type: object
-    PrivateHireErrorEventTimeDetails:
-      properties:
-        eventErrors:
-          items:
-            properties:
-              endTime:
-                type: string
-              startTime:
-                type: string
-              eventIndex:
-                type: number
-                format: double
-            required:
-            - eventIndex
-            type: object
-          type: array
-        taskId:
-          $ref: '#/components/schemas/TaskDisplayIdString'
-      required:
-      - eventErrors
-      - taskId
-      type: object
-    NonEmptyString:
+    ExternalPatchPrivateHireTripErrorTypesEnum.UpdatePrivateHireTripRegionNotAllowed:
+      enum:
+      - updatePrivateHireTripRegionNotAllowed
       type: string
-      minLength: 1
-    ExternalPrivateHireErrorWarning:
-      $ref: '#/components/schemas/PrivateHireWarningInvalidLabelCode'
-    PatchPrivateHireOrderTripsNotFoundError:
-      anyOf:
-      - $ref: '#/components/schemas/PrivateHireTripNotFoundError'
-      - $ref: '#/components/schemas/PrivateHireOrderNonExistentError'
+    UpdatePrivateHireTripLockedNotAllowedError:
+      properties:
+        details:
+          $ref: '#/components/schemas/UpdatePrivateHireTripLockedNotAllowedErrorDetails'
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/ExternalPatchPrivateHireTripErrorTypesEnum.UpdatePrivateHireTripLockedNotAllowed'
+      required:
+      - details
+      - message
+      - type
+      type: object
     PrivateHireTaskInResponse:
       allOf:
       - $ref: '#/components/schemas/Pick_PrivateHireTask.taskId-or-depotName-or-date-or-note_'
@@ -979,441 +1254,22 @@ components:
         - depotCode
         - regionName
         type: object
-    ExternalPrivateHireErrorTypesEnum.EventTimeNotWithin36Hours:
+    ExternalPrivateHireErrorTypesEnum.InvalidDepotName:
       enum:
-      - eventTimeNotWithin36Hours
+      - invalidDepotName
       type: string
-    PrivateHireAPIEvent:
-      properties:
-        distance:
-          type: number
-          format: double
-          description: Estimated distance in meters for the sub-trip that the vehicle will have to travel.
-        note:
-          type: string
-          description: Additional information relating to the sub-trip that could be relevant for the dispatchers.
-        labelCodes:
-          items:
-            type: string
-          type: array
-          description: A collection of label codes where each label specifies a particular characteristic of the private hire event.
-        endLocation:
-          $ref: '#/components/schemas/PrivateHireLocation'
-          description: Geographical information about the sub-trip's destination.
-        startLocation:
-          $ref: '#/components/schemas/PrivateHireLocation'
-          description: Geographical information about the sub-trip's origin.
-        endTime:
-          $ref: '#/components/schemas/TimeHHmmOrISO8601'
-        startTime:
-          $ref: '#/components/schemas/TimeHHmmOrISO8601'
-        type:
-          $ref: '#/components/schemas/PrivateHireEventTypes'
-      required:
-      - endLocation
-      - startLocation
-      - endTime
-      - startTime
-      - type
-      type: object
-    OnScheduleEventsTypes.Break:
-      enum:
-      - break
-      type: string
-    PrivateHireErrorMultipleRegionsDetails:
-      items:
-        properties:
-          depotName:
-            type: string
-          regionName:
-            type: string
-        required:
-        - depotName
-        - regionName
-        type: object
-      type: array
-    Pick_PreferencesLabel.Exclude_keyofPreferencesLabel.type__:
-      properties:
-        name:
-          type: string
-        code:
-          type: string
-      required:
-      - name
-      - code
-      type: object
-      description: From T, pick a set of properties whose keys are in the union K
-    ExternalPrivateHireErrorTypesEnum.ConflictProcessingRequest:
-      enum:
-      - conflictProcessingRequest
-      type: string
-    PrivateHireErrorDuplicateOrderId:
+    PrivateHireErrorDuplicateTaskIds:
       properties:
         details:
-          $ref: '#/components/schemas/PrivateHireErrorDuplicateOrderIdDetails'
+          $ref: '#/components/schemas/PrivateHireErrorDuplicateTaskIdDetails'
         message:
           type: string
         type:
-          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.OrderIdAlreadyExists'
+          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.TaskIdsAlreadyExists'
       required:
       - details
       - message
       - type
-      type: object
-    PatchPrivateHireTripsBodyRequest:
-      properties:
-        privateHires:
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/PrivateHireTask'
-            - $ref: '#/components/schemas/PatchPrivateHireCancellation'
-          type: array
-      required:
-      - privateHires
-      type: object
-    ExternalPrivateHireErrorTypesEnum.InvalidEventsTimeOverlap:
-      enum:
-      - invalidEventsTimeOverlap
-      type: string
-    PrivateHireErrorDuplicateOrderIdDetails:
-      properties:
-        orderId:
-          $ref: '#/components/schemas/OrderIdString'
-      required:
-      - orderId
-      type: object
-    GetPrivateHireOrderResponseError:
-      $ref: '#/components/schemas/PatchPrivateHireOrderNotExistResponse'
-    PrivateHireErrorDuplicateTaskIdDetails:
-      properties:
-        taskId:
-          $ref: '#/components/schemas/TaskDisplayIdString'
-      required:
-      - taskId
-      type: object
-    PrivateHireErrorResponse:
-      properties:
-        errors:
-          items:
-            $ref: '#/components/schemas/ExternalPrivateHireError'
-          type: array
-      type: object
-    PrivateHireEventInResponse:
-      properties:
-        note:
-          type: string
-          description: Additional information relating to the sub-trip that could be relevant for the dispatchers.
-        endLocation:
-          $ref: '#/components/schemas/PrivateHireLocation'
-          description: Geographical information about the sub-trip's destination.
-        startLocation:
-          $ref: '#/components/schemas/PrivateHireLocation'
-          description: Geographical information about the sub-trip's origin.
-        endTime:
-          $ref: '#/components/schemas/TimeHHmmOrISO8601'
-        startTime:
-          $ref: '#/components/schemas/TimeHHmmOrISO8601'
-        distance:
-          type: number
-          format: double
-          description: Estimated distance in meters for the sub-trip that the vehicle will have to travel.
-        type:
-          $ref: '#/components/schemas/PrivateHireEventTypes'
-        eventId:
-          type: string
-          description: Internal UUID to help mapping what vehicle will fulfill the event.
-      required:
-      - endTime
-      - startTime
-      - type
-      - eventId
-      type: object
-    PrivateHireEventTypes:
-      anyOf:
-      - $ref: '#/components/schemas/OnScheduleEventsTypes.Deadhead'
-      - $ref: '#/components/schemas/OnScheduleEventsTypes.Custom'
-      - $ref: '#/components/schemas/OnScheduleEventsTypes.Break'
-      - $ref: '#/components/schemas/OtherEventTypes.PullIn'
-      - $ref: '#/components/schemas/OtherEventTypes.PullOut'
-      - $ref: '#/components/schemas/OtherEventTypes.PrivateHire'
-    PrivateHireOrderAlreadyCancelledError:
-      properties:
-        details:
-          $ref: '#/components/schemas/PrivateHireOrderError'
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/ExternalPatchPrivateHireErrorTypesEnum.OrderAlreadyCancelled'
-      required:
-      - details
-      - message
-      - type
-      type: object
-    ExternalPrivateHireErrorTypesEnum.InvalidEventsTimeOrder:
-      enum:
-      - invalidEventsTimeOrder
-      type: string
-    PostPrivateHireOrderRequest:
-      properties:
-        orderStatus:
-          type: string
-          enum:
-          - confirmed
-        orderId:
-          $ref: '#/components/schemas/OrderIdString'
-        privateHires:
-          items:
-            $ref: '#/components/schemas/PrivateHireTask'
-          type: array
-          description: Representation of trips within a private hire order
-      required:
-      - orderId
-      - privateHires
-      type: object
-    ExternalPrivateHireErrorTypesEnum.PrivateHiresEmpty:
-      enum:
-      - privateHiresEmpty
-      type: string
-    Pick_PrivateHireTask.taskId_:
-      properties:
-        taskId:
-          type: string
-      required:
-      - taskId
-      type: object
-      description: From T, pick a set of properties whose keys are in the union K
-    PrivateHireOrderDoesNotHavePrivateHiresError:
-      properties:
-        details:
-          $ref: '#/components/schemas/PrivateHireOrderError'
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/ExternalPatchPrivateHireErrorTypesEnum.OrderDoesNotHavePrivateHires'
-      required:
-      - details
-      - message
-      - type
-      type: object
-    PatchPrivateHireOrderBodyRequest:
-      properties:
-        orderStatus:
-          $ref: '#/components/schemas/SupportedOrderStatus'
-      required:
-      - orderStatus
-      type: object
-    ExternalPrivateHireErrorTypesEnum.OrderIdAlreadyExists:
-      enum:
-      - orderIdAlreadyExists
-      type: string
-    ExternalPatchPrivateHireErrorTypesEnum.OrderDoesNotHavePrivateHires:
-      enum:
-      - orderDoesNotHavePrivateHires
-      type: string
-    Pick_DriverBaseInformation.id-or-firstName-or-lastName_:
-      properties:
-        id:
-          type: string
-          description: The driver ID provided by the user. It can be up to 36 characters with no gaps.
-        firstName:
-          type: string
-          description: The driver’s first name
-        lastName:
-          type: string
-          description: The driver’s last name
-      required:
-      - id
-      - firstName
-      - lastName
-      type: object
-      description: From T, pick a set of properties whose keys are in the union K
-    PrivateHireConflictProcessingRequestError:
-      properties:
-        message:
-          type: string
-          description: The request cannot be processed right now, because the system is currently sequentially processing other requests received briefly ago. Please wait and try again in a few seconds.
-        type:
-          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.ConflictProcessingRequest'
-      required:
-      - message
-      - type
-      type: object
-    Pick_Vehicle.licensePlate-or-type-or-model-or-availableSeats_:
-      properties:
-        availableSeats:
-          type: number
-          format: double
-        licensePlate:
-          type: string
-        type:
-          type: string
-          deprecated: true
-        model:
-          type: string
-      type: object
-      description: From T, pick a set of properties whose keys are in the union K
-    Undefinable_ISOWithTimeDate_:
-      $ref: '#/components/schemas/ISOWithTimeDate'
-    VehicleInResponse:
-      allOf:
-      - $ref: '#/components/schemas/Pick_Vehicle.id_'
-      - properties:
-          eventIds:
-            items:
-              type: string
-            type: array
-            description: Mapping of the events that the vehicle will fulfil.
-          attributes:
-            $ref: '#/components/schemas/Pick_Vehicle.licensePlate-or-type-or-model-or-availableSeats_'
-        required:
-        - eventIds
-        - attributes
-        type: object
-    ExternalPrivateHireErrorTypesEnum.InvalidOrderIdFormat:
-      enum:
-      - invalidOrderIdFormat
-      type: string
-    PatchPrivateHireCancellation:
-      allOf:
-      - $ref: '#/components/schemas/Pick_PrivateHireTask.taskId_'
-      - properties:
-          status:
-            type: string
-            enum:
-            - cancelled
-        required:
-        - status
-        type: object
-    PrivateHireErrorEmptyEvents:
-      properties:
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.PrivateHireEventsEmpty'
-      required:
-      - message
-      - type
-      type: object
-    PrivateHireTripNotFoundDetails:
-      properties:
-        availableTaskIds:
-          items:
-            type: string
-          type: array
-        taskId:
-          $ref: '#/components/schemas/TaskDisplayIdString'
-      required:
-      - availableTaskIds
-      - taskId
-      type: object
-    PrivateHireOrderAlreadyConfirmedError:
-      properties:
-        details:
-          $ref: '#/components/schemas/PrivateHireOrderError'
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/ExternalPatchPrivateHireErrorTypesEnum.OrderAlreadyConfirmed'
-      required:
-      - details
-      - message
-      - type
-      type: object
-    UpdatePrivateHireTripLockedNotAllowedError:
-      properties:
-        details:
-          $ref: '#/components/schemas/UpdatePrivateHireTripLockedNotAllowedErrorDetails'
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/ExternalPatchPrivateHireTripErrorTypesEnum.UpdatePrivateHireTripLockedNotAllowed'
-      required:
-      - details
-      - message
-      - type
-      type: object
-    GetPrivateHireOrderResponse:
-      anyOf:
-      - allOf:
-        - properties:
-            privateHires:
-              items:
-                $ref: '#/components/schemas/PrivateHireTaskInResponse'
-              type: array
-          required:
-          - privateHires
-          type: object
-        - $ref: '#/components/schemas/PrivateHireOrderInResponse'
-      - $ref: '#/components/schemas/GetPrivateHireOrderResponseError'
-    PrivateHiresNonUniqueError:
-      properties:
-        details:
-          $ref: '#/components/schemas/PrivateHiresNonUniqueDetails'
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.PrivateHiresNonUnique'
-      required:
-      - details
-      - message
-      - type
-      type: object
-    ExternalPrivateHireErrorTypesEnum.ServerError:
-      enum:
-      - serverError
-      type: string
-    UpdatePrivateHireTripCancelledNotAllowedErrorDetails:
-      properties:
-        taskId:
-          type: string
-      required:
-      - taskId
-      type: object
-    PrivateHireErrorServer:
-      properties:
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.ServerError'
-      required:
-      - message
-      - type
-      type: object
-    SupportedOrderStatus:
-      type: string
-      enum:
-      - confirmed
-      - cancelled
-      - deleted
-      description: 'Private hire order status.
-
-
-        - `confirmed`: the order is meant to have been paid by the hiring entity.
-
-        In the OPS Optibus platform, when a trip has any driver or vehicle associated, a warning message will be displayed to the inform the dispatchers about this fact.
-
-        - `cancelled`: all trips of a private hire order have been cancelled and the resources associated to it, such as drivers and vehicles, have been freed up.
-
-        - `deleted`: the order has been deleted as well as the trips belonging to that order. The resources associated to it, such as drivers and vehicles, have been freed up.'
-    OtherEventTypes.PullOut:
-      enum:
-      - depot_pull_out
-      type: string
-    UpdatePrivateHireTripRegionNotAllowedDetails:
-      properties:
-        newRegionName:
-          type: string
-        newDepotName:
-          type: string
-        currentRegionName:
-          type: string
-        currentDepotName:
-          type: string
-      required:
-      - newRegionName
-      - newDepotName
-      - currentRegionName
-      - currentDepotName
       type: object
     PrivateHiresNonUniqueDetails:
       properties:
@@ -1432,77 +1288,221 @@ components:
       required:
       - duplicatedPrivateHires
       type: object
-    PatchPrivateHireOrderTripsNotFoundErrorResponse:
+    ExternalPrivateHireErrorTypesEnum.InvalidDateFormat:
+      enum:
+      - invalidDateFormat
+      type: string
+    ExternalPatchPrivateHireErrorTypesEnum.OrderAlreadyConfirmed:
+      enum:
+      - orderAlreadyConfirmed
+      type: string
+    UpdatePrivateHireTripCancelledNotAllowedError:
+      properties:
+        details:
+          $ref: '#/components/schemas/UpdatePrivateHireTripCancelledNotAllowedErrorDetails'
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/ExternalPatchPrivateHireTripErrorTypesEnum.UpdatePrivateHireTripCancelledNotAllowed'
+      required:
+      - details
+      - message
+      - type
+      type: object
+    PrivateHireErrorDuplicateOrderId:
+      properties:
+        details:
+          $ref: '#/components/schemas/PrivateHireErrorDuplicateOrderIdDetails'
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.OrderIdAlreadyExists'
+      required:
+      - details
+      - message
+      - type
+      type: object
+    PrivateHireOrderInResponse:
+      properties:
+        cancelledAt:
+          $ref: '#/components/schemas/Undefinable_ISOWithTimeDate_'
+        confirmedAt:
+          $ref: '#/components/schemas/Undefinable_ISOWithTimeDate_'
+        orderId:
+          $ref: '#/components/schemas/OrderIdString'
+      required:
+      - cancelledAt
+      - confirmedAt
+      - orderId
+      type: object
+    ExternalPrivateHireErrorTypesEnum.EventTimeNotWithin36Hours:
+      enum:
+      - eventTimeNotWithin36Hours
+      type: string
+    ExternalPatchPrivateHireTripErrorTypesEnum.PrivateHireTripsWithoutChanges:
+      enum:
+      - privateHireTripsWithoutChanges
+      type: string
+    GetPrivateHireOrderResponse:
+      anyOf:
+      - allOf:
+        - properties:
+            privateHires:
+              items:
+                $ref: '#/components/schemas/PrivateHireTaskInResponse'
+              type: array
+          required:
+          - privateHires
+          type: object
+        - $ref: '#/components/schemas/PrivateHireOrderInResponse'
+      - $ref: '#/components/schemas/GetPrivateHireOrderResponseError'
+    PrivateHireOrderAlreadyConfirmedError:
+      properties:
+        details:
+          $ref: '#/components/schemas/PrivateHireOrderError'
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/ExternalPatchPrivateHireErrorTypesEnum.OrderAlreadyConfirmed'
+      required:
+      - details
+      - message
+      - type
+      type: object
+    PrivateHireErrorEventOverlap:
+      properties:
+        details:
+          $ref: '#/components/schemas/PrivateHireErrorEventTimeDetails'
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.InvalidEventsTimeOverlap'
+      required:
+      - details
+      - message
+      - type
+      type: object
+    ExternalPatchPrivateHireTripErrorTypesEnum.UpdatePrivateHireTripLockedNotAllowed:
+      enum:
+      - UpdatePrivateHireTripLockedNotAllowed
+      type: string
+    PrivateHireWarningInvalidLabelCodeDetails:
+      properties:
+        labelCodes:
+          items:
+            type: string
+          type: array
+        eventIndex:
+          type: number
+          format: double
+        taskId:
+          type: string
+      required:
+      - labelCodes
+      - taskId
+      type: object
+    PrivateHireTripsWithoutChangesError:
+      properties:
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/ExternalPatchPrivateHireTripErrorTypesEnum.PrivateHireTripsWithoutChanges'
+      required:
+      - message
+      - type
+      type: object
+    PrivateHireErrorEventTimeDetails:
+      properties:
+        eventErrors:
+          items:
+            properties:
+              endTime:
+                type: string
+              startTime:
+                type: string
+              eventIndex:
+                type: number
+                format: double
+            required:
+            - eventIndex
+            type: object
+          type: array
+        taskId:
+          $ref: '#/components/schemas/TaskDisplayIdString'
+      required:
+      - eventErrors
+      - taskId
+      type: object
+    PatchPrivateHireOrderTripsBadRequestErrorResponse:
       properties:
         errors:
           items:
-            $ref: '#/components/schemas/PatchPrivateHireOrderTripsNotFoundError'
+            $ref: '#/components/schemas/PatchPrivateHireOrderTripsBadRequestError'
           type: array
       type: object
-    Undefinable_Pick_DriverBaseInformation.id-or-firstName-or-lastName__:
-      $ref: '#/components/schemas/Pick_DriverBaseInformation.id-or-firstName-or-lastName_'
-    PatchPrivateHireOrderTripsBadRequestError:
-      anyOf:
-      - $ref: '#/components/schemas/DateTimeValidationErrors'
-      - $ref: '#/components/schemas/PrivateHireOrderDoesNotHavePrivateHiresError'
-      - $ref: '#/components/schemas/UpdatePrivateHireTripRegionNotAllowedError'
-      - $ref: '#/components/schemas/PrivateHireTripsWithoutChangesError'
-      - $ref: '#/components/schemas/PrivateHireErrorDepotName'
-      - $ref: '#/components/schemas/PrivateHireErrorEmptyPrivateHires'
-      - $ref: '#/components/schemas/PrivateHireErrorEmptyEvents'
-      - $ref: '#/components/schemas/PrivateHireErrorInvalidOrderIdFormat'
-      - $ref: '#/components/schemas/UpdatePrivateHireTripCancelledNotAllowedError'
-      - $ref: '#/components/schemas/PrivateHiresNonUniqueError'
-      - $ref: '#/components/schemas/UpdatePrivateHireTripLockedNotAllowedError'
-    UpdatePrivateHireTripRegionNotAllowedError:
+    PrivateHireConflictProcessingRequestError:
       properties:
-        details:
-          $ref: '#/components/schemas/UpdatePrivateHireTripRegionNotAllowedDetails'
         message:
           type: string
+          description: The request cannot be processed right now, because the system is currently sequentially processing other requests received briefly ago. Please wait and try again in a few seconds.
         type:
-          $ref: '#/components/schemas/ExternalPatchPrivateHireTripErrorTypesEnum.UpdatePrivateHireTripRegionNotAllowed'
+          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.ConflictProcessingRequest'
       required:
-      - details
       - message
       - type
       type: object
-    PrivateHireErrorTaskDate:
+    ISO8601Time:
+      type: string
+      example: '2024-06-30T23:30:00+02:00'
+      description: Representation of the time in ISO8601 format, where the minimum is at the start of the operational day (12am night) and the maximum 12 hours the day after the operational date of the private hire trip (12pm noon the day after)
+    ExternalPrivateHireErrorTypesEnum.InvalidEventsTimeOrder:
+      enum:
+      - invalidEventsTimeOrder
+      type: string
+    PatchPrivateHireOrderNotExistResponse:
       properties:
-        details:
-          $ref: '#/components/schemas/PrivateHireErrorTaskDateDetails'
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/ExternalPrivateHireErrorTypesEnum.InvalidDateFormat'
-      required:
-      - details
-      - message
-      - type
+        errors:
+          items:
+            $ref: '#/components/schemas/PrivateHireOrderNonExistentError'
+          type: array
       type: object
+    PatchPrivateHireCancellation:
+      allOf:
+      - $ref: '#/components/schemas/Pick_PrivateHireTask.taskId_'
+      - properties:
+          status:
+            type: string
+            enum:
+            - cancelled
+        required:
+        - status
+        type: object
+    ExternalPrivateHireErrorTypesEnum.OrderIdAlreadyExists:
+      enum:
+      - orderIdAlreadyExists
+      type: string
     OrderIdString:
       type: string
       description: External identifier of a private hire order that should be unique within the system
       minLength: 1
       maxLength: 255
-    ExternalPrivateHireErrorTypesEnum.InvalidDateFormat:
+    ExternalPrivateHireErrorTypesEnum.InvalidOrderIdFormat:
       enum:
-      - invalidDateFormat
+      - invalidOrderIdFormat
       type: string
-    PrivateHireErrorTaskDateDetails:
-      properties:
-        date:
-          type: string
-        taskId:
-          type: string
-      required:
-      - date
-      - taskId
-      type: object
-    OtherEventTypes.PrivateHire:
-      enum:
-      - private_hire
-      type: string
+    ExternalPrivateHireError:
+      anyOf:
+      - $ref: '#/components/schemas/DateTimeValidationErrors'
+      - $ref: '#/components/schemas/PrivateHireErrorDepotName'
+      - $ref: '#/components/schemas/PrivateHireErrorMultipleRegions'
+      - $ref: '#/components/schemas/PrivateHireErrorEmptyPrivateHires'
+      - $ref: '#/components/schemas/PrivateHireErrorEmptyEvents'
+      - $ref: '#/components/schemas/PrivateHireErrorDuplicateOrderId'
+      - $ref: '#/components/schemas/PrivateHireErrorInvalidOrderIdFormat'
+      - $ref: '#/components/schemas/PrivateHiresNonUniqueError'
+      - $ref: '#/components/schemas/PrivateHireErrorDuplicateTaskIds'
+    ExternalPrivateHireErrorWarning:
+      $ref: '#/components/schemas/PrivateHireWarningInvalidLabelCode'
   securitySchemes:
     api_key:
       type: apiKey

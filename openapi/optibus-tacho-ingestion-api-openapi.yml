@@ -62,14 +62,17 @@ paths:
               $ref: '#/components/schemas/PostTachoActivitiesRequest'
 components:
   schemas:
-    TachoActivityType:
-      description: The type of tachograph activity recorded for the driver.
-      enum:
-      - drive
-      - work
-      - available
-      - rest
-      type: string
+    PostTachoActivitiesRequest:
+      properties:
+        activities:
+          items:
+            $ref: '#/components/schemas/TachoActivity'
+          type: array
+          minItems: 1
+          maxItems: 5000
+      required:
+      - activities
+      type: object
     TypedErrorResponse_Invalidrequestschema_:
       properties:
         details: {}
@@ -83,26 +86,6 @@ components:
       - message
       - type
       type: object
-    TypedApiErrorResponse_PostTachoActivitiesErrorTypes_:
-      properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_PostTachoActivitiesErrorTypes_'
-      required:
-      - error
-      type: object
-    PostTachoActivitiesErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_PostTachoActivitiesErrorTypes_'
-    PostTachoActivitiesRequest:
-      properties:
-        activities:
-          items:
-            $ref: '#/components/schemas/TachoActivity'
-          type: array
-          minItems: 1
-          maxItems: 5000
-      required:
-      - activities
-      type: object
     TypedApiErrorResponse_Invalidrequestschema_:
       properties:
         error:
@@ -110,23 +93,27 @@ components:
       required:
       - error
       type: object
-    SchemaValidationErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
+    PostTachoActivitiesErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_PostTachoActivitiesErrorTypes_'
+    TypedApiErrorResponse_PostTachoActivitiesErrorTypes_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_PostTachoActivitiesErrorTypes_'
+      required:
+      - error
+      type: object
+    TachoActivityType:
+      description: The type of tachograph activity recorded for the driver.
+      enum:
+      - drive
+      - work
+      - available
+      - rest
+      type: string
     PostTachoActivitiesErrorTypes:
       type: string
       enum:
       - invalidTimeRange
-    TypedErrorResponse_PostTachoActivitiesErrorTypes_:
-      properties:
-        details: {}
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/PostTachoActivitiesErrorTypes'
-      required:
-      - message
-      - type
-      type: object
     TachoActivity:
       properties:
         rawExternalCode:
@@ -176,12 +163,25 @@ components:
       - vehicleId
       - driverId
       type: object
+    TypedErrorResponse_PostTachoActivitiesErrorTypes_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/PostTachoActivitiesErrorTypes'
+      required:
+      - message
+      - type
+      type: object
     StringifyDateTime:
       type: string
       format: date-time
       description: 'Stringified date-time.
 
         date-time notation as defined by [RFC 3339](https://tools.ietf.org/html/rfc3339#section-5.6), section 5.6, for example,2017-07-21T17:32:28Z'
+    SchemaValidationErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
   securitySchemes:
     api_key:
       type: apiKey

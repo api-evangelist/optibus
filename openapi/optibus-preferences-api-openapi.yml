@@ -64,24 +64,10 @@ paths:
       parameters: []
 components:
   schemas:
-    AbsenceType:
-      properties:
-        name:
-          type: string
-        code:
-          type: string
-      required:
-      - name
-      - code
-      type: object
     GetPreferencesHolidaysResponse:
       items:
         $ref: '#/components/schemas/HolidayInfo'
       type: array
-    StringifyDate:
-      type: string
-      format: date
-      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
     GetPreferencesAbsenceTypesResponse:
       properties:
         absenceTypes:
@@ -100,6 +86,20 @@ components:
       required:
       - to
       - from
+      type: object
+    StringifyDate:
+      type: string
+      format: date
+      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
+    AbsenceType:
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+      required:
+      - name
+      - code
       type: object
     HolidayInfo:
       properties:

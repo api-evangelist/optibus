@@ -38,157 +38,6 @@ paths:
               $ref: '#/components/schemas/RealTimeOperationODS'
 components:
   schemas:
-    ScheduleEventsType:
-      anyOf:
-      - $ref: '#/components/schemas/CustomScheduleEventsTypes'
-      - $ref: '#/components/schemas/OnScheduleEventsTypes'
-      - $ref: '#/components/schemas/OtherEventTypes'
-      - $ref: '#/components/schemas/ReliefCarEventsTypes'
-    RealTimeOperations:
-      enum:
-      - cut_duty
-      - cut_block
-      - assign_duty
-      - unassign_duty
-      - swap_duty_assignment
-      - assign_block
-      - unassign_block
-      - swap_block
-      - cancel_duty
-      - reactivate_duty
-      - delete_duty
-      type: string
-    RunODS:
-      properties:
-        split_part:
-          type: string
-          description: '(Optional) Chronological part of the duty that was split between the amount of parts
-
-            (e.g., "1/3" for the first part of a split duty in 3 pieces)'
-        cancellation_cause:
-          $ref: '#/components/schemas/CancellationCauseODS'
-          description: '(Optional) Cause selected by the dispatcher when soft-cancelling the duty.
-
-            Present only on `cancel` operations and only when the customer has configured causes.'
-        entity_operation:
-          $ref: '#/components/schemas/EntityOperationType'
-          description: Type of operation (create, update, delete, cancel, or reactivate) to be applied to the run
-        reference_from:
-          $ref: '#/components/schemas/RunReferenceFrom'
-          description: Indicates whether the run is split or clone from an original run
-        original_run_internal_id:
-          type: string
-          description: '(Optional) References the original run when the run is split or copied from another run,
-
-            using a UUID that guarantees uniqueness'
-        original_run_id:
-          type: string
-          description: (Optional) References the original run when the run is split or copied from another run
-        run_internal_id:
-          type: string
-          description: Internal identifier for the run to which this event belongs, which guarantees uniqueness
-        run_id:
-          type: string
-          description: 'Identifier for the run to which this event belongs in a readable format
-
-            that doesn''t guarantee uniqueness'
-        service_id:
-          type: string
-          description: (Optional) Identifier referencing the service
-      required:
-      - entity_operation
-      - run_internal_id
-      - run_id
-      type: object
-      description: Run data, which involves the definition of a set of trips or duties
-    RunReferenceFrom:
-      type: string
-      enum:
-      - clone
-      - split
-    ReliefCarEventsTypes:
-      enum:
-      - relief_car_passenger
-      - relief_car_driver
-      type: string
-    EntityOperationType:
-      type: string
-      enum:
-      - create
-      - update
-      - delete
-      - cancel
-      - reactivate
-      description: 'Enum of possible entity operations.
-
-        `cancel` / `reactivate` are reversible lifecycle state changes that preserve the
-
-        entity''s identity (the underlying records persist; only their state flips), as
-
-        opposed to `create` / `delete` which introduce or terminally remove an entity.'
-    BlockReferenceFrom:
-      type: string
-      enum:
-      - clone
-      - split
-    BlockODS:
-      properties:
-        split_part:
-          type: string
-          description: '(Optional) Chronological part of the duty that was split between the amount of parts
-
-            (e.g., "1/3" for the first part of a split duty in 3 pieces)'
-        entity_operation:
-          $ref: '#/components/schemas/EntityOperationType'
-          description: Type of operation (create, update, or delete) to be applied to the block
-        reference_from:
-          $ref: '#/components/schemas/BlockReferenceFrom'
-          description: Indicates whether the block is split or cloned from another block
-        original_block_internal_id:
-          type: string
-          description: '(Optional) References the original run when the run is split or copied from another run,
-
-            using a UUID that guarantees uniqueness'
-        original_block_id:
-          type: string
-          description: '(Optional) References the original run when the run is split or copied from another run,
-
-            using an readable identifier that doesn''t guarantees uniqueness'
-        block_internal_id:
-          type: string
-          description: Readable block identifier that doesn't guarantee uniqueness
-        block_id:
-          type: string
-          description: 'Identifier for the block to which this event belongs in a readable format
-
-            that doesn''t guarantee uniqueness'
-        service_id:
-          type: string
-          description: (Optional) Identifier referencing the service
-      required:
-      - entity_operation
-      type: object
-      description: Block definition (relating to trips and their sequences)
-    OperationalAction:
-      properties:
-        entities_changes:
-          items:
-            $ref: '#/components/schemas/EntityChanges'
-          type: array
-          description: 'The payload containing the detailed operational creating, deleting or updating entities
-
-            such as blocks, block_assignments, runs, run_assignments and run_events.'
-        operational_date:
-          type: string
-          description: The date of the operation in "YYYY-MM-DD" format
-        action_type:
-          $ref: '#/components/schemas/RealTimeOperationType'
-          description: The type of real-time operation (e.g., cut duty, assign duty)
-      required:
-      - entities_changes
-      - operational_date
-      - action_type
-      type: object
     BlockAssignmentODS:
       properties:
         split_part:
@@ -226,28 +75,6 @@ components:
       - block_id
       type: object
       description: Block assignment to vehicles in the operational system
-    OnScheduleEventsTypes:
-      enum:
-      - service_trip
-      - sub_trip
-      - deadhead
-      - sign_on
-      - sign_off
-      - split
-      - pre_trip
-      - post_trip
-      - attendance
-      - custom
-      - refuels
-      - recharge
-      - other_travels
-      - taxi
-      - walk
-      - relief_cars
-      - public_travel
-      - break
-      - other
-      type: string
     RunEventODS:
       properties:
         entity_operation:
@@ -329,6 +156,100 @@ components:
       - run_id
       type: object
       description: Events associated with the execution of a run (work shifts, breaks, trips, etc.)
+    OtherEventTypes:
+      enum:
+      - depot_pull_in
+      - depot_pull_out
+      - reinforcement_trip
+      - private_hire
+      type: string
+    EntityChanges:
+      properties:
+        run_events:
+          items:
+            $ref: '#/components/schemas/RunEventODS'
+          type: array
+        run_assignments:
+          items:
+            $ref: '#/components/schemas/RunAssignmentODS'
+          type: array
+        runs:
+          items:
+            $ref: '#/components/schemas/RunODS'
+          type: array
+        block_assignments:
+          items:
+            $ref: '#/components/schemas/BlockAssignmentODS'
+          type: array
+        blocks:
+          items:
+            $ref: '#/components/schemas/BlockODS'
+          type: array
+      required:
+      - run_events
+      - run_assignments
+      - runs
+      - block_assignments
+      - blocks
+      type: object
+    RunODS:
+      properties:
+        split_part:
+          type: string
+          description: '(Optional) Chronological part of the duty that was split between the amount of parts
+
+            (e.g., "1/3" for the first part of a split duty in 3 pieces)'
+        cancellation_cause:
+          $ref: '#/components/schemas/CancellationCauseODS'
+          description: '(Optional) Cause selected by the dispatcher when soft-cancelling the duty.
+
+            Present only on `cancel` operations and only when the customer has configured causes.'
+        entity_operation:
+          $ref: '#/components/schemas/EntityOperationType'
+          description: Type of operation (create, update, delete, cancel, or reactivate) to be applied to the run
+        reference_from:
+          $ref: '#/components/schemas/RunReferenceFrom'
+          description: Indicates whether the run is split or clone from an original run
+        original_run_internal_id:
+          type: string
+          description: '(Optional) References the original run when the run is split or copied from another run,
+
+            using a UUID that guarantees uniqueness'
+        original_run_id:
+          type: string
+          description: (Optional) References the original run when the run is split or copied from another run
+        run_internal_id:
+          type: string
+          description: Internal identifier for the run to which this event belongs, which guarantees uniqueness
+        run_id:
+          type: string
+          description: 'Identifier for the run to which this event belongs in a readable format
+
+            that doesn''t guarantee uniqueness'
+        service_id:
+          type: string
+          description: (Optional) Identifier referencing the service
+      required:
+      - entity_operation
+      - run_internal_id
+      - run_id
+      type: object
+      description: Run data, which involves the definition of a set of trips or duties
+    EntityOperationType:
+      type: string
+      enum:
+      - create
+      - update
+      - delete
+      - cancel
+      - reactivate
+      description: 'Enum of possible entity operations.
+
+        `cancel` / `reactivate` are reversible lifecycle state changes that preserve the
+
+        entity''s identity (the underlying records persist; only their state flips), as
+
+        opposed to `create` / `delete` which introduce or terminally remove an entity.'
     RunAssignmentODS:
       properties:
         split_part:
@@ -366,12 +287,43 @@ components:
       - run_id
       type: object
       description: Assignment of drivers to a run
-    OtherEventTypes:
+    OperationalAction:
+      properties:
+        entities_changes:
+          items:
+            $ref: '#/components/schemas/EntityChanges'
+          type: array
+          description: 'The payload containing the detailed operational creating, deleting or updating entities
+
+            such as blocks, block_assignments, runs, run_assignments and run_events.'
+        operational_date:
+          type: string
+          description: The date of the operation in "YYYY-MM-DD" format
+        action_type:
+          $ref: '#/components/schemas/RealTimeOperationType'
+          description: The type of real-time operation (e.g., cut duty, assign duty)
+      required:
+      - entities_changes
+      - operational_date
+      - action_type
+      type: object
+    RealTimeOperationType:
+      $ref: '#/components/schemas/RealTimeOperations'
+    BlockReferenceFrom:
+      type: string
       enum:
-      - depot_pull_in
-      - depot_pull_out
-      - reinforcement_trip
-      - private_hire
+      - clone
+      - split
+    CustomScheduleEventsTypes:
+      description: Duty schedule only custom event, vehicle does not move between stops
+      enum:
+      - standby
+      - technical_break
+      - meeting
+      - training
+      - non_revenue
+      - light_duty_hours
+      - behind_the_wheel_hours
       type: string
     RealTimeOperationODS:
       properties:
@@ -439,8 +391,77 @@ components:
               entity_operation: update
             run_events: []
       description: The main structure for a real-time operation message
-    RealTimeOperationType:
-      $ref: '#/components/schemas/RealTimeOperations'
+    RunReferenceFrom:
+      type: string
+      enum:
+      - clone
+      - split
+    BlockODS:
+      properties:
+        split_part:
+          type: string
+          description: '(Optional) Chronological part of the duty that was split between the amount of parts
+
+            (e.g., "1/3" for the first part of a split duty in 3 pieces)'
+        entity_operation:
+          $ref: '#/components/schemas/EntityOperationType'
+          description: Type of operation (create, update, or delete) to be applied to the block
+        reference_from:
+          $ref: '#/components/schemas/BlockReferenceFrom'
+          description: Indicates whether the block is split or cloned from another block
+        original_block_internal_id:
+          type: string
+          description: '(Optional) References the original run when the run is split or copied from another run,
+
+            using a UUID that guarantees uniqueness'
+        original_block_id:
+          type: string
+          description: '(Optional) References the original run when the run is split or copied from another run,
+
+            using an readable identifier that doesn''t guarantees uniqueness'
+        block_internal_id:
+          type: string
+          description: Readable block identifier that doesn't guarantee uniqueness
+        block_id:
+          type: string
+          description: 'Identifier for the block to which this event belongs in a readable format
+
+            that doesn''t guarantee uniqueness'
+        service_id:
+          type: string
+          description: (Optional) Identifier referencing the service
+      required:
+      - entity_operation
+      type: object
+      description: Block definition (relating to trips and their sequences)
+    ScheduleEventsType:
+      anyOf:
+      - $ref: '#/components/schemas/CustomScheduleEventsTypes'
+      - $ref: '#/components/schemas/OnScheduleEventsTypes'
+      - $ref: '#/components/schemas/OtherEventTypes'
+      - $ref: '#/components/schemas/ReliefCarEventsTypes'
+    OnScheduleEventsTypes:
+      enum:
+      - service_trip
+      - sub_trip
+      - deadhead
+      - sign_on
+      - sign_off
+      - split
+      - pre_trip
+      - post_trip
+      - attendance
+      - custom
+      - refuels
+      - recharge
+      - other_travels
+      - taxi
+      - walk
+      - relief_cars
+      - public_travel
+      - break
+      - other
+      type: string
     CancellationCauseODS:
       properties:
         cause:
@@ -458,45 +479,24 @@ components:
         Field names follow GTFS Realtime Service Alerts. Internally OPS uses
 
         `reason` / `reasonCode`; the rename happens at the OPS->GMV serializer boundary.'
-    EntityChanges:
-      properties:
-        run_events:
-          items:
-            $ref: '#/components/schemas/RunEventODS'
-          type: array
-        run_assignments:
-          items:
-            $ref: '#/components/schemas/RunAssignmentODS'
-          type: array
-        runs:
-          items:
-            $ref: '#/components/schemas/RunODS'
-          type: array
-        block_assignments:
-          items:
-            $ref: '#/components/schemas/BlockAssignmentODS'
-          type: array
-        blocks:
-          items:
-            $ref: '#/components/schemas/BlockODS'
-          type: array
-      required:
-      - run_events
-      - run_assignments
-      - runs
-      - block_assignments
-      - blocks
-      type: object
-    CustomScheduleEventsTypes:
-      description: Duty schedule only custom event, vehicle does not move between stops
+    RealTimeOperations:
       enum:
-      - standby
-      - technical_break
-      - meeting
-      - training
-      - non_revenue
-      - light_duty_hours
-      - behind_the_wheel_hours
+      - cut_duty
+      - cut_block
+      - assign_duty
+      - unassign_duty
+      - swap_duty_assignment
+      - assign_block
+      - unassign_block
+      - swap_block
+      - cancel_duty
+      - reactivate_duty
+      - delete_duty
+      type: string
+    ReliefCarEventsTypes:
+      enum:
+      - relief_car_passenger
+      - relief_car_driver
       type: string
   securitySchemes:
     api_key:
