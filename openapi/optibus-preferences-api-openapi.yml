@@ -64,43 +64,6 @@ paths:
       parameters: []
 components:
   schemas:
-    GetPreferencesHolidaysResponse:
-      items:
-        $ref: '#/components/schemas/HolidayInfo'
-      type: array
-    GetPreferencesAbsenceTypesResponse:
-      properties:
-        absenceTypes:
-          items:
-            $ref: '#/components/schemas/AbsenceType'
-          type: array
-      required:
-      - absenceTypes
-      type: object
-    PreferenceDateRange:
-      properties:
-        to:
-          $ref: '#/components/schemas/StringifyDate'
-        from:
-          $ref: '#/components/schemas/StringifyDate'
-      required:
-      - to
-      - from
-      type: object
-    StringifyDate:
-      type: string
-      format: date
-      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
-    AbsenceType:
-      properties:
-        name:
-          type: string
-        code:
-          type: string
-      required:
-      - name
-      - code
-      type: object
     HolidayInfo:
       properties:
         groupName:
@@ -115,6 +78,43 @@ components:
       required:
       - name
       - timeDefinition
+      type: object
+    AbsenceType:
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+      required:
+      - name
+      - code
+      type: object
+    GetPreferencesHolidaysResponse:
+      items:
+        $ref: '#/components/schemas/HolidayInfo'
+      type: array
+    GetPreferencesAbsenceTypesResponse:
+      properties:
+        absenceTypes:
+          items:
+            $ref: '#/components/schemas/AbsenceType'
+          type: array
+      required:
+      - absenceTypes
+      type: object
+    StringifyDate:
+      type: string
+      format: date
+      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
+    PreferenceDateRange:
+      properties:
+        to:
+          $ref: '#/components/schemas/StringifyDate'
+        from:
+          $ref: '#/components/schemas/StringifyDate'
+      required:
+      - to
+      - from
       type: object
   securitySchemes:
     api_key:

@@ -282,151 +282,30 @@ paths:
             type: string
 components:
   schemas:
-    ResponseDepotQuota:
-      properties:
-        unitQuotas:
-          items:
-            $ref: '#/components/schemas/UnitQuotaDef'
-          type: array
-          description: '`[]` = limits come from `quota` on this depot only (no per-unit split).'
-        quota:
-          type: number
-          format: double
-          description: Default depot-level cap; omit if limits are only in `unitQuotas`.
-        depotId:
-          type: string
-      required:
-      - unitQuotas
-      - depotId
-      type: object
-    BaseAbsence:
-      allOf:
-      - $ref: '#/components/schemas/BaseAbsenceTime'
-      - properties:
-          absenceRequestId:
-            $ref: '#/components/schemas/UUID'
-            description: Links this absence to the absence request that created it (if applicable).
-          updatedOn:
-            $ref: '#/components/schemas/StringifyDateTime'
-            description: 'UTC ISO datetime when absence was last updated.
+    SameDayMinutesFromMidnightTime:
+      type: integer
+      format: int32
+      description: 'Same-calendar-day wall clock time, represented as minutes since midnight. For example, `0` is midnight (start of the day), `120` is 02:00 (2 hours after midnight), `180` is 02:30 (2.5 hours after midnight), etc.
 
-              Set/maintained by the system.'
-          createdOn:
-            $ref: '#/components/schemas/StringifyDateTime'
-            description: 'UTC ISO datetime when absence was created.
-
-              Set/maintained by the system.'
-          metadata:
-            properties: {}
-            additionalProperties: {}
-            type: object
-            description: Additional data about the absence
-          note:
-            type: string
-            description: 'The note provided by the user.
-
-              Cannot exceed 255 characters.'
-          absenceCode:
-            type: string
-            description: The absence code provided by the user
-          absenceId:
-            $ref: '#/components/schemas/UUID'
-            description: 'The absence ID in the Ops platform.
-
-              Cannot exceed 36 characters.'
-        required:
-        - absenceCode
-        - absenceId
-        type: object
-    DriverResponseItems:
-      allOf:
-      - $ref: '#/components/schemas/DriverWithoutDepotAndGroup'
-      - properties:
-          attributes:
-            properties: {}
-            additionalProperties:
-              $ref: '#/components/schemas/AttributeValue'
-            type: object
-        required:
-        - attributes
-        type: object
-    CalculationTimeFrame:
-      type: string
-      enum:
-      - daily
-      - weekly
-    StringifyDate:
-      type: string
-      format: date
-      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
-    UnitQuotaUsage:
-      properties:
-        byAbsenceType:
-          $ref: '#/components/schemas/Record_string.Record_string._used-number___'
-        byWeek:
-          $ref: '#/components/schemas/Record_string.WeekUsage_'
-        byDay:
-          $ref: '#/components/schemas/Record_string.DayUsage_'
-      required:
-      - byWeek
-      - byDay
-      type: object
-    QuotaUsage:
-      properties:
-        byUnit:
-          $ref: '#/components/schemas/Record_string.UnitQuotaUsage_'
-          description: 'Present when `depotQuota.unitQuotas` is non-empty. Keys = `unitId`.
-
-            Omitted when `unitQuotas` is `[]`.'
-        byAbsenceType:
-          $ref: '#/components/schemas/Record_string.Record_string._used-number___'
-          description: 'Outer key: ISO date.'
-        byWeek:
-          $ref: '#/components/schemas/Record_string.WeekUsage_'
-        byDay:
-          $ref: '#/components/schemas/Record_string.DayUsage_'
-      required:
-      - byWeek
-      - byDay
-      type: object
-    DriverAttributesState:
+        Valid range is 0–1439 (00:00 through 23:59). Cross-midnight ranges must use the next date rather than values at or above 1440.'
+    Record_string.WeekUsage_:
       properties: {}
       additionalProperties:
-        $ref: '#/components/schemas/Attributes'
+        $ref: '#/components/schemas/WeekUsage'
       type: object
-    AbsenceQuotasMeta:
-      properties:
-        unitIds:
+      description: Construct a type with a set of properties K of type T
+    DriverWithoutDepotAndGroup:
+      $ref: '#/components/schemas/Omit_Driver.depot-or-group-or-opUnitId_'
+    GetSigningDeviationsResponse:
+      properties: {}
+      additionalProperties:
+        properties: {}
+        additionalProperties:
           items:
-            type: string
+            $ref: '#/components/schemas/SigningDeviationItem'
           type: array
-          description: Selected operational units; empty = no unit filter (depot / fallback rules).
-        depotId:
-          type:
-          - string
-          - 'null'
-        to:
-          type: string
-          description: Inclusive, `YYYY-MM-DD`.
-        from:
-          type: string
-          description: Inclusive, `YYYY-MM-DD`.
-      required:
-      - unitIds
-      - depotId
-      - to
-      - from
-      type: object
-    DriverAbsence:
-      allOf:
-      - $ref: '#/components/schemas/BaseAbsence'
-      - properties:
-          driver:
-            $ref: '#/components/schemas/UUID'
-            description: Which driver have this absence
-        required:
-        - driver
         type: object
+      type: object
     TypedApiErrorResponse_Invalidrequestschema_:
       properties:
         error:
@@ -434,237 +313,44 @@ components:
       required:
       - error
       type: object
-    GetAbsenceQuotasResponse:
+    AbsenceQuotaWithUsage:
       properties:
-        quotas:
+        usage:
+          $ref: '#/components/schemas/QuotaUsage'
+        depotQuota:
+          $ref: '#/components/schemas/ResponseDepotQuota'
+        absenceTypes:
           items:
-            $ref: '#/components/schemas/AbsenceQuotaWithUsage'
+            type: string
           type: array
-        meta:
-          $ref: '#/components/schemas/AbsenceQuotasMeta'
-      required:
-      - quotas
-      - meta
-      type: object
-    DriverId:
-      type: string
-      description: The Id of the driver
-    PostDriversResponse:
-      properties: {}
-      type: object
-    DayUsage:
-      properties:
-        limit:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: '`null` = no numeric cap for that day.'
-        used:
-          type: number
-          format: double
-      required:
-      - limit
-      - used
-      type: object
-      description: 'One calendar day: actual daily `used` + effective `limit` (after exceptions, scope).'
-    AttributeValue:
-      anyOf:
-      - items:
-          anyOf:
-          - type: number
-            format: double
-          - type: string
-        type: array
-      - type: string
-      - type: boolean
-      - type: number
-        format: double
-    Record_string.UnitQuotaUsage_:
-      properties: {}
-      additionalProperties:
-        $ref: '#/components/schemas/UnitQuotaUsage'
-      type: object
-      description: Construct a type with a set of properties K of type T
-    PostDriversRequest:
-      items:
-        $ref: '#/components/schemas/PostDriversRequestItem'
-      type: array
-    Record_string.DayUsage_:
-      properties: {}
-      additionalProperties:
-        $ref: '#/components/schemas/DayUsage'
-      type: object
-      description: Construct a type with a set of properties K of type T
-    UUID:
-      type: string
-      description: Stringified ID for a resource. Cannot exceed 36 characters.
-    SigningDeviationItem:
-      properties:
-        expectedTime:
-          $ref: '#/components/schemas/ISO8601Time'
-        actualTime:
-          $ref: '#/components/schemas/ISO8601Time'
-        deviation:
-          type: number
-          format: double
-        signingType:
-          type: string
-          enum:
-          - signOn
-          - signOff
-        signingDeviationType:
-          type: string
-          enum:
-          - early
-          - late
-      required:
-      - expectedTime
-      - actualTime
-      - deviation
-      - signingType
-      - signingDeviationType
-      type: object
-    Omit_Driver.depot-or-group-or-opUnitId_:
-      $ref: '#/components/schemas/Pick_Driver.Exclude_keyofDriver.depot-or-group-or-opUnitId__'
-      description: Construct a type with the properties of T except for those in type K.
-    WeekUsage:
-      properties:
-        limit:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: '`null` = no numeric cap for that week.'
-        used:
-          type: number
-          format: double
-      required:
-      - limit
-      - used
-      type: object
-      description: 'Roll-up for a calendar week overlapping `meta.from`…`meta.to`.
+        calculationTimeFrame:
+          $ref: '#/components/schemas/CalculationTimeFrame'
+          description: "- `daily`: each calendar day is evaluated against that day's `byDay[date].limit`.\n- `weekly`: compare week totals in `byWeek[weekKey]` to `byWeek[weekKey].limit`.\n  `byDay` is still per-day `used` (not a repeated week total)."
+        allowExceedQuota:
+          type: boolean
+          description: '`true` = exceeding effective limits is allowed (soft / warn). `false` = hard cap
 
-        Key = week-start Monday `YYYY-MM-DD`.'
-    GetDriverAttributesResponse:
-      allOf:
-      - $ref: '#/components/schemas/SnapshotVersionResponse'
-      - properties:
-          driverAttributes:
-            $ref: '#/components/schemas/DriverAttributesState'
-        required:
-        - driverAttributes
-        type: object
-    DepotId:
-      $ref: '#/components/schemas/UUID'
-      description: The depot unique identifier in the Ops system.
-    SchemaValidationErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
-    DriverWithoutDepotAndGroup:
-      $ref: '#/components/schemas/Omit_Driver.depot-or-group-or-opUnitId_'
-    EmploymentPeriod:
-      properties:
-        endDate:
-          $ref: '#/components/schemas/StringifyDate'
-        startDate:
-          $ref: '#/components/schemas/StringifyDate'
-        employmentPeriodId:
+            for clients that block or show errors.'
+        hidden:
+          type: boolean
+          description: When `true`, hide by default in UIs; response may still include the row.
+        quotaName:
+          type: string
+        quotaId:
           type: string
       required:
-      - startDate
-      - employmentPeriodId
+      - usage
+      - depotQuota
+      - absenceTypes
+      - calculationTimeFrame
+      - allowExceedQuota
+      - hidden
+      - quotaName
+      - quotaId
       type: object
-    AttributeEntry:
-      properties:
-        value:
-          $ref: '#/components/schemas/AttributeValue'
-        date:
-          $ref: '#/components/schemas/StringifyDate'
-        attributeId:
-          $ref: '#/components/schemas/AttributeId'
-      required:
-      - value
-      - date
-      - attributeId
-      type: object
-    Record_string.WeekUsage_:
-      properties: {}
-      additionalProperties:
-        $ref: '#/components/schemas/WeekUsage'
-      type: object
-      description: Construct a type with a set of properties K of type T
-    Attributes:
-      properties: {}
-      additionalProperties:
-        items:
-          $ref: '#/components/schemas/AttributeEntry'
-        type: array
-      type: object
-      description: 'Dictionary mapping attribute ID to an array of values by date.
+      description: 'Quota config from preferences (base depot + unit rows). Effective caps after exceptions
 
-        Correct usage: array sorted by date, only one value per date.'
-    Record_string.Record_string._used-number___:
-      properties: {}
-      additionalProperties:
-        $ref: '#/components/schemas/Record_string._used-number__'
-      type: object
-      description: Construct a type with a set of properties K of type T
-    SnapshotVersionResponse:
-      properties:
-        version:
-          type: number
-          format: double
-      required:
-      - version
-      type: object
-    Omit_DriverWithGradeUnionAndType.depot-or-group-or-opUnitId-or-note_:
-      $ref: '#/components/schemas/Pick_DriverWithGradeUnionAndType.Exclude_keyofDriverWithGradeUnionAndType.depot-or-group-or-opUnitId-or-note__'
-      description: Construct a type with the properties of T except for those in type K.
-    GetAbsenceResponse:
-      properties: {}
-      additionalProperties:
-        items:
-          $ref: '#/components/schemas/Absence'
-        type: array
-      type: object
-      description: 'A map between a driver and it''s absences, both personal and as part of a group.
-
-        remark: the same group absence can exists in multiple drivers'
-    UnitQuotaDef:
-      properties:
-        quota:
-          type: number
-          format: double
-        unitId:
-          type: string
-      required:
-      - quota
-      - unitId
-      type: object
-      description: Unit-level quota definition inside the API response (distinct from the preference-stored `UnitQuota`).
-    SameDayMinutesFromMidnightTime:
-      type: integer
-      format: int32
-      description: 'Same-calendar-day wall clock time, represented as minutes since midnight. For example, `0` is midnight (start of the day), `120` is 02:00 (2 hours after midnight), `180` is 02:30 (2.5 hours after midnight), etc.
-
-        Valid range is 0–1439 (00:00 through 23:59). Cross-midnight ranges must use the next date rather than values at or above 1440.'
-    TypedErrorResponse_Invalidrequestschema_:
-      properties:
-        details: {}
-        message:
-          type: string
-        type:
-          type: string
-          enum:
-          - Invalid request schema
-      required:
-      - message
-      - type
-      type: object
-    ISO8601Time:
-      type: string
-      example: '2024-06-30T23:30:00+02:00'
-      description: Representation of the time in ISO8601 format, where the minimum is at the start of the operational day (12am night) and the maximum 12 hours the day after the operational date of the private hire trip (12pm noon the day after)
+        and scope are in `usage.byDay` / `usage.byWeek` (and `usage.byUnit`).'
     Pick_DriverWithGradeUnionAndType.Exclude_keyofDriverWithGradeUnionAndType.depot-or-group-or-opUnitId-or-note__:
       properties:
         startDate:
@@ -716,6 +402,62 @@ components:
       - lastName
       type: object
       description: From T, pick a set of properties whose keys are in the union K
+    AbsenceQuotasMeta:
+      properties:
+        unitIds:
+          items:
+            type: string
+          type: array
+          description: Selected operational units; empty = no unit filter (depot / fallback rules).
+        depotId:
+          type:
+          - string
+          - 'null'
+        to:
+          type: string
+          description: Inclusive, `YYYY-MM-DD`.
+        from:
+          type: string
+          description: Inclusive, `YYYY-MM-DD`.
+      required:
+      - unitIds
+      - depotId
+      - to
+      - from
+      type: object
+    UUID:
+      type: string
+      description: Stringified ID for a resource. Cannot exceed 36 characters.
+    DayUsage:
+      properties:
+        limit:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: '`null` = no numeric cap for that day.'
+        used:
+          type: number
+          format: double
+      required:
+      - limit
+      - used
+      type: object
+      description: 'One calendar day: actual daily `used` + effective `limit` (after exceptions, scope).'
+    AttributeId:
+      type: string
+    DriverResponseItems:
+      allOf:
+      - $ref: '#/components/schemas/DriverWithoutDepotAndGroup'
+      - properties:
+          attributes:
+            properties: {}
+            additionalProperties:
+              $ref: '#/components/schemas/AttributeValue'
+            type: object
+        required:
+        - attributes
+        type: object
     PostDriversRequestItem:
       allOf:
       - properties:
@@ -769,6 +511,266 @@ components:
               Expected: Region name (e.g., "MyBusCompany West")'
         type: object
       - $ref: '#/components/schemas/Omit_DriverWithGradeUnionAndType.depot-or-group-or-opUnitId-or-note_'
+    GetAbsenceQuotasResponse:
+      properties:
+        quotas:
+          items:
+            $ref: '#/components/schemas/AbsenceQuotaWithUsage'
+          type: array
+        meta:
+          $ref: '#/components/schemas/AbsenceQuotasMeta'
+      required:
+      - quotas
+      - meta
+      type: object
+    Omit_Driver.depot-or-group-or-opUnitId_:
+      $ref: '#/components/schemas/Pick_Driver.Exclude_keyofDriver.depot-or-group-or-opUnitId__'
+      description: Construct a type with the properties of T except for those in type K.
+    BaseAbsenceTime:
+      properties:
+        endTimeNextDay:
+          type: boolean
+          deprecated: true
+        startTimeNextDay:
+          type: boolean
+          deprecated: true
+        endTime:
+          $ref: '#/components/schemas/SameDayMinutesFromMidnightTime'
+          description: 'The end time in minutes from midnight (on the end date).
+
+            Without end time the absence is until the end of the operational day'
+        endDate:
+          $ref: '#/components/schemas/StringifyDate'
+          description: The absence end date. absence can be without end date
+        startTime:
+          $ref: '#/components/schemas/SameDayMinutesFromMidnightTime'
+          description: 'The start time in minutes from midnight (on the start date).
+
+            Without start time the absence is form the start of the operational day'
+        startDate:
+          $ref: '#/components/schemas/StringifyDate'
+          description: The absence start date
+      required:
+      - startDate
+      type: object
+    TypedErrorResponse_Invalidrequestschema_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - Invalid request schema
+      required:
+      - message
+      - type
+      type: object
+    ResponseDepotQuota:
+      properties:
+        unitQuotas:
+          items:
+            $ref: '#/components/schemas/UnitQuotaDef'
+          type: array
+          description: '`[]` = limits come from `quota` on this depot only (no per-unit split).'
+        quota:
+          type: number
+          format: double
+          description: Default depot-level cap; omit if limits are only in `unitQuotas`.
+        depotId:
+          type: string
+      required:
+      - unitQuotas
+      - depotId
+      type: object
+    EmploymentPeriod:
+      properties:
+        endDate:
+          $ref: '#/components/schemas/StringifyDate'
+        startDate:
+          $ref: '#/components/schemas/StringifyDate'
+        employmentPeriodId:
+          type: string
+      required:
+      - startDate
+      - employmentPeriodId
+      type: object
+    UnitQuotaDef:
+      properties:
+        quota:
+          type: number
+          format: double
+        unitId:
+          type: string
+      required:
+      - quota
+      - unitId
+      type: object
+      description: Unit-level quota definition inside the API response (distinct from the preference-stored `UnitQuota`).
+    SchemaValidationErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
+    DriverAttributesState:
+      properties: {}
+      additionalProperties:
+        $ref: '#/components/schemas/Attributes'
+      type: object
+    QuotaUsage:
+      properties:
+        byUnit:
+          $ref: '#/components/schemas/Record_string.UnitQuotaUsage_'
+          description: 'Present when `depotQuota.unitQuotas` is non-empty. Keys = `unitId`.
+
+            Omitted when `unitQuotas` is `[]`.'
+        byAbsenceType:
+          $ref: '#/components/schemas/Record_string.Record_string._used-number___'
+          description: 'Outer key: ISO date.'
+        byWeek:
+          $ref: '#/components/schemas/Record_string.WeekUsage_'
+        byDay:
+          $ref: '#/components/schemas/Record_string.DayUsage_'
+      required:
+      - byWeek
+      - byDay
+      type: object
+    StringifyDateTime:
+      type: string
+      format: date-time
+      description: 'Stringified date-time.
+
+        date-time notation as defined by [RFC 3339](https://tools.ietf.org/html/rfc3339#section-5.6), section 5.6, for example,2017-07-21T17:32:28Z'
+    Attributes:
+      properties: {}
+      additionalProperties:
+        items:
+          $ref: '#/components/schemas/AttributeEntry'
+        type: array
+      type: object
+      description: 'Dictionary mapping attribute ID to an array of values by date.
+
+        Correct usage: array sorted by date, only one value per date.'
+    DepotId:
+      $ref: '#/components/schemas/UUID'
+      description: The depot unique identifier in the Ops system.
+    Absence:
+      $ref: '#/components/schemas/DriverAbsence'
+    CalculationTimeFrame:
+      type: string
+      enum:
+      - daily
+      - weekly
+    Record_string.DayUsage_:
+      properties: {}
+      additionalProperties:
+        $ref: '#/components/schemas/DayUsage'
+      type: object
+      description: Construct a type with a set of properties K of type T
+    GetDriverAttributesResponse:
+      allOf:
+      - $ref: '#/components/schemas/SnapshotVersionResponse'
+      - properties:
+          driverAttributes:
+            $ref: '#/components/schemas/DriverAttributesState'
+        required:
+        - driverAttributes
+        type: object
+    GetAbsenceResponse:
+      properties: {}
+      additionalProperties:
+        items:
+          $ref: '#/components/schemas/Absence'
+        type: array
+      type: object
+      description: 'A map between a driver and it''s absences, both personal and as part of a group.
+
+        remark: the same group absence can exists in multiple drivers'
+    UnitQuotaUsage:
+      properties:
+        byAbsenceType:
+          $ref: '#/components/schemas/Record_string.Record_string._used-number___'
+        byWeek:
+          $ref: '#/components/schemas/Record_string.WeekUsage_'
+        byDay:
+          $ref: '#/components/schemas/Record_string.DayUsage_'
+      required:
+      - byWeek
+      - byDay
+      type: object
+    Record_string.UnitQuotaUsage_:
+      properties: {}
+      additionalProperties:
+        $ref: '#/components/schemas/UnitQuotaUsage'
+      type: object
+      description: Construct a type with a set of properties K of type T
+    SnapshotVersionResponse:
+      properties:
+        version:
+          type: number
+          format: double
+      required:
+      - version
+      type: object
+    PostDriversRequest:
+      items:
+        $ref: '#/components/schemas/PostDriversRequestItem'
+      type: array
+    AttributeEntry:
+      properties:
+        value:
+          $ref: '#/components/schemas/AttributeValue'
+        date:
+          $ref: '#/components/schemas/StringifyDate'
+        attributeId:
+          $ref: '#/components/schemas/AttributeId'
+      required:
+      - value
+      - date
+      - attributeId
+      type: object
+    BaseAbsence:
+      allOf:
+      - $ref: '#/components/schemas/BaseAbsenceTime'
+      - properties:
+          absenceRequestId:
+            $ref: '#/components/schemas/UUID'
+            description: Links this absence to the absence request that created it (if applicable).
+          updatedOn:
+            $ref: '#/components/schemas/StringifyDateTime'
+            description: 'UTC ISO datetime when absence was last updated.
+
+              Set/maintained by the system.'
+          createdOn:
+            $ref: '#/components/schemas/StringifyDateTime'
+            description: 'UTC ISO datetime when absence was created.
+
+              Set/maintained by the system.'
+          metadata:
+            properties: {}
+            additionalProperties: {}
+            type: object
+            description: Additional data about the absence
+          note:
+            type: string
+            description: 'The note provided by the user.
+
+              Cannot exceed 255 characters.'
+          absenceCode:
+            type: string
+            description: The absence code provided by the user
+          absenceId:
+            $ref: '#/components/schemas/UUID'
+            description: 'The absence ID in the Ops platform.
+
+              Cannot exceed 36 characters.'
+        required:
+        - absenceCode
+        - absenceId
+        type: object
+    Record_string.Record_string._used-number___:
+      properties: {}
+      additionalProperties:
+        $ref: '#/components/schemas/Record_string._used-number__'
+      type: object
+      description: Construct a type with a set of properties K of type T
     Record_string._used-number__:
       properties: {}
       additionalProperties:
@@ -781,62 +783,43 @@ components:
         type: object
       type: object
       description: Construct a type with a set of properties K of type T
+    DriverId:
+      type: string
+      description: The Id of the driver
+    ISO8601Time:
+      type: string
+      example: '2024-06-30T23:30:00+02:00'
+      description: Representation of the time in ISO8601 format, where the minimum is at the start of the operational day (12am night) and the maximum 12 hours the day after the operational date of the private hire trip (12pm noon the day after)
     GetDriverResponse:
       items:
         $ref: '#/components/schemas/DriverResponseItems'
       type: array
-    GetSigningDeviationsResponse:
-      properties: {}
-      additionalProperties:
-        properties: {}
-        additionalProperties:
-          items:
-            $ref: '#/components/schemas/SigningDeviationItem'
-          type: array
-        type: object
-      type: object
-    AttributeId:
-      type: string
-    Absence:
-      $ref: '#/components/schemas/DriverAbsence'
-    AbsenceQuotaWithUsage:
+    SigningDeviationItem:
       properties:
-        usage:
-          $ref: '#/components/schemas/QuotaUsage'
-        depotQuota:
-          $ref: '#/components/schemas/ResponseDepotQuota'
-        absenceTypes:
-          items:
-            type: string
-          type: array
-        calculationTimeFrame:
-          $ref: '#/components/schemas/CalculationTimeFrame'
-          description: "- `daily`: each calendar day is evaluated against that day's `byDay[date].limit`.\n- `weekly`: compare week totals in `byWeek[weekKey]` to `byWeek[weekKey].limit`.\n  `byDay` is still per-day `used` (not a repeated week total)."
-        allowExceedQuota:
-          type: boolean
-          description: '`true` = exceeding effective limits is allowed (soft / warn). `false` = hard cap
-
-            for clients that block or show errors.'
-        hidden:
-          type: boolean
-          description: When `true`, hide by default in UIs; response may still include the row.
-        quotaName:
+        expectedTime:
+          $ref: '#/components/schemas/ISO8601Time'
+        actualTime:
+          $ref: '#/components/schemas/ISO8601Time'
+        deviation:
+          type: number
+          format: double
+        signingType:
           type: string
-        quotaId:
+          enum:
+          - signOn
+          - signOff
+        signingDeviationType:
           type: string
+          enum:
+          - early
+          - late
       required:
-      - usage
-      - depotQuota
-      - absenceTypes
-      - calculationTimeFrame
-      - allowExceedQuota
-      - hidden
-      - quotaName
-      - quotaId
+      - expectedTime
+      - actualTime
+      - deviation
+      - signingType
+      - signingDeviationType
       type: object
-      description: 'Quota config from preferences (base depot + unit rows). Effective caps after exceptions
-
-        and scope are in `usage.byDay` / `usage.byWeek` (and `usage.byUnit`).'
     Pick_Driver.Exclude_keyofDriver.depot-or-group-or-opUnitId__:
       properties:
         id:
@@ -889,39 +872,56 @@ components:
       - employmentPeriods
       type: object
       description: From T, pick a set of properties whose keys are in the union K
-    BaseAbsenceTime:
+    WeekUsage:
       properties:
-        endTimeNextDay:
-          type: boolean
-          deprecated: true
-        startTimeNextDay:
-          type: boolean
-          deprecated: true
-        endTime:
-          $ref: '#/components/schemas/SameDayMinutesFromMidnightTime'
-          description: 'The end time in minutes from midnight (on the end date).
-
-            Without end time the absence is until the end of the operational day'
-        endDate:
-          $ref: '#/components/schemas/StringifyDate'
-          description: The absence end date. absence can be without end date
-        startTime:
-          $ref: '#/components/schemas/SameDayMinutesFromMidnightTime'
-          description: 'The start time in minutes from midnight (on the start date).
-
-            Without start time the absence is form the start of the operational day'
-        startDate:
-          $ref: '#/components/schemas/StringifyDate'
-          description: The absence start date
+        limit:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: '`null` = no numeric cap for that week.'
+        used:
+          type: number
+          format: double
       required:
-      - startDate
+      - limit
+      - used
       type: object
-    StringifyDateTime:
-      type: string
-      format: date-time
-      description: 'Stringified date-time.
+      description: 'Roll-up for a calendar week overlapping `meta.from`…`meta.to`.
 
-        date-time notation as defined by [RFC 3339](https://tools.ietf.org/html/rfc3339#section-5.6), section 5.6, for example,2017-07-21T17:32:28Z'
+        Key = week-start Monday `YYYY-MM-DD`.'
+    PostDriversResponse:
+      properties: {}
+      type: object
+    StringifyDate:
+      type: string
+      format: date
+      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
+    DriverAbsence:
+      allOf:
+      - $ref: '#/components/schemas/BaseAbsence'
+      - properties:
+          driver:
+            $ref: '#/components/schemas/UUID'
+            description: Which driver have this absence
+        required:
+        - driver
+        type: object
+    AttributeValue:
+      anyOf:
+      - items:
+          anyOf:
+          - type: number
+            format: double
+          - type: string
+        type: array
+      - type: string
+      - type: boolean
+      - type: number
+        format: double
+    Omit_DriverWithGradeUnionAndType.depot-or-group-or-opUnitId-or-note_:
+      $ref: '#/components/schemas/Pick_DriverWithGradeUnionAndType.Exclude_keyofDriverWithGradeUnionAndType.depot-or-group-or-opUnitId-or-note__'
+      description: Construct a type with the properties of T except for those in type K.
   securitySchemes:
     api_key:
       type: apiKey

@@ -205,80 +205,8 @@ paths:
               $ref: '#/components/schemas/PutVehiclesCustomAttributesRequest'
 components:
   schemas:
-    GetVehiclesCustomAttributesErrorTypes:
-      type: string
-      enum:
-      - invalidDatesCombination
-      - pageNotFound
-    StringifyDate:
-      type: string
-      format: date
-      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
-    GetVehiclesCustomAttributesSuccess:
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        entries:
-          items:
-            $ref: '#/components/schemas/VehicleCustomAttributeEntry'
-          type: array
-      required:
-      - pagination
-      - entries
-      type: object
-      example:
-        entries:
-        - entryId: entry-123
-          vehicleId: vehicle-1
-          value: red
-          startDate: '2024-01-01'
-          endDate: '2024-01-02'
-          attributeId: color
-        - entryId: entry-456
-          vehicleId: vehicle-1
-          value: green
-          startDate: '2024-01-03'
-          attributeId: color
-        pagination:
-          currentPage: 1
-          nextPage: 2
-          totalPages: 2
-    TypedErrorResponse_GetVehiclesCustomAttributesErrorTypes_:
-      properties:
-        details: {}
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/GetVehiclesCustomAttributesErrorTypes'
-      required:
-      - message
-      - type
-      type: object
-    VehicleCustomAttributeEntry:
-      properties:
-        attributeId:
-          type: string
-          description: ID of the attribute this custom attribute entry applies to, corresponding to the attribute definition in the "Vehicle attributes" preference in your Ops instance
-        endDate:
-          $ref: '#/components/schemas/StringifyDate'
-        startDate:
-          $ref: '#/components/schemas/StringifyDate'
-        value:
-          $ref: '#/components/schemas/AttributeValue'
-          description: Value of the custom attribute
-        vehicleId:
-          type: string
-          description: ID of the vehicle this custom attribute entry applies to
-        entryId:
-          type: string
-          description: Unique identifier for the custom attribute entry
-      required:
-      - attributeId
-      - startDate
-      - value
-      - vehicleId
-      - entryId
-      type: object
+    PutVehiclesCustomAttributesErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_PutVehiclesCustomAttributesErrorTypes_'
     TypedApiErrorResponse_Invalidrequestschema_:
       properties:
         error:
@@ -286,67 +214,16 @@ components:
       required:
       - error
       type: object
-    AttributeValue:
-      anyOf:
-      - items:
-          anyOf:
-          - type: number
-            format: double
-          - type: string
-        type: array
-      - type: string
-      - type: boolean
-      - type: number
-        format: double
-    IdList:
-      items:
-        $ref: '#/components/schemas/UUID'
-      type: array
-      example:
-      - item-123
-      - item-456
-      - item-789
-      description: A list of IDs.
-    PageNumber:
-      $ref: '#/components/schemas/Integer'
-      description: Page number (1-indexed). Defaults to 1.
-      minimum: 1
-    Integer:
-      type: integer
-      format: int32
+    TypedApiErrorResponse_GetVehiclesCustomAttributesErrorTypes_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_GetVehiclesCustomAttributesErrorTypes_'
+      required:
+      - error
+      type: object
     UUID:
       type: string
       description: Stringified ID for a resource. Cannot exceed 36 characters.
-    PutVehiclesCustomAttributesEntry:
-      properties:
-        endDate:
-          $ref: '#/components/schemas/StringifyDate'
-          description: Optional end date (YYYY-MM-dd) when this value stops being effective (inclusive)
-        startDate:
-          $ref: '#/components/schemas/StringifyDate'
-          description: Start date (YYYY-MM-dd) when this value becomes effective
-        value:
-          $ref: '#/components/schemas/AttributeValue'
-          description: Attribute value according to the attribute definition type
-        attributeId:
-          type: string
-          description: Attribute ID to update
-        vehicleId:
-          type: string
-          description: Vehicle ID this attribute entry applies to
-        entryId:
-          type: string
-          description: 'Optional identifier for an existing attribute entry. If provided, must be unique within the request.
-
-            Cannot exceed 36 characters.'
-      required:
-      - startDate
-      - value
-      - attributeId
-      - vehicleId
-      type: object
-    SchemaValidationErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
     PutVehiclesCustomAttributesRequest:
       properties:
         entries:
@@ -378,24 +255,28 @@ components:
       - createdEntryIds
       - modifiedEntryIds
       type: object
-    GetVehiclesCustomAttributesErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_GetVehiclesCustomAttributesErrorTypes_'
-    PutVehiclesCustomAttributesErrorTypes:
-      type: string
-      enum:
-      - tooManyItems
-      - noItems
-      - invalidFieldContent
-      - vehiclesNotFound
-      - invalidAttributeTimeline
-      - conflictProcessingRequest
-    TypedApiErrorResponse_GetVehiclesCustomAttributesErrorTypes_:
+    TypedErrorResponse_Invalidrequestschema_:
       properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_GetVehiclesCustomAttributesErrorTypes_'
+        details: {}
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - Invalid request schema
       required:
-      - error
+      - message
+      - type
       type: object
+    Integer:
+      type: integer
+      format: int32
+    SchemaValidationErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
+    PageNumber:
+      $ref: '#/components/schemas/Integer'
+      description: Page number (1-indexed). Defaults to 1.
+      minimum: 1
     Pagination:
       properties:
         totalPages:
@@ -414,28 +295,124 @@ components:
       description: 'Metadata about the pagination of a list of items. When a list of items is too large to be returned in a single response, it is split into multiple pages.
 
         This object informs you about the current page, the next page, and the total number of pages.'
-    PutVehiclesCustomAttributesErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_PutVehiclesCustomAttributesErrorTypes_'
-    TypedApiErrorResponse_PutVehiclesCustomAttributesErrorTypes_:
+    GetVehiclesCustomAttributesSuccess:
       properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_PutVehiclesCustomAttributesErrorTypes_'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        entries:
+          items:
+            $ref: '#/components/schemas/VehicleCustomAttributeEntry'
+          type: array
       required:
-      - error
+      - pagination
+      - entries
       type: object
-    TypedErrorResponse_Invalidrequestschema_:
+      example:
+        entries:
+        - entryId: entry-123
+          vehicleId: vehicle-1
+          value: red
+          startDate: '2024-01-01'
+          endDate: '2024-01-02'
+          attributeId: color
+        - entryId: entry-456
+          vehicleId: vehicle-1
+          value: green
+          startDate: '2024-01-03'
+          attributeId: color
+        pagination:
+          currentPage: 1
+          nextPage: 2
+          totalPages: 2
+    PutVehiclesCustomAttributesEntry:
+      properties:
+        endDate:
+          $ref: '#/components/schemas/StringifyDate'
+          description: Optional end date (YYYY-MM-dd) when this value stops being effective (inclusive)
+        startDate:
+          $ref: '#/components/schemas/StringifyDate'
+          description: Start date (YYYY-MM-dd) when this value becomes effective
+        value:
+          $ref: '#/components/schemas/AttributeValue'
+          description: Attribute value according to the attribute definition type
+        attributeId:
+          type: string
+          description: Attribute ID to update
+        vehicleId:
+          type: string
+          description: Vehicle ID this attribute entry applies to
+        entryId:
+          type: string
+          description: 'Optional identifier for an existing attribute entry. If provided, must be unique within the request.
+
+            Cannot exceed 36 characters.'
+      required:
+      - startDate
+      - value
+      - attributeId
+      - vehicleId
+      type: object
+    IdList:
+      items:
+        $ref: '#/components/schemas/UUID'
+      type: array
+      example:
+      - item-123
+      - item-456
+      - item-789
+      description: A list of IDs.
+    GetVehiclesCustomAttributesErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_GetVehiclesCustomAttributesErrorTypes_'
+    VehicleCustomAttributeEntry:
+      properties:
+        attributeId:
+          type: string
+          description: ID of the attribute this custom attribute entry applies to, corresponding to the attribute definition in the "Vehicle attributes" preference in your Ops instance
+        endDate:
+          $ref: '#/components/schemas/StringifyDate'
+        startDate:
+          $ref: '#/components/schemas/StringifyDate'
+        value:
+          $ref: '#/components/schemas/AttributeValue'
+          description: Value of the custom attribute
+        vehicleId:
+          type: string
+          description: ID of the vehicle this custom attribute entry applies to
+        entryId:
+          type: string
+          description: Unique identifier for the custom attribute entry
+      required:
+      - attributeId
+      - startDate
+      - value
+      - vehicleId
+      - entryId
+      type: object
+    GetVehiclesCustomAttributesErrorTypes:
+      type: string
+      enum:
+      - invalidDatesCombination
+      - pageNotFound
+    TypedErrorResponse_GetVehiclesCustomAttributesErrorTypes_:
       properties:
         details: {}
         message:
           type: string
         type:
-          type: string
-          enum:
-          - Invalid request schema
+          $ref: '#/components/schemas/GetVehiclesCustomAttributesErrorTypes'
       required:
       - message
       - type
       type: object
+    PutVehiclesCustomAttributesErrorTypes:
+      type: string
+      enum:
+      - tooManyItems
+      - noItems
+      - invalidFieldContent
+      - vehiclesNotFound
+      - invalidAttributeTimeline
+      - conflictProcessingRequest
     TypedErrorResponse_PutVehiclesCustomAttributesErrorTypes_:
       properties:
         details: {}
@@ -447,6 +424,29 @@ components:
       - message
       - type
       type: object
+    TypedApiErrorResponse_PutVehiclesCustomAttributesErrorTypes_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_PutVehiclesCustomAttributesErrorTypes_'
+      required:
+      - error
+      type: object
+    StringifyDate:
+      type: string
+      format: date
+      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
+    AttributeValue:
+      anyOf:
+      - items:
+          anyOf:
+          - type: number
+            format: double
+          - type: string
+        type: array
+      - type: string
+      - type: boolean
+      - type: number
+        format: double
   securitySchemes:
     api_key:
       type: apiKey

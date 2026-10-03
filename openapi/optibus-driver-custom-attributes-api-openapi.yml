@@ -209,20 +209,12 @@ paths:
               $ref: '#/components/schemas/PutDriversCustomAttributesRequest'
 components:
   schemas:
-    StringifyDate:
-      type: string
-      format: date
-      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
-    TypedErrorResponse_GetDriversCustomAttributesErrorTypes_:
+    TypedApiErrorResponse_PutDriversCustomAttributesErrorTypes_:
       properties:
-        details: {}
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/GetDriversCustomAttributesErrorTypes'
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_PutDriversCustomAttributesErrorTypes_'
       required:
-      - message
-      - type
+      - error
       type: object
     PutDriversCustomAttributesSuccessResponse:
       properties:
@@ -234,6 +226,127 @@ components:
       - createdEntryIds
       - modifiedEntryIds
       type: object
+    TypedApiErrorResponse_Invalidrequestschema_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_Invalidrequestschema_'
+      required:
+      - error
+      type: object
+    TypedApiErrorResponse_GetDriversCustomAttributesErrorTypes_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_GetDriversCustomAttributesErrorTypes_'
+      required:
+      - error
+      type: object
+    DriverCustomAttributeEntry:
+      properties:
+        attributeId:
+          type: string
+        endDate:
+          $ref: '#/components/schemas/StringifyDate'
+        startDate:
+          $ref: '#/components/schemas/StringifyDate'
+        value:
+          $ref: '#/components/schemas/AttributeValue'
+        driverId:
+          type: string
+        entryId:
+          type: string
+      required:
+      - attributeId
+      - startDate
+      - value
+      - driverId
+      - entryId
+      type: object
+    GetDriversCustomAttributesErrorTypes:
+      type: string
+      enum:
+      - invalidDatesCombination
+      - pageNotFound
+    UUID:
+      type: string
+      description: Stringified ID for a resource. Cannot exceed 36 characters.
+    TypedErrorResponse_Invalidrequestschema_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - Invalid request schema
+      required:
+      - message
+      - type
+      type: object
+    Integer:
+      type: integer
+      format: int32
+    PutDriversCustomAttributesErrorTypes:
+      type: string
+      enum:
+      - tooManyItems
+      - noItems
+      - invalidFieldContent
+      - driversNotFound
+      - invalidAttributeTimeline
+      - conflictProcessingRequest
+    SchemaValidationErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
+    TypedErrorResponse_GetDriversCustomAttributesErrorTypes_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/GetDriversCustomAttributesErrorTypes'
+      required:
+      - message
+      - type
+      type: object
+    PageNumber:
+      $ref: '#/components/schemas/Integer'
+      description: Page number (1-indexed). Defaults to 1.
+      minimum: 1
+    PutDriversCustomAttributesRequest:
+      properties:
+        entries:
+          items:
+            $ref: '#/components/schemas/PutDriversCustomAttributesEntry'
+          type: array
+      required:
+      - entries
+      type: object
+    Pagination:
+      properties:
+        totalPages:
+          $ref: '#/components/schemas/Integer'
+          description: Total number of pages.
+        nextPage:
+          $ref: '#/components/schemas/PageNumber'
+          description: Next page number (1-indexed). If undefined, there is no next page.
+        currentPage:
+          $ref: '#/components/schemas/PageNumber'
+          description: Current page number (1-indexed).
+      required:
+      - totalPages
+      - currentPage
+      type: object
+      description: 'Metadata about the pagination of a list of items. When a list of items is too large to be returned in a single response, it is split into multiple pages.
+
+        This object informs you about the current page, the next page, and the total number of pages.'
+    IdList:
+      items:
+        $ref: '#/components/schemas/UUID'
+      type: array
+      example:
+      - item-123
+      - item-456
+      - item-789
+      description: A list of IDs.
     PutDriversCustomAttributesEntry:
       properties:
         endDate:
@@ -262,50 +375,11 @@ components:
       - attributeId
       - driverId
       type: object
-    TypedApiErrorResponse_Invalidrequestschema_:
-      properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_Invalidrequestschema_'
-      required:
-      - error
-      type: object
-    TypedErrorResponse_PutDriversCustomAttributesErrorTypes_:
-      properties:
-        details: {}
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/PutDriversCustomAttributesErrorTypes'
-      required:
-      - message
-      - type
-      type: object
+    PutDriversCustomAttributesErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_PutDriversCustomAttributesErrorTypes_'
     DriverId:
       type: string
       description: The Id of the driver
-    GetDriversCustomAttributesErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_GetDriversCustomAttributesErrorTypes_'
-    AttributeValue:
-      anyOf:
-      - items:
-          anyOf:
-          - type: number
-            format: double
-          - type: string
-        type: array
-      - type: string
-      - type: boolean
-      - type: number
-        format: double
-    IdList:
-      items:
-        $ref: '#/components/schemas/UUID'
-      type: array
-      example:
-      - item-123
-      - item-456
-      - item-789
-      description: A list of IDs.
     GetDriversCustomAttributesSuccess:
       properties:
         pagination:
@@ -335,109 +409,35 @@ components:
           currentPage: 1
           nextPage: 2
           totalPages: 10
-    PageNumber:
-      $ref: '#/components/schemas/Integer'
-      description: Page number (1-indexed). Defaults to 1.
-      minimum: 1
-    UUID:
-      type: string
-      description: Stringified ID for a resource. Cannot exceed 36 characters.
-    Integer:
-      type: integer
-      format: int32
-    SchemaValidationErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
-    TypedApiErrorResponse_GetDriversCustomAttributesErrorTypes_:
-      properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_GetDriversCustomAttributesErrorTypes_'
-      required:
-      - error
-      type: object
-    Pagination:
-      properties:
-        totalPages:
-          $ref: '#/components/schemas/Integer'
-          description: Total number of pages.
-        nextPage:
-          $ref: '#/components/schemas/PageNumber'
-          description: Next page number (1-indexed). If undefined, there is no next page.
-        currentPage:
-          $ref: '#/components/schemas/PageNumber'
-          description: Current page number (1-indexed).
-      required:
-      - totalPages
-      - currentPage
-      type: object
-      description: 'Metadata about the pagination of a list of items. When a list of items is too large to be returned in a single response, it is split into multiple pages.
-
-        This object informs you about the current page, the next page, and the total number of pages.'
-    PutDriversCustomAttributesErrorTypes:
-      type: string
-      enum:
-      - tooManyItems
-      - noItems
-      - invalidFieldContent
-      - driversNotFound
-      - invalidAttributeTimeline
-      - conflictProcessingRequest
-    GetDriversCustomAttributesErrorTypes:
-      type: string
-      enum:
-      - invalidDatesCombination
-      - pageNotFound
-    TypedApiErrorResponse_PutDriversCustomAttributesErrorTypes_:
-      properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_PutDriversCustomAttributesErrorTypes_'
-      required:
-      - error
-      type: object
-    TypedErrorResponse_Invalidrequestschema_:
+    GetDriversCustomAttributesErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_GetDriversCustomAttributesErrorTypes_'
+    TypedErrorResponse_PutDriversCustomAttributesErrorTypes_:
       properties:
         details: {}
         message:
           type: string
         type:
-          type: string
-          enum:
-          - Invalid request schema
+          $ref: '#/components/schemas/PutDriversCustomAttributesErrorTypes'
       required:
       - message
       - type
       type: object
-    PutDriversCustomAttributesErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_PutDriversCustomAttributesErrorTypes_'
-    PutDriversCustomAttributesRequest:
-      properties:
-        entries:
-          items:
-            $ref: '#/components/schemas/PutDriversCustomAttributesEntry'
-          type: array
-      required:
-      - entries
-      type: object
-    DriverCustomAttributeEntry:
-      properties:
-        attributeId:
-          type: string
-        endDate:
-          $ref: '#/components/schemas/StringifyDate'
-        startDate:
-          $ref: '#/components/schemas/StringifyDate'
-        value:
-          $ref: '#/components/schemas/AttributeValue'
-        driverId:
-          type: string
-        entryId:
-          type: string
-      required:
-      - attributeId
-      - startDate
-      - value
-      - driverId
-      - entryId
-      type: object
+    StringifyDate:
+      type: string
+      format: date
+      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
+    AttributeValue:
+      anyOf:
+      - items:
+          anyOf:
+          - type: number
+            format: double
+          - type: string
+        type: array
+      - type: string
+      - type: boolean
+      - type: number
+        format: double
   securitySchemes:
     api_key:
       type: apiKey

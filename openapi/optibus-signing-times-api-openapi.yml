@@ -138,9 +138,45 @@ paths:
             $ref: '#/components/schemas/DriverId'
 components:
   schemas:
-    DriverUuid:
-      $ref: '#/components/schemas/UUID'
-      description: The driver unique identifier in the Ops system (not the driver personal id)
+    GetSigningDeviationsResponse:
+      properties: {}
+      additionalProperties:
+        properties: {}
+        additionalProperties:
+          items:
+            $ref: '#/components/schemas/SigningDeviationItem'
+          type: array
+        type: object
+      type: object
+    TypedApiErrorResponse_Invalidrequestschema_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_Invalidrequestschema_'
+      required:
+      - error
+      type: object
+    GetSigningTimesV2DriverEntry:
+      properties:
+        signingTimes:
+          items:
+            $ref: '#/components/schemas/SigningTimeV2'
+          type: array
+          description: Matched expected/actual signing records for this driver on the date. May be empty.
+        id:
+          $ref: '#/components/schemas/DriverUuid'
+          description: External driver ID.
+      required:
+      - signingTimes
+      - id
+      type: object
+      description: Signing times for a single driver on the requested date.
+    GetSigningTimesV2ErrorTypes:
+      type: string
+      enum:
+      - pageNotFound
+    UUID:
+      type: string
+      description: Stringified ID for a resource. Cannot exceed 36 characters.
     GetSigningTimesV2SuccessfulResponse:
       properties:
         pagination:
@@ -173,10 +209,22 @@ components:
         - id: driver-335
           signingTimes: []
       description: Paginated response containing per-driver signing times for a date in a region.
-    StringifyDate:
-      type: string
-      format: date
-      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
+    TypedErrorResponse_Invalidrequestschema_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - Invalid request schema
+      required:
+      - message
+      - type
+      type: object
+    Integer:
+      type: integer
+      format: int32
     TypedErrorResponse_GetSigningTimesV2ErrorTypes_:
       properties:
         details: {}
@@ -188,26 +236,49 @@ components:
       - message
       - type
       type: object
-    TypedApiErrorResponse_Invalidrequestschema_:
+    SchemaValidationErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
+    PageNumber:
+      $ref: '#/components/schemas/Integer'
+      description: Page number (1-indexed). Defaults to 1.
+      minimum: 1
+    DepotId:
+      $ref: '#/components/schemas/UUID'
+      description: The depot unique identifier in the Ops system.
+    GetSigningTimesV2ErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_GetSigningTimesV2ErrorTypes_'
+    Pagination:
+      properties:
+        totalPages:
+          $ref: '#/components/schemas/Integer'
+          description: Total number of pages.
+        nextPage:
+          $ref: '#/components/schemas/PageNumber'
+          description: Next page number (1-indexed). If undefined, there is no next page.
+        currentPage:
+          $ref: '#/components/schemas/PageNumber'
+          description: Current page number (1-indexed).
+      required:
+      - totalPages
+      - currentPage
+      type: object
+      description: 'Metadata about the pagination of a list of items. When a list of items is too large to be returned in a single response, it is split into multiple pages.
+
+        This object informs you about the current page, the next page, and the total number of pages.'
+    TypedApiErrorResponse_GetSigningTimesV2ErrorTypes_:
       properties:
         error:
-          $ref: '#/components/schemas/TypedErrorResponse_Invalidrequestschema_'
+          $ref: '#/components/schemas/TypedErrorResponse_GetSigningTimesV2ErrorTypes_'
       required:
       - error
       type: object
     DriverId:
       type: string
       description: The Id of the driver
-    PageNumber:
-      $ref: '#/components/schemas/Integer'
-      description: Page number (1-indexed). Defaults to 1.
-      minimum: 1
-    UUID:
+    ISO8601Time:
       type: string
-      description: Stringified ID for a resource. Cannot exceed 36 characters.
-    Integer:
-      type: integer
-      format: int32
+      example: '2024-06-30T23:30:00+02:00'
+      description: Representation of the time in ISO8601 format, where the minimum is at the start of the operational day (12am night) and the maximum 12 hours the day after the operational date of the private hire trip (12pm noon the day after)
     SigningDeviationItem:
       properties:
         expectedTime:
@@ -234,74 +305,13 @@ components:
       - signingType
       - signingDeviationType
       type: object
-    TypedApiErrorResponse_GetSigningTimesV2ErrorTypes_:
-      properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_GetSigningTimesV2ErrorTypes_'
-      required:
-      - error
-      type: object
-    DepotId:
+    StringifyDate:
+      type: string
+      format: date
+      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
+    DriverUuid:
       $ref: '#/components/schemas/UUID'
-      description: The depot unique identifier in the Ops system.
-    SchemaValidationErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
-    GetSigningTimesV2DriverEntry:
-      properties:
-        signingTimes:
-          items:
-            $ref: '#/components/schemas/SigningTimeV2'
-          type: array
-          description: Matched expected/actual signing records for this driver on the date. May be empty.
-        id:
-          $ref: '#/components/schemas/DriverUuid'
-          description: External driver ID.
-      required:
-      - signingTimes
-      - id
-      type: object
-      description: Signing times for a single driver on the requested date.
-    Pagination:
-      properties:
-        totalPages:
-          $ref: '#/components/schemas/Integer'
-          description: Total number of pages.
-        nextPage:
-          $ref: '#/components/schemas/PageNumber'
-          description: Next page number (1-indexed). If undefined, there is no next page.
-        currentPage:
-          $ref: '#/components/schemas/PageNumber'
-          description: Current page number (1-indexed).
-      required:
-      - totalPages
-      - currentPage
-      type: object
-      description: 'Metadata about the pagination of a list of items. When a list of items is too large to be returned in a single response, it is split into multiple pages.
-
-        This object informs you about the current page, the next page, and the total number of pages.'
-    GetSigningTimesV2ErrorTypes:
-      type: string
-      enum:
-      - pageNotFound
-    TypedErrorResponse_Invalidrequestschema_:
-      properties:
-        details: {}
-        message:
-          type: string
-        type:
-          type: string
-          enum:
-          - Invalid request schema
-      required:
-      - message
-      - type
-      type: object
-    ISO8601Time:
-      type: string
-      example: '2024-06-30T23:30:00+02:00'
-      description: Representation of the time in ISO8601 format, where the minimum is at the start of the operational day (12am night) and the maximum 12 hours the day after the operational date of the private hire trip (12pm noon the day after)
-    GetSigningTimesV2ErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_GetSigningTimesV2ErrorTypes_'
+      description: The driver unique identifier in the Ops system (not the driver personal id)
     SigningTimeV2:
       properties:
         orphaned:
@@ -333,16 +343,6 @@ components:
       - type
       type: object
       description: A single matched expected/actual signing record.
-    GetSigningDeviationsResponse:
-      properties: {}
-      additionalProperties:
-        properties: {}
-        additionalProperties:
-          items:
-            $ref: '#/components/schemas/SigningDeviationItem'
-          type: array
-        type: object
-      type: object
   securitySchemes:
     api_key:
       type: apiKey

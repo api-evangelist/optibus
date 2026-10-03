@@ -102,6 +102,31 @@ paths:
           type: string
 components:
   schemas:
+    AttributeEntry:
+      properties:
+        value:
+          $ref: '#/components/schemas/AttributeValue'
+        date:
+          $ref: '#/components/schemas/StringifyDate'
+        attributeId:
+          $ref: '#/components/schemas/AttributeId'
+      required:
+      - value
+      - date
+      - attributeId
+      type: object
+    Attributes:
+      properties: {}
+      additionalProperties:
+        items:
+          $ref: '#/components/schemas/AttributeEntry'
+        type: array
+      type: object
+      description: 'Dictionary mapping attribute ID to an array of values by date.
+
+        Correct usage: array sorted by date, only one value per date.'
+    VehicleId:
+      type: string
     GetVehicleAttributesResponse:
       properties:
         attributes:
@@ -118,47 +143,38 @@ components:
       - attributes
       - attributeMap
       type: object
-    AttributeEntry:
-      properties:
-        value:
-          $ref: '#/components/schemas/AttributeValue'
-        date:
-          $ref: '#/components/schemas/StringifyDate'
-        attributeId:
-          $ref: '#/components/schemas/AttributeId'
-      required:
-      - value
-      - date
-      - attributeId
-      type: object
-    AttributeValue:
-      anyOf:
-      - items:
-          anyOf:
-          - type: number
-            format: double
-          - type: string
-        type: array
-      - type: string
-      - type: boolean
-      - type: number
-        format: double
-    VehicleId:
+    UUID:
+      type: string
+      description: Stringified ID for a resource. Cannot exceed 36 characters.
+    AttributeId:
+      type: string
+    AttributeType:
+      enum:
+      - STRING
+      - BOOLEAN
+      - SINGLE_SELECT
+      - MULTI_SELECT
+      - DATE
+      - NUMBER
+      - DURATION
       type: string
     StringifyDate:
       type: string
       format: date
       description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
-    Attributes:
-      properties: {}
-      additionalProperties:
-        items:
-          $ref: '#/components/schemas/AttributeEntry'
-        type: array
+    Pick_AttributeTypeDefinition.id-or-type-or-displayName_:
+      properties:
+        id:
+          type: string
+        type:
+          $ref: '#/components/schemas/AttributeType'
+        displayName:
+          type: string
+      required:
+      - id
+      - type
       type: object
-      description: 'Dictionary mapping attribute ID to an array of values by date.
-
-        Correct usage: array sorted by date, only one value per date.'
+      description: From T, pick a set of properties whose keys are in the union K
     vehicleWithAttributes:
       properties:
         id:
@@ -192,38 +208,22 @@ components:
       type: object
       additionalProperties:
         $ref: '#/components/schemas/AttributeValue'
-    AttributeType:
-      enum:
-      - STRING
-      - BOOLEAN
-      - SINGLE_SELECT
-      - MULTI_SELECT
-      - DATE
-      - NUMBER
-      - DURATION
-      type: string
-    UUID:
-      type: string
-      description: Stringified ID for a resource. Cannot exceed 36 characters.
+    AttributeValue:
+      anyOf:
+      - items:
+          anyOf:
+          - type: number
+            format: double
+          - type: string
+        type: array
+      - type: string
+      - type: boolean
+      - type: number
+        format: double
     GetVehiclesResponse:
       items:
         $ref: '#/components/schemas/vehicleWithAttributes'
       type: array
-    AttributeId:
-      type: string
-    Pick_AttributeTypeDefinition.id-or-type-or-displayName_:
-      properties:
-        id:
-          type: string
-        type:
-          $ref: '#/components/schemas/AttributeType'
-        displayName:
-          type: string
-      required:
-      - id
-      - type
-      type: object
-      description: From T, pick a set of properties whose keys are in the union K
   securitySchemes:
     api_key:
       type: apiKey

@@ -124,49 +124,27 @@ paths:
           $ref: '#/components/schemas/CalculationLimitMode'
 components:
   schemas:
-    DriverUuid:
-      $ref: '#/components/schemas/UUID'
-      description: The driver unique identifier in the Ops system (not the driver personal id)
-    _TimeTypeCycle:
-      properties:
-        cycleType:
-          $ref: '#/components/schemas/CycleType'
-        type:
-          $ref: '#/components/schemas/TimeTypeKind.Cycle'
-      required:
-      - cycleType
-      - type
-      type: object
-    TimeTypeKind.Weeks:
-      enum:
-      - weeks
-      type: string
-    _TimeTypeDay:
-      properties:
-        type:
-          $ref: '#/components/schemas/TimeTypeKind.Day'
-      required:
-      - type
-      type: object
-    WorkEntityNumberValue:
+    WorkEntityBooleanValue:
       properties:
         value:
-          type: number
-          format: double
+          type: boolean
         type:
-          $ref: '#/components/schemas/WorkEntitiesAPIValueTypesEnum.Number'
+          $ref: '#/components/schemas/WorkEntitiesAPIValueTypesEnum.Boolean'
       required:
       - value
       - type
       type: object
-    TimeTypeKind.Dynamic:
-      enum:
-      - dynamic
-      type: string
-    WorkEntitiesAPIValueTypesEnum.Boolean:
-      enum:
-      - Boolean
-      type: string
+    TimeTypeWeeks:
+      properties:
+        count:
+          type: number
+          format: double
+        type:
+          $ref: '#/components/schemas/TimeTypeKind.Weeks'
+      required:
+      - count
+      - type
+      type: object
     ApiTimeInterval:
       items:
         properties:
@@ -179,58 +157,59 @@ components:
         - start
         type: object
       type: array
-    StringifyDate:
+    ISOWithTimeDate:
       type: string
       format: date
-      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
-    WorkEntityId:
-      type: string
-    CalculationLimitMode:
-      enum:
-      - payroll
-      - workEntities
-      type: string
-    WorkEntityDurationInMinutesValue:
+      description: Stringified ISO8601 date in the form of 2017-07-21T23:59:00+03:00
+    WorkingDriver:
       properties:
-        value:
-          $ref: '#/components/schemas/Minutes'
-        type:
-          $ref: '#/components/schemas/WorkEntitiesAPIValueTypesEnum.DurationInMinutes'
-      required:
-      - value
-      - type
-      type: object
-    WorkEntitiesAPIValueTypesEnum.Distance:
-      enum:
-      - Distance
-      type: string
-    _TimeType:
-      anyOf:
-      - $ref: '#/components/schemas/_TimeTypeDay'
-      - $ref: '#/components/schemas/TimeTypeWeeks'
-      - $ref: '#/components/schemas/_TimeTypeCycle'
-      - $ref: '#/components/schemas/_TimeTypeDynamic'
-    WorkEntityErrorValue:
-      properties:
-        value:
+        driverExternalId:
           type: string
-        type:
-          $ref: '#/components/schemas/WorkEntitiesAPIValueTypesEnum.Error'
+        driverUuid:
+          $ref: '#/components/schemas/DriverUuid'
       required:
-      - value
-      - type
+      - driverExternalId
+      - driverUuid
       type: object
+    WorkEntitiesAPIValueTypesEnum.DurationInMinutes:
+      enum:
+      - durationInMinutes
+      type: string
+    WorkEntitiesAPIValueTypesEnum.Boolean:
+      enum:
+      - Boolean
+      type: string
     WorkEntitiesAPIValueTypesEnum.Error:
       enum:
       - error
       type: string
-    GetAPICalculationLimitResponse:
+    UUID:
+      type: string
+      description: Stringified ID for a resource. Cannot exceed 36 characters.
+    WorkEntitiesAPIValueTypesEnum.Distance:
+      enum:
+      - Distance
+      type: string
+    TimeTypeKind.Day:
+      enum:
+      - day
+      type: string
+    _TimeTypeDynamic:
       properties:
-        limit:
-          type: number
-          format: double
+        type:
+          $ref: '#/components/schemas/TimeTypeKind.Dynamic'
       required:
-      - limit
+      - type
+      type: object
+    _TimeTypeCycle:
+      properties:
+        cycleType:
+          $ref: '#/components/schemas/CycleType'
+        type:
+          $ref: '#/components/schemas/TimeTypeKind.Cycle'
+      required:
+      - cycleType
+      - type
       type: object
     WorkEntityIntervalsValue:
       properties:
@@ -242,30 +221,50 @@ components:
       - value
       - type
       type: object
-    WorkingDriver:
+    WorkEntityDurationInMinutesValue:
       properties:
-        driverExternalId:
-          type: string
-        driverUuid:
-          $ref: '#/components/schemas/DriverUuid'
+        value:
+          $ref: '#/components/schemas/Minutes'
+        type:
+          $ref: '#/components/schemas/WorkEntitiesAPIValueTypesEnum.DurationInMinutes'
       required:
-      - driverExternalId
-      - driverUuid
+      - value
+      - type
       type: object
-    WorkEntityAPIValues:
-      anyOf:
-      - $ref: '#/components/schemas/WorkEntityBooleanValue'
-      - $ref: '#/components/schemas/WorkEntityDurationInMinutesValue'
-      - $ref: '#/components/schemas/WorkEntityIntervalsValue'
-      - $ref: '#/components/schemas/WorkEntityNumberValue'
-      - $ref: '#/components/schemas/WorkEntityErrorValue'
-      - $ref: '#/components/schemas/WorkEntityDistanceValue'
-    UUID:
+    WorkEntityErrorValue:
+      properties:
+        value:
+          type: string
+        type:
+          $ref: '#/components/schemas/WorkEntitiesAPIValueTypesEnum.Error'
+      required:
+      - value
+      - type
+      type: object
+    CalculationLimitMode:
+      enum:
+      - payroll
+      - workEntities
       type: string
-      description: Stringified ID for a resource. Cannot exceed 36 characters.
+    TimeTypeKind.Cycle:
+      enum:
+      - cycle
+      type: string
     DepotId:
       $ref: '#/components/schemas/UUID'
       description: The depot unique identifier in the Ops system.
+    GetWorkEntitiesResponse:
+      items:
+        $ref: '#/components/schemas/WorkEntityExternal'
+      type: array
+    GetAPICalculationLimitResponse:
+      properties:
+        limit:
+          type: number
+          format: double
+      required:
+      - limit
+      type: object
     WorkEntityExternal:
       properties:
         timeType:
@@ -296,10 +295,26 @@ components:
       - workingDriver
       - depotId
       type: object
+    WorkEntityId:
+      type: string
+    CycleType:
+      enum:
+      - weekly
+      - biWeekly
+      - monthly
+      type: string
+    TimeTypeKind.Weeks:
+      enum:
+      - weeks
+      type: string
     Minutes:
       type: integer
       format: int32
       description: time measure in minutes
+    TimeTypeKind.Dynamic:
+      enum:
+      - dynamic
+      type: string
     WorkEntityDistanceValue:
       properties:
         value:
@@ -311,68 +326,53 @@ components:
       - value
       - type
       type: object
-    _TimeTypeDynamic:
+    _TimeTypeDay:
       properties:
         type:
-          $ref: '#/components/schemas/TimeTypeKind.Dynamic'
+          $ref: '#/components/schemas/TimeTypeKind.Day'
       required:
       - type
       type: object
-    TimeTypeKind.Day:
-      enum:
-      - day
-      type: string
-    TimeTypeWeeks:
+    WorkEntityAPIValues:
+      anyOf:
+      - $ref: '#/components/schemas/WorkEntityBooleanValue'
+      - $ref: '#/components/schemas/WorkEntityDurationInMinutesValue'
+      - $ref: '#/components/schemas/WorkEntityIntervalsValue'
+      - $ref: '#/components/schemas/WorkEntityNumberValue'
+      - $ref: '#/components/schemas/WorkEntityErrorValue'
+      - $ref: '#/components/schemas/WorkEntityDistanceValue'
+    WorkEntityNumberValue:
       properties:
-        count:
+        value:
           type: number
           format: double
         type:
-          $ref: '#/components/schemas/TimeTypeKind.Weeks'
+          $ref: '#/components/schemas/WorkEntitiesAPIValueTypesEnum.Number'
       required:
-      - count
+      - value
       - type
       type: object
     WorkEntitiesAPIValueTypesEnum.TimeIntervals:
       enum:
       - timeInterval
       type: string
-    CycleType:
-      enum:
-      - weekly
-      - biWeekly
-      - monthly
-      type: string
-    TimeTypeKind.Cycle:
-      enum:
-      - cycle
-      type: string
-    GetWorkEntitiesResponse:
-      items:
-        $ref: '#/components/schemas/WorkEntityExternal'
-      type: array
-    ISOWithTimeDate:
+    _TimeType:
+      anyOf:
+      - $ref: '#/components/schemas/_TimeTypeDay'
+      - $ref: '#/components/schemas/TimeTypeWeeks'
+      - $ref: '#/components/schemas/_TimeTypeCycle'
+      - $ref: '#/components/schemas/_TimeTypeDynamic'
+    StringifyDate:
       type: string
       format: date
-      description: Stringified ISO8601 date in the form of 2017-07-21T23:59:00+03:00
+      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
+    DriverUuid:
+      $ref: '#/components/schemas/UUID'
+      description: The driver unique identifier in the Ops system (not the driver personal id)
     WorkEntitiesAPIValueTypesEnum.Number:
       enum:
       - Number
       type: string
-    WorkEntitiesAPIValueTypesEnum.DurationInMinutes:
-      enum:
-      - durationInMinutes
-      type: string
-    WorkEntityBooleanValue:
-      properties:
-        value:
-          type: boolean
-        type:
-          $ref: '#/components/schemas/WorkEntitiesAPIValueTypesEnum.Boolean'
-      required:
-      - value
-      - type
-      type: object
   securitySchemes:
     api_key:
       type: apiKey
