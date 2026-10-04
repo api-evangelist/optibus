@@ -86,13 +86,21 @@ components:
     DepotId:
       $ref: '#/components/schemas/UUID'
       description: The depot unique identifier in the Ops system.
+    CodeId:
+      type: string
+    UUID:
+      type: string
+      description: Stringified ID for a resource. Cannot exceed 36 characters.
+    CycleType:
+      enum:
+      - weekly
+      - biWeekly
+      - monthly
+      type: string
     GetPayrollV2Response:
       items:
         $ref: '#/components/schemas/PayrollV2External'
       type: array
-    UUID:
-      type: string
-      description: Stringified ID for a resource. Cannot exceed 36 characters.
     TimeUnit:
       enum:
       - Minutes
@@ -100,14 +108,19 @@ components:
       - Days
       - Number
       type: string
-    WorkEntityId:
+    CycleTypeWithDaily:
+      anyOf:
+      - $ref: '#/components/schemas/CycleType'
+      - type: string
+        enum:
+        - daily
+    ISOWithTimeDate:
       type: string
-    CycleType:
-      enum:
-      - weekly
-      - biWeekly
-      - monthly
-      type: string
+      format: date
+      description: Stringified ISO8601 date in the form of 2017-07-21T23:59:00+03:00
+    DriverUuid:
+      $ref: '#/components/schemas/UUID'
+      description: The driver unique identifier in the Ops system (not the driver personal id)
     ApiTimeInterval:
       items:
         properties:
@@ -120,12 +133,20 @@ components:
         - start
         type: object
       type: array
-    CodeId:
-      type: string
-    ISOWithTimeDate:
+    StringifyDate:
       type: string
       format: date
-      description: Stringified ISO8601 date in the form of 2017-07-21T23:59:00+03:00
+      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
+    WorkingDriver:
+      properties:
+        driverExternalId:
+          type: string
+        driverUuid:
+          $ref: '#/components/schemas/DriverUuid'
+      required:
+      - driverExternalId
+      - driverUuid
+      type: object
     PayrollV2External:
       properties:
         occurrenceDates:
@@ -174,29 +195,8 @@ components:
       - workingDriver
       - depotId
       type: object
-    StringifyDate:
+    WorkEntityId:
       type: string
-      format: date
-      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
-    DriverUuid:
-      $ref: '#/components/schemas/UUID'
-      description: The driver unique identifier in the Ops system (not the driver personal id)
-    CycleTypeWithDaily:
-      anyOf:
-      - $ref: '#/components/schemas/CycleType'
-      - type: string
-        enum:
-        - daily
-    WorkingDriver:
-      properties:
-        driverExternalId:
-          type: string
-        driverUuid:
-          $ref: '#/components/schemas/DriverUuid'
-      required:
-      - driverExternalId
-      - driverUuid
-      type: object
   securitySchemes:
     api_key:
       type: apiKey

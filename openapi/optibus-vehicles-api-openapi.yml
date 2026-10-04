@@ -245,185 +245,17 @@ paths:
             type: string
 components:
   schemas:
-    PutVehiclesErrorTypes:
+    PostVehiclesErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_PostVehiclesErrorTypes_'
+    UUID:
       type: string
-      enum:
-      - tooManyItems
-      - noItems
-      - invalidFieldContent
-      - vehiclesNotFound
-      - conflictProcessingRequest
-    BaseDepotPeriod:
-      properties:
-        opUnitId:
-          type: string
-        endTime:
-          $ref: '#/components/schemas/Integer'
-        startTime:
-          $ref: '#/components/schemas/Integer'
-        endDate:
-          $ref: '#/components/schemas/StringifyDate'
-        startDate:
-          $ref: '#/components/schemas/StringifyDate'
-        depotId:
-          type: string
-        type:
-          $ref: '#/components/schemas/DepotPeriodType'
-        periodId:
-          type: string
-      required:
-      - startDate
-      - depotId
-      - type
-      - periodId
-      type: object
+      description: Stringified ID for a resource. Cannot exceed 36 characters.
     GetVehiclesDepotPeriodsResponse:
       properties: {}
       additionalProperties:
         items:
           $ref: '#/components/schemas/VehicleDepotPeriod'
         type: array
-      type: object
-    PostVehiclesErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_PostVehiclesErrorTypes_'
-    TypedApiErrorResponse_Invalidrequestschema_:
-      properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_Invalidrequestschema_'
-      required:
-      - error
-      type: object
-    TypedErrorResponse_PostVehiclesErrorTypes_:
-      properties:
-        details: {}
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/PostVehiclesErrorTypes'
-      required:
-      - message
-      - type
-      type: object
-    NewVehicle:
-      properties:
-        customAttributes:
-          properties: {}
-          additionalProperties:
-            $ref: '#/components/schemas/AttributeValue'
-          type: object
-          description: 'Custom attributes for the vehicle. Note that some custom attributes may be mandatory, according to the ''Vehicle attributes'' preference in your Ops instance.
-
-            Should be a mapping of the ''attributeId'' (configured in your Ops instance) to the initial value for that custom attribute. The value will be validated according
-
-            to the attribute definition configured in your Ops instance.'
-        decommissionedOnDate:
-          $ref: '#/components/schemas/StringifyDate'
-          description: When the vehicle was decommissioned, if decommissioned is true.
-        decommissioned:
-          type: boolean
-          description: Whether the vehicle is decommissioned.
-        model:
-          type: string
-          description: The model of the vehicle, cannot exceed 36 characters.
-        type:
-          type: string
-          description: The type of the vehicle. Depending on the 'Vehicle types' preference in your Ops instance, this may be mandatory. If specified, must be one of the vehicle types configured in your Ops instance.
-        description:
-          type: string
-          description: A description of the vehicle, cannot exceed 65535 characters.
-        depotName:
-          type: string
-          description: The name of the depot the vehicle is assigned to. If specified, should correspond to the 'unit' name returned by `GET /v1/regions`, and be a depot/unit belonging to the region.
-        regionName:
-          type: string
-          description: The name of the region the vehicle is assigned to. Should correspond to the region name returned by `GET /v1/regions`.
-        parkingLocation:
-          type: string
-          description: The parking location of the vehicle, cannot exceed 255 characters.
-        licensePlate:
-          type: string
-          description: The license plate of the vehicle, cannot exceed 36 characters.
-        id:
-          type: string
-          description: 'Unique identifier for the vehicle, cannot exceed 36 characters.
-
-            Ideally corresponds to the ID for the vehicle in the external system that you are synchronizing with.'
-      required:
-      - regionName
-      - id
-      type: object
-    PostVehiclesErrorTypes:
-      type: string
-      enum:
-      - tooManyItems
-      - noItems
-      - invalidFieldContent
-      - vehicleAlreadyExists
-      - conflictProcessingRequest
-    EditedVehicle:
-      properties:
-        customAttributes:
-          properties: {}
-          additionalProperties:
-            $ref: '#/components/schemas/AttributeValue'
-          type: object
-          description: 'Custom attributes for the vehicle. Note that some custom attributes may be mandatory, according to the ''Vehicle attributes'' preference in your Ops instance.
-
-            Should be a mapping of the ''attributeId'' (configured in your Ops instance) to the initial value for that custom attribute. The value will be validated according
-
-            to the attribute definition configured in your Ops instance.'
-        decommissionedOnDate:
-          $ref: '#/components/schemas/StringifyDate'
-          description: When the vehicle was decommissioned, if decommissioned is true.
-        decommissioned:
-          type: boolean
-          description: Whether the vehicle is decommissioned.
-        model:
-          type: string
-          description: The model of the vehicle, cannot exceed 36 characters.
-        type:
-          type: string
-          description: The type of the vehicle. Depending on the 'Vehicle types' preference in your Ops instance, this may be mandatory. If specified, must be one of the vehicle types configured in your Ops instance.
-        description:
-          type: string
-          description: A description of the vehicle, cannot exceed 65535 characters.
-        mainRegionPeriod:
-          properties:
-            depotName:
-              type: string
-              description: The name of the depot the vehicle is assigned to. If specified, should correspond to the 'unit' name returned by `GET /v1/regions`, and be a depot/unit belonging to the region.
-            regionName:
-              type: string
-              description: The name of the region the vehicle is assigned to. Should correspond to the region name returned by `GET /v1/regions`.
-          required:
-          - regionName
-          type: object
-          description: "The main region (and, optionally, depot) that the vehicle is assigned to from today onwards.\nShape matches the `mainRegionPeriod` returned by `GET /v1/vehicles`.\n\nThis field is optional for backwards-compatibility: existing integrations that do not send it\nwill continue to work unchanged.\n\nNote: unlike other optional fields on this endpoint, omitting `mainRegionPeriod` does NOT clear\nthe vehicle's current region assignment. Every vehicle must always belong to a region, so there\nis no way to remove a region assignment - you can only change it to a different region. If you\nwant to leave the current region and depot untouched, you have two equivalent options:\n  1. Omit this field entirely from the request item, or\n  2. Send the same `mainRegionPeriod` value currently returned by `GET /v1/vehicles` for the\n     vehicle (when the requested value matches the vehicle's current assignment, no change is\n     made and no warning is emitted).\n\nWhen specified:\n- If the region and depot match the vehicle's current assignment, nothing changes.\n- Otherwise, a new region period is created starting from today (in the customer's timezone).\n- If a region period already exists starting today, it is overwritten in place and an\n  `overwriteMainRegionPeriodEntry` warning is returned in the response."
-        parkingLocation:
-          type: string
-          description: The parking location of the vehicle, cannot exceed 255 characters.
-        licensePlate:
-          type: string
-          description: The license plate of the vehicle, cannot exceed 36 characters.
-        id:
-          type: string
-          description: Unique identifier for the vehicle - should match a vehicle already created in Ops (either via the API, import process, or the Ops user interface)
-      required:
-      - id
-      type: object
-    UUID:
-      type: string
-      description: Stringified ID for a resource. Cannot exceed 36 characters.
-    TypedErrorResponse_PutVehiclesErrorTypes_:
-      properties:
-        details: {}
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/PutVehiclesErrorTypes'
-      required:
-      - message
-      - type
       type: object
     PutVehiclesWarning:
       anyOf:
@@ -478,64 +310,19 @@ components:
         - message
         - type
         type: object
-    PutVehiclesSuccessResponse:
-      properties:
-        warnings:
-          items:
-            $ref: '#/components/schemas/PutVehiclesWarning'
-          type: array
-          description: 'Non-fatal warnings about side effects of the request (for example, entries starting today being overwritten).
-
-            Omitted when there are no warnings.'
-        updatedVehicleIds:
-          $ref: '#/components/schemas/IdList'
-          description: List of vehicle IDs that were updated.
-      required:
-      - updatedVehicleIds
-      type: object
-    TypedApiErrorResponse_GetVehiclesV1ErrorTypes_:
+    TypedApiErrorResponse_Invalidrequestschema_:
       properties:
         error:
-          $ref: '#/components/schemas/TypedErrorResponse_GetVehiclesV1ErrorTypes_'
+          $ref: '#/components/schemas/TypedErrorResponse_Invalidrequestschema_'
       required:
       - error
       type: object
-    TypedErrorResponse_Invalidrequestschema_:
-      properties:
-        details: {}
-        message:
-          type: string
-        type:
-          type: string
-          enum:
-          - Invalid request schema
-      required:
-      - message
-      - type
-      type: object
-    GetVehiclesV1ErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_GetVehiclesV1ErrorTypes_'
-    Integer:
-      type: integer
-      format: int32
-    SchemaValidationErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
-    PageNumber:
-      $ref: '#/components/schemas/Integer'
-      description: Page number (1-indexed). Defaults to 1.
-      minimum: 1
-    GetVehiclesV1SuccessfulResponse:
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        vehicles:
-          items:
-            $ref: '#/components/schemas/VehicleV1'
-          type: array
-      required:
-      - pagination
-      - vehicles
-      type: object
+    PutVehiclesErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_PutVehiclesErrorTypes_'
+    StringifyDate:
+      type: string
+      format: date
+      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
     PostVehiclesRequest:
       properties:
         vehicles:
@@ -572,6 +359,94 @@ components:
           customAttributes:
             color: blue
             capacity: 36
+    NewVehicle:
+      properties:
+        customAttributes:
+          properties: {}
+          additionalProperties:
+            $ref: '#/components/schemas/AttributeValue'
+          type: object
+          description: 'Custom attributes for the vehicle. Note that some custom attributes may be mandatory, according to the ''Vehicle attributes'' preference in your Ops instance.
+
+            Should be a mapping of the ''attributeId'' (configured in your Ops instance) to the initial value for that custom attribute. The value will be validated according
+
+            to the attribute definition configured in your Ops instance.'
+        decommissionedOnDate:
+          $ref: '#/components/schemas/StringifyDate'
+          description: When the vehicle was decommissioned, if decommissioned is true.
+        decommissioned:
+          type: boolean
+          description: Whether the vehicle is decommissioned.
+        model:
+          type: string
+          description: The model of the vehicle, cannot exceed 36 characters.
+        type:
+          type: string
+          description: The type of the vehicle. Depending on the 'Vehicle types' preference in your Ops instance, this may be mandatory. If specified, must be one of the vehicle types configured in your Ops instance.
+        description:
+          type: string
+          description: A description of the vehicle, cannot exceed 65535 characters.
+        depotName:
+          type: string
+          description: The name of the depot the vehicle is assigned to. If specified, should correspond to the 'unit' name returned by `GET /v1/regions`, and be a depot/unit belonging to the region.
+        regionName:
+          type: string
+          description: The name of the region the vehicle is assigned to. Should correspond to the region name returned by `GET /v1/regions`.
+        parkingLocation:
+          type: string
+          description: The parking location of the vehicle, cannot exceed 255 characters.
+        licensePlate:
+          type: string
+          description: The license plate of the vehicle, cannot exceed 36 characters.
+        id:
+          type: string
+          description: 'Unique identifier for the vehicle, cannot exceed 36 characters.
+
+            Ideally corresponds to the ID for the vehicle in the external system that you are synchronizing with.'
+      required:
+      - regionName
+      - id
+      type: object
+    TypedApiErrorResponse_PutVehiclesErrorTypes_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_PutVehiclesErrorTypes_'
+      required:
+      - error
+      type: object
+    IdList:
+      items:
+        $ref: '#/components/schemas/UUID'
+      type: array
+      example:
+      - item-123
+      - item-456
+      - item-789
+      description: A list of IDs.
+    BaseDepotPeriod:
+      properties:
+        opUnitId:
+          type: string
+        endTime:
+          $ref: '#/components/schemas/Integer'
+        startTime:
+          $ref: '#/components/schemas/Integer'
+        endDate:
+          $ref: '#/components/schemas/StringifyDate'
+        startDate:
+          $ref: '#/components/schemas/StringifyDate'
+        depotId:
+          type: string
+        type:
+          $ref: '#/components/schemas/DepotPeriodType'
+        periodId:
+          type: string
+      required:
+      - startDate
+      - depotId
+      - type
+      - periodId
+      type: object
     PostVehiclesSuccessResponse:
       properties:
         createdVehicleIds:
@@ -580,12 +455,90 @@ components:
       required:
       - createdVehicleIds
       type: object
+    TypedApiErrorResponse_GetVehiclesV1ErrorTypes_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_GetVehiclesV1ErrorTypes_'
+      required:
+      - error
+      type: object
+    TypedApiErrorResponse_PostVehiclesErrorTypes_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_PostVehiclesErrorTypes_'
+      required:
+      - error
+      type: object
+    TypedErrorResponse_PutVehiclesErrorTypes_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/PutVehiclesErrorTypes'
+      required:
+      - message
+      - type
+      type: object
     DepotPeriodType:
       enum:
       - MAIN
       - LOAN
       - FIRST
       type: string
+    GetVehiclesV1SuccessfulResponse:
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        vehicles:
+          items:
+            $ref: '#/components/schemas/VehicleV1'
+          type: array
+      required:
+      - pagination
+      - vehicles
+      type: object
+    PutVehiclesSuccessResponse:
+      properties:
+        warnings:
+          items:
+            $ref: '#/components/schemas/PutVehiclesWarning'
+          type: array
+          description: 'Non-fatal warnings about side effects of the request (for example, entries starting today being overwritten).
+
+            Omitted when there are no warnings.'
+        updatedVehicleIds:
+          $ref: '#/components/schemas/IdList'
+          description: List of vehicle IDs that were updated.
+      required:
+      - updatedVehicleIds
+      type: object
+    Integer:
+      type: integer
+      format: int32
+    TypedErrorResponse_GetVehiclesV1ErrorTypes_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/GetVehiclesV1ErrorTypes'
+      required:
+      - message
+      - type
+      type: object
+    AttributeValue:
+      anyOf:
+      - items:
+          anyOf:
+          - type: number
+            format: double
+          - type: string
+        type: array
+      - type: string
+      - type: boolean
+      - type: number
+        format: double
     Pagination:
       properties:
         totalPages:
@@ -604,28 +557,47 @@ components:
       description: 'Metadata about the pagination of a list of items. When a list of items is too large to be returned in a single response, it is split into multiple pages.
 
         This object informs you about the current page, the next page, and the total number of pages.'
-    IdList:
-      items:
-        $ref: '#/components/schemas/UUID'
-      type: array
-      example:
-      - item-123
-      - item-456
-      - item-789
-      description: A list of IDs.
-    TypedErrorResponse_GetVehiclesV1ErrorTypes_:
+    PutVehiclesRequest:
       properties:
-        details: {}
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/GetVehiclesV1ErrorTypes'
+        vehicles:
+          items:
+            $ref: '#/components/schemas/EditedVehicle'
+          type: array
       required:
-      - message
-      - type
+      - vehicles
       type: object
-    PutVehiclesErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_PutVehiclesErrorTypes_'
+      example:
+        vehicles:
+        - id: abc-123
+          licensePlate: XYZ 999
+          parkingLocation: Bay 30
+          description: A note about the vehicle
+          type: Double Decker
+          model: Routemaster
+          decommissioned: false
+          customAttributes:
+            color: red
+            capacity: 42
+        - id: def-456
+          licensePlate: XYZ 999
+          parkingLocation: Bay 31
+          description: Another note about a vehicle
+          type: Single Deck
+          model: Metrodecker
+          decommissioned: true
+          decommissionedOnDate: '2024-01-01'
+          customAttributes:
+            color: blue
+            capacity: 36
+    VehicleDepotPeriod:
+      allOf:
+      - $ref: '#/components/schemas/BaseDepotPeriod'
+      - properties:
+          vehicleId:
+            type: string
+        required:
+        - vehicleId
+        type: object
     VehicleV1:
       properties:
         customAttributes:
@@ -687,80 +659,108 @@ components:
       - mainRegionPeriod
       - id
       type: object
+    PostVehiclesErrorTypes:
+      type: string
+      enum:
+      - tooManyItems
+      - noItems
+      - invalidFieldContent
+      - vehicleAlreadyExists
+      - conflictProcessingRequest
+    TypedErrorResponse_PostVehiclesErrorTypes_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/PostVehiclesErrorTypes'
+      required:
+      - message
+      - type
+      type: object
     GetVehiclesV1ErrorTypes:
       type: string
       enum:
       - pageNotFound
-    TypedApiErrorResponse_PostVehiclesErrorTypes_:
-      properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_PostVehiclesErrorTypes_'
-      required:
-      - error
-      type: object
-    PutVehiclesRequest:
-      properties:
-        vehicles:
-          items:
-            $ref: '#/components/schemas/EditedVehicle'
-          type: array
-      required:
-      - vehicles
-      type: object
-      example:
-        vehicles:
-        - id: abc-123
-          licensePlate: XYZ 999
-          parkingLocation: Bay 30
-          description: A note about the vehicle
-          type: Double Decker
-          model: Routemaster
-          decommissioned: false
-          customAttributes:
-            color: red
-            capacity: 42
-        - id: def-456
-          licensePlate: XYZ 999
-          parkingLocation: Bay 31
-          description: Another note about a vehicle
-          type: Single Deck
-          model: Metrodecker
-          decommissioned: true
-          decommissionedOnDate: '2024-01-01'
-          customAttributes:
-            color: blue
-            capacity: 36
-    StringifyDate:
+    GetVehiclesV1ErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_GetVehiclesV1ErrorTypes_'
+    PutVehiclesErrorTypes:
       type: string
-      format: date
-      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
-    VehicleDepotPeriod:
-      allOf:
-      - $ref: '#/components/schemas/BaseDepotPeriod'
-      - properties:
-          vehicleId:
-            type: string
-        required:
-        - vehicleId
-        type: object
-    AttributeValue:
-      anyOf:
-      - items:
-          anyOf:
-          - type: number
-            format: double
-          - type: string
-        type: array
-      - type: string
-      - type: boolean
-      - type: number
-        format: double
-    TypedApiErrorResponse_PutVehiclesErrorTypes_:
+      enum:
+      - tooManyItems
+      - noItems
+      - invalidFieldContent
+      - vehiclesNotFound
+      - conflictProcessingRequest
+    EditedVehicle:
       properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_PutVehiclesErrorTypes_'
+        customAttributes:
+          properties: {}
+          additionalProperties:
+            $ref: '#/components/schemas/AttributeValue'
+          type: object
+          description: 'Custom attributes for the vehicle. Note that some custom attributes may be mandatory, according to the ''Vehicle attributes'' preference in your Ops instance.
+
+            Should be a mapping of the ''attributeId'' (configured in your Ops instance) to the initial value for that custom attribute. The value will be validated according
+
+            to the attribute definition configured in your Ops instance.'
+        decommissionedOnDate:
+          $ref: '#/components/schemas/StringifyDate'
+          description: When the vehicle was decommissioned, if decommissioned is true.
+        decommissioned:
+          type: boolean
+          description: Whether the vehicle is decommissioned.
+        model:
+          type: string
+          description: The model of the vehicle, cannot exceed 36 characters.
+        type:
+          type: string
+          description: The type of the vehicle. Depending on the 'Vehicle types' preference in your Ops instance, this may be mandatory. If specified, must be one of the vehicle types configured in your Ops instance.
+        description:
+          type: string
+          description: A description of the vehicle, cannot exceed 65535 characters.
+        mainRegionPeriod:
+          properties:
+            depotName:
+              type: string
+              description: The name of the depot the vehicle is assigned to. If specified, should correspond to the 'unit' name returned by `GET /v1/regions`, and be a depot/unit belonging to the region.
+            regionName:
+              type: string
+              description: The name of the region the vehicle is assigned to. Should correspond to the region name returned by `GET /v1/regions`.
+          required:
+          - regionName
+          type: object
+          description: "The main region (and, optionally, depot) that the vehicle is assigned to from today onwards.\nShape matches the `mainRegionPeriod` returned by `GET /v1/vehicles`.\n\nThis field is optional for backwards-compatibility: existing integrations that do not send it\nwill continue to work unchanged.\n\nNote: unlike other optional fields on this endpoint, omitting `mainRegionPeriod` does NOT clear\nthe vehicle's current region assignment. Every vehicle must always belong to a region, so there\nis no way to remove a region assignment - you can only change it to a different region. If you\nwant to leave the current region and depot untouched, you have two equivalent options:\n  1. Omit this field entirely from the request item, or\n  2. Send the same `mainRegionPeriod` value currently returned by `GET /v1/vehicles` for the\n     vehicle (when the requested value matches the vehicle's current assignment, no change is\n     made and no warning is emitted).\n\nWhen specified:\n- If the region and depot match the vehicle's current assignment, nothing changes.\n- Otherwise, a new region period is created starting from today (in the customer's timezone).\n- If a region period already exists starting today, it is overwritten in place and an\n  `overwriteMainRegionPeriodEntry` warning is returned in the response."
+        parkingLocation:
+          type: string
+          description: The parking location of the vehicle, cannot exceed 255 characters.
+        licensePlate:
+          type: string
+          description: The license plate of the vehicle, cannot exceed 36 characters.
+        id:
+          type: string
+          description: Unique identifier for the vehicle - should match a vehicle already created in Ops (either via the API, import process, or the Ops user interface)
       required:
-      - error
+      - id
+      type: object
+    PageNumber:
+      $ref: '#/components/schemas/Integer'
+      description: Page number (1-indexed). Defaults to 1.
+      minimum: 1
+    SchemaValidationErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
+    TypedErrorResponse_Invalidrequestschema_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - Invalid request schema
+      required:
+      - message
+      - type
       type: object
   securitySchemes:
     api_key:

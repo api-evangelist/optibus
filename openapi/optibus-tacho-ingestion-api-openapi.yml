@@ -79,32 +79,8 @@ components:
       description: 'Stringified date-time.
 
         date-time notation as defined by [RFC 3339](https://tools.ietf.org/html/rfc3339#section-5.6), section 5.6, for example,2017-07-21T17:32:28Z'
-    TachoActivityType:
-      description: The type of tachograph activity recorded for the driver.
-      enum:
-      - drive
-      - work
-      - available
-      - rest
-      type: string
-    TypedErrorResponse_PostTachoActivitiesErrorTypes_:
-      properties:
-        details: {}
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/PostTachoActivitiesErrorTypes'
-      required:
-      - message
-      - type
-      type: object
-    TypedApiErrorResponse_Invalidrequestschema_:
-      properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_Invalidrequestschema_'
-      required:
-      - error
-      type: object
+    PostTachoActivitiesErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_PostTachoActivitiesErrorTypes_'
     TachoActivity:
       properties:
         rawExternalCode:
@@ -154,12 +130,43 @@ components:
       - vehicleId
       - driverId
       type: object
-    PostTachoActivitiesErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_PostTachoActivitiesErrorTypes_'
+    TypedErrorResponse_PostTachoActivitiesErrorTypes_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/PostTachoActivitiesErrorTypes'
+      required:
+      - message
+      - type
+      type: object
+    TachoActivityType:
+      description: The type of tachograph activity recorded for the driver.
+      enum:
+      - drive
+      - work
+      - available
+      - rest
+      type: string
+    TypedApiErrorResponse_Invalidrequestschema_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_Invalidrequestschema_'
+      required:
+      - error
+      type: object
     PostTachoActivitiesErrorTypes:
       type: string
       enum:
       - invalidTimeRange
+    TypedApiErrorResponse_PostTachoActivitiesErrorTypes_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_PostTachoActivitiesErrorTypes_'
+      required:
+      - error
+      type: object
     TypedErrorResponse_Invalidrequestschema_:
       properties:
         details: {}
@@ -172,13 +179,6 @@ components:
       required:
       - message
       - type
-      type: object
-    TypedApiErrorResponse_PostTachoActivitiesErrorTypes_:
-      properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_PostTachoActivitiesErrorTypes_'
-      required:
-      - error
       type: object
     SchemaValidationErrorResponse:
       $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'

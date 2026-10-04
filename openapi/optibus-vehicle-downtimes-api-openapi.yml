@@ -151,39 +151,18 @@ paths:
               $ref: '#/components/schemas/PutVehiclesDowntimesRequest'
 components:
   schemas:
-    GetVehiclesDowntimesErrorTypes:
+    GetVehiclesDowntimesErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_GetVehiclesDowntimesErrorTypes_'
+    UUID:
       type: string
-      enum:
-      - invalidDatesCombination
-      - pageNotFound
-    PutVehiclesDowntimesRequest:
+      description: Stringified ID for a resource. Cannot exceed 36 characters.
+    TypedApiErrorResponse_GetVehiclesDowntimesErrorTypes_:
       properties:
-        downtimes:
-          items:
-            $ref: '#/components/schemas/PutVehicleDowntimeEntry'
-          type: array
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_GetVehiclesDowntimesErrorTypes_'
       required:
-      - downtimes
+      - error
       type: object
-      example:
-        downtimes:
-        - downtimeId: downtime-1
-          vehicleId: vehicle-1
-          startDate: '2024-01-01'
-          endDate: '2024-01-02'
-          startTime: 120
-          endTime: 180
-          note: Vehicle is being serviced for a discrete time period (02:00 on 1st January until 02:30 on 2nd January)
-        - downtimeId: downtime-2
-          vehicleId: vehicle-2
-          startDate: '2024-01-03'
-          startTime: 360
-          note: Vehicle is being serviced starting at 06:00 on 3rd January, and the downtime is ongoing indefinitely
-        - downtimeId: downtime-3
-          vehicleId: vehicle-3
-          startDate: '2024-01-04'
-          endDate: '2024-01-05'
-          note: Vehicle is being serviced all day on the 4th and 5th January
     TypedApiErrorResponse_Invalidrequestschema_:
       properties:
         error:
@@ -191,57 +170,10 @@ components:
       required:
       - error
       type: object
-    GetVehiclesDowntimesErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_GetVehiclesDowntimesErrorTypes_'
-    UUID:
+    StringifyDate:
       type: string
-      description: Stringified ID for a resource. Cannot exceed 36 characters.
-    PutVehiclesDowntimesErrorTypes:
-      type: string
-      enum:
-      - tooManyItems
-      - noItems
-      - invalidFieldContent
-      - vehiclesNotFound
-      - conflictProcessingRequest
-    MinutesFromMidnightTime:
-      type: integer
-      format: int32
-      description: Wall clock time, represented as minutes since midnight. For example, `0` is midnight (start of the day), `120` is 02:00 (2 hours after midnight), `180` is 02:30 (2.5 hours after midnight), `1560` is 02:00 the _next day_ (26 hours after midnight), etc.
-    PutVehiclesDowntimesSuccessResponse:
-      properties:
-        createDowntimeIds:
-          $ref: '#/components/schemas/IdList'
-          description: List of downtime IDs that were created.
-        modifiedDowntimeIds:
-          $ref: '#/components/schemas/IdList'
-          description: List of downtime IDs that were modified.
-      required:
-      - createDowntimeIds
-      - modifiedDowntimeIds
-      type: object
-    TypedErrorResponse_Invalidrequestschema_:
-      properties:
-        details: {}
-        message:
-          type: string
-        type:
-          type: string
-          enum:
-          - Invalid request schema
-      required:
-      - message
-      - type
-      type: object
-    Integer:
-      type: integer
-      format: int32
-    SchemaValidationErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
-    PageNumber:
-      $ref: '#/components/schemas/Integer'
-      description: Page number (1-indexed). Defaults to 1.
-      minimum: 1
+      format: date
+      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
     VehicleDowntime:
       properties:
         note:
@@ -266,49 +198,6 @@ components:
       - vehicleId
       - downtimeId
       type: object
-    TypedApiErrorResponse_GetVehiclesDowntimesErrorTypes_:
-      properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_GetVehiclesDowntimesErrorTypes_'
-      required:
-      - error
-      type: object
-    TypedApiErrorResponse_PutVehiclesDowntimesErrorTypes_:
-      properties:
-        error:
-          $ref: '#/components/schemas/TypedErrorResponse_PutVehiclesDowntimesErrorTypes_'
-      required:
-      - error
-      type: object
-    Pagination:
-      properties:
-        totalPages:
-          $ref: '#/components/schemas/Integer'
-          description: Total number of pages.
-        nextPage:
-          $ref: '#/components/schemas/PageNumber'
-          description: Next page number (1-indexed). If undefined, there is no next page.
-        currentPage:
-          $ref: '#/components/schemas/PageNumber'
-          description: Current page number (1-indexed).
-      required:
-      - totalPages
-      - currentPage
-      type: object
-      description: 'Metadata about the pagination of a list of items. When a list of items is too large to be returned in a single response, it is split into multiple pages.
-
-        This object informs you about the current page, the next page, and the total number of pages.'
-    IdList:
-      items:
-        $ref: '#/components/schemas/UUID'
-      type: array
-      example:
-      - item-123
-      - item-456
-      - item-789
-      description: A list of IDs.
-    PutVehiclesDowntimesErrorResponse:
-      $ref: '#/components/schemas/TypedApiErrorResponse_PutVehiclesDowntimesErrorTypes_'
     GetVehiclesDowntimesSuccess:
       properties:
         pagination:
@@ -344,17 +233,104 @@ components:
           currentPage: 1
           nextPage: 2
           totalPages: 2
-    TypedErrorResponse_PutVehiclesDowntimesErrorTypes_:
+    TypedErrorResponse_GetVehiclesDowntimesErrorTypes_:
       properties:
         details: {}
         message:
           type: string
         type:
-          $ref: '#/components/schemas/PutVehiclesDowntimesErrorTypes'
+          $ref: '#/components/schemas/GetVehiclesDowntimesErrorTypes'
       required:
       - message
       - type
       type: object
+    IdList:
+      items:
+        $ref: '#/components/schemas/UUID'
+      type: array
+      example:
+      - item-123
+      - item-456
+      - item-789
+      description: A list of IDs.
+    PutVehiclesDowntimesSuccessResponse:
+      properties:
+        createDowntimeIds:
+          $ref: '#/components/schemas/IdList'
+          description: List of downtime IDs that were created.
+        modifiedDowntimeIds:
+          $ref: '#/components/schemas/IdList'
+          description: List of downtime IDs that were modified.
+      required:
+      - createDowntimeIds
+      - modifiedDowntimeIds
+      type: object
+    PutVehiclesDowntimesRequest:
+      properties:
+        downtimes:
+          items:
+            $ref: '#/components/schemas/PutVehicleDowntimeEntry'
+          type: array
+      required:
+      - downtimes
+      type: object
+      example:
+        downtimes:
+        - downtimeId: downtime-1
+          vehicleId: vehicle-1
+          startDate: '2024-01-01'
+          endDate: '2024-01-02'
+          startTime: 120
+          endTime: 180
+          note: Vehicle is being serviced for a discrete time period (02:00 on 1st January until 02:30 on 2nd January)
+        - downtimeId: downtime-2
+          vehicleId: vehicle-2
+          startDate: '2024-01-03'
+          startTime: 360
+          note: Vehicle is being serviced starting at 06:00 on 3rd January, and the downtime is ongoing indefinitely
+        - downtimeId: downtime-3
+          vehicleId: vehicle-3
+          startDate: '2024-01-04'
+          endDate: '2024-01-05'
+          note: Vehicle is being serviced all day on the 4th and 5th January
+    PutVehiclesDowntimesErrorTypes:
+      type: string
+      enum:
+      - tooManyItems
+      - noItems
+      - invalidFieldContent
+      - vehiclesNotFound
+      - conflictProcessingRequest
+    Integer:
+      type: integer
+      format: int32
+    Pagination:
+      properties:
+        totalPages:
+          $ref: '#/components/schemas/Integer'
+          description: Total number of pages.
+        nextPage:
+          $ref: '#/components/schemas/PageNumber'
+          description: Next page number (1-indexed). If undefined, there is no next page.
+        currentPage:
+          $ref: '#/components/schemas/PageNumber'
+          description: Current page number (1-indexed).
+      required:
+      - totalPages
+      - currentPage
+      type: object
+      description: 'Metadata about the pagination of a list of items. When a list of items is too large to be returned in a single response, it is split into multiple pages.
+
+        This object informs you about the current page, the next page, and the total number of pages.'
+    MinutesFromMidnightTime:
+      type: integer
+      format: int32
+      description: Wall clock time, represented as minutes since midnight. For example, `0` is midnight (start of the day), `120` is 02:00 (2 hours after midnight), `180` is 02:30 (2.5 hours after midnight), `1560` is 02:00 the _next day_ (26 hours after midnight), etc.
+    GetVehiclesDowntimesErrorTypes:
+      type: string
+      enum:
+      - invalidDatesCombination
+      - pageNotFound
     PutVehicleDowntimeEntry:
       properties:
         note:
@@ -378,21 +354,45 @@ components:
       - startDate
       - vehicleId
       type: object
-    TypedErrorResponse_GetVehiclesDowntimesErrorTypes_:
+    PutVehiclesDowntimesErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_PutVehiclesDowntimesErrorTypes_'
+    TypedApiErrorResponse_PutVehiclesDowntimesErrorTypes_:
+      properties:
+        error:
+          $ref: '#/components/schemas/TypedErrorResponse_PutVehiclesDowntimesErrorTypes_'
+      required:
+      - error
+      type: object
+    PageNumber:
+      $ref: '#/components/schemas/Integer'
+      description: Page number (1-indexed). Defaults to 1.
+      minimum: 1
+    TypedErrorResponse_PutVehiclesDowntimesErrorTypes_:
       properties:
         details: {}
         message:
           type: string
         type:
-          $ref: '#/components/schemas/GetVehiclesDowntimesErrorTypes'
+          $ref: '#/components/schemas/PutVehiclesDowntimesErrorTypes'
       required:
       - message
       - type
       type: object
-    StringifyDate:
-      type: string
-      format: date
-      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
+    SchemaValidationErrorResponse:
+      $ref: '#/components/schemas/TypedApiErrorResponse_Invalidrequestschema_'
+    TypedErrorResponse_Invalidrequestschema_:
+      properties:
+        details: {}
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - Invalid request schema
+      required:
+      - message
+      - type
+      type: object
   securitySchemes:
     api_key:
       type: apiKey

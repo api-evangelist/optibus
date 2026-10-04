@@ -89,10 +89,6 @@ components:
       - name
       - code
       type: object
-    GetPreferencesHolidaysResponse:
-      items:
-        $ref: '#/components/schemas/HolidayInfo'
-      type: array
     GetPreferencesAbsenceTypesResponse:
       properties:
         absenceTypes:
@@ -116,6 +112,10 @@ components:
       - to
       - from
       type: object
+    GetPreferencesHolidaysResponse:
+      items:
+        $ref: '#/components/schemas/HolidayInfo'
+      type: array
   securitySchemes:
     api_key:
       type: apiKey

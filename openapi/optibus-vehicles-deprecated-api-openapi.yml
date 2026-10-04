@@ -102,6 +102,9 @@ paths:
           type: string
 components:
   schemas:
+    UUID:
+      type: string
+      description: Stringified ID for a resource. Cannot exceed 36 characters.
     AttributeEntry:
       properties:
         value:
@@ -125,8 +128,45 @@ components:
       description: 'Dictionary mapping attribute ID to an array of values by date.
 
         Correct usage: array sorted by date, only one value per date.'
+    AttributeId:
+      type: string
     VehicleId:
       type: string
+    AttributeValue:
+      anyOf:
+      - items:
+          anyOf:
+          - type: number
+            format: double
+          - type: string
+        type: array
+      - type: string
+      - type: boolean
+      - type: number
+        format: double
+    AttributeType:
+      enum:
+      - STRING
+      - BOOLEAN
+      - SINGLE_SELECT
+      - MULTI_SELECT
+      - DATE
+      - NUMBER
+      - DURATION
+      type: string
+    Pick_AttributeTypeDefinition.id-or-type-or-displayName_:
+      properties:
+        id:
+          type: string
+        type:
+          $ref: '#/components/schemas/AttributeType'
+        displayName:
+          type: string
+      required:
+      - id
+      - type
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
     GetVehicleAttributesResponse:
       properties:
         attributes:
@@ -143,38 +183,10 @@ components:
       - attributes
       - attributeMap
       type: object
-    UUID:
-      type: string
-      description: Stringified ID for a resource. Cannot exceed 36 characters.
-    AttributeId:
-      type: string
-    AttributeType:
-      enum:
-      - STRING
-      - BOOLEAN
-      - SINGLE_SELECT
-      - MULTI_SELECT
-      - DATE
-      - NUMBER
-      - DURATION
-      type: string
     StringifyDate:
       type: string
       format: date
       description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
-    Pick_AttributeTypeDefinition.id-or-type-or-displayName_:
-      properties:
-        id:
-          type: string
-        type:
-          $ref: '#/components/schemas/AttributeType'
-        displayName:
-          type: string
-      required:
-      - id
-      - type
-      type: object
-      description: From T, pick a set of properties whose keys are in the union K
     vehicleWithAttributes:
       properties:
         id:
@@ -208,18 +220,6 @@ components:
       type: object
       additionalProperties:
         $ref: '#/components/schemas/AttributeValue'
-    AttributeValue:
-      anyOf:
-      - items:
-          anyOf:
-          - type: number
-            format: double
-          - type: string
-        type: array
-      - type: string
-      - type: boolean
-      - type: number
-        format: double
     GetVehiclesResponse:
       items:
         $ref: '#/components/schemas/vehicleWithAttributes'

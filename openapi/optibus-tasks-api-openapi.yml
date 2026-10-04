@@ -113,377 +113,10 @@ paths:
             $ref: '#/components/schemas/UUID'
 components:
   schemas:
-    Partial_Omit_OnScheduleBreakEvent.stops-or-id__:
-      properties:
-        paidTime:
-          type: number
-          format: double
-        breakId:
-          type: string
-        extraTime:
-          type: number
-          format: double
-      type: object
-      description: Make all properties in T optional
-    TaskEventBase__distance_63_-number_-and-PrivateHireEventJsonData.OtherEventTypes.PrivateHire_:
-      allOf:
-      - $ref: '#/components/schemas/RosterEvent__distance_63_-number_-and-PrivateHireEventJsonData.OtherEventTypes.PrivateHire_'
-      - $ref: '#/components/schemas/TaskEventProps'
-      - properties:
-          eventJsonData:
-            allOf:
-            - $ref: '#/components/schemas/SignPost'
-            - properties:
-                id:
-                  $ref: '#/components/schemas/UUID'
-              type: object
-            - $ref: '#/components/schemas/SubTripMeta'
-        required:
-        - eventJsonData
-        type: object
-    TaskEventProps:
-      properties:
-        splitTripReference:
-          type: string
-        custom:
-          type: boolean
-        labels:
-          items:
-            $ref: '#/components/schemas/Label'
-          type: array
-        driverNoteText:
-          type: string
-        noteText:
-          type: string
-        disabled:
-          type: boolean
-      type: object
-    OnScheduleEventsTypes.Taxi:
-      enum:
-      - taxi
-      type: string
-    OnScheduleEventsTypes.OtherTravels:
-      enum:
-      - other_travels
-      type: string
-    RosterEvent_ReliefCarEventJsonData.OnScheduleEventsTypes.ReliefCar_:
-      allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/OnScheduleEventsTypes.ReliefCar'
-          eventId:
-            type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_ReliefCarEventJsonData_'
-    RosterEvent_TaxiEventJsonData.OnScheduleEventsTypes.Taxi_:
-      allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/OnScheduleEventsTypes.Taxi'
-          eventId:
-            type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_TaxiEventJsonData_'
-    RosterEvent_SplitEventJsonData.OnScheduleEventsTypes.Split_:
-      allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/OnScheduleEventsTypes.Split'
-          eventId:
-            type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_SplitEventJsonData_'
-    _RechargeEvent:
-      $ref: '#/components/schemas/TaskEventBase_RechargeEventJsonData.OnScheduleEventsTypes.Recharge_'
-    TaskEventBase_ReliefCarPassengerEventJsonData.ReliefCarEventsTypes.ReliefCarPassenger_:
-      allOf:
-      - $ref: '#/components/schemas/RosterEvent_ReliefCarPassengerEventJsonData.ReliefCarEventsTypes.ReliefCarPassenger_'
-      - $ref: '#/components/schemas/TaskEventProps'
-      - properties:
-          eventJsonData:
-            allOf:
-            - $ref: '#/components/schemas/SignPost'
-            - properties:
-                id:
-                  $ref: '#/components/schemas/UUID'
-              type: object
-            - $ref: '#/components/schemas/SubTripMeta'
-        required:
-        - eventJsonData
-        type: object
-    OnScheduleEventsTypes.PreTrip:
-      enum:
-      - pre_trip
-      type: string
-    RosterEvent_RefuelEventJsonData.OnScheduleEventsTypes.Refuel_:
-      allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/OnScheduleEventsTypes.Refuel'
-          eventId:
-            type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_RefuelEventJsonData_'
-    TaskEventBase_ReliefCarEventJsonData.OnScheduleEventsTypes.ReliefCar_:
-      allOf:
-      - $ref: '#/components/schemas/RosterEvent_ReliefCarEventJsonData.OnScheduleEventsTypes.ReliefCar_'
-      - $ref: '#/components/schemas/TaskEventProps'
-      - properties:
-          eventJsonData:
-            allOf:
-            - $ref: '#/components/schemas/SignPost'
-            - properties:
-                id:
-                  $ref: '#/components/schemas/UUID'
-              type: object
-            - $ref: '#/components/schemas/SubTripMeta'
-        required:
-        - eventJsonData
-        type: object
-    GenericRosterEventProps_BehindTheWheelHoursEventJsonData_:
+    GenericRosterEventProps_SplitEventJsonData_:
       properties:
         eventJsonData:
-          $ref: '#/components/schemas/BehindTheWheelHoursEventJsonData'
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-        startTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-      required:
-      - eventJsonData
-      - endTime
-      - startTime
-      type: object
-    Pick_SameLocationEvent.Exclude_keyofSameLocationEvent.stops-or-id__:
-      properties:
-        vehicleId:
-          type: string
-        dutyId:
-          type: string
-      type: object
-      description: From T, pick a set of properties whose keys are in the union K
-    TravelTypeEvent:
-      anyOf:
-      - $ref: '#/components/schemas/ReliefCarEvent'
-      - $ref: '#/components/schemas/TaxiEvent'
-      - $ref: '#/components/schemas/OtherTravelsEvent'
-      - $ref: '#/components/schemas/WalksEvent'
-      - $ref: '#/components/schemas/PublicTravelEvent'
-    RosterEvent_PostTripEventJsonData.OnScheduleEventsTypes.PostTrip_:
-      allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/OnScheduleEventsTypes.PostTrip'
-          eventId:
-            type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_PostTripEventJsonData_'
-    BlockType:
-      enum:
-      - block
-      - custom
-      type: string
-    CustomScheduleEventsTypes.LightDutyHours:
-      enum:
-      - light_duty_hours
-      type: string
-    StandbyEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_OnScheduleCustomEvent.stops-or-id-or-description_'
-      - $ref: '#/components/schemas/Partial_BaseEventJsonData_'
-      - properties:
-          description:
-            type: string
-        type: object
-    PostTripEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_SameLocationEvent.stops-or-id_'
-      - $ref: '#/components/schemas/BaseEventJsonData'
-    GetCalendarResponse:
-      $ref: '#/components/schemas/CalendarInformation'
-    ReinforcementTripEventJsonData:
-      $ref: '#/components/schemas/ServiceTripEventJsonData'
-    MinutesFromMidnightTime:
-      type: integer
-      format: int32
-      description: Wall clock time, represented as minutes since midnight. For example, `0` is midnight (start of the day), `120` is 02:00 (2 hours after midnight), `180` is 02:30 (2.5 hours after midnight), `1560` is 02:00 the _next day_ (26 hours after midnight), etc.
-    ReliefCarEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_ReliefCarTravelEvent.stops-or-id_'
-      - $ref: '#/components/schemas/BaseEventJsonData'
-    RosterEvent_NonRevenueEventJsonData.CustomScheduleEventsTypes.NonRevenue_:
-      allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/CustomScheduleEventsTypes.NonRevenue'
-          eventId:
-            type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_NonRevenueEventJsonData_'
-    SameDutyLocationTypeEvent:
-      anyOf:
-      - $ref: '#/components/schemas/SplitEvent'
-      - $ref: '#/components/schemas/SignOffEvent'
-      - $ref: '#/components/schemas/SignOnEvent'
-    DeadheadSubType:
-      anyOf:
-      - $ref: '#/components/schemas/OnScheduleEventsTypes.Deadhead'
-      - $ref: '#/components/schemas/OtherEventTypes.PullIn'
-      - $ref: '#/components/schemas/OtherEventTypes.PullOut'
-    TechnicalBreakEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_OnScheduleCustomEvent.stops-or-id-or-description_'
-      - $ref: '#/components/schemas/Partial_BaseEventJsonData_'
-    TrainingEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_OnScheduleCustomEvent.stops-or-id-or-description_'
-      - $ref: '#/components/schemas/Partial_BaseEventJsonData_'
-    OnScheduleEventsTypes.Recharge:
-      enum:
-      - recharge
-      type: string
-    TaskType:
-      enum:
-      - duty
-      - day_off
-      - standby
-      - spare
-      - custom
-      type: string
-    ScheduleEventsTypeName:
-      type: string
-      enum:
-      - trips
-      - subTrips
-      - deadheads
-      - signOns
-      - signOffs
-      - splits
-      - preTrip
-      - postTrip
-      - attendance
-      - custom
-      - refuels
-      - recharges
-      - taxis
-      - otherTravels
-      - walks
-      - reliefCars
-      - publicTravels
-    TaskEventBase_RechargeEventJsonData.OnScheduleEventsTypes.Recharge_:
-      allOf:
-      - $ref: '#/components/schemas/RosterEvent_RechargeEventJsonData.OnScheduleEventsTypes.Recharge_'
-      - $ref: '#/components/schemas/TaskEventProps'
-      - properties:
-          eventJsonData:
-            allOf:
-            - $ref: '#/components/schemas/SignPost'
-            - properties:
-                id:
-                  $ref: '#/components/schemas/UUID'
-              type: object
-            - $ref: '#/components/schemas/SubTripMeta'
-        required:
-        - eventJsonData
-        type: object
-    TaskEventBase_StandbyEventJsonData.CustomScheduleEventsTypes.Standby_:
-      allOf:
-      - $ref: '#/components/schemas/RosterEvent_StandbyEventJsonData.CustomScheduleEventsTypes.Standby_'
-      - $ref: '#/components/schemas/TaskEventProps'
-      - properties:
-          eventJsonData:
-            allOf:
-            - $ref: '#/components/schemas/SignPost'
-            - properties:
-                id:
-                  $ref: '#/components/schemas/UUID'
-              type: object
-            - $ref: '#/components/schemas/SubTripMeta'
-        required:
-        - eventJsonData
-        type: object
-    GenericRosterEventProps_ServiceTripEventJsonData_:
-      properties:
-        eventJsonData:
-          $ref: '#/components/schemas/ServiceTripEventJsonData'
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-        startTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-      required:
-      - eventJsonData
-      - endTime
-      - startTime
-      type: object
-    Omit_OtherTravelEvent.stops-or-id-or-name_:
-      $ref: '#/components/schemas/Pick_OtherTravelEvent.Exclude_keyofOtherTravelEvent.stops-or-id-or-name__'
-      description: Construct a type with the properties of T except for those in type K.
-    OnScheduleEventsTypes:
-      enum:
-      - service_trip
-      - sub_trip
-      - deadhead
-      - sign_on
-      - sign_off
-      - split
-      - pre_trip
-      - post_trip
-      - attendance
-      - custom
-      - refuels
-      - recharge
-      - other_travels
-      - taxi
-      - walk
-      - relief_cars
-      - public_travel
-      - break
-      - other
-      type: string
-    TaxiEvent:
-      $ref: '#/components/schemas/TaskEventBase_TaxiEventJsonData.OnScheduleEventsTypes.Taxi_'
-    Omit_PublicTransportationEvent.stops-or-id_:
-      $ref: '#/components/schemas/Pick_PublicTransportationEvent.Exclude_keyofPublicTransportationEvent.stops-or-id__'
-      description: Construct a type with the properties of T except for those in type K.
-    TaxiEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_OnScheduleTaxiEvent.stops-or-id_'
-      - $ref: '#/components/schemas/BaseEventJsonData'
-    Omit_OnScheduleTaxiEvent.stops-or-id_:
-      $ref: '#/components/schemas/Pick_OnScheduleTaxiEvent.Exclude_keyofOnScheduleTaxiEvent.stops-or-id__'
-      description: Construct a type with the properties of T except for those in type K.
-    CustomScheduleEventsTypes:
-      description: Duty schedule only custom event, vehicle does not move between stops
-      enum:
-      - standby
-      - technical_break
-      - meeting
-      - training
-      - non_revenue
-      - light_duty_hours
-      - behind_the_wheel_hours
-      type: string
-    GenericRosterEventProps_OtherEventJsonData_:
-      properties:
-        eventJsonData:
-          $ref: '#/components/schemas/OtherEventJsonData'
+          $ref: '#/components/schemas/SplitEventJsonData'
         endTime:
           $ref: '#/components/schemas/MinutesFromMidnightTime'
         startTime:
@@ -509,91 +142,28 @@ components:
         required:
         - eventJsonData
         type: object
-    CalendarPlanInformation:
+    Pick_ReliefCarTravelEvent.Exclude_keyofReliefCarTravelEvent.stops-or-id__:
       properties:
-        deployDateRange:
-          $ref: '#/components/schemas/StringifyDateRange'
-        group:
+        distance:
+          type: number
+          format: double
+        dutyId:
           type: string
-        rosterId:
-          $ref: '#/components/schemas/UUID'
-        plan:
-          $ref: '#/components/schemas/UUID'
-      required:
-      - deployDateRange
-      - group
-      - rosterId
-      - plan
+        passengers:
+          items:
+            $ref: '#/components/schemas/Passenger'
+          type: array
+        carId:
+          type: string
       type: object
-    SplitEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_SameLocationDutyEvent.stops-or-id_'
-      - $ref: '#/components/schemas/BaseEventJsonData'
-    SignOnEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_SameLocationDutyEvent.stops-or-id_'
-      - $ref: '#/components/schemas/BaseEventJsonData'
-    MeetingEvent:
-      $ref: '#/components/schemas/TaskEventBase_MeetingEventJsonData.CustomScheduleEventsTypes.Meeting_'
-    TaskEventBase_PreTripEventJsonData.OnScheduleEventsTypes.PreTrip_:
-      allOf:
-      - $ref: '#/components/schemas/RosterEvent_PreTripEventJsonData.OnScheduleEventsTypes.PreTrip_'
-      - $ref: '#/components/schemas/TaskEventProps'
-      - properties:
-          eventJsonData:
-            allOf:
-            - $ref: '#/components/schemas/SignPost'
-            - properties:
-                id:
-                  $ref: '#/components/schemas/UUID'
-              type: object
-            - $ref: '#/components/schemas/SubTripMeta'
-        required:
-        - eventJsonData
-        type: object
-    Record_AttributeId.AttributeValue_:
-      properties: {}
-      additionalProperties:
-        $ref: '#/components/schemas/AttributeValue'
-      type: object
-      description: Construct a type with a set of properties K of type T
-    OnScheduleEventsTypes.Split:
-      enum:
-      - split
-      type: string
-    RosterEvent_PublicTravelEventJsonData.OnScheduleEventsTypes.PublicTravel_:
-      allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/OnScheduleEventsTypes.PublicTravel'
-          eventId:
-            type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_PublicTravelEventJsonData_'
-    EventStop:
-      anyOf:
-      - $ref: '#/components/schemas/CustomEventStop'
-      - allOf:
-        - $ref: '#/components/schemas/OnScheduleEventStop'
-        - properties:
-            isCustom:
-              type: boolean
-              enum:
-              - false
-          type: object
-    GenericRosterEventProps__distance_63_-number_-and-PrivateHireEventJsonData_:
+      description: From T, pick a set of properties whose keys are in the union K
+    Omit_TravelEvent.stops-or-id_:
+      $ref: '#/components/schemas/Pick_TravelEvent.Exclude_keyofTravelEvent.stops-or-id__'
+      description: Construct a type with the properties of T except for those in type K.
+    GenericRosterEventProps_SubTripEventJsonData_:
       properties:
         eventJsonData:
-          allOf:
-          - properties:
-              distance:
-                type: number
-                format: double
-            type: object
-          - $ref: '#/components/schemas/PrivateHireEventJsonData'
+          $ref: '#/components/schemas/SubTripEventJsonData'
         endTime:
           $ref: '#/components/schemas/MinutesFromMidnightTime'
         startTime:
@@ -603,17 +173,36 @@ components:
       - endTime
       - startTime
       type: object
-    OnScheduleEventsTypes.SubTrip:
+    OnScheduleEventsTypes.SignOn:
       enum:
-      - sub_trip
+      - sign_on
       type: string
-    VehicleBlockJsonData:
+    ReliefCarPassengerEvent:
+      $ref: '#/components/schemas/TaskEventBase_ReliefCarPassengerEventJsonData.ReliefCarEventsTypes.ReliefCarPassenger_'
+    GenericRosterEventProps_TrainingEventJsonData_:
       properties:
         eventJsonData:
-          $ref: '#/components/schemas/BlockId'
+          $ref: '#/components/schemas/TrainingEventJsonData'
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
       required:
       - eventJsonData
+      - endTime
+      - startTime
       type: object
+    OnScheduleEventsTypes.Walks:
+      enum:
+      - walk
+      type: string
+    OnScheduleEventsTypes.Deadhead:
+      enum:
+      - deadhead
+      type: string
+    Omit_OnScheduleCustomEvent.stops-or-id-or-description_:
+      $ref: '#/components/schemas/Pick_OnScheduleCustomEvent.Exclude_keyofOnScheduleCustomEvent.stops-or-id-or-description__'
+      description: Construct a type with the properties of T except for those in type K.
     TaskEvent:
       anyOf:
       - $ref: '#/components/schemas/TechnicalBreakEvent'
@@ -646,84 +235,9 @@ components:
       - $ref: '#/components/schemas/AttendanceEvent'
       - $ref: '#/components/schemas/ReliefCarPassengerEvent'
       - $ref: '#/components/schemas/ReliefCarDriverEvent'
-    Pick_OtherTravelEvent.Exclude_keyofOtherTravelEvent.stops-or-id-or-name__:
-      properties:
-        distance:
-          type: number
-          format: double
-        dutyId:
-          type: string
-      type: object
-      description: From T, pick a set of properties whose keys are in the union K
-    Pick_RefuelEvent.Exclude_keyofRefuelEvent.stops-or-id__:
-      properties:
-        vehicleId:
-          type: string
-        dutyId:
-          type: string
-        setupTime:
-          type: number
-          format: double
-      type: object
-      description: From T, pick a set of properties whose keys are in the union K
-    GenericRosterEventProps_ReinforcementTripEventJsonData_:
-      properties:
-        eventJsonData:
-          $ref: '#/components/schemas/ReinforcementTripEventJsonData'
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-        startTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-      required:
-      - eventJsonData
-      - endTime
-      - startTime
-      type: object
-    GenericRosterEventProps_TaxiEventJsonData_:
-      properties:
-        eventJsonData:
-          $ref: '#/components/schemas/TaxiEventJsonData'
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-        startTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-      required:
-      - eventJsonData
-      - endTime
-      - startTime
-      type: object
-    Pick_CalendarTask.Exclude_keyofCalendarTask.events-or-summary-or-disabled-or-cancellationCode-or-cancellationReason__:
-      properties:
-        id:
-          type: string
-        description:
-          type: string
-          description: The description property is only found on custom duties and standbys. It is used to hold dispatcher notes for these custom tasks.
-        type:
-          $ref: '#/components/schemas/TaskType'
-        attributes:
-          $ref: '#/components/schemas/Record_string.AttributeValue_'
-        displayId:
-          type: string
-        srcTaskId:
-          type: string
-        data: {}
-        rosterDatasetId:
-          type: string
-        scheduleId:
-          type: string
-        copiedTaskId:
-          type: string
-          description: if the task is a copy, then this property holds the original task's ID
-      required:
-      - id
-      - type
-      - displayId
-      type: object
-      description: From T, pick a set of properties whose keys are in the union K
-    TaskEventBase_SplitEventJsonData.OnScheduleEventsTypes.Split_:
+    TaskEventBase_ServiceTripEventJsonData.OnScheduleEventsTypes.ServiceTrip_:
       allOf:
-      - $ref: '#/components/schemas/RosterEvent_SplitEventJsonData.OnScheduleEventsTypes.Split_'
+      - $ref: '#/components/schemas/RosterEvent_ServiceTripEventJsonData.OnScheduleEventsTypes.ServiceTrip_'
       - $ref: '#/components/schemas/TaskEventProps'
       - properties:
           eventJsonData:
@@ -737,14 +251,67 @@ components:
         required:
         - eventJsonData
         type: object
-    Record_string.unknown_:
-      properties: {}
-      additionalProperties: {}
+    OptibusIds:
+      properties:
+        optibusTimeplanId:
+          type: string
+        optibusScheduleId:
+          type: string
+        optibusRosterDatasetId:
+          type: string
+        optibusRosterId:
+          type: string
+      required:
+      - optibusTimeplanId
+      - optibusScheduleId
       type: object
-      description: Construct a type with a set of properties K of type T
-    TaskEventBase_ReliefCarDriverEventJsonData.ReliefCarEventsTypes.ReliefCarDriver_:
+    BreakEvent:
+      $ref: '#/components/schemas/TaskEventBase_BreakEventJsonData.OnScheduleEventsTypes.Break_'
+    RosterEvent__distance_63_-number_-and-PrivateHireEventJsonData.OtherEventTypes.PrivateHire_:
       allOf:
-      - $ref: '#/components/schemas/RosterEvent_ReliefCarDriverEventJsonData.ReliefCarEventsTypes.ReliefCarDriver_'
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/OtherEventTypes.PrivateHire'
+          eventId:
+            type: string
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps__distance_63_-number_-and-PrivateHireEventJsonData_'
+    SubTripEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Omit_OnScheduleServiceTripEvent.stops-or-id_'
+      - $ref: '#/components/schemas/Required_LocationInformation_'
+      - $ref: '#/components/schemas/Stops'
+      - $ref: '#/components/schemas/SubTripMeta'
+    TravelTypeEvent:
+      anyOf:
+      - $ref: '#/components/schemas/ReliefCarEvent'
+      - $ref: '#/components/schemas/TaxiEvent'
+      - $ref: '#/components/schemas/OtherTravelsEvent'
+      - $ref: '#/components/schemas/WalksEvent'
+      - $ref: '#/components/schemas/PublicTravelEvent'
+    GenericRosterEventProps_MeetingEventJsonData_:
+      properties:
+        eventJsonData:
+          $ref: '#/components/schemas/MeetingEventJsonData'
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - eventJsonData
+      - endTime
+      - startTime
+      type: object
+    OnScheduleEventsTypes.Attendance:
+      enum:
+      - attendance
+      type: string
+    TaskEventBase_CustomEventJsonData.OnScheduleEventsTypes.Custom_:
+      allOf:
+      - $ref: '#/components/schemas/RosterEvent_CustomEventJsonData.OnScheduleEventsTypes.Custom_'
       - $ref: '#/components/schemas/TaskEventProps'
       - properties:
           eventJsonData:
@@ -758,131 +325,84 @@ components:
         required:
         - eventJsonData
         type: object
+    TaskEventProps:
+      properties:
+        splitTripReference:
+          type: string
+        custom:
+          type: boolean
+        labels:
+          items:
+            $ref: '#/components/schemas/Label'
+          type: array
+        driverNoteText:
+          type: string
+        noteText:
+          type: string
+        disabled:
+          type: boolean
+      type: object
     OnScheduleEventsTypes.PostTrip:
       enum:
       - post_trip
       type: string
-    RefuelEventJsonData:
+    GenericRosterEventProps_RechargeEventJsonData_:
+      properties:
+        eventJsonData:
+          $ref: '#/components/schemas/RechargeEventJsonData'
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - eventJsonData
+      - endTime
+      - startTime
+      type: object
+    PublicTravelEventJsonData:
       allOf:
-      - $ref: '#/components/schemas/Omit_RefuelEvent.stops-or-id_'
+      - $ref: '#/components/schemas/Omit_PublicTransportationEvent.stops-or-id_'
       - $ref: '#/components/schemas/BaseEventJsonData'
-    PrivateHireEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_OnScheduleCustomEvent.stops-or-id-or-description_'
-      - $ref: '#/components/schemas/Partial_BaseEventJsonData_'
-    TaskEventBase_SubTripEventJsonData.OnScheduleEventsTypes.SubTrip_:
-      allOf:
-      - $ref: '#/components/schemas/RosterEvent_SubTripEventJsonData.OnScheduleEventsTypes.SubTrip_'
-      - $ref: '#/components/schemas/TaskEventProps'
-      - properties:
-          eventJsonData:
-            allOf:
-            - $ref: '#/components/schemas/SignPost'
-            - properties:
-                id:
-                  $ref: '#/components/schemas/UUID'
-              type: object
-            - $ref: '#/components/schemas/SubTripMeta'
-        required:
-        - eventJsonData
-        type: object
-    Omit_SameLocationEvent.stops-or-id_:
-      $ref: '#/components/schemas/Pick_SameLocationEvent.Exclude_keyofSameLocationEvent.stops-or-id__'
-      description: Construct a type with the properties of T except for those in type K.
-    GenericRosterEventProps_TechnicalBreakEventJsonData_:
-      properties:
-        eventJsonData:
-          $ref: '#/components/schemas/TechnicalBreakEventJsonData'
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-        startTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-      required:
-      - eventJsonData
-      - endTime
-      - startTime
-      type: object
-    CustomScheduleEventsTypes.Meeting:
-      enum:
-      - meeting
-      type: string
-    RosterEvent_RechargeEventJsonData.OnScheduleEventsTypes.Recharge_:
+    RosterEvent_ReinforcementTripEventJsonData.OtherEventTypes.ReinforcementTrip_:
       allOf:
       - properties:
           eventType:
-            $ref: '#/components/schemas/OnScheduleEventsTypes.Recharge'
+            $ref: '#/components/schemas/OtherEventTypes.ReinforcementTrip'
           eventId:
             type: string
         required:
         - eventType
         - eventId
         type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_RechargeEventJsonData_'
-    PrivateHireEvent:
-      $ref: '#/components/schemas/TaskEventBase__distance_63_-number_-and-PrivateHireEventJsonData.OtherEventTypes.PrivateHire_'
-    RosterEvent_WalkEventJsonData.OnScheduleEventsTypes.Walks_:
+      - $ref: '#/components/schemas/GenericRosterEventProps_ReinforcementTripEventJsonData_'
+    RosterEvent_BehindTheWheelHoursEventJsonData.CustomScheduleEventsTypes.BehindTheWheelHours_:
       allOf:
       - properties:
           eventType:
-            $ref: '#/components/schemas/OnScheduleEventsTypes.Walks'
+            $ref: '#/components/schemas/CustomScheduleEventsTypes.BehindTheWheelHours'
           eventId:
             type: string
         required:
         - eventType
         - eventId
         type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_WalkEventJsonData_'
-    BreakEvent:
-      $ref: '#/components/schemas/TaskEventBase_BreakEventJsonData.OnScheduleEventsTypes.Break_'
-    OnScheduleEventsTypes.Custom:
-      enum:
-      - custom
-      type: string
-    SameLocationTypeEvent:
-      anyOf:
-      - $ref: '#/components/schemas/PreTripEvent'
-      - $ref: '#/components/schemas/PostTripEvent'
-      - $ref: '#/components/schemas/_RefuelEvent'
-      - $ref: '#/components/schemas/_RechargeEvent'
-      - $ref: '#/components/schemas/AttendanceEvent'
-    AttendanceEvent:
-      $ref: '#/components/schemas/TaskEventBase_AttendanceEventJsonData.OnScheduleEventsTypes.Attendance_'
-    OnScheduleEventsTypes.Deadhead:
-      enum:
-      - deadhead
-      type: string
-    GenericRosterEventProps_ReliefCarDriverEventJsonData_:
+      - $ref: '#/components/schemas/GenericRosterEventProps_BehindTheWheelHoursEventJsonData_'
+    OnScheduleEventStop:
       properties:
-        eventJsonData:
-          $ref: '#/components/schemas/ReliefCarDriverEventJsonData'
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-        startTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-      required:
-      - eventJsonData
-      - endTime
-      - startTime
-      type: object
-    RosterDutyEventReference:
-      properties:
-        originRosterId:
-          type: string
-        deleted:
+        time:
+          $ref: '#/components/schemas/OptibusTime'
+        isTimePoint:
           type: boolean
-        originalDutyId:
-          type: string
-        dutyId:
-          type: string
-        eventId:
-          type: string
+          description: If true, stop can be a relief point
+        id:
+          $ref: '#/components/schemas/StringId'
       required:
-      - dutyId
-      - eventId
+      - time
+      - id
       type: object
-    Omit_OnScheduleServiceTripEvent.stops-or-id_:
-      $ref: '#/components/schemas/Pick_OnScheduleServiceTripEvent.Exclude_keyofOnScheduleServiceTripEvent.stops-or-id__'
-      description: Construct a type with the properties of T except for those in type K.
+      description: 'Stop event related data.<br/>
+
+        Full stop information should be taken from `stops` property with this stop `id`'
     CustomEventStop:
       allOf:
       - $ref: '#/components/schemas/OnScheduleEventStop'
@@ -900,244 +420,80 @@ components:
         Custom stops cannot be found in the `stops` catalog/property
 
         Their ID is actually their name and lat and long are stored directly in the EventStop json'
-    GenericRosterEventProps_LightDutyHoursEventJsonData_:
+    VehicleBlockJsonData:
       properties:
         eventJsonData:
-          $ref: '#/components/schemas/LightDutyHoursEventJsonData'
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-        startTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
+          $ref: '#/components/schemas/BlockId'
       required:
       - eventJsonData
-      - endTime
-      - startTime
       type: object
-    PublicTravelEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_PublicTransportationEvent.stops-or-id_'
-      - $ref: '#/components/schemas/BaseEventJsonData'
-    ReliefCarEventsTypes:
-      enum:
-      - relief_car_passenger
-      - relief_car_driver
-      type: string
-    Pick_SameLocationDutyEvent.Exclude_keyofSameLocationDutyEvent.stops-or-id__:
-      properties:
-        dutyId:
-          type: string
-      type: object
-      description: From T, pick a set of properties whose keys are in the union K
-    CustomScheduleEventsTypes.NonRevenue:
-      enum:
-      - non_revenue
-      type: string
-    OnScheduleEventsTypes.Refuel:
-      enum:
-      - refuels
-      type: string
-    GenericRosterEventProps_PublicTravelEventJsonData_:
-      properties:
-        eventJsonData:
-          $ref: '#/components/schemas/PublicTravelEventJsonData'
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-        startTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-      required:
-      - eventJsonData
-      - endTime
-      - startTime
-      type: object
-    BlockId:
-      properties:
-        blockId:
-          type: string
-          description: 'in ops a vehicle is called a block
-
-            the vehicleId in ops refers to something completely different where a vehicle can run more than one block
-
-            this type allows us to rename vehicleId as blockId
-
-            vehicleId is deprecated in V2 of the external API'
-      type: object
+    VehicleEvent:
+      anyOf:
+      - $ref: '#/components/schemas/DeadheadTypeEvent'
+      - $ref: '#/components/schemas/SameLocationTypeEvent'
+      - $ref: '#/components/schemas/ServiceTripTypeEvent'
     SourceMeta:
       anyOf:
       - $ref: '#/components/schemas/ScheduleSourceMeta'
       - $ref: '#/components/schemas/OperationsSourceMeta'
-    Omit_OnScheduleDeadheadEvent.stops-or-id_:
-      $ref: '#/components/schemas/Pick_OnScheduleDeadheadEvent.Exclude_keyofOnScheduleDeadheadEvent.stops-or-id__'
-      description: Construct a type with the properties of T except for those in type K.
-    OtherEventTypes.PullOut:
-      enum:
-      - depot_pull_out
-      type: string
-    CalendarDailyInformation:
-      properties:
-        tasks:
-          items:
-            $ref: '#/components/schemas/TaskAssignment'
-          type: array
-        date:
-          $ref: '#/components/schemas/StringifyDate'
-      required:
-      - tasks
-      - date
-      type: object
-    OtherEventTypes:
-      enum:
-      - depot_pull_in
-      - depot_pull_out
-      - reinforcement_trip
-      - private_hire
-      type: string
-    TaskEventBase_ServiceTripEventJsonData.OnScheduleEventsTypes.ServiceTrip_:
+    CustomEvent:
       allOf:
-      - $ref: '#/components/schemas/RosterEvent_ServiceTripEventJsonData.OnScheduleEventsTypes.ServiceTrip_'
-      - $ref: '#/components/schemas/TaskEventProps'
+      - $ref: '#/components/schemas/TaskEventBase_CustomEventJsonData.OnScheduleEventsTypes.Custom_'
       - properties:
-          eventJsonData:
-            allOf:
-            - $ref: '#/components/schemas/SignPost'
-            - properties:
-                id:
-                  $ref: '#/components/schemas/UUID'
-              type: object
-            - $ref: '#/components/schemas/SubTripMeta'
-        required:
-        - eventJsonData
+          originalEventType:
+            $ref: '#/components/schemas/ScheduleEventsType'
+          distance:
+            type: number
+            format: double
         type: object
-    ServiceTripTypeEvent:
-      anyOf:
-      - $ref: '#/components/schemas/ServiceTripEvent'
-      - $ref: '#/components/schemas/SubTripEvent'
-      - $ref: '#/components/schemas/ReinforcementTripEvent'
-    SignOnEvent:
-      $ref: '#/components/schemas/TaskEventBase_SignOnEventJsonData.OnScheduleEventsTypes.SignOn_'
-    SignOffEvent:
-      $ref: '#/components/schemas/TaskEventBase_SignOffEventJsonData.OnScheduleEventsTypes.SignOff_'
-    ServiceTripEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_OnScheduleServiceTripEvent.stops-or-id_'
-      - $ref: '#/components/schemas/Required_LocationInformation_'
-      - $ref: '#/components/schemas/Stops'
-      - $ref: '#/components/schemas/ParentTripMeta'
-      - $ref: '#/components/schemas/SubTripMeta'
-    RosterEvent_ReinforcementTripEventJsonData.OtherEventTypes.ReinforcementTrip_:
-      allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/OtherEventTypes.ReinforcementTrip'
-          eventId:
-            type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_ReinforcementTripEventJsonData_'
-    SignPost:
+    MeetingEvent:
+      $ref: '#/components/schemas/TaskEventBase_MeetingEventJsonData.CustomScheduleEventsTypes.Meeting_'
+    DutyEventSummary:
       properties:
-        signPost:
+        destinationStop:
           type: string
-      type: object
-    DutyCancellationReason:
-      properties:
-        reasonCode:
+        destinationDepot:
           type: string
-        reason:
+        originStop:
           type: string
-      required:
-      - reasonCode
-      - reason
-      type: object
-    UUID:
-      type: string
-      description: Stringified ID for a resource. Cannot exceed 36 characters.
-    NonRevenueEvent:
-      $ref: '#/components/schemas/TaskEventBase_NonRevenueEventJsonData.CustomScheduleEventsTypes.NonRevenue_'
-    RosterEvent_CustomEventJsonData.OnScheduleEventsTypes.Custom_:
-      allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/OnScheduleEventsTypes.Custom'
-          eventId:
-            type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_CustomEventJsonData_'
-    RosterEvent_StandbyEventJsonData.CustomScheduleEventsTypes.Standby_:
-      allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/CustomScheduleEventsTypes.Standby'
-          eventId:
-            type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_StandbyEventJsonData_'
-    GenericRosterEventProps_PreTripEventJsonData_:
-      properties:
-        eventJsonData:
-          $ref: '#/components/schemas/PreTripEventJsonData'
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        originDepot:
+          type: string
         startTime:
           $ref: '#/components/schemas/MinutesFromMidnightTime'
-      required:
-      - eventJsonData
-      - endTime
-      - startTime
-      type: object
-    OperationsSourceMeta:
-      properties:
-        source:
+        serviceName:
           type: string
-          enum:
-          - operations
-      required:
-      - source
-      type: object
-    RosterEvent_DeadheadEventJsonData.DeadheadSubType_:
-      allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/DeadheadSubType'
-          eventId:
+        serviceId:
+          type: string
+        timePlanId:
+          type: string
+        scheduleDatasetId:
+          type: string
+          description: This is actually the schedule ID (as found in the scheduling URL). It is not the schedule dataset ID
+        routes:
+          items:
             type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_DeadheadEventJsonData_'
-    TaskEventBase_AttendanceEventJsonData.OnScheduleEventsTypes.Attendance_:
+          type: array
+        rosterSourceId:
+          type: string
+        rosterDatasetId:
+          type: string
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - destinationStop
+      - originStop
+      - startTime
+      - routes
+      - endTime
+      type: object
+    OtherEventJsonData:
       allOf:
-      - $ref: '#/components/schemas/RosterEvent_AttendanceEventJsonData.OnScheduleEventsTypes.Attendance_'
-      - $ref: '#/components/schemas/TaskEventProps'
+      - $ref: '#/components/schemas/Omit_OnScheduleCustomEvent.stops-or-id-or-description_'
+      - $ref: '#/components/schemas/Partial_BaseEventJsonData_'
       - properties:
-          eventJsonData:
-            allOf:
-            - $ref: '#/components/schemas/SignPost'
-            - properties:
-                id:
-                  $ref: '#/components/schemas/UUID'
-              type: object
-            - $ref: '#/components/schemas/SubTripMeta'
-        required:
-        - eventJsonData
+          description:
+            type: string
         type: object
-    PublicTravelEvent:
-      $ref: '#/components/schemas/TaskEventBase_PublicTravelEventJsonData.OnScheduleEventsTypes.PublicTravel_'
-    SignOffEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_SameLocationDutyEvent.stops-or-id_'
-      - $ref: '#/components/schemas/BaseEventJsonData'
-    Omit_SameLocationDutyEvent.stops-or-id_:
-      $ref: '#/components/schemas/Pick_SameLocationDutyEvent.Exclude_keyofSameLocationDutyEvent.stops-or-id__'
-      description: Construct a type with the properties of T except for those in type K.
     Pick_OnScheduleServiceTripEvent.Exclude_keyofOnScheduleServiceTripEvent.stops-or-id__:
       properties:
         distance:
@@ -1192,122 +548,28 @@ components:
       - optibusRouteId
       type: object
       description: From T, pick a set of properties whose keys are in the union K
-    RosterEvent_MeetingEventJsonData.CustomScheduleEventsTypes.Meeting_:
-      allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/CustomScheduleEventsTypes.Meeting'
-          eventId:
-            type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_MeetingEventJsonData_'
-    ParentTripMeta:
-      properties:
-        subTripsEventId:
-          items:
-            type: string
-          type: array
-          description: Parent roster event id  for the Sub-trip list af a parent trip
-      type: object
+    ReliefCarEventsTypes:
+      enum:
+      - relief_car_passenger
+      - relief_car_driver
+      type: string
+    OtherEventTypes.PullOut:
+      enum:
+      - depot_pull_out
+      type: string
+    OnScheduleEventsTypes.SignOff:
+      enum:
+      - sign_off
+      type: string
     ScheduleEventsType:
       anyOf:
       - $ref: '#/components/schemas/CustomScheduleEventsTypes'
       - $ref: '#/components/schemas/OnScheduleEventsTypes'
       - $ref: '#/components/schemas/OtherEventTypes'
       - $ref: '#/components/schemas/ReliefCarEventsTypes'
-    GenericRosterEventProps_OtherTravelEventJsonData_:
-      properties:
-        eventJsonData:
-          $ref: '#/components/schemas/OtherTravelEventJsonData'
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-        startTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-      required:
-      - eventJsonData
-      - endTime
-      - startTime
-      type: object
-    TechnicalBreakEvent:
-      $ref: '#/components/schemas/TaskEventBase_TechnicalBreakEventJsonData.CustomScheduleEventsTypes.TechnicalBreak_'
-    RosterEvent_SubTripEventJsonData.OnScheduleEventsTypes.SubTrip_:
+    TaskEventBase_AttendanceEventJsonData.OnScheduleEventsTypes.Attendance_:
       allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/OnScheduleEventsTypes.SubTrip'
-          eventId:
-            type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_SubTripEventJsonData_'
-    RosterEvent_SignOffEventJsonData.OnScheduleEventsTypes.SignOff_:
-      allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/OnScheduleEventsTypes.SignOff'
-          eventId:
-            type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_SignOffEventJsonData_'
-    ScheduleSourceMeta:
-      properties:
-        source:
-          type: string
-          enum:
-          - scheduling
-        wasModifiedInOperations:
-          type: boolean
-        optibusIds:
-          $ref: '#/components/schemas/OptibusIds'
-      required:
-      - source
-      - wasModifiedInOperations
-      - optibusIds
-      type: object
-    Partial_Coordinates_:
-      properties:
-        lat:
-          type: number
-          format: double
-        long:
-          type: number
-          format: double
-      type: object
-      description: Make all properties in T optional
-    Pick_OnScheduleCustomEvent.Exclude_keyofOnScheduleCustomEvent.stops-or-id-or-description__:
-      properties:
-        properties:
-          $ref: '#/components/schemas/Record_string.unknown_'
-        dutyId:
-          type: string
-      type: object
-      description: From T, pick a set of properties whose keys are in the union K
-    Pick_OnScheduleCustomEvent.Exclude_keyofOnScheduleCustomEvent.stops-or-id__:
-      properties:
-        description:
-          type: string
-        properties:
-          $ref: '#/components/schemas/Record_string.unknown_'
-        dutyId:
-          type: string
-      required:
-      - description
-      type: object
-      description: From T, pick a set of properties whose keys are in the union K
-    StringId:
-      type: string
-      description: The name of an entity that is also used as its identifier (ID)
-    TaskEventBase_MeetingEventJsonData.CustomScheduleEventsTypes.Meeting_:
-      allOf:
-      - $ref: '#/components/schemas/RosterEvent_MeetingEventJsonData.CustomScheduleEventsTypes.Meeting_'
+      - $ref: '#/components/schemas/RosterEvent_AttendanceEventJsonData.OnScheduleEventsTypes.Attendance_'
       - $ref: '#/components/schemas/TaskEventProps'
       - properties:
           eventJsonData:
@@ -1321,61 +583,7 @@ components:
         required:
         - eventJsonData
         type: object
-    Omit_CalendarTask.events-or-summary-or-disabled-or-cancellationCode-or-cancellationReason_:
-      $ref: '#/components/schemas/Pick_CalendarTask.Exclude_keyofCalendarTask.events-or-summary-or-disabled-or-cancellationCode-or-cancellationReason__'
-      description: Construct a type with the properties of T except for those in type K.
-    TaskAssignment:
-      allOf:
-      - $ref: '#/components/schemas/PlannedTaskAssignment'
-      - properties:
-          lastAssignedDriverId:
-            type:
-            - string
-            - 'null'
-          attributes:
-            $ref: '#/components/schemas/Record_AttributeId.AttributeValue_'
-          labels:
-            items:
-              $ref: '#/components/schemas/Label'
-            type: array
-          vehicleId:
-            $ref: '#/components/schemas/UUID'
-          originalDriverId:
-            $ref: '#/components/schemas/UUID'
-        type: object
-    RosterEvent_OtherTravelEventJsonData.OnScheduleEventsTypes.OtherTravels_:
-      allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/OnScheduleEventsTypes.OtherTravels'
-          eventId:
-            type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_OtherTravelEventJsonData_'
-    NonRevenueEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_OnScheduleCustomEvent.stops-or-id-or-description_'
-      - $ref: '#/components/schemas/Partial_BaseEventJsonData_'
-    OnScheduleEventsTypes.Break:
-      enum:
-      - break
-      type: string
-    RosterEvent_SignOnEventJsonData.OnScheduleEventsTypes.SignOn_:
-      allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/OnScheduleEventsTypes.SignOn'
-          eventId:
-            type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_SignOnEventJsonData_'
-    Pick_ReliefCarTravelEvent.Exclude_keyofReliefCarTravelEvent.stops-or-id__:
+    Pick_OnScheduleTaxiEvent.Exclude_keyofOnScheduleTaxiEvent.stops-or-id__:
       properties:
         distance:
           type: number
@@ -1388,326 +596,135 @@ components:
           type: array
         carId:
           type: string
+        isReliefCar:
+          type: boolean
       type: object
       description: From T, pick a set of properties whose keys are in the union K
-    GenericRosterEventProps_ReliefCarEventJsonData_:
-      properties:
-        eventJsonData:
-          $ref: '#/components/schemas/ReliefCarEventJsonData'
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-        startTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-      required:
-      - eventJsonData
-      - endTime
-      - startTime
-      type: object
-    TaskEventBase_LightDutyHoursEventJsonData.CustomScheduleEventsTypes.LightDutyHours_:
-      allOf:
-      - $ref: '#/components/schemas/RosterEvent_LightDutyHoursEventJsonData.CustomScheduleEventsTypes.LightDutyHours_'
-      - $ref: '#/components/schemas/TaskEventProps'
-      - properties:
-          eventJsonData:
-            allOf:
-            - $ref: '#/components/schemas/SignPost'
-            - properties:
-                id:
-                  $ref: '#/components/schemas/UUID'
-              type: object
-            - $ref: '#/components/schemas/SubTripMeta'
-        required:
-        - eventJsonData
-        type: object
-    GenericRosterEventProps_SplitEventJsonData_:
-      properties:
-        eventJsonData:
-          $ref: '#/components/schemas/SplitEventJsonData'
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-        startTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-      required:
-      - eventJsonData
-      - endTime
-      - startTime
-      type: object
-    Direction:
-      description: Route trip direction
+    Omit_RechargeEvent.stops-or-id_:
+      $ref: '#/components/schemas/Pick_RechargeEvent.Exclude_keyofRechargeEvent.stops-or-id__'
+      description: Construct a type with the properties of T except for those in type K.
+    OnScheduleEventsTypes.Recharge:
       enum:
-      - 0
-      - 1
-      - 2
-      - 3
-      type: number
-    SubTripEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_OnScheduleServiceTripEvent.stops-or-id_'
-      - $ref: '#/components/schemas/Required_LocationInformation_'
-      - $ref: '#/components/schemas/Stops'
-      - $ref: '#/components/schemas/SubTripMeta'
-    OnScheduleEventsTypes.SignOn:
-      enum:
-      - sign_on
+      - recharge
       type: string
-    RosterEvent_AttendanceEventJsonData.OnScheduleEventsTypes.Attendance_:
-      allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/OnScheduleEventsTypes.Attendance'
-          eventId:
-            type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_AttendanceEventJsonData_'
-    TaskEventBase_OtherEventJsonData.OnScheduleEventsTypes.Other_:
-      allOf:
-      - $ref: '#/components/schemas/RosterEvent_OtherEventJsonData.OnScheduleEventsTypes.Other_'
-      - $ref: '#/components/schemas/TaskEventProps'
-      - properties:
-          eventJsonData:
-            allOf:
-            - $ref: '#/components/schemas/SignPost'
-            - properties:
-                id:
-                  $ref: '#/components/schemas/UUID'
-              type: object
-            - $ref: '#/components/schemas/SubTripMeta'
-        required:
-        - eventJsonData
-        type: object
-    TaskEventBase_TaxiEventJsonData.OnScheduleEventsTypes.Taxi_:
-      allOf:
-      - $ref: '#/components/schemas/RosterEvent_TaxiEventJsonData.OnScheduleEventsTypes.Taxi_'
-      - $ref: '#/components/schemas/TaskEventProps'
-      - properties:
-          eventJsonData:
-            allOf:
-            - $ref: '#/components/schemas/SignPost'
-            - properties:
-                id:
-                  $ref: '#/components/schemas/UUID'
-              type: object
-            - $ref: '#/components/schemas/SubTripMeta'
-        required:
-        - eventJsonData
-        type: object
-    GenericRosterEventProps_ReliefCarPassengerEventJsonData_:
-      properties:
-        eventJsonData:
-          $ref: '#/components/schemas/ReliefCarPassengerEventJsonData'
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-        startTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-      required:
-      - eventJsonData
-      - endTime
-      - startTime
-      type: object
-    Pick_PreferencesLabel.Exclude_keyofPreferencesLabel.type__:
-      properties:
-        name:
-          type: string
-        code:
-          type: string
-      required:
-      - name
-      - code
-      type: object
-      description: From T, pick a set of properties whose keys are in the union K
-    GenericRosterEventProps_NonRevenueEventJsonData_:
-      properties:
-        eventJsonData:
-          $ref: '#/components/schemas/NonRevenueEventJsonData'
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-        startTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-      required:
-      - eventJsonData
-      - endTime
-      - startTime
-      type: object
-    OtherEventTypes.PullIn:
-      enum:
-      - depot_pull_in
-      type: string
-    TaskEventBase_NonRevenueEventJsonData.CustomScheduleEventsTypes.NonRevenue_:
-      allOf:
-      - $ref: '#/components/schemas/RosterEvent_NonRevenueEventJsonData.CustomScheduleEventsTypes.NonRevenue_'
-      - $ref: '#/components/schemas/TaskEventProps'
-      - properties:
-          eventJsonData:
-            allOf:
-            - $ref: '#/components/schemas/SignPost'
-            - properties:
-                id:
-                  $ref: '#/components/schemas/UUID'
-              type: object
-            - $ref: '#/components/schemas/SubTripMeta'
-        required:
-        - eventJsonData
-        type: object
-    TaskEventBase_SignOnEventJsonData.OnScheduleEventsTypes.SignOn_:
-      allOf:
-      - $ref: '#/components/schemas/RosterEvent_SignOnEventJsonData.OnScheduleEventsTypes.SignOn_'
-      - $ref: '#/components/schemas/TaskEventProps'
-      - properties:
-          eventJsonData:
-            allOf:
-            - $ref: '#/components/schemas/SignPost'
-            - properties:
-                id:
-                  $ref: '#/components/schemas/UUID'
-              type: object
-            - $ref: '#/components/schemas/SubTripMeta'
-        required:
-        - eventJsonData
-        type: object
-    RosterEvent_BreakEventJsonData.OnScheduleEventsTypes.Break_:
-      allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/OnScheduleEventsTypes.Break'
-          eventId:
-            type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_BreakEventJsonData_'
-    GenericRosterEventProps_RechargeEventJsonData_:
-      properties:
-        eventJsonData:
-          $ref: '#/components/schemas/RechargeEventJsonData'
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-        startTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-      required:
-      - eventJsonData
-      - endTime
-      - startTime
-      type: object
-    ReinforcementTripEventBase:
-      properties:
-        reinforcedTripReference:
-          type: string
-      required:
-      - reinforcedTripReference
-      type: object
-    NonVehicleEvent:
-      anyOf:
-      - $ref: '#/components/schemas/TravelTypeEvent'
-      - $ref: '#/components/schemas/SameDutyLocationTypeEvent'
-      - $ref: '#/components/schemas/CustomTypeEvents'
-    OnScheduleEventsTypes.Walks:
-      enum:
-      - walk
-      type: string
-    GenericRosterEventProps_RefuelEventJsonData_:
-      properties:
-        eventJsonData:
-          $ref: '#/components/schemas/RefuelEventJsonData'
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-        startTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-      required:
-      - eventJsonData
-      - endTime
-      - startTime
-      type: object
-    TaskEventBase_SignOffEventJsonData.OnScheduleEventsTypes.SignOff_:
-      allOf:
-      - $ref: '#/components/schemas/RosterEvent_SignOffEventJsonData.OnScheduleEventsTypes.SignOff_'
-      - $ref: '#/components/schemas/TaskEventProps'
-      - properties:
-          eventJsonData:
-            allOf:
-            - $ref: '#/components/schemas/SignPost'
-            - properties:
-                id:
-                  $ref: '#/components/schemas/UUID'
-              type: object
-            - $ref: '#/components/schemas/SubTripMeta'
-        required:
-        - eventJsonData
-        type: object
-    PreTripEvent:
-      $ref: '#/components/schemas/TaskEventBase_PreTripEventJsonData.OnScheduleEventsTypes.PreTrip_'
-    CustomScheduleEventsTypes.Standby:
-      enum:
-      - standby
-      type: string
-    PreTripEventJsonData:
+    AttendanceEventJsonData:
       allOf:
       - $ref: '#/components/schemas/Omit_SameLocationEvent.stops-or-id_'
       - $ref: '#/components/schemas/BaseEventJsonData'
-    Label:
-      $ref: '#/components/schemas/Omit_PreferencesLabel.type_'
-    OnScheduleEventsTypes.PublicTravel:
+    Omit_OnScheduleServiceTripEvent.stops-or-id_:
+      $ref: '#/components/schemas/Pick_OnScheduleServiceTripEvent.Exclude_keyofOnScheduleServiceTripEvent.stops-or-id__'
+      description: Construct a type with the properties of T except for those in type K.
+    CustomScheduleEventsTypes.Training:
       enum:
-      - public_travel
+      - training
       type: string
-    Stops:
+    WalksEvent:
+      $ref: '#/components/schemas/TaskEventBase_WalkEventJsonData.OnScheduleEventsTypes.Walks_'
+    RosterDutyEventReference:
       properties:
-        stops:
-          items:
-            $ref: '#/components/schemas/EventStop'
-          type: array
-          description: The list of stops will only be included if includeStops is set to true on the request
-      type: object
-    LightDutyHoursEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_OnScheduleCustomEvent.stops-or-id-or-description_'
-      - $ref: '#/components/schemas/Partial_BaseEventJsonData_'
-    BehindTheWheelHoursEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_OnScheduleCustomEvent.stops-or-id-or-description_'
-      - $ref: '#/components/schemas/Partial_BaseEventJsonData_'
-    EventWithBlock:
-      allOf:
-      - $ref: '#/components/schemas/VehicleEvent'
-      - $ref: '#/components/schemas/ExternalTaskEventProps'
-      - $ref: '#/components/schemas/VehicleBlockJsonData'
-    StringifyDateRange:
-      properties:
-        to:
-          $ref: '#/components/schemas/StringifyDate'
-        from:
-          $ref: '#/components/schemas/StringifyDate'
-      required:
-      - to
-      - from
-      type: object
-      description: Stringified date range.
-    Partial_Pick_OtherTravelEvent.name__:
-      properties:
-        name:
+        originRosterId:
           type: string
+        deleted:
+          type: boolean
+        originalDutyId:
+          type: string
+        dutyId:
+          type: string
+        eventId:
+          type: string
+      required:
+      - dutyId
+      - eventId
+      type: object
+    GenericRosterEventProps_TaxiEventJsonData_:
+      properties:
+        eventJsonData:
+          $ref: '#/components/schemas/TaxiEventJsonData'
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - eventJsonData
+      - endTime
+      - startTime
+      type: object
+    GenericRosterEventProps_ServiceTripEventJsonData_:
+      properties:
+        eventJsonData:
+          $ref: '#/components/schemas/ServiceTripEventJsonData'
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - eventJsonData
+      - endTime
+      - startTime
+      type: object
+    RosterEvent_LightDutyHoursEventJsonData.CustomScheduleEventsTypes.LightDutyHours_:
+      allOf:
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/CustomScheduleEventsTypes.LightDutyHours'
+          eventId:
+            type: string
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_LightDutyHoursEventJsonData_'
+    Partial_Coordinates_:
+      properties:
+        lat:
+          type: number
+          format: double
+        long:
+          type: number
+          format: double
       type: object
       description: Make all properties in T optional
-    ReliefCarEvent:
-      $ref: '#/components/schemas/TaskEventBase_ReliefCarEventJsonData.OnScheduleEventsTypes.ReliefCar_'
-    Required_LocationInformation_:
+    Pick_OnScheduleCustomEvent.Exclude_keyofOnScheduleCustomEvent.stops-or-id__:
       properties:
-        origin:
-          $ref: '#/components/schemas/EventStop'
-        destination:
-          $ref: '#/components/schemas/EventStop'
+        description:
+          type: string
+        properties:
+          $ref: '#/components/schemas/Record_string.unknown_'
+        dutyId:
+          type: string
       required:
-      - origin
-      - destination
+      - description
       type: object
-      description: Make all properties in T required
-    ExternalCalendarTaskEvent_TaskEvent_:
-      anyOf:
-      - $ref: '#/components/schemas/EventWithBlock'
-      - $ref: '#/components/schemas/EventWithoutBlock'
+      description: From T, pick a set of properties whose keys are in the union K
+    GenericRosterEventProps_WalkEventJsonData_:
+      properties:
+        eventJsonData:
+          $ref: '#/components/schemas/WalkEventJsonData'
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - eventJsonData
+      - endTime
+      - startTime
+      type: object
+    GenericRosterEventProps_BreakEventJsonData_:
+      properties:
+        eventJsonData:
+          $ref: '#/components/schemas/BreakEventJsonData'
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - eventJsonData
+      - endTime
+      - startTime
+      type: object
+    Omit_ReliefCarTravelEvent.stops-or-id_:
+      $ref: '#/components/schemas/Pick_ReliefCarTravelEvent.Exclude_keyofReliefCarTravelEvent.stops-or-id__'
+      description: Construct a type with the properties of T except for those in type K.
     ExternalCalendarTaskBase_ExternalCalendarTaskSummary_:
       allOf:
       - $ref: '#/components/schemas/Omit_CalendarTask.events-or-summary-or-disabled-or-cancellationCode-or-cancellationReason_'
@@ -1727,9 +744,17 @@ components:
         - type
         type: object
       - $ref: '#/components/schemas/SourceMeta'
-    TaskEventBase_PublicTravelEventJsonData.OnScheduleEventsTypes.PublicTravel_:
+    ReliefCarPassengerEventJsonData:
       allOf:
-      - $ref: '#/components/schemas/RosterEvent_PublicTravelEventJsonData.OnScheduleEventsTypes.PublicTravel_'
+      - $ref: '#/components/schemas/Omit_ReliefCarTravelEvent.stops-or-id_'
+      - $ref: '#/components/schemas/BaseEventJsonData'
+    CustomScheduleEventsTypes.LightDutyHours:
+      enum:
+      - light_duty_hours
+      type: string
+    TaskEventBase_RefuelEventJsonData.OnScheduleEventsTypes.Refuel_:
+      allOf:
+      - $ref: '#/components/schemas/RosterEvent_RefuelEventJsonData.OnScheduleEventsTypes.Refuel_'
       - $ref: '#/components/schemas/TaskEventProps'
       - properties:
           eventJsonData:
@@ -1743,29 +768,74 @@ components:
         required:
         - eventJsonData
         type: object
-    RosterEvent_TechnicalBreakEventJsonData.CustomScheduleEventsTypes.TechnicalBreak_:
+    GenericRosterEventProps_RefuelEventJsonData_:
+      properties:
+        eventJsonData:
+          $ref: '#/components/schemas/RefuelEventJsonData'
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - eventJsonData
+      - endTime
+      - startTime
+      type: object
+    UUID:
+      type: string
+      description: Stringified ID for a resource. Cannot exceed 36 characters.
+    OtherEventTypes.ReinforcementTrip:
+      enum:
+      - reinforcement_trip
+      type: string
+    TaskEventBase__distance_63_-number_-and-PrivateHireEventJsonData.OtherEventTypes.PrivateHire_:
+      allOf:
+      - $ref: '#/components/schemas/RosterEvent__distance_63_-number_-and-PrivateHireEventJsonData.OtherEventTypes.PrivateHire_'
+      - $ref: '#/components/schemas/TaskEventProps'
+      - properties:
+          eventJsonData:
+            allOf:
+            - $ref: '#/components/schemas/SignPost'
+            - properties:
+                id:
+                  $ref: '#/components/schemas/UUID'
+              type: object
+            - $ref: '#/components/schemas/SubTripMeta'
+        required:
+        - eventJsonData
+        type: object
+    TrainingEvent:
+      $ref: '#/components/schemas/TaskEventBase_TrainingEventJsonData.CustomScheduleEventsTypes.Training_'
+    DeadheadTypeEvent:
+      allOf:
+      - $ref: '#/components/schemas/DeadheadEvent'
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/DeadheadSubType'
+        required:
+        - eventType
+        type: object
+    ReliefCarDriverEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Omit_ReliefCarTravelEvent.stops-or-id_'
+      - $ref: '#/components/schemas/BaseEventJsonData'
+    EventWithBlock:
+      allOf:
+      - $ref: '#/components/schemas/VehicleEvent'
+      - $ref: '#/components/schemas/ExternalTaskEventProps'
+      - $ref: '#/components/schemas/VehicleBlockJsonData'
+    RosterEvent_SignOnEventJsonData.OnScheduleEventsTypes.SignOn_:
       allOf:
       - properties:
           eventType:
-            $ref: '#/components/schemas/CustomScheduleEventsTypes.TechnicalBreak'
+            $ref: '#/components/schemas/OnScheduleEventsTypes.SignOn'
           eventId:
             type: string
         required:
         - eventType
         - eventId
         type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_TechnicalBreakEventJsonData_'
-    OtherEventTypes.ReinforcementTrip:
-      enum:
-      - reinforcement_trip
-      type: string
-    EventStringId:
-      type: string
-      description: Unique identifier for a scheduling event
-      pattern: ^-?[0-9a-f]{8}$
-    Omit_RefuelEvent.stops-or-id_:
-      $ref: '#/components/schemas/Pick_RefuelEvent.Exclude_keyofRefuelEvent.stops-or-id__'
-      description: Construct a type with the properties of T except for those in type K.
+      - $ref: '#/components/schemas/GenericRosterEventProps_SignOnEventJsonData_'
     CalendarBlock:
       allOf:
       - properties:
@@ -1802,281 +872,31 @@ components:
         - id
         type: object
       - $ref: '#/components/schemas/SourceMeta'
-    Omit_RechargeEvent.stops-or-id_:
-      $ref: '#/components/schemas/Pick_RechargeEvent.Exclude_keyofRechargeEvent.stops-or-id__'
-      description: Construct a type with the properties of T except for those in type K.
-    Pick_TravelEvent.Exclude_keyofTravelEvent.stops-or-id__:
-      properties:
-        distance:
-          type: number
-          format: double
-        dutyId:
-          type: string
-      type: object
-      description: From T, pick a set of properties whose keys are in the union K
-    ReliefCarEventsTypes.ReliefCarDriver:
-      enum:
-      - relief_car_driver
+    TaskEventBase_ReliefCarEventJsonData.OnScheduleEventsTypes.ReliefCar_:
+      allOf:
+      - $ref: '#/components/schemas/RosterEvent_ReliefCarEventJsonData.OnScheduleEventsTypes.ReliefCar_'
+      - $ref: '#/components/schemas/TaskEventProps'
+      - properties:
+          eventJsonData:
+            allOf:
+            - $ref: '#/components/schemas/SignPost'
+            - properties:
+                id:
+                  $ref: '#/components/schemas/UUID'
+              type: object
+            - $ref: '#/components/schemas/SubTripMeta'
+        required:
+        - eventJsonData
+        type: object
+    SignOnEvent:
+      $ref: '#/components/schemas/TaskEventBase_SignOnEventJsonData.OnScheduleEventsTypes.SignOn_'
+    StringifyDate:
       type: string
-    DutyEventSummary:
-      properties:
-        destinationStop:
-          type: string
-        destinationDepot:
-          type: string
-        originStop:
-          type: string
-        originDepot:
-          type: string
-        startTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-        serviceName:
-          type: string
-        serviceId:
-          type: string
-        timePlanId:
-          type: string
-        scheduleDatasetId:
-          type: string
-          description: This is actually the schedule ID (as found in the scheduling URL). It is not the schedule dataset ID
-        routes:
-          items:
-            type: string
-          type: array
-        rosterSourceId:
-          type: string
-        rosterDatasetId:
-          type: string
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-      required:
-      - destinationStop
-      - originStop
-      - startTime
-      - routes
-      - endTime
-      type: object
-    TaskEventBase_CustomEventJsonData.OnScheduleEventsTypes.Custom_:
-      allOf:
-      - $ref: '#/components/schemas/RosterEvent_CustomEventJsonData.OnScheduleEventsTypes.Custom_'
-      - $ref: '#/components/schemas/TaskEventProps'
-      - properties:
-          eventJsonData:
-            allOf:
-            - $ref: '#/components/schemas/SignPost'
-            - properties:
-                id:
-                  $ref: '#/components/schemas/UUID'
-              type: object
-            - $ref: '#/components/schemas/SubTripMeta'
-        required:
-        - eventJsonData
-        type: object
-    BehindTheWheelHoursEvent:
-      $ref: '#/components/schemas/TaskEventBase_BehindTheWheelHoursEventJsonData.CustomScheduleEventsTypes.BehindTheWheelHours_'
-    RechargeEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_RechargeEvent.stops-or-id_'
-      - $ref: '#/components/schemas/BaseEventJsonData'
-    TrainingEvent:
-      $ref: '#/components/schemas/TaskEventBase_TrainingEventJsonData.CustomScheduleEventsTypes.Training_'
-    SplitEvent:
-      $ref: '#/components/schemas/TaskEventBase_SplitEventJsonData.OnScheduleEventsTypes.Split_'
-    TaskEventBase_PostTripEventJsonData.OnScheduleEventsTypes.PostTrip_:
-      allOf:
-      - $ref: '#/components/schemas/RosterEvent_PostTripEventJsonData.OnScheduleEventsTypes.PostTrip_'
-      - $ref: '#/components/schemas/TaskEventProps'
-      - properties:
-          eventJsonData:
-            allOf:
-            - $ref: '#/components/schemas/SignPost'
-            - properties:
-                id:
-                  $ref: '#/components/schemas/UUID'
-              type: object
-            - $ref: '#/components/schemas/SubTripMeta'
-        required:
-        - eventJsonData
-        type: object
-    Omit_ReliefCarTravelEvent.stops-or-id_:
-      $ref: '#/components/schemas/Pick_ReliefCarTravelEvent.Exclude_keyofReliefCarTravelEvent.stops-or-id__'
+      format: date
+      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
+    Omit_CalendarTask.events-or-summary-or-disabled-or-cancellationCode-or-cancellationReason_:
+      $ref: '#/components/schemas/Pick_CalendarTask.Exclude_keyofCalendarTask.events-or-summary-or-disabled-or-cancellationCode-or-cancellationReason__'
       description: Construct a type with the properties of T except for those in type K.
-    Omit_PreferencesLabel.type_:
-      $ref: '#/components/schemas/Pick_PreferencesLabel.Exclude_keyofPreferencesLabel.type__'
-      description: Construct a type with the properties of T except for those in type K.
-    Omit_OnScheduleCustomEvent.stops-or-id_:
-      $ref: '#/components/schemas/Pick_OnScheduleCustomEvent.Exclude_keyofOnScheduleCustomEvent.stops-or-id__'
-      description: Construct a type with the properties of T except for those in type K.
-    Omit_OnScheduleCustomEvent.stops-or-id-or-description_:
-      $ref: '#/components/schemas/Pick_OnScheduleCustomEvent.Exclude_keyofOnScheduleCustomEvent.stops-or-id-or-description__'
-      description: Construct a type with the properties of T except for those in type K.
-    TaskEventBase_TrainingEventJsonData.CustomScheduleEventsTypes.Training_:
-      allOf:
-      - $ref: '#/components/schemas/RosterEvent_TrainingEventJsonData.CustomScheduleEventsTypes.Training_'
-      - $ref: '#/components/schemas/TaskEventProps'
-      - properties:
-          eventJsonData:
-            allOf:
-            - $ref: '#/components/schemas/SignPost'
-            - properties:
-                id:
-                  $ref: '#/components/schemas/UUID'
-              type: object
-            - $ref: '#/components/schemas/SubTripMeta'
-        required:
-        - eventJsonData
-        type: object
-    RosterEvent_ServiceTripEventJsonData.OnScheduleEventsTypes.ServiceTrip_:
-      allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/OnScheduleEventsTypes.ServiceTrip'
-          eventId:
-            type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_ServiceTripEventJsonData_'
-    Pick_RechargeEvent.Exclude_keyofRechargeEvent.stops-or-id__:
-      properties:
-        vehicleId:
-          type: string
-        dutyId:
-          type: string
-        setupTime:
-          type: number
-          format: double
-        chargerProfile:
-          type: string
-        chargerType:
-          type: string
-      type: object
-      description: From T, pick a set of properties whose keys are in the union K
-    SubTripEvent:
-      $ref: '#/components/schemas/TaskEventBase_SubTripEventJsonData.OnScheduleEventsTypes.SubTrip_'
-    Pick_PublicTransportationEvent.Exclude_keyofPublicTransportationEvent.stops-or-id__:
-      properties:
-        distance:
-          type: number
-          format: double
-        dutyId:
-          type: string
-        passengers:
-          items:
-            $ref: '#/components/schemas/Passenger'
-          type: array
-        travelTripsOnVehicle:
-          properties:
-            trips:
-              items:
-                $ref: '#/components/schemas/EventsRef'
-              type: array
-            id:
-              type: string
-          required:
-          - trips
-          - id
-          type: object
-      required:
-      - travelTripsOnVehicle
-      type: object
-      description: From T, pick a set of properties whose keys are in the union K
-    RosterEvent__distance_63_-number_-and-PrivateHireEventJsonData.OtherEventTypes.PrivateHire_:
-      allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/OtherEventTypes.PrivateHire'
-          eventId:
-            type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps__distance_63_-number_-and-PrivateHireEventJsonData_'
-    TaskEventBase_WalkEventJsonData.OnScheduleEventsTypes.Walks_:
-      allOf:
-      - $ref: '#/components/schemas/RosterEvent_WalkEventJsonData.OnScheduleEventsTypes.Walks_'
-      - $ref: '#/components/schemas/TaskEventProps'
-      - properties:
-          eventJsonData:
-            allOf:
-            - $ref: '#/components/schemas/SignPost'
-            - properties:
-                id:
-                  $ref: '#/components/schemas/UUID'
-              type: object
-            - $ref: '#/components/schemas/SubTripMeta'
-        required:
-        - eventJsonData
-        type: object
-    PublicTravelPassenger:
-      properties:
-        publicTravelId:
-          $ref: '#/components/schemas/StringId'
-        dutyId:
-          $ref: '#/components/schemas/StringId'
-      required:
-      - publicTravelId
-      - dutyId
-      type: object
-    ReliefCarDriverEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_ReliefCarTravelEvent.stops-or-id_'
-      - $ref: '#/components/schemas/BaseEventJsonData'
-    TaskEventBase_BehindTheWheelHoursEventJsonData.CustomScheduleEventsTypes.BehindTheWheelHours_:
-      allOf:
-      - $ref: '#/components/schemas/RosterEvent_BehindTheWheelHoursEventJsonData.CustomScheduleEventsTypes.BehindTheWheelHours_'
-      - $ref: '#/components/schemas/TaskEventProps'
-      - properties:
-          eventJsonData:
-            allOf:
-            - $ref: '#/components/schemas/SignPost'
-            - properties:
-                id:
-                  $ref: '#/components/schemas/UUID'
-              type: object
-            - $ref: '#/components/schemas/SubTripMeta'
-        required:
-        - eventJsonData
-        type: object
-    OnScheduleEventsTypes.SignOff:
-      enum:
-      - sign_off
-      type: string
-    GenericRosterEventProps_MeetingEventJsonData_:
-      properties:
-        eventJsonData:
-          $ref: '#/components/schemas/MeetingEventJsonData'
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-        startTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-      required:
-      - eventJsonData
-      - endTime
-      - startTime
-      type: object
-    MeetingEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_OnScheduleCustomEvent.stops-or-id-or-description_'
-      - $ref: '#/components/schemas/Partial_BaseEventJsonData_'
-    TaskEventBase_OtherTravelEventJsonData.OnScheduleEventsTypes.OtherTravels_:
-      allOf:
-      - $ref: '#/components/schemas/RosterEvent_OtherTravelEventJsonData.OnScheduleEventsTypes.OtherTravels_'
-      - $ref: '#/components/schemas/TaskEventProps'
-      - properties:
-          eventJsonData:
-            allOf:
-            - $ref: '#/components/schemas/SignPost'
-            - properties:
-                id:
-                  $ref: '#/components/schemas/UUID'
-              type: object
-            - $ref: '#/components/schemas/SubTripMeta'
-        required:
-        - eventJsonData
-        type: object
     CalendarInformation:
       properties:
         calendarVehicleAssignments:
@@ -2109,58 +929,41 @@ components:
       - deployedPlans
       - depotId
       type: object
-    BlockEvent:
-      anyOf:
-      - $ref: '#/components/schemas/RosterDutyEventReference'
-      - $ref: '#/components/schemas/TaskEvent'
-    DeadheadEvent:
-      $ref: '#/components/schemas/TaskEventBase_DeadheadEventJsonData.DeadheadSubType_'
-    StringifyDate:
+    ReinforcementTripEventJsonData:
+      $ref: '#/components/schemas/ServiceTripEventJsonData'
+    BehindTheWheelHoursEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Omit_OnScheduleCustomEvent.stops-or-id-or-description_'
+      - $ref: '#/components/schemas/Partial_BaseEventJsonData_'
+    Pick_TravelEvent.Exclude_keyofTravelEvent.stops-or-id__:
+      properties:
+        distance:
+          type: number
+          format: double
+        dutyId:
+          type: string
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
+    OtherEventTypes.PullIn:
+      enum:
+      - depot_pull_in
       type: string
-      format: date
-      description: Stringified ISO8601 date in the form of `YYYY-MM-dd`, for example `2017-07-21`
-    GenericRosterEventProps_TrainingEventJsonData_:
-      properties:
-        eventJsonData:
-          $ref: '#/components/schemas/TrainingEventJsonData'
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-        startTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-      required:
-      - eventJsonData
-      - endTime
-      - startTime
-      type: object
-    Partial_BaseEventJsonData_:
-      properties:
-        stops:
-          items:
-            $ref: '#/components/schemas/EventStop'
-          type: array
-          description: The list of stops will only be included if includeStops is set to true on the request
-        origin:
-          $ref: '#/components/schemas/EventStop'
-        destination:
-          $ref: '#/components/schemas/EventStop'
-      type: object
-      description: Make all properties in T optional
-    RosterEvent_ReliefCarPassengerEventJsonData.ReliefCarEventsTypes.ReliefCarPassenger_:
+    RosterEvent_RefuelEventJsonData.OnScheduleEventsTypes.Refuel_:
       allOf:
       - properties:
           eventType:
-            $ref: '#/components/schemas/ReliefCarEventsTypes.ReliefCarPassenger'
+            $ref: '#/components/schemas/OnScheduleEventsTypes.Refuel'
           eventId:
             type: string
         required:
         - eventType
         - eventId
         type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_ReliefCarPassengerEventJsonData_'
-    GenericRosterEventProps_DeadheadEventJsonData_:
+      - $ref: '#/components/schemas/GenericRosterEventProps_RefuelEventJsonData_'
+    GenericRosterEventProps_StandbyEventJsonData_:
       properties:
         eventJsonData:
-          $ref: '#/components/schemas/DeadheadEventJsonData'
+          $ref: '#/components/schemas/StandbyEventJsonData'
         endTime:
           $ref: '#/components/schemas/MinutesFromMidnightTime'
         startTime:
@@ -2170,53 +973,44 @@ components:
       - endTime
       - startTime
       type: object
-    ExternalTaskEventProps:
-      properties:
-        type:
-          $ref: '#/components/schemas/ScheduleEventsType'
-        id:
-          $ref: '#/components/schemas/UUID'
-      required:
-      - type
-      - id
-      type: object
-    ReliefCarDriverEvent:
-      $ref: '#/components/schemas/TaskEventBase_ReliefCarDriverEventJsonData.ReliefCarEventsTypes.ReliefCarDriver_'
-    SubTripMeta:
-      properties:
-        subTripIndex:
-          type: number
-          format: double
-          description: 'if a sub trip, what is its position within it''s parent
-
-            where parentTripId exists so should subTripIndex
-
-            subTripIndex is one based'
-        isLastSubTrip:
-          type: boolean
-        isFirstSubTrip:
-          type: boolean
-        parentSubTrips:
-          items:
+    SameLocationTypeEvent:
+      anyOf:
+      - $ref: '#/components/schemas/PreTripEvent'
+      - $ref: '#/components/schemas/PostTripEvent'
+      - $ref: '#/components/schemas/_RefuelEvent'
+      - $ref: '#/components/schemas/_RechargeEvent'
+      - $ref: '#/components/schemas/AttendanceEvent'
+    RosterEvent_TrainingEventJsonData.CustomScheduleEventsTypes.Training_:
+      allOf:
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/CustomScheduleEventsTypes.Training'
+          eventId:
             type: string
-          type:
-          - array
-          - 'null'
-          description: entire list of sub-trips for a parent trip
-        parentProperties:
-          $ref: '#/components/schemas/Record_string.unknown_'
-          description: sub-trips don't have their own properties so they carry a copy of any properties their parent may have
-        parentTripId:
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_TrainingEventJsonData_'
+    ScheduleSourceMeta:
+      properties:
+        source:
           type: string
-          description: If trip is a sub trip, this is tripId of it's parent
-        parentEventId:
-          type: string
-          description: Parent roster event id of the sub-trip
+          enum:
+          - scheduling
+        wasModifiedInOperations:
+          type: boolean
+        optibusIds:
+          $ref: '#/components/schemas/OptibusIds'
+      required:
+      - source
+      - wasModifiedInOperations
+      - optibusIds
       type: object
-    GenericRosterEventProps_CustomEventJsonData_:
+    GenericRosterEventProps_PostTripEventJsonData_:
       properties:
         eventJsonData:
-          $ref: '#/components/schemas/CustomEventJsonData'
+          $ref: '#/components/schemas/PostTripEventJsonData'
         endTime:
           $ref: '#/components/schemas/MinutesFromMidnightTime'
         startTime:
@@ -2226,37 +1020,6 @@ components:
       - endTime
       - startTime
       type: object
-    TaskEventBase_RefuelEventJsonData.OnScheduleEventsTypes.Refuel_:
-      allOf:
-      - $ref: '#/components/schemas/RosterEvent_RefuelEventJsonData.OnScheduleEventsTypes.Refuel_'
-      - $ref: '#/components/schemas/TaskEventProps'
-      - properties:
-          eventJsonData:
-            allOf:
-            - $ref: '#/components/schemas/SignPost'
-            - properties:
-                id:
-                  $ref: '#/components/schemas/UUID'
-              type: object
-            - $ref: '#/components/schemas/SubTripMeta'
-        required:
-        - eventJsonData
-        type: object
-    _RefuelEvent:
-      $ref: '#/components/schemas/TaskEventBase_RefuelEventJsonData.OnScheduleEventsTypes.Refuel_'
-    CustomEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_OnScheduleCustomEvent.stops-or-id_'
-      - $ref: '#/components/schemas/BaseEventJsonData'
-      - properties:
-          distance:
-            type: number
-            format: double
-        type: object
-    ReliefCarEventsTypes.ReliefCarPassenger:
-      enum:
-      - relief_car_passenger
-      type: string
     GenericRosterEventProps_SignOnEventJsonData_:
       properties:
         eventJsonData:
@@ -2270,189 +1033,6 @@ components:
       - endTime
       - startTime
       type: object
-    RosterEvent_ReliefCarDriverEventJsonData.ReliefCarEventsTypes.ReliefCarDriver_:
-      allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/ReliefCarEventsTypes.ReliefCarDriver'
-          eventId:
-            type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_ReliefCarDriverEventJsonData_'
-    OtherTravelEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_OtherTravelEvent.stops-or-id-or-name_'
-      - $ref: '#/components/schemas/Partial_Pick_OtherTravelEvent.name__'
-      - $ref: '#/components/schemas/BaseEventJsonData'
-    GenericRosterEventProps_WalkEventJsonData_:
-      properties:
-        eventJsonData:
-          $ref: '#/components/schemas/WalkEventJsonData'
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-        startTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-      required:
-      - eventJsonData
-      - endTime
-      - startTime
-      type: object
-    OnScheduleEventStop:
-      properties:
-        time:
-          $ref: '#/components/schemas/OptibusTime'
-        isTimePoint:
-          type: boolean
-          description: If true, stop can be a relief point
-        id:
-          $ref: '#/components/schemas/StringId'
-      required:
-      - time
-      - id
-      type: object
-      description: 'Stop event related data.<br/>
-
-        Full stop information should be taken from `stops` property with this stop `id`'
-    GenericRosterEventProps_SubTripEventJsonData_:
-      properties:
-        eventJsonData:
-          $ref: '#/components/schemas/SubTripEventJsonData'
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-        startTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-      required:
-      - eventJsonData
-      - endTime
-      - startTime
-      type: object
-    DeadheadTypeEvent:
-      allOf:
-      - $ref: '#/components/schemas/DeadheadEvent'
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/DeadheadSubType'
-        required:
-        - eventType
-        type: object
-    Passenger:
-      anyOf:
-      - $ref: '#/components/schemas/PublicTravelPassenger'
-      - $ref: '#/components/schemas/StringId'
-      description: 'The driver as a passenger.<br/>
-
-        Events that can have drivers as passengers:<br/>
-
-        <i>service | idle | taxi | reliefCar</i>'
-    ReliefCarPassengerEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_ReliefCarTravelEvent.stops-or-id_'
-      - $ref: '#/components/schemas/BaseEventJsonData'
-    ExternalCalendarTask:
-      allOf:
-      - $ref: '#/components/schemas/ExternalCalendarTaskBase_ExternalCalendarTaskSummary_'
-      - properties:
-          spareType:
-            type: string
-          events:
-            items:
-              $ref: '#/components/schemas/ExternalCalendarTaskEvent_TaskEvent_'
-            type: array
-        type: object
-    PlannedTaskAssignment:
-      properties:
-        opUnitUuid:
-          type: string
-        cancellationReason:
-          $ref: '#/components/schemas/DutyCancellationReason'
-          description: if disabled = true and the customer has configured cancellation reasons, then this is present
-        disabled:
-          type: boolean
-        driverId:
-          $ref: '#/components/schemas/UUID'
-        taskId:
-          $ref: '#/components/schemas/UUID'
-      required:
-      - taskId
-      type: object
-    GenericRosterEventProps_SignOffEventJsonData_:
-      properties:
-        eventJsonData:
-          $ref: '#/components/schemas/SignOffEventJsonData'
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-        startTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-      required:
-      - eventJsonData
-      - endTime
-      - startTime
-      type: object
-    CustomEvent:
-      allOf:
-      - $ref: '#/components/schemas/TaskEventBase_CustomEventJsonData.OnScheduleEventsTypes.Custom_'
-      - properties:
-          originalEventType:
-            $ref: '#/components/schemas/ScheduleEventsType'
-          distance:
-            type: number
-            format: double
-        type: object
-    ReinforcementTripEvent:
-      allOf:
-      - $ref: '#/components/schemas/TaskEventBase_ReinforcementTripEventJsonData.OtherEventTypes.ReinforcementTrip_'
-      - $ref: '#/components/schemas/ReinforcementTripEventBase'
-    OptibusIds:
-      properties:
-        optibusTimeplanId:
-          type: string
-        optibusScheduleId:
-          type: string
-        optibusRosterDatasetId:
-          type: string
-        optibusRosterId:
-          type: string
-      required:
-      - optibusTimeplanId
-      - optibusScheduleId
-      type: object
-    RosterEvent_TrainingEventJsonData.CustomScheduleEventsTypes.Training_:
-      allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/CustomScheduleEventsTypes.Training'
-          eventId:
-            type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_TrainingEventJsonData_'
-    CalendarVehicleAssignment:
-      properties:
-        tasks:
-          items:
-            $ref: '#/components/schemas/VehicleAssignment'
-          type: array
-        date:
-          $ref: '#/components/schemas/StringifyDate'
-      required:
-      - tasks
-      - date
-      type: object
-    OnScheduleEventsTypes.Other:
-      enum:
-      - other
-      type: string
-    CustomScheduleEventsTypes.TechnicalBreak:
-      enum:
-      - technical_break
-      type: string
-    LightDutyHoursEvent:
-      $ref: '#/components/schemas/TaskEventBase_LightDutyHoursEventJsonData.CustomScheduleEventsTypes.LightDutyHours_'
     TaskEventBase_DeadheadEventJsonData.DeadheadSubType_:
       allOf:
       - $ref: '#/components/schemas/RosterEvent_DeadheadEventJsonData.DeadheadSubType_'
@@ -2469,105 +1049,13 @@ components:
         required:
         - eventJsonData
         type: object
-    OnScheduleEventsTypes.ServiceTrip:
-      enum:
-      - service_trip
+    StringId:
       type: string
-    ReliefCarPassengerEvent:
-      $ref: '#/components/schemas/TaskEventBase_ReliefCarPassengerEventJsonData.ReliefCarEventsTypes.ReliefCarPassenger_'
-    Record_string.AttributeValue_:
-      properties: {}
-      additionalProperties:
-        $ref: '#/components/schemas/AttributeValue'
-      type: object
-      description: Construct a type with a set of properties K of type T
-    Pick_OnScheduleTaxiEvent.Exclude_keyofOnScheduleTaxiEvent.stops-or-id__:
-      properties:
-        distance:
-          type: number
-          format: double
-        dutyId:
-          type: string
-        passengers:
-          items:
-            $ref: '#/components/schemas/Passenger'
-          type: array
-        carId:
-          type: string
-        isReliefCar:
-          type: boolean
-      type: object
-      description: From T, pick a set of properties whose keys are in the union K
-    BaseEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Stops'
-      - $ref: '#/components/schemas/LocationInformation'
-    RosterEvent_OtherEventJsonData.OnScheduleEventsTypes.Other_:
-      allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/OnScheduleEventsTypes.Other'
-          eventId:
-            type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_OtherEventJsonData_'
-    ServiceTripEvent:
-      anyOf:
-      - $ref: '#/components/schemas/TaskEventBase_ServiceTripEventJsonData.OnScheduleEventsTypes.ServiceTrip_'
-      - $ref: '#/components/schemas/ReinforcementTripEvent'
-    WalksEvent:
-      $ref: '#/components/schemas/TaskEventBase_WalkEventJsonData.OnScheduleEventsTypes.Walks_'
-    AttendanceEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_SameLocationEvent.stops-or-id_'
-      - $ref: '#/components/schemas/BaseEventJsonData'
-    DeadheadEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_OnScheduleDeadheadEvent.stops-or-id_'
-      - $ref: '#/components/schemas/BaseEventJsonData'
-    ExternalCalendarTaskSummary:
-      anyOf:
-      - $ref: '#/components/schemas/DutyEventSummary'
-      - properties:
-          type:
-            $ref: '#/components/schemas/TaskType'
-        required:
-        - type
-        type: object
-    RosterEvent_BehindTheWheelHoursEventJsonData.CustomScheduleEventsTypes.BehindTheWheelHours_:
-      allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/CustomScheduleEventsTypes.BehindTheWheelHours'
-          eventId:
-            type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_BehindTheWheelHoursEventJsonData_'
-    Omit_TravelEvent.stops-or-id_:
-      $ref: '#/components/schemas/Pick_TravelEvent.Exclude_keyofTravelEvent.stops-or-id__'
-      description: Construct a type with the properties of T except for those in type K.
-    OnScheduleEventsTypes.ReliefCar:
-      enum:
-      - relief_cars
-      type: string
-    CustomScheduleEventsTypes.Training:
-      enum:
-      - training
-      type: string
-    OtherEventTypes.PrivateHire:
-      enum:
-      - private_hire
-      type: string
-    GenericRosterEventProps_AttendanceEventJsonData_:
+      description: The name of an entity that is also used as its identifier (ID)
+    GenericRosterEventProps_ReliefCarPassengerEventJsonData_:
       properties:
         eventJsonData:
-          $ref: '#/components/schemas/AttendanceEventJsonData'
+          $ref: '#/components/schemas/ReliefCarPassengerEventJsonData'
         endTime:
           $ref: '#/components/schemas/MinutesFromMidnightTime'
         startTime:
@@ -2577,27 +1065,9 @@ components:
       - endTime
       - startTime
       type: object
-    RosterEvent_PreTripEventJsonData.OnScheduleEventsTypes.PreTrip_:
+    TaskEventBase_PostTripEventJsonData.OnScheduleEventsTypes.PostTrip_:
       allOf:
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/OnScheduleEventsTypes.PreTrip'
-          eventId:
-            type: string
-        required:
-        - eventType
-        - eventId
-        type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_PreTripEventJsonData_'
-    OtherTravelsEvent:
-      $ref: '#/components/schemas/TaskEventBase_OtherTravelEventJsonData.OnScheduleEventsTypes.OtherTravels_'
-    EventWithoutBlock:
-      allOf:
-      - $ref: '#/components/schemas/NonVehicleEvent'
-      - $ref: '#/components/schemas/ExternalTaskEventProps'
-    TaskEventBase_ReinforcementTripEventJsonData.OtherEventTypes.ReinforcementTrip_:
-      allOf:
-      - $ref: '#/components/schemas/RosterEvent_ReinforcementTripEventJsonData.OtherEventTypes.ReinforcementTrip_'
+      - $ref: '#/components/schemas/RosterEvent_PostTripEventJsonData.OnScheduleEventsTypes.PostTrip_'
       - $ref: '#/components/schemas/TaskEventProps'
       - properties:
           eventJsonData:
@@ -2611,64 +1081,32 @@ components:
         required:
         - eventJsonData
         type: object
-    VehicleEvent:
-      anyOf:
-      - $ref: '#/components/schemas/DeadheadTypeEvent'
-      - $ref: '#/components/schemas/SameLocationTypeEvent'
-      - $ref: '#/components/schemas/ServiceTripTypeEvent'
-    PostTripEvent:
-      $ref: '#/components/schemas/TaskEventBase_PostTripEventJsonData.OnScheduleEventsTypes.PostTrip_'
-    StandbyEvent:
-      $ref: '#/components/schemas/TaskEventBase_StandbyEventJsonData.CustomScheduleEventsTypes.Standby_'
-    GenericRosterEventProps_StandbyEventJsonData_:
+    Required_LocationInformation_:
       properties:
-        eventJsonData:
-          $ref: '#/components/schemas/StandbyEventJsonData'
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-        startTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        origin:
+          $ref: '#/components/schemas/EventStop'
+        destination:
+          $ref: '#/components/schemas/EventStop'
       required:
-      - eventJsonData
-      - endTime
-      - startTime
+      - origin
+      - destination
       type: object
-    VehicleAssignment:
-      properties:
-        originalVehicleId:
-          $ref: '#/components/schemas/UUID'
-        vehicleId:
-          $ref: '#/components/schemas/UUID'
-        blockId:
-          $ref: '#/components/schemas/UUID'
-      required:
-      - blockId
-      type: object
-    OptibusTime:
-      type: string
-      description: 'Time as HH:MM:SS <br/>
-
-        between 24:00:00 and 47:59:59 is next day <br/>
-
-        between 48:00:00 and 71:59:59 is the day after that
-
-        a leading "-"" represents the previous day (eg -01:00:00 is 23:00 on the previous day)'
-      pattern: ^-?([0-7][0-1]|[0-6][0-9]):([0-5][0-9]):([0-5][0-9])$
-    BreakEventJsonData:
+      description: Make all properties in T required
+    TaskEventBase_PreTripEventJsonData.OnScheduleEventsTypes.PreTrip_:
       allOf:
-      - $ref: '#/components/schemas/Partial_Omit_OnScheduleBreakEvent.stops-or-id__'
-      - $ref: '#/components/schemas/BaseEventJsonData'
-    CustomScheduleEventsTypes.BehindTheWheelHours:
-      enum:
-      - behind_the_wheel_hours
-      type: string
-    OtherEventJsonData:
-      allOf:
-      - $ref: '#/components/schemas/Omit_OnScheduleCustomEvent.stops-or-id-or-description_'
-      - $ref: '#/components/schemas/Partial_BaseEventJsonData_'
+      - $ref: '#/components/schemas/RosterEvent_PreTripEventJsonData.OnScheduleEventsTypes.PreTrip_'
+      - $ref: '#/components/schemas/TaskEventProps'
       - properties:
-          description:
-            type: string
+          eventJsonData:
+            allOf:
+            - $ref: '#/components/schemas/SignPost'
+            - properties:
+                id:
+                  $ref: '#/components/schemas/UUID'
+              type: object
+            - $ref: '#/components/schemas/SubTripMeta'
+        required:
+        - eventJsonData
         type: object
     Pick_OnScheduleDeadheadEvent.Exclude_keyofOnScheduleDeadheadEvent.stops-or-id__:
       properties:
@@ -2701,30 +1139,307 @@ components:
       - distance
       type: object
       description: From T, pick a set of properties whose keys are in the union K
-    RosterEvent_LightDutyHoursEventJsonData.CustomScheduleEventsTypes.LightDutyHours_:
+    GenericRosterEventProps_BehindTheWheelHoursEventJsonData_:
+      properties:
+        eventJsonData:
+          $ref: '#/components/schemas/BehindTheWheelHoursEventJsonData'
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - eventJsonData
+      - endTime
+      - startTime
+      type: object
+    TaskEventBase_MeetingEventJsonData.CustomScheduleEventsTypes.Meeting_:
+      allOf:
+      - $ref: '#/components/schemas/RosterEvent_MeetingEventJsonData.CustomScheduleEventsTypes.Meeting_'
+      - $ref: '#/components/schemas/TaskEventProps'
+      - properties:
+          eventJsonData:
+            allOf:
+            - $ref: '#/components/schemas/SignPost'
+            - properties:
+                id:
+                  $ref: '#/components/schemas/UUID'
+              type: object
+            - $ref: '#/components/schemas/SubTripMeta'
+        required:
+        - eventJsonData
+        type: object
+    Partial_Pick_OtherTravelEvent.name__:
+      properties:
+        name:
+          type: string
+      type: object
+      description: Make all properties in T optional
+    RosterEvent_TaxiEventJsonData.OnScheduleEventsTypes.Taxi_:
       allOf:
       - properties:
           eventType:
-            $ref: '#/components/schemas/CustomScheduleEventsTypes.LightDutyHours'
+            $ref: '#/components/schemas/OnScheduleEventsTypes.Taxi'
           eventId:
             type: string
         required:
         - eventType
         - eventId
         type: object
-      - $ref: '#/components/schemas/GenericRosterEventProps_LightDutyHoursEventJsonData_'
-    LocationInformation:
+      - $ref: '#/components/schemas/GenericRosterEventProps_TaxiEventJsonData_'
+    ReinforcementTripEventBase:
       properties:
-        destination:
-          $ref: '#/components/schemas/EventStop'
-        origin:
-          $ref: '#/components/schemas/EventStop'
+        reinforcedTripReference:
+          type: string
+      required:
+      - reinforcedTripReference
       type: object
-      description: 'This type is used to map the event to the stops in the real world.
-
-        remark: for same location events, the origin and the destination are the same.'
-    OtherTaskEvent:
-      $ref: '#/components/schemas/TaskEventBase_OtherEventJsonData.OnScheduleEventsTypes.Other_'
+    OnScheduleEventsTypes.ServiceTrip:
+      enum:
+      - service_trip
+      type: string
+    AttributeValue:
+      anyOf:
+      - items:
+          anyOf:
+          - type: number
+            format: double
+          - type: string
+        type: array
+      - type: string
+      - type: boolean
+      - type: number
+        format: double
+    Omit_OnScheduleDeadheadEvent.stops-or-id_:
+      $ref: '#/components/schemas/Pick_OnScheduleDeadheadEvent.Exclude_keyofOnScheduleDeadheadEvent.stops-or-id__'
+      description: Construct a type with the properties of T except for those in type K.
+    Record_AttributeId.AttributeValue_:
+      properties: {}
+      additionalProperties:
+        $ref: '#/components/schemas/AttributeValue'
+      type: object
+      description: Construct a type with a set of properties K of type T
+    Record_string.AttributeValue_:
+      properties: {}
+      additionalProperties:
+        $ref: '#/components/schemas/AttributeValue'
+      type: object
+      description: Construct a type with a set of properties K of type T
+    SplitEvent:
+      $ref: '#/components/schemas/TaskEventBase_SplitEventJsonData.OnScheduleEventsTypes.Split_'
+    TaskEventBase_BehindTheWheelHoursEventJsonData.CustomScheduleEventsTypes.BehindTheWheelHours_:
+      allOf:
+      - $ref: '#/components/schemas/RosterEvent_BehindTheWheelHoursEventJsonData.CustomScheduleEventsTypes.BehindTheWheelHours_'
+      - $ref: '#/components/schemas/TaskEventProps'
+      - properties:
+          eventJsonData:
+            allOf:
+            - $ref: '#/components/schemas/SignPost'
+            - properties:
+                id:
+                  $ref: '#/components/schemas/UUID'
+              type: object
+            - $ref: '#/components/schemas/SubTripMeta'
+        required:
+        - eventJsonData
+        type: object
+    RosterEvent_NonRevenueEventJsonData.CustomScheduleEventsTypes.NonRevenue_:
+      allOf:
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/CustomScheduleEventsTypes.NonRevenue'
+          eventId:
+            type: string
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_NonRevenueEventJsonData_'
+    WalkEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Omit_TravelEvent.stops-or-id_'
+      - $ref: '#/components/schemas/BaseEventJsonData'
+    ReliefCarDriverEvent:
+      $ref: '#/components/schemas/TaskEventBase_ReliefCarDriverEventJsonData.ReliefCarEventsTypes.ReliefCarDriver_'
+    Omit_RefuelEvent.stops-or-id_:
+      $ref: '#/components/schemas/Pick_RefuelEvent.Exclude_keyofRefuelEvent.stops-or-id__'
+      description: Construct a type with the properties of T except for those in type K.
+    Pick_CalendarTask.Exclude_keyofCalendarTask.events-or-summary-or-disabled-or-cancellationCode-or-cancellationReason__:
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+          description: The description property is only found on custom duties and standbys. It is used to hold dispatcher notes for these custom tasks.
+        type:
+          $ref: '#/components/schemas/TaskType'
+        attributes:
+          $ref: '#/components/schemas/Record_string.AttributeValue_'
+        displayId:
+          type: string
+        srcTaskId:
+          type: string
+        data: {}
+        rosterDatasetId:
+          type: string
+        scheduleId:
+          type: string
+        copiedTaskId:
+          type: string
+          description: if the task is a copy, then this property holds the original task's ID
+      required:
+      - id
+      - type
+      - displayId
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
+    OtherEventTypes:
+      enum:
+      - depot_pull_in
+      - depot_pull_out
+      - reinforcement_trip
+      - private_hire
+      type: string
+    RosterEvent_SignOffEventJsonData.OnScheduleEventsTypes.SignOff_:
+      allOf:
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/OnScheduleEventsTypes.SignOff'
+          eventId:
+            type: string
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_SignOffEventJsonData_'
+    PublicTravelPassenger:
+      properties:
+        publicTravelId:
+          $ref: '#/components/schemas/StringId'
+        dutyId:
+          $ref: '#/components/schemas/StringId'
+      required:
+      - publicTravelId
+      - dutyId
+      type: object
+    Label:
+      $ref: '#/components/schemas/Omit_PreferencesLabel.type_'
+    RosterEvent_StandbyEventJsonData.CustomScheduleEventsTypes.Standby_:
+      allOf:
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/CustomScheduleEventsTypes.Standby'
+          eventId:
+            type: string
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_StandbyEventJsonData_'
+    OnScheduleEventsTypes.Other:
+      enum:
+      - other
+      type: string
+    CustomScheduleEventsTypes.Standby:
+      enum:
+      - standby
+      type: string
+    GenericRosterEventProps_CustomEventJsonData_:
+      properties:
+        eventJsonData:
+          $ref: '#/components/schemas/CustomEventJsonData'
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - eventJsonData
+      - endTime
+      - startTime
+      type: object
+    Pick_PublicTransportationEvent.Exclude_keyofPublicTransportationEvent.stops-or-id__:
+      properties:
+        distance:
+          type: number
+          format: double
+        dutyId:
+          type: string
+        passengers:
+          items:
+            $ref: '#/components/schemas/Passenger'
+          type: array
+        travelTripsOnVehicle:
+          properties:
+            trips:
+              items:
+                $ref: '#/components/schemas/EventsRef'
+              type: array
+            id:
+              type: string
+          required:
+          - trips
+          - id
+          type: object
+      required:
+      - travelTripsOnVehicle
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
+    RosterEvent_PreTripEventJsonData.OnScheduleEventsTypes.PreTrip_:
+      allOf:
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/OnScheduleEventsTypes.PreTrip'
+          eventId:
+            type: string
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_PreTripEventJsonData_'
+    Pick_OnScheduleCustomEvent.Exclude_keyofOnScheduleCustomEvent.stops-or-id-or-description__:
+      properties:
+        properties:
+          $ref: '#/components/schemas/Record_string.unknown_'
+        dutyId:
+          type: string
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
+    ServiceTripEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Omit_OnScheduleServiceTripEvent.stops-or-id_'
+      - $ref: '#/components/schemas/Required_LocationInformation_'
+      - $ref: '#/components/schemas/Stops'
+      - $ref: '#/components/schemas/ParentTripMeta'
+      - $ref: '#/components/schemas/SubTripMeta'
+    OtherTravelsEvent:
+      $ref: '#/components/schemas/TaskEventBase_OtherTravelEventJsonData.OnScheduleEventsTypes.OtherTravels_'
+    TaskEventBase_OtherEventJsonData.OnScheduleEventsTypes.Other_:
+      allOf:
+      - $ref: '#/components/schemas/RosterEvent_OtherEventJsonData.OnScheduleEventsTypes.Other_'
+      - $ref: '#/components/schemas/TaskEventProps'
+      - properties:
+          eventJsonData:
+            allOf:
+            - $ref: '#/components/schemas/SignPost'
+            - properties:
+                id:
+                  $ref: '#/components/schemas/UUID'
+              type: object
+            - $ref: '#/components/schemas/SubTripMeta'
+        required:
+        - eventJsonData
+        type: object
+    RosterEvent_PostTripEventJsonData.OnScheduleEventsTypes.PostTrip_:
+      allOf:
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/OnScheduleEventsTypes.PostTrip'
+          eventId:
+            type: string
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_PostTripEventJsonData_'
     TaskEventBase_BreakEventJsonData.OnScheduleEventsTypes.Break_:
       allOf:
       - $ref: '#/components/schemas/RosterEvent_BreakEventJsonData.OnScheduleEventsTypes.Break_'
@@ -2741,50 +1456,878 @@ components:
         required:
         - eventJsonData
         type: object
-    GenericRosterEventProps_BreakEventJsonData_:
+    CalendarVehicleAssignment:
       properties:
-        eventJsonData:
-          $ref: '#/components/schemas/BreakEventJsonData'
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-        startTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        tasks:
+          items:
+            $ref: '#/components/schemas/VehicleAssignment'
+          type: array
+        date:
+          $ref: '#/components/schemas/StringifyDate'
       required:
-      - eventJsonData
-      - endTime
-      - startTime
+      - tasks
+      - date
       type: object
-    GenericRosterEventProps_PostTripEventJsonData_:
+    TaskEventBase_TrainingEventJsonData.CustomScheduleEventsTypes.Training_:
+      allOf:
+      - $ref: '#/components/schemas/RosterEvent_TrainingEventJsonData.CustomScheduleEventsTypes.Training_'
+      - $ref: '#/components/schemas/TaskEventProps'
+      - properties:
+          eventJsonData:
+            allOf:
+            - $ref: '#/components/schemas/SignPost'
+            - properties:
+                id:
+                  $ref: '#/components/schemas/UUID'
+              type: object
+            - $ref: '#/components/schemas/SubTripMeta'
+        required:
+        - eventJsonData
+        type: object
+    Pick_RefuelEvent.Exclude_keyofRefuelEvent.stops-or-id__:
       properties:
-        eventJsonData:
-          $ref: '#/components/schemas/PostTripEventJsonData'
-        endTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-        startTime:
-          $ref: '#/components/schemas/MinutesFromMidnightTime'
-      required:
-      - eventJsonData
-      - endTime
-      - startTime
+        vehicleId:
+          type: string
+        dutyId:
+          type: string
+        setupTime:
+          type: number
+          format: double
       type: object
-    OnScheduleEventsTypes.Attendance:
+      description: From T, pick a set of properties whose keys are in the union K
+    NonRevenueEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Omit_OnScheduleCustomEvent.stops-or-id-or-description_'
+      - $ref: '#/components/schemas/Partial_BaseEventJsonData_'
+    OnScheduleEventsTypes.Custom:
       enum:
-      - attendance
+      - custom
       type: string
-    EventsRef:
-      description: Unique ID combination to get full event data from `events` property
+    RosterEvent_WalkEventJsonData.OnScheduleEventsTypes.Walks_:
+      allOf:
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/OnScheduleEventsTypes.Walks'
+          eventId:
+            type: string
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_WalkEventJsonData_'
+    RosterEvent_ReliefCarEventJsonData.OnScheduleEventsTypes.ReliefCar_:
+      allOf:
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/OnScheduleEventsTypes.ReliefCar'
+          eventId:
+            type: string
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_ReliefCarEventJsonData_'
+    CustomScheduleEventsTypes.Meeting:
+      enum:
+      - meeting
+      type: string
+    StandbyEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Omit_OnScheduleCustomEvent.stops-or-id-or-description_'
+      - $ref: '#/components/schemas/Partial_BaseEventJsonData_'
+      - properties:
+          description:
+            type: string
+        type: object
+    Partial_BaseEventJsonData_:
+      properties:
+        stops:
+          items:
+            $ref: '#/components/schemas/EventStop'
+          type: array
+          description: The list of stops will only be included if includeStops is set to true on the request
+        origin:
+          $ref: '#/components/schemas/EventStop'
+        destination:
+          $ref: '#/components/schemas/EventStop'
+      type: object
+      description: Make all properties in T optional
+    CustomEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Omit_OnScheduleCustomEvent.stops-or-id_'
+      - $ref: '#/components/schemas/BaseEventJsonData'
+      - properties:
+          distance:
+            type: number
+            format: double
+        type: object
+    RosterEvent_RechargeEventJsonData.OnScheduleEventsTypes.Recharge_:
+      allOf:
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/OnScheduleEventsTypes.Recharge'
+          eventId:
+            type: string
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_RechargeEventJsonData_'
+    Direction:
+      description: Route trip direction
+      enum:
+      - 0
+      - 1
+      - 2
+      - 3
+      type: number
+    CustomScheduleEventsTypes.TechnicalBreak:
+      enum:
+      - technical_break
+      type: string
+    RosterEvent_DeadheadEventJsonData.DeadheadSubType_:
+      allOf:
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/DeadheadSubType'
+          eventId:
+            type: string
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_DeadheadEventJsonData_'
+    RosterEvent_SplitEventJsonData.OnScheduleEventsTypes.Split_:
+      allOf:
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/OnScheduleEventsTypes.Split'
+          eventId:
+            type: string
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_SplitEventJsonData_'
+    Omit_SameLocationDutyEvent.stops-or-id_:
+      $ref: '#/components/schemas/Pick_SameLocationDutyEvent.Exclude_keyofSameLocationDutyEvent.stops-or-id__'
+      description: Construct a type with the properties of T except for those in type K.
+    Omit_OnScheduleTaxiEvent.stops-or-id_:
+      $ref: '#/components/schemas/Pick_OnScheduleTaxiEvent.Exclude_keyofOnScheduleTaxiEvent.stops-or-id__'
+      description: Construct a type with the properties of T except for those in type K.
+    OnScheduleEventsTypes.PreTrip:
+      enum:
+      - pre_trip
+      type: string
+    BreakEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Partial_Omit_OnScheduleBreakEvent.stops-or-id__'
+      - $ref: '#/components/schemas/BaseEventJsonData'
+    OtherTravelEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Omit_OtherTravelEvent.stops-or-id-or-name_'
+      - $ref: '#/components/schemas/Partial_Pick_OtherTravelEvent.name__'
+      - $ref: '#/components/schemas/BaseEventJsonData'
+    OnScheduleEventsTypes.Refuel:
+      enum:
+      - refuels
+      type: string
+    TaskEventBase_RechargeEventJsonData.OnScheduleEventsTypes.Recharge_:
+      allOf:
+      - $ref: '#/components/schemas/RosterEvent_RechargeEventJsonData.OnScheduleEventsTypes.Recharge_'
+      - $ref: '#/components/schemas/TaskEventProps'
+      - properties:
+          eventJsonData:
+            allOf:
+            - $ref: '#/components/schemas/SignPost'
+            - properties:
+                id:
+                  $ref: '#/components/schemas/UUID'
+              type: object
+            - $ref: '#/components/schemas/SubTripMeta'
+        required:
+        - eventJsonData
+        type: object
+    OtherEventTypes.PrivateHire:
+      enum:
+      - private_hire
+      type: string
+    RosterEvent_ServiceTripEventJsonData.OnScheduleEventsTypes.ServiceTrip_:
+      allOf:
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/OnScheduleEventsTypes.ServiceTrip'
+          eventId:
+            type: string
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_ServiceTripEventJsonData_'
+    BlockEvent:
+      anyOf:
+      - $ref: '#/components/schemas/RosterDutyEventReference'
+      - $ref: '#/components/schemas/TaskEvent'
+    Pick_RechargeEvent.Exclude_keyofRechargeEvent.stops-or-id__:
+      properties:
+        vehicleId:
+          type: string
+        dutyId:
+          type: string
+        setupTime:
+          type: number
+          format: double
+        chargerProfile:
+          type: string
+        chargerType:
+          type: string
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
+    RosterEvent_TechnicalBreakEventJsonData.CustomScheduleEventsTypes.TechnicalBreak_:
+      allOf:
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/CustomScheduleEventsTypes.TechnicalBreak'
+          eventId:
+            type: string
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_TechnicalBreakEventJsonData_'
+    OnScheduleEventsTypes.PublicTravel:
+      enum:
+      - public_travel
+      type: string
+    TechnicalBreakEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Omit_OnScheduleCustomEvent.stops-or-id-or-description_'
+      - $ref: '#/components/schemas/Partial_BaseEventJsonData_'
+    GenericRosterEventProps_OtherEventJsonData_:
+      properties:
+        eventJsonData:
+          $ref: '#/components/schemas/OtherEventJsonData'
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - eventJsonData
+      - endTime
+      - startTime
+      type: object
+    PreTripEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Omit_SameLocationEvent.stops-or-id_'
+      - $ref: '#/components/schemas/BaseEventJsonData'
+    OnScheduleEventsTypes.Split:
+      enum:
+      - split
+      type: string
+    TechnicalBreakEvent:
+      $ref: '#/components/schemas/TaskEventBase_TechnicalBreakEventJsonData.CustomScheduleEventsTypes.TechnicalBreak_'
+    TaskEventBase_SubTripEventJsonData.OnScheduleEventsTypes.SubTrip_:
+      allOf:
+      - $ref: '#/components/schemas/RosterEvent_SubTripEventJsonData.OnScheduleEventsTypes.SubTrip_'
+      - $ref: '#/components/schemas/TaskEventProps'
+      - properties:
+          eventJsonData:
+            allOf:
+            - $ref: '#/components/schemas/SignPost'
+            - properties:
+                id:
+                  $ref: '#/components/schemas/UUID'
+              type: object
+            - $ref: '#/components/schemas/SubTripMeta'
+        required:
+        - eventJsonData
+        type: object
+    DeadheadEvent:
+      $ref: '#/components/schemas/TaskEventBase_DeadheadEventJsonData.DeadheadSubType_'
+    TaskAssignment:
+      allOf:
+      - $ref: '#/components/schemas/PlannedTaskAssignment'
+      - properties:
+          lastAssignedDriverId:
+            type:
+            - string
+            - 'null'
+          attributes:
+            $ref: '#/components/schemas/Record_AttributeId.AttributeValue_'
+          labels:
+            items:
+              $ref: '#/components/schemas/Label'
+            type: array
+          vehicleId:
+            $ref: '#/components/schemas/UUID'
+          originalDriverId:
+            $ref: '#/components/schemas/UUID'
+        type: object
+    TaskEventBase_ReliefCarPassengerEventJsonData.ReliefCarEventsTypes.ReliefCarPassenger_:
+      allOf:
+      - $ref: '#/components/schemas/RosterEvent_ReliefCarPassengerEventJsonData.ReliefCarEventsTypes.ReliefCarPassenger_'
+      - $ref: '#/components/schemas/TaskEventProps'
+      - properties:
+          eventJsonData:
+            allOf:
+            - $ref: '#/components/schemas/SignPost'
+            - properties:
+                id:
+                  $ref: '#/components/schemas/UUID'
+              type: object
+            - $ref: '#/components/schemas/SubTripMeta'
+        required:
+        - eventJsonData
+        type: object
+    Partial_Omit_OnScheduleBreakEvent.stops-or-id__:
+      properties:
+        paidTime:
+          type: number
+          format: double
+        breakId:
+          type: string
+        extraTime:
+          type: number
+          format: double
+      type: object
+      description: Make all properties in T optional
+    ExternalCalendarTask:
+      allOf:
+      - $ref: '#/components/schemas/ExternalCalendarTaskBase_ExternalCalendarTaskSummary_'
+      - properties:
+          spareType:
+            type: string
+          events:
+            items:
+              $ref: '#/components/schemas/ExternalCalendarTaskEvent_TaskEvent_'
+            type: array
+        type: object
+    GenericRosterEventProps_SignOffEventJsonData_:
+      properties:
+        eventJsonData:
+          $ref: '#/components/schemas/SignOffEventJsonData'
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - eventJsonData
+      - endTime
+      - startTime
+      type: object
+    TrainingEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Omit_OnScheduleCustomEvent.stops-or-id-or-description_'
+      - $ref: '#/components/schemas/Partial_BaseEventJsonData_'
+    BlockId:
+      properties:
+        blockId:
+          type: string
+          description: 'in ops a vehicle is called a block
+
+            the vehicleId in ops refers to something completely different where a vehicle can run more than one block
+
+            this type allows us to rename vehicleId as blockId
+
+            vehicleId is deprecated in V2 of the external API'
+      type: object
+    SignOffEvent:
+      $ref: '#/components/schemas/TaskEventBase_SignOffEventJsonData.OnScheduleEventsTypes.SignOff_'
+    OnScheduleEventsTypes.Taxi:
+      enum:
+      - taxi
+      type: string
+    TaskEventBase_SignOnEventJsonData.OnScheduleEventsTypes.SignOn_:
+      allOf:
+      - $ref: '#/components/schemas/RosterEvent_SignOnEventJsonData.OnScheduleEventsTypes.SignOn_'
+      - $ref: '#/components/schemas/TaskEventProps'
+      - properties:
+          eventJsonData:
+            allOf:
+            - $ref: '#/components/schemas/SignPost'
+            - properties:
+                id:
+                  $ref: '#/components/schemas/UUID'
+              type: object
+            - $ref: '#/components/schemas/SubTripMeta'
+        required:
+        - eventJsonData
+        type: object
+    TaskEventBase_OtherTravelEventJsonData.OnScheduleEventsTypes.OtherTravels_:
+      allOf:
+      - $ref: '#/components/schemas/RosterEvent_OtherTravelEventJsonData.OnScheduleEventsTypes.OtherTravels_'
+      - $ref: '#/components/schemas/TaskEventProps'
+      - properties:
+          eventJsonData:
+            allOf:
+            - $ref: '#/components/schemas/SignPost'
+            - properties:
+                id:
+                  $ref: '#/components/schemas/UUID'
+              type: object
+            - $ref: '#/components/schemas/SubTripMeta'
+        required:
+        - eventJsonData
+        type: object
+    AttendanceEvent:
+      $ref: '#/components/schemas/TaskEventBase_AttendanceEventJsonData.OnScheduleEventsTypes.Attendance_'
+    ReinforcementTripEvent:
+      allOf:
+      - $ref: '#/components/schemas/TaskEventBase_ReinforcementTripEventJsonData.OtherEventTypes.ReinforcementTrip_'
+      - $ref: '#/components/schemas/ReinforcementTripEventBase'
+    GenericRosterEventProps_LightDutyHoursEventJsonData_:
+      properties:
+        eventJsonData:
+          $ref: '#/components/schemas/LightDutyHoursEventJsonData'
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - eventJsonData
+      - endTime
+      - startTime
+      type: object
+    CalendarPlanInformation:
+      properties:
+        deployDateRange:
+          $ref: '#/components/schemas/StringifyDateRange'
+        group:
+          type: string
+        rosterId:
+          $ref: '#/components/schemas/UUID'
+        plan:
+          $ref: '#/components/schemas/UUID'
+      required:
+      - deployDateRange
+      - group
+      - rosterId
+      - plan
+      type: object
+    NonRevenueEvent:
+      $ref: '#/components/schemas/TaskEventBase_NonRevenueEventJsonData.CustomScheduleEventsTypes.NonRevenue_'
+    NonVehicleEvent:
+      anyOf:
+      - $ref: '#/components/schemas/TravelTypeEvent'
+      - $ref: '#/components/schemas/SameDutyLocationTypeEvent'
+      - $ref: '#/components/schemas/CustomTypeEvents'
+    TaskEventBase_SignOffEventJsonData.OnScheduleEventsTypes.SignOff_:
+      allOf:
+      - $ref: '#/components/schemas/RosterEvent_SignOffEventJsonData.OnScheduleEventsTypes.SignOff_'
+      - $ref: '#/components/schemas/TaskEventProps'
+      - properties:
+          eventJsonData:
+            allOf:
+            - $ref: '#/components/schemas/SignPost'
+            - properties:
+                id:
+                  $ref: '#/components/schemas/UUID'
+              type: object
+            - $ref: '#/components/schemas/SubTripMeta'
+        required:
+        - eventJsonData
+        type: object
+    SplitEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Omit_SameLocationDutyEvent.stops-or-id_'
+      - $ref: '#/components/schemas/BaseEventJsonData'
+    GenericRosterEventProps_TechnicalBreakEventJsonData_:
+      properties:
+        eventJsonData:
+          $ref: '#/components/schemas/TechnicalBreakEventJsonData'
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - eventJsonData
+      - endTime
+      - startTime
+      type: object
+    OnScheduleEventsTypes.Break:
+      enum:
+      - break
+      type: string
+    MeetingEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Omit_OnScheduleCustomEvent.stops-or-id-or-description_'
+      - $ref: '#/components/schemas/Partial_BaseEventJsonData_'
+    Pick_PreferencesLabel.Exclude_keyofPreferencesLabel.type__:
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+      required:
+      - name
+      - code
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
+    MinutesFromMidnightTime:
+      type: integer
+      format: int32
+      description: Wall clock time, represented as minutes since midnight. For example, `0` is midnight (start of the day), `120` is 02:00 (2 hours after midnight), `180` is 02:30 (2.5 hours after midnight), `1560` is 02:00 the _next day_ (26 hours after midnight), etc.
+    RosterEvent_OtherEventJsonData.OnScheduleEventsTypes.Other_:
+      allOf:
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/OnScheduleEventsTypes.Other'
+          eventId:
+            type: string
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_OtherEventJsonData_'
+    PrivateHireEvent:
+      $ref: '#/components/schemas/TaskEventBase__distance_63_-number_-and-PrivateHireEventJsonData.OtherEventTypes.PrivateHire_'
+    LocationInformation:
+      properties:
+        destination:
+          $ref: '#/components/schemas/EventStop'
+        origin:
+          $ref: '#/components/schemas/EventStop'
+      type: object
+      description: 'This type is used to map the event to the stops in the real world.
+
+        remark: for same location events, the origin and the destination are the same.'
+    ExternalTaskEventProps:
       properties:
         type:
-          $ref: '#/components/schemas/ScheduleEventsTypeName'
+          $ref: '#/components/schemas/ScheduleEventsType'
         id:
-          anyOf:
-          - type: string
-          - $ref: '#/components/schemas/EventStringId'
+          $ref: '#/components/schemas/UUID'
       required:
       - type
       - id
       type: object
-      additionalProperties: false
+    Pick_SameLocationEvent.Exclude_keyofSameLocationEvent.stops-or-id__:
+      properties:
+        vehicleId:
+          type: string
+        dutyId:
+          type: string
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
+    ReliefCarEvent:
+      $ref: '#/components/schemas/TaskEventBase_ReliefCarEventJsonData.OnScheduleEventsTypes.ReliefCar_'
+    OnScheduleEventsTypes.SubTrip:
+      enum:
+      - sub_trip
+      type: string
+    TaskEventBase_LightDutyHoursEventJsonData.CustomScheduleEventsTypes.LightDutyHours_:
+      allOf:
+      - $ref: '#/components/schemas/RosterEvent_LightDutyHoursEventJsonData.CustomScheduleEventsTypes.LightDutyHours_'
+      - $ref: '#/components/schemas/TaskEventProps'
+      - properties:
+          eventJsonData:
+            allOf:
+            - $ref: '#/components/schemas/SignPost'
+            - properties:
+                id:
+                  $ref: '#/components/schemas/UUID'
+              type: object
+            - $ref: '#/components/schemas/SubTripMeta'
+        required:
+        - eventJsonData
+        type: object
+    CustomScheduleEventsTypes.BehindTheWheelHours:
+      enum:
+      - behind_the_wheel_hours
+      type: string
+    Omit_OtherTravelEvent.stops-or-id-or-name_:
+      $ref: '#/components/schemas/Pick_OtherTravelEvent.Exclude_keyofOtherTravelEvent.stops-or-id-or-name__'
+      description: Construct a type with the properties of T except for those in type K.
+    GenericRosterEventProps_ReliefCarDriverEventJsonData_:
+      properties:
+        eventJsonData:
+          $ref: '#/components/schemas/ReliefCarDriverEventJsonData'
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - eventJsonData
+      - endTime
+      - startTime
+      type: object
+    TaskEventBase_StandbyEventJsonData.CustomScheduleEventsTypes.Standby_:
+      allOf:
+      - $ref: '#/components/schemas/RosterEvent_StandbyEventJsonData.CustomScheduleEventsTypes.Standby_'
+      - $ref: '#/components/schemas/TaskEventProps'
+      - properties:
+          eventJsonData:
+            allOf:
+            - $ref: '#/components/schemas/SignPost'
+            - properties:
+                id:
+                  $ref: '#/components/schemas/UUID'
+              type: object
+            - $ref: '#/components/schemas/SubTripMeta'
+        required:
+        - eventJsonData
+        type: object
+    ParentTripMeta:
+      properties:
+        subTripsEventId:
+          items:
+            type: string
+          type: array
+          description: Parent roster event id  for the Sub-trip list af a parent trip
+      type: object
+    GenericRosterEventProps_DeadheadEventJsonData_:
+      properties:
+        eventJsonData:
+          $ref: '#/components/schemas/DeadheadEventJsonData'
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - eventJsonData
+      - endTime
+      - startTime
+      type: object
+    TaskEventBase_PublicTravelEventJsonData.OnScheduleEventsTypes.PublicTravel_:
+      allOf:
+      - $ref: '#/components/schemas/RosterEvent_PublicTravelEventJsonData.OnScheduleEventsTypes.PublicTravel_'
+      - $ref: '#/components/schemas/TaskEventProps'
+      - properties:
+          eventJsonData:
+            allOf:
+            - $ref: '#/components/schemas/SignPost'
+            - properties:
+                id:
+                  $ref: '#/components/schemas/UUID'
+              type: object
+            - $ref: '#/components/schemas/SubTripMeta'
+        required:
+        - eventJsonData
+        type: object
+    ExternalCalendarTaskEvent_TaskEvent_:
+      anyOf:
+      - $ref: '#/components/schemas/EventWithBlock'
+      - $ref: '#/components/schemas/EventWithoutBlock'
+    RosterEvent_MeetingEventJsonData.CustomScheduleEventsTypes.Meeting_:
+      allOf:
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/CustomScheduleEventsTypes.Meeting'
+          eventId:
+            type: string
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_MeetingEventJsonData_'
+    SubTripMeta:
+      properties:
+        subTripIndex:
+          type: number
+          format: double
+          description: 'if a sub trip, what is its position within it''s parent
+
+            where parentTripId exists so should subTripIndex
+
+            subTripIndex is one based'
+        isLastSubTrip:
+          type: boolean
+        isFirstSubTrip:
+          type: boolean
+        parentSubTrips:
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+          description: entire list of sub-trips for a parent trip
+        parentProperties:
+          $ref: '#/components/schemas/Record_string.unknown_'
+          description: sub-trips don't have their own properties so they carry a copy of any properties their parent may have
+        parentTripId:
+          type: string
+          description: If trip is a sub trip, this is tripId of it's parent
+        parentEventId:
+          type: string
+          description: Parent roster event id of the sub-trip
+      type: object
+    RosterEvent_OtherTravelEventJsonData.OnScheduleEventsTypes.OtherTravels_:
+      allOf:
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/OnScheduleEventsTypes.OtherTravels'
+          eventId:
+            type: string
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_OtherTravelEventJsonData_'
+    GenericRosterEventProps_NonRevenueEventJsonData_:
+      properties:
+        eventJsonData:
+          $ref: '#/components/schemas/NonRevenueEventJsonData'
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - eventJsonData
+      - endTime
+      - startTime
+      type: object
+    TaskEventBase_WalkEventJsonData.OnScheduleEventsTypes.Walks_:
+      allOf:
+      - $ref: '#/components/schemas/RosterEvent_WalkEventJsonData.OnScheduleEventsTypes.Walks_'
+      - $ref: '#/components/schemas/TaskEventProps'
+      - properties:
+          eventJsonData:
+            allOf:
+            - $ref: '#/components/schemas/SignPost'
+            - properties:
+                id:
+                  $ref: '#/components/schemas/UUID'
+              type: object
+            - $ref: '#/components/schemas/SubTripMeta'
+        required:
+        - eventJsonData
+        type: object
+    SignPost:
+      properties:
+        signPost:
+          type: string
+      type: object
+    TaskEventBase_NonRevenueEventJsonData.CustomScheduleEventsTypes.NonRevenue_:
+      allOf:
+      - $ref: '#/components/schemas/RosterEvent_NonRevenueEventJsonData.CustomScheduleEventsTypes.NonRevenue_'
+      - $ref: '#/components/schemas/TaskEventProps'
+      - properties:
+          eventJsonData:
+            allOf:
+            - $ref: '#/components/schemas/SignPost'
+            - properties:
+                id:
+                  $ref: '#/components/schemas/UUID'
+              type: object
+            - $ref: '#/components/schemas/SubTripMeta'
+        required:
+        - eventJsonData
+        type: object
+    Pick_OtherTravelEvent.Exclude_keyofOtherTravelEvent.stops-or-id-or-name__:
+      properties:
+        distance:
+          type: number
+          format: double
+        dutyId:
+          type: string
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
+    OptibusTime:
+      type: string
+      description: 'Time as HH:MM:SS <br/>
+
+        between 24:00:00 and 47:59:59 is next day <br/>
+
+        between 48:00:00 and 71:59:59 is the day after that
+
+        a leading "-"" represents the previous day (eg -01:00:00 is 23:00 on the previous day)'
+      pattern: ^-?([0-7][0-1]|[0-6][0-9]):([0-5][0-9]):([0-5][0-9])$
+    PrivateHireEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Omit_OnScheduleCustomEvent.stops-or-id-or-description_'
+      - $ref: '#/components/schemas/Partial_BaseEventJsonData_'
+    ScheduleEventsTypeName:
+      type: string
+      enum:
+      - trips
+      - subTrips
+      - deadheads
+      - signOns
+      - signOffs
+      - splits
+      - preTrip
+      - postTrip
+      - attendance
+      - custom
+      - refuels
+      - recharges
+      - taxis
+      - otherTravels
+      - walks
+      - reliefCars
+      - publicTravels
+    PreTripEvent:
+      $ref: '#/components/schemas/TaskEventBase_PreTripEventJsonData.OnScheduleEventsTypes.PreTrip_'
+    SignOnEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Omit_SameLocationDutyEvent.stops-or-id_'
+      - $ref: '#/components/schemas/BaseEventJsonData'
+    Stops:
+      properties:
+        stops:
+          items:
+            $ref: '#/components/schemas/EventStop'
+          type: array
+          description: The list of stops will only be included if includeStops is set to true on the request
+      type: object
+    RosterEvent_ReliefCarPassengerEventJsonData.ReliefCarEventsTypes.ReliefCarPassenger_:
+      allOf:
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/ReliefCarEventsTypes.ReliefCarPassenger'
+          eventId:
+            type: string
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_ReliefCarPassengerEventJsonData_'
+    SameDutyLocationTypeEvent:
+      anyOf:
+      - $ref: '#/components/schemas/SplitEvent'
+      - $ref: '#/components/schemas/SignOffEvent'
+      - $ref: '#/components/schemas/SignOnEvent'
+    Omit_OnScheduleCustomEvent.stops-or-id_:
+      $ref: '#/components/schemas/Pick_OnScheduleCustomEvent.Exclude_keyofOnScheduleCustomEvent.stops-or-id__'
+      description: Construct a type with the properties of T except for those in type K.
+    DeadheadEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Omit_OnScheduleDeadheadEvent.stops-or-id_'
+      - $ref: '#/components/schemas/BaseEventJsonData'
+    DutyCancellationReason:
+      properties:
+        reasonCode:
+          type: string
+        reason:
+          type: string
+      required:
+      - reasonCode
+      - reason
+      type: object
+    RefuelEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Omit_RefuelEvent.stops-or-id_'
+      - $ref: '#/components/schemas/BaseEventJsonData'
+    RechargeEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Omit_RechargeEvent.stops-or-id_'
+      - $ref: '#/components/schemas/BaseEventJsonData'
+    BlockType:
+      enum:
+      - block
+      - custom
+      type: string
+    StringifyDateRange:
+      properties:
+        to:
+          $ref: '#/components/schemas/StringifyDate'
+        from:
+          $ref: '#/components/schemas/StringifyDate'
+      required:
+      - to
+      - from
+      type: object
+      description: Stringified date range.
     CustomTypeEvents:
       anyOf:
       - $ref: '#/components/schemas/StandbyEvent'
@@ -2800,21 +2343,478 @@ components:
       - $ref: '#/components/schemas/CustomEvent'
       - $ref: '#/components/schemas/ReliefCarPassengerEvent'
       - $ref: '#/components/schemas/ReliefCarDriverEvent'
-    AttributeValue:
+    Passenger:
       anyOf:
-      - items:
-          anyOf:
-          - type: number
-            format: double
-          - type: string
-        type: array
-      - type: string
-      - type: boolean
-      - type: number
-        format: double
-    WalkEventJsonData:
+      - $ref: '#/components/schemas/PublicTravelPassenger'
+      - $ref: '#/components/schemas/StringId'
+      description: 'The driver as a passenger.<br/>
+
+        Events that can have drivers as passengers:<br/>
+
+        <i>service | idle | taxi | reliefCar</i>'
+    TaskEventBase_TaxiEventJsonData.OnScheduleEventsTypes.Taxi_:
       allOf:
-      - $ref: '#/components/schemas/Omit_TravelEvent.stops-or-id_'
+      - $ref: '#/components/schemas/RosterEvent_TaxiEventJsonData.OnScheduleEventsTypes.Taxi_'
+      - $ref: '#/components/schemas/TaskEventProps'
+      - properties:
+          eventJsonData:
+            allOf:
+            - $ref: '#/components/schemas/SignPost'
+            - properties:
+                id:
+                  $ref: '#/components/schemas/UUID'
+              type: object
+            - $ref: '#/components/schemas/SubTripMeta'
+        required:
+        - eventJsonData
+        type: object
+    GenericRosterEventProps__distance_63_-number_-and-PrivateHireEventJsonData_:
+      properties:
+        eventJsonData:
+          allOf:
+          - properties:
+              distance:
+                type: number
+                format: double
+            type: object
+          - $ref: '#/components/schemas/PrivateHireEventJsonData'
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - eventJsonData
+      - endTime
+      - startTime
+      type: object
+    GenericRosterEventProps_ReinforcementTripEventJsonData_:
+      properties:
+        eventJsonData:
+          $ref: '#/components/schemas/ReinforcementTripEventJsonData'
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - eventJsonData
+      - endTime
+      - startTime
+      type: object
+    TaxiEvent:
+      $ref: '#/components/schemas/TaskEventBase_TaxiEventJsonData.OnScheduleEventsTypes.Taxi_'
+    ServiceTripEvent:
+      anyOf:
+      - $ref: '#/components/schemas/TaskEventBase_ServiceTripEventJsonData.OnScheduleEventsTypes.ServiceTrip_'
+      - $ref: '#/components/schemas/ReinforcementTripEvent'
+    RosterEvent_PublicTravelEventJsonData.OnScheduleEventsTypes.PublicTravel_:
+      allOf:
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/OnScheduleEventsTypes.PublicTravel'
+          eventId:
+            type: string
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_PublicTravelEventJsonData_'
+    OnScheduleEventsTypes:
+      enum:
+      - service_trip
+      - sub_trip
+      - deadhead
+      - sign_on
+      - sign_off
+      - split
+      - pre_trip
+      - post_trip
+      - attendance
+      - custom
+      - refuels
+      - recharge
+      - other_travels
+      - taxi
+      - walk
+      - relief_cars
+      - public_travel
+      - break
+      - other
+      type: string
+    OnScheduleEventsTypes.ReliefCar:
+      enum:
+      - relief_cars
+      type: string
+    VehicleAssignment:
+      properties:
+        originalVehicleId:
+          $ref: '#/components/schemas/UUID'
+        vehicleId:
+          $ref: '#/components/schemas/UUID'
+        blockId:
+          $ref: '#/components/schemas/UUID'
+      required:
+      - blockId
+      type: object
+    LightDutyHoursEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Omit_OnScheduleCustomEvent.stops-or-id-or-description_'
+      - $ref: '#/components/schemas/Partial_BaseEventJsonData_'
+    OtherTaskEvent:
+      $ref: '#/components/schemas/TaskEventBase_OtherEventJsonData.OnScheduleEventsTypes.Other_'
+    CustomScheduleEventsTypes.NonRevenue:
+      enum:
+      - non_revenue
+      type: string
+    OperationsSourceMeta:
+      properties:
+        source:
+          type: string
+          enum:
+          - operations
+      required:
+      - source
+      type: object
+    OnScheduleEventsTypes.OtherTravels:
+      enum:
+      - other_travels
+      type: string
+    GenericRosterEventProps_PreTripEventJsonData_:
+      properties:
+        eventJsonData:
+          $ref: '#/components/schemas/PreTripEventJsonData'
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - eventJsonData
+      - endTime
+      - startTime
+      type: object
+    GenericRosterEventProps_AttendanceEventJsonData_:
+      properties:
+        eventJsonData:
+          $ref: '#/components/schemas/AttendanceEventJsonData'
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - eventJsonData
+      - endTime
+      - startTime
+      type: object
+    EventsRef:
+      description: Unique ID combination to get full event data from `events` property
+      properties:
+        type:
+          $ref: '#/components/schemas/ScheduleEventsTypeName'
+        id:
+          anyOf:
+          - type: string
+          - $ref: '#/components/schemas/EventStringId'
+      required:
+      - type
+      - id
+      type: object
+      additionalProperties: false
+    Pick_SameLocationDutyEvent.Exclude_keyofSameLocationDutyEvent.stops-or-id__:
+      properties:
+        dutyId:
+          type: string
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
+    LightDutyHoursEvent:
+      $ref: '#/components/schemas/TaskEventBase_LightDutyHoursEventJsonData.CustomScheduleEventsTypes.LightDutyHours_'
+    CalendarDailyInformation:
+      properties:
+        tasks:
+          items:
+            $ref: '#/components/schemas/TaskAssignment'
+          type: array
+        date:
+          $ref: '#/components/schemas/StringifyDate'
+      required:
+      - tasks
+      - date
+      type: object
+    PostTripEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Omit_SameLocationEvent.stops-or-id_'
+      - $ref: '#/components/schemas/BaseEventJsonData'
+    SignOffEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Omit_SameLocationDutyEvent.stops-or-id_'
+      - $ref: '#/components/schemas/BaseEventJsonData'
+    CustomScheduleEventsTypes:
+      description: Duty schedule only custom event, vehicle does not move between stops
+      enum:
+      - standby
+      - technical_break
+      - meeting
+      - training
+      - non_revenue
+      - light_duty_hours
+      - behind_the_wheel_hours
+      type: string
+    Omit_PreferencesLabel.type_:
+      $ref: '#/components/schemas/Pick_PreferencesLabel.Exclude_keyofPreferencesLabel.type__'
+      description: Construct a type with the properties of T except for those in type K.
+    GetCalendarResponse:
+      $ref: '#/components/schemas/CalendarInformation'
+    ReliefCarEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Omit_ReliefCarTravelEvent.stops-or-id_'
+      - $ref: '#/components/schemas/BaseEventJsonData'
+    Omit_PublicTransportationEvent.stops-or-id_:
+      $ref: '#/components/schemas/Pick_PublicTransportationEvent.Exclude_keyofPublicTransportationEvent.stops-or-id__'
+      description: Construct a type with the properties of T except for those in type K.
+    TaskEventBase_SplitEventJsonData.OnScheduleEventsTypes.Split_:
+      allOf:
+      - $ref: '#/components/schemas/RosterEvent_SplitEventJsonData.OnScheduleEventsTypes.Split_'
+      - $ref: '#/components/schemas/TaskEventProps'
+      - properties:
+          eventJsonData:
+            allOf:
+            - $ref: '#/components/schemas/SignPost'
+            - properties:
+                id:
+                  $ref: '#/components/schemas/UUID'
+              type: object
+            - $ref: '#/components/schemas/SubTripMeta'
+        required:
+        - eventJsonData
+        type: object
+    SubTripEvent:
+      $ref: '#/components/schemas/TaskEventBase_SubTripEventJsonData.OnScheduleEventsTypes.SubTrip_'
+    GenericRosterEventProps_ReliefCarEventJsonData_:
+      properties:
+        eventJsonData:
+          $ref: '#/components/schemas/ReliefCarEventJsonData'
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - eventJsonData
+      - endTime
+      - startTime
+      type: object
+    ExternalCalendarTaskSummary:
+      anyOf:
+      - $ref: '#/components/schemas/DutyEventSummary'
+      - properties:
+          type:
+            $ref: '#/components/schemas/TaskType'
+        required:
+        - type
+        type: object
+    Record_string.unknown_:
+      properties: {}
+      additionalProperties: {}
+      type: object
+      description: Construct a type with a set of properties K of type T
+    RosterEvent_SubTripEventJsonData.OnScheduleEventsTypes.SubTrip_:
+      allOf:
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/OnScheduleEventsTypes.SubTrip'
+          eventId:
+            type: string
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_SubTripEventJsonData_'
+    RosterEvent_CustomEventJsonData.OnScheduleEventsTypes.Custom_:
+      allOf:
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/OnScheduleEventsTypes.Custom'
+          eventId:
+            type: string
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_CustomEventJsonData_'
+    _RefuelEvent:
+      $ref: '#/components/schemas/TaskEventBase_RefuelEventJsonData.OnScheduleEventsTypes.Refuel_'
+    RosterEvent_AttendanceEventJsonData.OnScheduleEventsTypes.Attendance_:
+      allOf:
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/OnScheduleEventsTypes.Attendance'
+          eventId:
+            type: string
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_AttendanceEventJsonData_'
+    EventStop:
+      anyOf:
+      - $ref: '#/components/schemas/CustomEventStop'
+      - allOf:
+        - $ref: '#/components/schemas/OnScheduleEventStop'
+        - properties:
+            isCustom:
+              type: boolean
+              enum:
+              - false
+          type: object
+    GenericRosterEventProps_PublicTravelEventJsonData_:
+      properties:
+        eventJsonData:
+          $ref: '#/components/schemas/PublicTravelEventJsonData'
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - eventJsonData
+      - endTime
+      - startTime
+      type: object
+    ReliefCarEventsTypes.ReliefCarPassenger:
+      enum:
+      - relief_car_passenger
+      type: string
+    TaskEventBase_ReinforcementTripEventJsonData.OtherEventTypes.ReinforcementTrip_:
+      allOf:
+      - $ref: '#/components/schemas/RosterEvent_ReinforcementTripEventJsonData.OtherEventTypes.ReinforcementTrip_'
+      - $ref: '#/components/schemas/TaskEventProps'
+      - properties:
+          eventJsonData:
+            allOf:
+            - $ref: '#/components/schemas/SignPost'
+            - properties:
+                id:
+                  $ref: '#/components/schemas/UUID'
+              type: object
+            - $ref: '#/components/schemas/SubTripMeta'
+        required:
+        - eventJsonData
+        type: object
+    TaskType:
+      enum:
+      - duty
+      - day_off
+      - standby
+      - spare
+      - custom
+      type: string
+    Omit_SameLocationEvent.stops-or-id_:
+      $ref: '#/components/schemas/Pick_SameLocationEvent.Exclude_keyofSameLocationEvent.stops-or-id__'
+      description: Construct a type with the properties of T except for those in type K.
+    GenericRosterEventProps_OtherTravelEventJsonData_:
+      properties:
+        eventJsonData:
+          $ref: '#/components/schemas/OtherTravelEventJsonData'
+        endTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+        startTime:
+          $ref: '#/components/schemas/MinutesFromMidnightTime'
+      required:
+      - eventJsonData
+      - endTime
+      - startTime
+      type: object
+    _RechargeEvent:
+      $ref: '#/components/schemas/TaskEventBase_RechargeEventJsonData.OnScheduleEventsTypes.Recharge_'
+    DeadheadSubType:
+      anyOf:
+      - $ref: '#/components/schemas/OnScheduleEventsTypes.Deadhead'
+      - $ref: '#/components/schemas/OtherEventTypes.PullIn'
+      - $ref: '#/components/schemas/OtherEventTypes.PullOut'
+    BaseEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Stops'
+      - $ref: '#/components/schemas/LocationInformation'
+    RosterEvent_ReliefCarDriverEventJsonData.ReliefCarEventsTypes.ReliefCarDriver_:
+      allOf:
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/ReliefCarEventsTypes.ReliefCarDriver'
+          eventId:
+            type: string
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_ReliefCarDriverEventJsonData_'
+    EventStringId:
+      type: string
+      description: Unique identifier for a scheduling event
+      pattern: ^-?[0-9a-f]{8}$
+    ReliefCarEventsTypes.ReliefCarDriver:
+      enum:
+      - relief_car_driver
+      type: string
+    PublicTravelEvent:
+      $ref: '#/components/schemas/TaskEventBase_PublicTravelEventJsonData.OnScheduleEventsTypes.PublicTravel_'
+    BehindTheWheelHoursEvent:
+      $ref: '#/components/schemas/TaskEventBase_BehindTheWheelHoursEventJsonData.CustomScheduleEventsTypes.BehindTheWheelHours_'
+    RosterEvent_BreakEventJsonData.OnScheduleEventsTypes.Break_:
+      allOf:
+      - properties:
+          eventType:
+            $ref: '#/components/schemas/OnScheduleEventsTypes.Break'
+          eventId:
+            type: string
+        required:
+        - eventType
+        - eventId
+        type: object
+      - $ref: '#/components/schemas/GenericRosterEventProps_BreakEventJsonData_'
+    StandbyEvent:
+      $ref: '#/components/schemas/TaskEventBase_StandbyEventJsonData.CustomScheduleEventsTypes.Standby_'
+    TaskEventBase_ReliefCarDriverEventJsonData.ReliefCarEventsTypes.ReliefCarDriver_:
+      allOf:
+      - $ref: '#/components/schemas/RosterEvent_ReliefCarDriverEventJsonData.ReliefCarEventsTypes.ReliefCarDriver_'
+      - $ref: '#/components/schemas/TaskEventProps'
+      - properties:
+          eventJsonData:
+            allOf:
+            - $ref: '#/components/schemas/SignPost'
+            - properties:
+                id:
+                  $ref: '#/components/schemas/UUID'
+              type: object
+            - $ref: '#/components/schemas/SubTripMeta'
+        required:
+        - eventJsonData
+        type: object
+    ServiceTripTypeEvent:
+      anyOf:
+      - $ref: '#/components/schemas/ServiceTripEvent'
+      - $ref: '#/components/schemas/SubTripEvent'
+      - $ref: '#/components/schemas/ReinforcementTripEvent'
+    PostTripEvent:
+      $ref: '#/components/schemas/TaskEventBase_PostTripEventJsonData.OnScheduleEventsTypes.PostTrip_'
+    PlannedTaskAssignment:
+      properties:
+        opUnitUuid:
+          type: string
+        cancellationReason:
+          $ref: '#/components/schemas/DutyCancellationReason'
+          description: if disabled = true and the customer has configured cancellation reasons, then this is present
+        disabled:
+          type: boolean
+        driverId:
+          $ref: '#/components/schemas/UUID'
+        taskId:
+          $ref: '#/components/schemas/UUID'
+      required:
+      - taskId
+      type: object
+    EventWithoutBlock:
+      allOf:
+      - $ref: '#/components/schemas/NonVehicleEvent'
+      - $ref: '#/components/schemas/ExternalTaskEventProps'
+    TaxiEventJsonData:
+      allOf:
+      - $ref: '#/components/schemas/Omit_OnScheduleTaxiEvent.stops-or-id_'
       - $ref: '#/components/schemas/BaseEventJsonData'
   securitySchemes:
     api_key:
